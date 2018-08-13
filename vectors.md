@@ -65,7 +65,7 @@ dplyr::near
 #> {
 #>     abs(x - y) < tol
 #> }
-#> <bytecode: 0x564e2380e908>
+#> <bytecode: 0x7f9390d0bb60>
 #> <environment: namespace:dplyr>
 ```
 

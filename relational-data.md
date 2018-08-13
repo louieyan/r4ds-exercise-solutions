@@ -304,11 +304,6 @@ airports %>%
     borders("state") +
     geom_point() +
     coord_quickmap()
-#> 
-#> Attaching package: 'maps'
-#> The following object is masked from 'package:purrr':
-#> 
-#>     map
 ```
 
 
@@ -491,7 +486,6 @@ The largest delays are in Tennessee (Nashville), the Southeast, and the Midwest,
 
 ```r
 library(viridis)
-#> Loading required package: viridisLite
 flights %>%
   filter(year == 2013, month == 6, day == 13) %>%
   group_by(dest) %>%

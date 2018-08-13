@@ -132,20 +132,6 @@
 \theoremstyle{remark}
 \newtheorem*{answer}{Solution}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -157,16 +143,16 @@
 \chapter*{Welcome}\label{welcome}}
 \addcontentsline{toc}{chapter}{Welcome}
 
-This contains my exercise solutions for Hadley Wickham and Garret
-Grolemund, \href{http://amzn.to/2aHLAQ1}{R for Data Science} (Wickham
-and Grolemund \protect\hyperlink{ref-WickhamGrolemund2017}{2017}). The
-website for the book is \href{http://r4ds.had.co.nz/}{r4ds.had.co.nz}.
+This contains solutions to the exercise in
+\href{http://amzn.to/2aHLAQ1}{\emph{R for Data Science}}, byn Hadley
+Wickham and Garret Grolemund (Wickham and Grolemund
+\protect\hyperlink{ref-WickhamGrolemund2017}{2017}). The website for
+that book is \href{http://r4ds.had.co.nz/}{r4ds.had.co.nz}, and a
+physical copy is published by O'Reilly and available from
+\href{http://amzn.to/2aHLAQ1}{amazon}.
 
-The text of this work is licensed under the
-\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons
-Attribution 4.0 International License}. The R Code in this work is
-licensed under the \href{https://opensource.org/licenses/MIT}{MIT
-License}.
+This work is licensed under a Creative Commons Attribution 4.0
+International License
 
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
@@ -179,21 +165,22 @@ All the credit should go to Garrett Grolemund and Hadley Wickham for
 writing the truly fantastic \emph{R for Data Science} book, without
 which these solutions would not exist---literally.
 
-This book was written in the open, with some people contributed pull
-requests to fix problems. Thank you to all who contributed via
-\href{https://github.com/jrnold/r4ds-exercise-solutions/graphs/contributors}{GitHub}.
-
-Thanks go to all contributers in alphabetical order: @jmclawson,
-\href{mailto:benherbertson@gmail.com}{\nolinkurl{benherbertson@gmail.com}},
-\href{mailto:dongzhuoer@mail.nankai.edu.cn}{\nolinkurl{dongzhuoer@mail.nankai.edu.cn}},
-\href{mailto:dongzhuoer@mail.nankai.edu.cn}{\nolinkurl{dongzhuoer@mail.nankai.edu.cn}},
-\href{mailto:kleinmarkgeard@gmail.com}{\nolinkurl{kleinmarkgeard@gmail.com}},
-\href{mailto:mjones01@BattelleEcology.org}{\nolinkurl{mjones01@BattelleEcology.org}},
-\href{mailto:ndecoursin@gmail.com}{\nolinkurl{ndecoursin@gmail.com}},
-\href{mailto:nickywang100@gmail.com}{\nolinkurl{nickywang100@gmail.com}},
-\href{mailto:theadamattack@gmail.com}{\nolinkurl{theadamattack@gmail.com}},
-\href{mailto:theadamattack@gmail.com}{\nolinkurl{theadamattack@gmail.com}},
-\href{mailto:tinhb92@gmail.com}{\nolinkurl{tinhb92@gmail.com}}.
+These solutions have benefitted from those who fixed problems and
+contributed solutions. Thank you to all of those who contributed on
+\href{https://github.com/jrnold/r4ds-exercise-solutions/graphs/contributors}{GitHub}
+(in alphabetical order): (in alphabetical order)
+\href{https://github.com/adamblake}{@adamblake},
+\href{https://github.com/benherbertson}{@benherbertson},
+\href{https://github.com/dcgreaves}{@dcgreaves},
+\href{https://github.com/decoursin}{@decoursin},
+\href{https://github.com/dongzhuoer}{@dongzhuoer},
+\href{https://github.com/JamesCuster}{@JamesCuster},
+\href{https://github.com/jmclawson}{@jmclawson},
+\href{https://github.com/KleinGeard}{@KleinGeard},
+\href{https://github.com/mjones01}{@mjones01},
+\href{https://github.com/nickcorona}{@nickcorona},
+\href{https://github.com/nzxwang}{@nzxwang},
+and\href{https://github.com/tinhb92}{@tinhb92}.
 
 \hypertarget{organization}{%
 \section*{Organization}\label{organization}}
@@ -518,58 +505,63 @@ This book was built with:
 \CommentTok{#> Session info -------------------------------------------------------------}
 \CommentTok{#>  setting  value                       }
 \CommentTok{#>  version  R version 3.5.1 (2018-07-02)}
-\CommentTok{#>  system   x86_64, linux-gnu           }
+\CommentTok{#>  system   x86_64, darwin15.6.0        }
 \CommentTok{#>  ui       X11                         }
 \CommentTok{#>  language (EN)                        }
 \CommentTok{#>  collate  en_US.UTF-8                 }
-\CommentTok{#>  tz       Etc/UTC                     }
-\CommentTok{#>  date     2018-08-11}
+\CommentTok{#>  tz       America/Los_Angeles         }
+\CommentTok{#>  date     2018-08-12}
 \CommentTok{#> Packages -----------------------------------------------------------------}
-\CommentTok{#>  package    * version date       source        }
-\CommentTok{#>  assertthat   0.2.0   2017-04-11 CRAN (R 3.5.1)}
-\CommentTok{#>  backports    1.1.2   2017-12-13 CRAN (R 3.5.1)}
-\CommentTok{#>  base       * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  bindr        0.1.1   2018-03-13 CRAN (R 3.5.1)}
-\CommentTok{#>  bindrcpp   * 0.2.2   2018-03-29 CRAN (R 3.5.1)}
-\CommentTok{#>  bookdown     0.7     2018-02-18 CRAN (R 3.5.1)}
-\CommentTok{#>  codetools    0.2-15  2016-10-05 CRAN (R 3.5.1)}
-\CommentTok{#>  compiler     3.5.1   2018-08-08 local         }
-\CommentTok{#>  crayon       1.3.4   2017-09-16 CRAN (R 3.5.1)}
-\CommentTok{#>  datasets   * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  devtools     1.13.6  2018-06-27 CRAN (R 3.5.1)}
-\CommentTok{#>  digest       0.6.15  2018-01-28 CRAN (R 3.5.1)}
-\CommentTok{#>  dplyr      * 0.7.6   2018-06-29 CRAN (R 3.5.1)}
-\CommentTok{#>  evaluate     0.11    2018-07-17 CRAN (R 3.5.1)}
-\CommentTok{#>  git2r        0.23.0  2018-07-17 CRAN (R 3.5.1)}
-\CommentTok{#>  glue         1.3.0   2018-07-17 CRAN (R 3.5.1)}
-\CommentTok{#>  graphics   * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  grDevices  * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  here         0.1     2017-05-28 cran (@0.1)   }
-\CommentTok{#>  hms          0.4.2   2018-03-10 CRAN (R 3.5.1)}
-\CommentTok{#>  htmltools    0.3.6   2017-04-28 CRAN (R 3.5.1)}
-\CommentTok{#>  knitr        1.20    2018-02-20 CRAN (R 3.5.1)}
-\CommentTok{#>  magrittr     1.5     2014-11-22 CRAN (R 3.5.1)}
-\CommentTok{#>  memoise      1.1.0   2017-04-21 CRAN (R 3.5.1)}
-\CommentTok{#>  methods    * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  pillar       1.3.0   2018-07-14 CRAN (R 3.5.1)}
-\CommentTok{#>  pkgconfig    2.0.1   2017-03-21 CRAN (R 3.5.1)}
-\CommentTok{#>  purrr        0.2.5   2018-05-29 CRAN (R 3.5.1)}
-\CommentTok{#>  R6           2.2.2   2017-06-17 CRAN (R 3.5.1)}
-\CommentTok{#>  Rcpp         0.12.18 2018-07-23 CRAN (R 3.5.1)}
-\CommentTok{#>  readr        1.1.1   2017-05-16 CRAN (R 3.5.1)}
-\CommentTok{#>  rlang        0.2.1   2018-05-30 CRAN (R 3.5.1)}
-\CommentTok{#>  rmarkdown    1.10    2018-06-11 CRAN (R 3.5.1)}
-\CommentTok{#>  rprojroot    1.3-2   2018-01-03 CRAN (R 3.5.1)}
-\CommentTok{#>  stats      * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  stringi      1.2.4   2018-07-20 CRAN (R 3.5.1)}
-\CommentTok{#>  stringr      1.3.1   2018-05-10 CRAN (R 3.5.1)}
-\CommentTok{#>  tibble       1.4.2   2018-01-22 CRAN (R 3.5.1)}
-\CommentTok{#>  tidyselect   0.2.4   2018-02-26 CRAN (R 3.5.1)}
-\CommentTok{#>  tools        3.5.1   2018-08-08 local         }
-\CommentTok{#>  utils      * 3.5.1   2018-08-08 local         }
-\CommentTok{#>  withr        2.1.2   2018-03-15 CRAN (R 3.5.1)}
-\CommentTok{#>  xfun         0.3     2018-07-06 CRAN (R 3.5.1)}
-\CommentTok{#>  yaml         2.2.0   2018-07-25 CRAN (R 3.5.1)}
+\CommentTok{#>  package    * version date       source                            }
+\CommentTok{#>  assertthat   0.2.0   2017-04-11 CRAN (R 3.5.0)                    }
+\CommentTok{#>  backports    1.1.2   2017-12-13 CRAN (R 3.5.0)                    }
+\CommentTok{#>  base       * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  bindr        0.1.1   2018-03-13 CRAN (R 3.5.0)                    }
+\CommentTok{#>  bindrcpp   * 0.2.2   2018-03-29 CRAN (R 3.5.0)                    }
+\CommentTok{#>  bookdown     0.7.17  2018-08-10 Github (rstudio/bookdown@02b0fd1) }
+\CommentTok{#>  codetools    0.2-15  2016-10-05 CRAN (R 3.5.1)                    }
+\CommentTok{#>  compiler     3.5.1   2018-07-05 local                             }
+\CommentTok{#>  crayon       1.3.4   2017-09-16 CRAN (R 3.5.0)                    }
+\CommentTok{#>  curl         3.2     2018-03-28 CRAN (R 3.5.0)                    }
+\CommentTok{#>  datasets   * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  devtools     1.13.6  2018-06-27 CRAN (R 3.5.0)                    }
+\CommentTok{#>  digest       0.6.15  2018-01-28 CRAN (R 3.5.0)                    }
+\CommentTok{#>  dplyr      * 0.7.6   2018-06-29 CRAN (R 3.5.1)                    }
+\CommentTok{#>  evaluate     0.11    2018-07-17 cran (@0.11)                      }
+\CommentTok{#>  gh           1.0.1   2017-07-16 CRAN (R 3.5.0)                    }
+\CommentTok{#>  glue         1.3.0   2018-07-20 Github (tidyverse/glue@66de125)   }
+\CommentTok{#>  graphics   * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  grDevices  * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  here         0.1     2017-05-28 CRAN (R 3.5.0)                    }
+\CommentTok{#>  hms          0.4.2   2018-03-10 CRAN (R 3.5.0)                    }
+\CommentTok{#>  htmldeps     0.1.1   2018-08-10 Github (rstudio/htmldeps@c1023e0) }
+\CommentTok{#>  htmltools    0.3.6   2017-04-28 CRAN (R 3.5.0)                    }
+\CommentTok{#>  httr         1.3.1   2017-08-20 CRAN (R 3.5.0)                    }
+\CommentTok{#>  ini          0.3.1   2018-05-20 CRAN (R 3.5.0)                    }
+\CommentTok{#>  jsonlite     1.5     2017-06-01 CRAN (R 3.5.0)                    }
+\CommentTok{#>  knitr        1.20    2018-02-20 CRAN (R 3.5.0)                    }
+\CommentTok{#>  magrittr   * 1.5     2014-11-22 CRAN (R 3.5.0)                    }
+\CommentTok{#>  memoise      1.1.0   2017-04-21 CRAN (R 3.5.0)                    }
+\CommentTok{#>  methods    * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  pillar       1.3.0   2018-07-14 CRAN (R 3.5.1)                    }
+\CommentTok{#>  pkgconfig    2.0.1   2017-03-21 CRAN (R 3.5.0)                    }
+\CommentTok{#>  purrr        0.2.5   2018-05-29 cran (@0.2.5)                     }
+\CommentTok{#>  R6           2.2.2   2017-06-17 CRAN (R 3.5.0)                    }
+\CommentTok{#>  Rcpp         0.12.18 2018-07-23 cran (@0.12.18)                   }
+\CommentTok{#>  readr        1.1.1   2017-05-16 CRAN (R 3.5.0)                    }
+\CommentTok{#>  rlang        0.2.1   2018-05-30 cran (@0.2.1)                     }
+\CommentTok{#>  rmarkdown    1.10.11 2018-08-10 Github (rstudio/rmarkdown@adb0279)}
+\CommentTok{#>  rprojroot    1.3-2   2018-01-03 CRAN (R 3.5.0)                    }
+\CommentTok{#>  stats      * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  stringi      1.2.3   2018-06-12 CRAN (R 3.5.0)                    }
+\CommentTok{#>  stringr      1.3.1   2018-05-10 cran (@1.3.1)                     }
+\CommentTok{#>  tibble       1.4.2   2018-01-22 CRAN (R 3.5.0)                    }
+\CommentTok{#>  tidyselect   0.2.4   2018-02-26 CRAN (R 3.5.0)                    }
+\CommentTok{#>  tools        3.5.1   2018-07-05 local                             }
+\CommentTok{#>  utils      * 3.5.1   2018-07-05 local                             }
+\CommentTok{#>  withr        2.1.2   2018-03-15 CRAN (R 3.5.0)                    }
+\CommentTok{#>  xfun         0.3     2018-07-06 CRAN (R 3.5.1)                    }
+\CommentTok{#>  yaml         2.2.0   2018-07-25 cran (@2.2.0)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4167,7 +4159,7 @@ looks.
 \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3000}\NormalTok{)}
 \CommentTok{#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.}
 \CommentTok{#> Warning: Removed 14714 rows containing non-finite values (stat_bin).}
-\CommentTok{#> Warning: Removed 5 rows containing missing values (geom_bar).}
+\CommentTok{#> Warning: Removed 6 rows containing missing values (geom_bar).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4406,11 +4398,6 @@ aesthetics are flipped.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(}\StringTok{"ggstance"}\NormalTok{)}
-\CommentTok{#> }
-\CommentTok{#> Attaching package: 'ggstance'}
-\CommentTok{#> The following objects are masked from 'package:ggplot2':}
-\CommentTok{#> }
-\CommentTok{#>     geom_errorbarh, GeomErrorbarh}
 
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_boxploth}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{reorder}\NormalTok{(class, hwy, }\DataTypeTok{FUN =}\NormalTok{ median), }\DataTypeTok{x =}\NormalTok{ hwy))}
@@ -7263,11 +7250,6 @@ delays. Here's an easy way to draw a map of the United States:
 \StringTok{    }\KeywordTok{borders}\NormalTok{(}\StringTok{"state"}\NormalTok{) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{coord_quickmap}\NormalTok{()}
-\CommentTok{#> }
-\CommentTok{#> Attaching package: 'maps'}
-\CommentTok{#> The following object is masked from 'package:purrr':}
-\CommentTok{#> }
-\CommentTok{#>     map}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7456,7 +7438,6 @@ Midwest, which were the locations of the derechos:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(viridis)}
-\CommentTok{#> Loading required package: viridisLite}
 \NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\DecValTok{2013}\NormalTok{, month }\OperatorTok{==}\StringTok{ }\DecValTok{6}\NormalTok{, day }\OperatorTok{==}\StringTok{ }\DecValTok{13}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(dest) }\OperatorTok{%>%}
@@ -10644,7 +10625,7 @@ will make it easier to test your function.)
 \NormalTok{  \}}
 \NormalTok{\}}
 \KeywordTok{greet}\NormalTok{()}
-\CommentTok{#> [1] "good morning"}
+\CommentTok{#> [1] "good afternoon"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:05"}\NormalTok{))}
 \CommentTok{#> [1] "good morning"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:13"}\NormalTok{))}
@@ -11114,7 +11095,7 @@ The source for \texttt{dplyr::near} is:
 \CommentTok{#> \{}
 \CommentTok{#>     abs(x - y) < tol}
 \CommentTok{#> \}}
-\CommentTok{#> <bytecode: 0x564e2380e908>}
+\CommentTok{#> <bytecode: 0x7f9390d0bb60>}
 \CommentTok{#> <environment: namespace:dplyr>}
 \end{Highlighting}
 \end{Shaded}
@@ -12781,7 +12762,7 @@ Define a function that appends to an integer vector.
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: milliseconds}
 \CommentTok{#>                  expr min  lq mean median  uq max neval}
-\CommentTok{#>  add_to_vector(10000) 114 115  128    116 135 155     3}
+\CommentTok{#>  add_to_vector(10000) 215 222  276    228 307 385     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12798,8 +12779,8 @@ And one that pre-allocates it.
 \NormalTok{\}}
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector_2}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: microseconds}
-\CommentTok{#>                    expr min  lq mean median   uq  max neval}
-\CommentTok{#>  add_to_vector_2(10000) 705 776 2533    847 3446 6046     3}
+\CommentTok{#>                    expr min   lq mean median   uq  max neval}
+\CommentTok{#>  add_to_vector_2(10000) 665 2528 4349   4390 6192 7993     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -14609,20 +14590,16 @@ variables. More importantly for prediction purposes, it has a higher AIC
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{glance}\NormalTok{(mod4) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(r.squared, sigma, AIC, df)}
-\CommentTok{#> # A tibble: 1 x 4}
-\CommentTok{#>   r.squared sigma   AIC    df}
-\CommentTok{#> *     <dbl> <dbl> <dbl> <int>}
-\CommentTok{#> 1     0.736  47.4 3863.     9}
+\CommentTok{#>   r.squared sigma  AIC df}
+\CommentTok{#> 1     0.736  47.4 3863  9}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{glance}\NormalTok{(mod2) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(r.squared, sigma, AIC, df)}
-\CommentTok{#> # A tibble: 1 x 4}
-\CommentTok{#>   r.squared sigma   AIC    df}
-\CommentTok{#> *     <dbl> <dbl> <dbl> <int>}
-\CommentTok{#> 1     0.757  46.2 3856.    21}
+\CommentTok{#>   r.squared sigma  AIC df}
+\CommentTok{#> 1     0.757  46.2 3856 21}
 \end{Highlighting}
 \end{Shaded}
 
@@ -14808,14 +14785,6 @@ No exercises
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(}\StringTok{"modelr"}\NormalTok{)}
 \KeywordTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
-\CommentTok{#> -- Attaching packages ---------------------------------- tidyverse 1.2.1 --}
-\CommentTok{#> √ ggplot2 3.0.0     √ purrr   0.2.5}
-\CommentTok{#> √ tibble  1.4.2     √ dplyr   0.7.6}
-\CommentTok{#> √ tidyr   0.8.1     √ stringr 1.3.1}
-\CommentTok{#> √ readr   1.1.1     √ forcats 0.3.0}
-\CommentTok{#> -- Conflicts ------------------------------------- tidyverse_conflicts() --}
-\CommentTok{#> x dplyr::filter() masks stats::filter()}
-\CommentTok{#> x dplyr::lag()    masks stats::lag()}
 \KeywordTok{library}\NormalTok{(}\StringTok{"gapminder"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -15518,21 +15487,8 @@ No exercises
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
-\CommentTok{#> -- Attaching packages ---------------------------------- tidyverse 1.2.1 --}
-\CommentTok{#> √ ggplot2 3.0.0     √ purrr   0.2.5}
-\CommentTok{#> √ tibble  1.4.2     √ dplyr   0.7.6}
-\CommentTok{#> √ tidyr   0.8.1     √ stringr 1.3.1}
-\CommentTok{#> √ readr   1.1.1     √ forcats 0.3.0}
-\CommentTok{#> -- Conflicts ------------------------------------- tidyverse_conflicts() --}
-\CommentTok{#> x dplyr::filter() masks stats::filter()}
-\CommentTok{#> x dplyr::lag()    masks stats::lag()}
 \KeywordTok{library}\NormalTok{(}\StringTok{"modelr"}\NormalTok{)}
 \KeywordTok{library}\NormalTok{(}\StringTok{"lubridate"}\NormalTok{)}
-\CommentTok{#> }
-\CommentTok{#> Attaching package: 'lubridate'}
-\CommentTok{#> The following object is masked from 'package:base':}
-\CommentTok{#> }
-\CommentTok{#>     date}
 \end{Highlighting}
 \end{Shaded}
 
