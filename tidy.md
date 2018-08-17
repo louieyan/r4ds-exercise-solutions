@@ -122,8 +122,10 @@ Calculate the cases per capita in a separate data frame.
 
 ```r
 t2_cases_per_cap <- t2_cases %>%
-  mutate(population = t2_population$population,
-         cases_per_cap = (cases / population) * 10000) %>%
+  mutate(
+    population = t2_population$population,
+    cases_per_cap = (cases / population) * 10000
+  ) %>%
   select(country, year, cases_per_cap)
 ```
 Since the question asks us to store it back in the appropriate location, we will add new rows with
@@ -157,9 +159,11 @@ For `table4a` and `table4b`, we will create a separate table for cases per capit
 
 ```r
 table4c <-
-  tibble(country = table4a$country,
-         `1999` = table4a[["1999"]] / table4b[["1999"]] * 10000,
-       `2000` = table4a[["2000"]] / table4b[["2000"]] * 10000)
+  tibble(
+    country = table4a$country,
+    `1999` = table4a[["1999"]] / table4b[["1999"]] * 10000,
+    `2000` = table4a[["2000"]] / table4b[["2000"]] * 10000
+  )
 table4c
 #> # A tibble: 3 x 3
 #>   country     `1999` `2000`
@@ -230,8 +234,8 @@ Carefully consider the following example:
 
 ```r
 stocks <- tibble(
-  year   = c(2015, 2015, 2016, 2016),
-  half  = c(   1,    2,     1,    2),
+  year = c(2015, 2015, 2016, 2016),
+  half = c(1, 2, 1, 2),
   return = c(1.88, 0.59, 0.92, 0.17)
 )
 stocks %>%
@@ -314,13 +318,13 @@ Why does spreading this tibble fail? How could you add a new column to fix the p
 
 ```r
 people <- tribble(
-  ~name,             ~key,    ~value,
+  ~name, ~key, ~value,
   #-----------------|--------|------
-  "Phillip Woods",   "age",       45,
-  "Phillip Woods",   "height",   186,
-  "Phillip Woods",   "age",       50,
-  "Jessica Cordero", "age",       37,
-  "Jessica Cordero", "height",   156
+  "Phillip Woods", "age", 45,
+  "Phillip Woods", "height", 186,
+  "Phillip Woods", "age", 50,
+  "Jessica Cordero", "age", 37,
+  "Jessica Cordero", "height", 156
 )
 glimpse(people)
 #> Observations: 5
@@ -342,13 +346,13 @@ We would need to add another column with an indicator for the number observation
 
 ```r
 people <- tribble(
-  ~name,             ~key,    ~value, ~obs,
+  ~name, ~key, ~value, ~obs,
   #-----------------|--------|------|------
-  "Phillip Woods",   "age",       45, 1,
-  "Phillip Woods",   "height",   186, 1,
-  "Phillip Woods",   "age",       50, 2,
-  "Jessica Cordero", "age",       37, 1,
-  "Jessica Cordero", "height",   156, 1
+  "Phillip Woods", "age", 45, 1,
+  "Phillip Woods", "height", 186, 1,
+  "Phillip Woods", "age", 50, 2,
+  "Jessica Cordero", "age", 37, 1,
+  "Jessica Cordero", "height", 156, 1
 )
 spread(people, key, value)
 #> # A tibble: 3 x 4
@@ -373,8 +377,8 @@ Tidy the simple tibble below. Do you need to spread or gather it? What are the v
 ```r
 preg <- tribble(
   ~pregnant, ~male, ~female,
-  "yes",     NA,    10,
-  "no",      20,    12
+  "yes", NA, 10,
+  "no", 20, 12
 )
 ```
 
@@ -387,8 +391,10 @@ You need to gather it. The variables are:
 
 ```r
 gather(preg, sex, count, male, female) %>%
-  mutate(pregnant = pregnant == "yes",
-         female = sex == "female") %>%
+  mutate(
+    pregnant = pregnant == "yes",
+    female = sex == "female"
+  ) %>%
   select(-sex)
 #> # A tibble: 4 x 3
 #>   pregnant count female
@@ -596,7 +602,7 @@ tibble(x = c("X1", "X2", "Y1", "Y2")) %>%
 
 # example that separate could not parse
 tibble(x = c("X1", "X20", "AA11", "AA2")) %>%
-  extract(x, c("variable", "id"), regex = "([A-Z]+)([0-9]+)")  
+  extract(x, c("variable", "id"), regex = "([A-Z]+)([0-9]+)")
 #> # A tibble: 4 x 2
 #>   variable id   
 #>   <chr>    <chr>
@@ -679,7 +685,7 @@ glimpse(who1)
 
 ```r
 who2 <- who1 %>%
- mutate(key = stringr::str_replace(key, "newrel", "new_rel"))
+  mutate(key = stringr::str_replace(key, "newrel", "new_rel"))
 ```
 
 
@@ -755,7 +761,7 @@ So it is okay to treat explicitly and implicitly missing values the same, and we
 
 ```r
 gather(who, new_sp_m014:newrel_f65, key = "key", value = "cases") %>%
-  group_by(country, year)  %>%
+  group_by(country, year) %>%
   mutate(missing = is.na(cases)) %>%
   select(country, year, missing) %>%
   distinct() %>%

@@ -25,6 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
+<meta name="date" content="2018-08-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,24 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#organization"><i class="fa fa-check"></i>Organization</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#dependencies"><i class="fa fa-check"></i>Dependencies</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#bugscontributing"><i class="fa fa-check"></i>Bugs/Contributing</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#updates"><i class="fa fa-check"></i>Updates</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section"><i class="fa fa-check"></i>2018-08-06</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-1"><i class="fa fa-check"></i>2018-08-05</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-2"><i class="fa fa-check"></i>2018-08-04</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-3"><i class="fa fa-check"></i>2018-08-03</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-4"><i class="fa fa-check"></i>2018-08-01</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-5"><i class="fa fa-check"></i>2018-07-31</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-6"><i class="fa fa-check"></i>2018-07-30</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-7"><i class="fa fa-check"></i>2018-07-29</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-8"><i class="fa fa-check"></i>2018-07-28</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-9"><i class="fa fa-check"></i>2018-07-24</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-10"><i class="fa fa-check"></i>2018-07-23</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-11"><i class="fa fa-check"></i>2018-07-22</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-12"><i class="fa fa-check"></i>2018-07-21</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-13"><i class="fa fa-check"></i>2018-07-15</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-14"><i class="fa fa-check"></i>2018-07-14</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-15"><i class="fa fa-check"></i>2018-05-08</a></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Explore</b></span></li>
@@ -876,7 +859,7 @@ out
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>)
 sd. &lt;-<span class="st"> </span><span class="dv">0</span>
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
-  sd. &lt;-<span class="st"> </span>sd. <span class="op">+</span><span class="st"> </span>(x[i] <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>
+  sd. &lt;-<span class="st"> </span>sd. <span class="op">+</span><span class="st"> </span>(x[i] <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>
 }
 sd. &lt;-<span class="st"> </span><span class="kw">sqrt</span>(sd. <span class="op">/</span><span class="st"> </span>(<span class="kw">length</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
 sd.
@@ -886,7 +869,7 @@ sd.
 <span class="co">#&gt; [1] 29</span></code></pre>
 <p>Or if there was a need to use the equation (e.g. for pedagogical reasons), then
 the functions <code>mean()</code> and <code>sum()</code> already work with vectors:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw">length</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw">length</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
 <span class="co">#&gt; [1] 29</span></code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">100</span>)
 out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="kw">length</span>(x))
@@ -906,7 +889,7 @@ out
 <span class="co">#&gt;  [81] 40.140 40.736 40.901 41.468 42.366 42.960 43.792 44.386 45.165 45.562</span>
 <span class="co">#&gt;  [91] 46.412 47.154 47.472 47.583 47.685 48.485 48.865 48.917 49.904 50.508</span></code></pre>
 <p>The code above is calculating a cumulative sum. Use the function <code>cumsum()</code></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">cumsum</span>(x),out)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">cumsum</span>(x), out)
 <span class="co">#&gt; [1] TRUE</span></code></pre>
 </div>
 </div>
@@ -944,7 +927,8 @@ Now Alice is a horse.</p>
 <pre class="sourceCode r"><code class="sourceCode r">humps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;five&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;no&quot;</span>)
 <span class="cf">for</span> (i <span class="cf">in</span> humps) {
   <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="st">&quot;Alice the camel has &quot;</span>, <span class="kw">rep</span>(i, <span class="dv">3</span>), <span class="st">&quot; humps.&quot;</span>,
-             <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+    <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>
+  ), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
   <span class="cf">if</span> (i <span class="op">==</span><span class="st"> &quot;no&quot;</span>) {
     <span class="kw">cat</span>(<span class="st">&quot;Now Alice is a horse.</span><span class="ch">\n</span><span class="st">&quot;</span>)
   } <span class="cf">else</span> {
@@ -996,8 +980,10 @@ There was one in the bed<br />
 and the little one said,<br />
 “I’m lonely…”</p>
 </blockquote>
-<pre class="sourceCode r"><code class="sourceCode r">numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ten&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;seven&quot;</span>, <span class="st">&quot;six&quot;</span>, <span class="st">&quot;five&quot;</span>,
-             <span class="st">&quot;four&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;one&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">numbers &lt;-<span class="st"> </span><span class="kw">c</span>(
+  <span class="st">&quot;ten&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;seven&quot;</span>, <span class="st">&quot;six&quot;</span>, <span class="st">&quot;five&quot;</span>,
+  <span class="st">&quot;four&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;one&quot;</span>
+)
 <span class="cf">for</span> (i <span class="cf">in</span> numbers) {
   <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="st">&quot;There were &quot;</span>, i, <span class="st">&quot; in the bed</span><span class="ch">\n</span><span class="st">&quot;</span>))
   <span class="kw">cat</span>(<span class="st">&quot;and the little one said</span><span class="ch">\n</span><span class="st">&quot;</span>)
@@ -1071,11 +1057,11 @@ We’ve taken them down and passed them around; now we’re drunk and passed out
 <p>For the bottles of beer, I define a helper function to correctly print the number of bottles.</p>
 <pre class="sourceCode r"><code class="sourceCode r">bottles &lt;-<span class="st"> </span><span class="cf">function</span>(i) {
   <span class="cf">if</span> (i <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) {
-   bottles &lt;-<span class="st"> </span><span class="kw">str_c</span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="st">&quot; bottles&quot;</span>)
+    bottles &lt;-<span class="st"> </span><span class="kw">str_c</span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="st">&quot; bottles&quot;</span>)
   } <span class="cf">else</span> <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) {
-   bottles &lt;-<span class="st"> &quot;1 bottle&quot;</span>
+    bottles &lt;-<span class="st"> &quot;1 bottle&quot;</span>
   } <span class="cf">else</span> {
-   bottles &lt;-<span class="st"> &quot;no more bottles&quot;</span>
+    bottles &lt;-<span class="st"> &quot;no more bottles&quot;</span>
   }
   bottles
 }
@@ -1083,9 +1069,11 @@ We’ve taken them down and passed them around; now we’re drunk and passed out
 beer_bottles &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
   <span class="co"># should test whether n &gt;= 1.</span>
   <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(n, <span class="dv">1</span>)) {
-     <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="kw">bottles</span>(i), <span class="st">&quot; of beer on the wall, &quot;</span>, <span class="kw">bottles</span>(i), <span class="st">&quot; of beer.</span><span class="ch">\n</span><span class="st">&quot;</span>))
-     <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="st">&quot;Take one down and pass it around, &quot;</span>, <span class="kw">bottles</span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>),
-                <span class="st">&quot; of beer on the wall.</span><span class="ch">\n\n</span><span class="st">&quot;</span>))
+    <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="kw">bottles</span>(i), <span class="st">&quot; of beer on the wall, &quot;</span>, <span class="kw">bottles</span>(i), <span class="st">&quot; of beer.</span><span class="ch">\n</span><span class="st">&quot;</span>))
+    <span class="kw">cat</span>(<span class="kw">str_c</span>(
+      <span class="st">&quot;Take one down and pass it around, &quot;</span>, <span class="kw">bottles</span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>),
+      <span class="st">&quot; of beer on the wall.</span><span class="ch">\n\n</span><span class="st">&quot;</span>
+    ))
   }
   <span class="kw">cat</span>(<span class="st">&quot;No more bottles of beer on the wall, no more bottles of beer.</span><span class="ch">\n</span><span class="st">&quot;</span>)
   <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="st">&quot;Go to the store and buy some more, &quot;</span>, <span class="kw">bottles</span>(n), <span class="st">&quot; of beer on the wall.</span><span class="ch">\n</span><span class="st">&quot;</span>))
@@ -1124,12 +1112,12 @@ The <code>microbenchmark()</code> function will run an R expression a number of 
   <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(n)) {
     output &lt;-<span class="st"> </span><span class="kw">c</span>(output, i)
   }
-  output  
+  output
 }
 <span class="kw">microbenchmark</span>(<span class="kw">add_to_vector</span>(<span class="dv">10000</span>), <span class="dt">times =</span> <span class="dv">3</span>)
 <span class="co">#&gt; Unit: milliseconds</span>
 <span class="co">#&gt;                  expr min  lq mean median  uq max neval</span>
-<span class="co">#&gt;  add_to_vector(10000) 133 135  153    136 163 189     3</span></code></pre>
+<span class="co">#&gt;  add_to_vector(10000) 204 205  219    205 226 247     3</span></code></pre>
 <p>And one that pre-allocates it.</p>
 <pre class="sourceCode r"><code class="sourceCode r">add_to_vector_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
   output &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;integer&quot;</span>, n)
@@ -1139,9 +1127,9 @@ The <code>microbenchmark()</code> function will run an R expression a number of 
   output
 }
 <span class="kw">microbenchmark</span>(<span class="kw">add_to_vector_2</span>(<span class="dv">10000</span>), <span class="dt">times =</span> <span class="dv">3</span>)
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;                    expr  min   lq mean median   uq  max neval</span>
-<span class="co">#&gt;  add_to_vector_2(10000) 1.04 1.22 2.13   1.41 2.68 3.95     3</span></code></pre>
+<span class="co">#&gt; Unit: microseconds</span>
+<span class="co">#&gt;                    expr min   lq mean median   uq  max neval</span>
+<span class="co">#&gt;  add_to_vector_2(10000) 656 2586 4766   4517 6821 9125     3</span></code></pre>
 <p>The pre-allocated vector is about <strong>10</strong> times faster!
 You may get different answers, but the longer the vector and the bigger the objects, the more that pre-allocation will outperform appending.</p>
 </div>
@@ -1228,10 +1216,10 @@ For example, <code>show_mean(iris)</code> would print:</p>
 </div>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">show_mean</span>(iris)
-<span class="co">#&gt; Sepal.Length: 5.84</span>
-<span class="co">#&gt; Sepal.Width:  3.06</span>
-<span class="co">#&gt; Petal.Length: 3.76</span>
-<span class="co">#&gt; Petal.Width:  1.20</span></code></pre>
+<span class="co"># &gt; Sepal.Length: 5.84</span>
+<span class="co"># &gt; Sepal.Width:  3.06</span>
+<span class="co"># &gt; Petal.Length: 3.76</span>
+<span class="co"># &gt; Petal.Width:  1.20</span></code></pre>
 <blockquote>
 <p>(Extra challenge: what function did I use to make sure that the numbers lined up nicely, even though the variable names had different lengths?)</p>
 </blockquote>
@@ -1242,10 +1230,13 @@ I messed around with the options to <code>format()</code> until I got two digits
   maxstr &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">str_length</span>(<span class="kw">names</span>(df)))
   <span class="cf">for</span> (nm <span class="cf">in</span> <span class="kw">names</span>(df)) {
     <span class="cf">if</span> (<span class="kw">is.numeric</span>(df[[nm]])) {
-      <span class="kw">cat</span>(<span class="kw">str_c</span>(<span class="kw">str_pad</span>(<span class="kw">str_c</span>(nm, <span class="st">&quot;:&quot;</span>), maxstr <span class="op">+</span><span class="st"> </span>1L, <span class="dt">side =</span> <span class="st">&quot;right&quot;</span>),
-                <span class="kw">format</span>(<span class="kw">mean</span>(df[[nm]]), <span class="dt">digits =</span> digits, <span class="dt">nsmall =</span> digits),
-                <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>),
-          <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+      <span class="kw">cat</span>(
+        <span class="kw">str_c</span>(<span class="kw">str_pad</span>(<span class="kw">str_c</span>(nm, <span class="st">&quot;:&quot;</span>), maxstr <span class="op">+</span><span class="st"> </span>1L, <span class="dt">side =</span> <span class="st">&quot;right&quot;</span>),
+          <span class="kw">format</span>(<span class="kw">mean</span>(df[[nm]]), <span class="dt">digits =</span> digits, <span class="dt">nsmall =</span> digits),
+          <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>
+        ),
+        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>
+      )
     }
   }
 }
@@ -1430,7 +1421,7 @@ Though if by type, <code>typeof</code> is meant:</p>
 <span class="co">#&gt;       distance           hour         minute      time_hour </span>
 <span class="co">#&gt;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;</span></code></pre>
 <p>To calculate the number of unique values in each column of <code>iris</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_int</span>(iris, <span class="op">~</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(.)))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_int</span>(iris, <span class="op">~</span><span class="kw">length</span>(<span class="kw">unique</span>(.)))
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
 <span class="co">#&gt;           35           23           43           22            3</span></code></pre>
 <p>To generate 10 random normals for each of <span class="math inline">\(\mu = -10\)</span>, <span class="math inline">\(0\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(100\)</span>:</p>
@@ -1528,7 +1519,7 @@ to return a numeric vector of length one.</p>
 <p>Rewrite <code>map(x, function(df) lm(mpg ~ wt, data = df))</code> to eliminate the anonymous function.</p>
 </div>
 <div class="answer">
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="kw">list</span>(mtcars), <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> .))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="kw">list</span>(mtcars), <span class="op">~</span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> .))
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -1571,12 +1562,16 @@ every2 &lt;-<span class="st"> </span><span class="cf">function</span>(.x, .p, ..
     }
   }
   <span class="co"># if nothing was FALSE, then it is TRUE</span>
-  <span class="ot">TRUE</span>  
+  <span class="ot">TRUE</span>
 }
 
-<span class="kw">every2</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(x) {x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>})
+<span class="kw">every2</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(x) {
+  x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>
+})
 <span class="co">#&gt; [1] FALSE</span>
-<span class="kw">every2</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(x) {x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>})
+<span class="kw">every2</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(x) {
+  x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>
+})
 <span class="co">#&gt; [1] TRUE</span></code></pre>
 <p>The function <code>purrr::every()</code> does fancy things with <code>.p</code>, like taking a logical vector instead of a function, or being able to test part of a string if the elements of <code>.x</code> are lists.</p>
 </div>

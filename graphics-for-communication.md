@@ -23,8 +23,10 @@ Create one plot on the fuel economy data with customized `title`,
 
 
 ```r
-ggplot(data = mpg,
-       mapping = aes(x = reorder(class, hwy, median), y = hwy)) +
+ggplot(
+  data = mpg,
+  mapping = aes(x = reorder(class, hwy, median), y = hwy)
+) +
   geom_boxplot() +
   coord_flip() +
   labs(
@@ -120,10 +122,10 @@ But, `geom_text()` takes `hjust` and `vjust` as aesthetics, I can add them to th
 ```r
 label <- tribble(
   ~displ, ~hwy, ~label, ~vjust, ~hjust,
-     Inf,  Inf,    "Top right", "top", "right",
-     Inf, -Inf,    "Bottom right", "bottom", "right",
-    -Inf,  Inf,    "Top left", "top", "left",
-    -Inf, -Inf,    "Bottom left", "bottom", "left"
+  Inf, Inf, "Top right", "top", "right",
+  Inf, -Inf, "Bottom right", "bottom", "right",
+  -Inf, Inf, "Top left", "top", "left",
+  -Inf, -Inf, "Bottom left", "bottom", "left"
 )
 
 ggplot(mpg, aes(displ, hwy)) +
@@ -150,8 +152,10 @@ With annotate you use what would be aesthetic mappings directly as arguments:
 ```r
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  annotate("text", x = Inf, y = Inf,
-           label = "Increasing engine size is \nrelated to decreasing fuel economy.", vjust = "top", hjust = "right")
+  annotate("text",
+    x = Inf, y = Inf,
+    label = "Increasing engine size is \nrelated to decreasing fuel economy.", vjust = "top", hjust = "right"
+  )
 ```
 
 
@@ -182,9 +186,11 @@ label <- tibble(
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  geom_text(aes(label = label), data = label, vjust = "top", hjust = "right",
-            size = 2) +
-  facet_wrap(~ class)
+  geom_text(aes(label = label),
+    data = label, vjust = "top", hjust = "right",
+    size = 2
+  ) +
+  facet_wrap(~class)
 ```
 
 
@@ -203,9 +209,11 @@ label <- tibble(
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  geom_text(aes(label = label), data = label, vjust = "top", hjust = "right",
-            size = 2) +
-  facet_wrap(~ class)
+  geom_text(aes(label = label),
+    data = label, vjust = "top", hjust = "right",
+    size = 2
+  ) +
+  facet_wrap(~class)
 ```
 
 
@@ -224,9 +232,11 @@ label <- tibble(
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  geom_text(aes(label = label), data = label, vjust = "top", hjust = "right",
-            size = 3) +
-  facet_wrap(~ class)
+  geom_text(aes(label = label),
+    data = label, vjust = "top", hjust = "right",
+    size = 3
+  ) +
+  facet_wrap(~class)
 ```
 
 
@@ -370,20 +380,23 @@ Change the display of the presidential terms by:
 
 ```r
 years <- lubridate::make_date(seq(year(min(presidential$start)),
-             year(max(presidential$end)),
-             by = 4), 1, 1)
+  year(max(presidential$end)),
+  by = 4
+), 1, 1)
 
 presidential %>%
-  mutate(id = 33 + row_number(),
-         name_id = stringr::str_c(name, " (", id, ")"),
-         name_id = factor(name_id, levels = name_id)) %>%
+  mutate(
+    id = 33 + row_number(),
+    name_id = stringr::str_c(name, " (", id, ")"),
+    name_id = factor(name_id, levels = name_id)
+  ) %>%
   ggplot(aes(start, name_id, colour = party)) +
-    geom_point() +
-    geom_segment(aes(xend = end, yend = name_id)) +
-    scale_colour_manual(values = c(Republican = "red", Democratic = "blue")) +
-    scale_y_discrete(NULL) +
-    scale_x_date(NULL, breaks = years, date_labels = "'%y") +
-    theme(panel.grid.minor = element_blank())
+  geom_point() +
+  geom_segment(aes(xend = end, yend = name_id)) +
+  scale_colour_manual(values = c(Republican = "red", Democratic = "blue")) +
+  scale_y_discrete(NULL) +
+  scale_x_date(NULL, breaks = years, date_labels = "'%y") +
+  theme(panel.grid.minor = element_blank())
 ```
 
 
@@ -403,7 +416,7 @@ Use `override.aes` to make the legend on the following plot easier to see.
 
 ```r
 ggplot(diamonds, aes(carat, price)) +
-  geom_point(aes(colour = cut), alpha = 1/20)
+  geom_point(aes(colour = cut), alpha = 1 / 20)
 ```
 
 
@@ -414,9 +427,9 @@ The problem with the legend is that the `alpha` value make the colors hard to se
 
 ```r
 ggplot(diamonds, aes(carat, price)) +
-  geom_point(aes(colour = cut), alpha = 1/20)  +
+  geom_point(aes(colour = cut), alpha = 1 / 20) +
   theme(legend.position = "bottom") +
-  guides(colour = guide_legend(nrow = 1, override.aes = list(alpha = 1)))  
+  guides(colour = guide_legend(nrow = 1, override.aes = list(alpha = 1)))
 ```
 
 

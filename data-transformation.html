@@ -25,6 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
+<meta name="date" content="2018-08-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,24 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#organization"><i class="fa fa-check"></i>Organization</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#dependencies"><i class="fa fa-check"></i>Dependencies</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#bugscontributing"><i class="fa fa-check"></i>Bugs/Contributing</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#updates"><i class="fa fa-check"></i>Updates</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section"><i class="fa fa-check"></i>2018-08-06</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-1"><i class="fa fa-check"></i>2018-08-05</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-2"><i class="fa fa-check"></i>2018-08-04</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-3"><i class="fa fa-check"></i>2018-08-03</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-4"><i class="fa fa-check"></i>2018-08-01</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-5"><i class="fa fa-check"></i>2018-07-31</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-6"><i class="fa fa-check"></i>2018-07-30</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-7"><i class="fa fa-check"></i>2018-07-29</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-8"><i class="fa fa-check"></i>2018-07-28</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-9"><i class="fa fa-check"></i>2018-07-24</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-10"><i class="fa fa-check"></i>2018-07-23</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-11"><i class="fa fa-check"></i>2018-07-22</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-12"><i class="fa fa-check"></i>2018-07-21</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-13"><i class="fa fa-check"></i>2018-07-15</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-14"><i class="fa fa-check"></i>2018-07-14</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-15"><i class="fa fa-check"></i>2018-05-08</a></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Explore</b></span></li>
@@ -942,7 +925,7 @@ Why is <code>FALSE &amp; NA</code> not missing? Can you figure out the general r
 </div>
 <div class="answer">
 <p><code>NA ^ 0 == 1</code> since for all numeric values <span class="math inline">\(x ^ 0 = 1\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="ot">NA</span> <span class="op">^</span><span class="st"> </span><span class="dv">0</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="ot">NA</span><span class="op">^</span><span class="dv">0</span>
 <span class="co">#&gt; [1] 1</span></code></pre>
 <p><code>NA | TRUE</code> is <code>TRUE</code> because the value of the missing <code>TRUE</code> or <code>FALSE</code>,
 <span class="math inline">\(x\)</span> or <code>TRUE</code> is <code>TRUE</code> for all values of <span class="math inline">\(x\)</span>.</p>
@@ -1224,8 +1207,9 @@ stored as an R data frame or in a database.</p>
 <div class="answer">
 <p>To get the departure times in the number of minutes, (integer) divide <code>dep_time</code> by 100 to get the hours since midnight and multiply by 60 and add the remainder of <code>dep_time</code> divided by 100.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(flights,
-       <span class="dt">dep_time_mins =</span> dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
-       <span class="dt">sched_dep_time_mins =</span> sched_dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>sched_dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span>
+  <span class="dt">dep_time_mins =</span> dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
+  <span class="dt">sched_dep_time_mins =</span> sched_dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>sched_dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>
+) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)
 <span class="co">#&gt; # A tibble: 336,776 x 4</span>
 <span class="co">#&gt;   dep_time dep_time_mins sched_dep_time sched_dep_time_mins</span>
@@ -1242,8 +1226,9 @@ stored as an R data frame or in a database.</p>
   x <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>x <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>
 }
 <span class="kw">mutate</span>(flights,
-       <span class="dt">dep_time_mins =</span> <span class="kw">time2mins</span>(dep_time),
-       <span class="dt">sched_dep_time_mins =</span> <span class="kw">time2mins</span>(sched_dep_time)) <span class="op">%&gt;%</span>
+  <span class="dt">dep_time_mins =</span> <span class="kw">time2mins</span>(dep_time),
+  <span class="dt">sched_dep_time_mins =</span> <span class="kw">time2mins</span>(sched_dep_time)
+) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)
 <span class="co">#&gt; # A tibble: 336,776 x 4</span>
 <span class="co">#&gt;   dep_time dep_time_mins sched_dep_time sched_dep_time_mins</span>
@@ -1266,10 +1251,11 @@ stored as an R data frame or in a database.</p>
 <p>As with the previous question, we will need to
 Since <code>arr_time</code> and <code>dep_time</code> may be in different time zones, the <code>air_time</code> does not equal the differences.</p>
 <pre class="sourceCode r"><code class="sourceCode r">air_times &lt;-<span class="st"> </span><span class="kw">mutate</span>(flights,
-       <span class="dt">arr_time_min =</span> arr_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>arr_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
-       <span class="dt">dep_time_min =</span> dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
-       <span class="dt">air_time_2 =</span> (arr_time_min <span class="op">-</span><span class="st"> </span>dep_time_min <span class="op">+</span><span class="st"> </span><span class="dv">1440</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">1440</span>,
-       <span class="dt">air_time_diff =</span> air_time_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span>air_time)
+  <span class="dt">arr_time_min =</span> arr_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>arr_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
+  <span class="dt">dep_time_min =</span> dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>,
+  <span class="dt">air_time_2 =</span> (arr_time_min <span class="op">-</span><span class="st"> </span>dep_time_min <span class="op">+</span><span class="st"> </span><span class="dv">1440</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">1440</span>,
+  <span class="dt">air_time_diff =</span> air_time_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span>air_time
+)
 
 air_times <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(<span class="kw">abs</span>(air_time_diff))) <span class="op">%&gt;%</span>
@@ -1295,7 +1281,8 @@ air_times <span class="op">%&gt;%</span>
 <p>I would expect <code>dep_time</code>, <code>sched_dep_time</code>, and <code>dep_delay</code> to be related by the
 equation <code>dep_time - sched_dep_time = dep_delay</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(flights,
-       <span class="dt">dep_delay2 =</span> <span class="kw">time2mins</span>(dep_time) <span class="op">-</span><span class="st"> </span><span class="kw">time2mins</span>(sched_dep_time)) <span class="op">%&gt;%</span>
+  <span class="dt">dep_delay2 =</span> <span class="kw">time2mins</span>(dep_time) <span class="op">-</span><span class="st"> </span><span class="kw">time2mins</span>(sched_dep_time)
+) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(dep_delay2 <span class="op">!=</span><span class="st"> </span>dep_delay) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(dep_time, sched_dep_time, dep_delay, dep_delay2)
 <span class="co">#&gt; # A tibble: 1,207 x 4</span>
@@ -1324,7 +1311,8 @@ from the scheduled departure time.</p>
 have the same value and are the most delayed, we would say they are tied for
 first, not tied for third or second.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(flights,
-       <span class="dt">dep_delay_rank =</span> <span class="kw">min_rank</span>(<span class="op">-</span>dep_delay)) <span class="op">%&gt;%</span>
+  <span class="dt">dep_delay_rank =</span> <span class="kw">min_rank</span>(<span class="op">-</span>dep_delay)
+) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(dep_delay_rank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(dep_delay_rank <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10</span>)
 <span class="co">#&gt; # A tibble: 10 x 20</span>
@@ -1570,8 +1558,10 @@ They may be combining different flights?</p>
 <span class="st">  </span>flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">canceled =</span> (<span class="kw">is.na</span>(arr_delay) <span class="op">|</span><span class="st"> </span><span class="kw">is.na</span>(dep_delay))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">prop_canceled =</span> <span class="kw">mean</span>(canceled),
-            <span class="dt">avg_dep_delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))
+<span class="st">  </span><span class="kw">summarise</span>(
+    <span class="dt">prop_canceled =</span> <span class="kw">mean</span>(canceled),
+    <span class="dt">avg_dep_delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+  )
 
 <span class="kw">ggplot</span>(canceled_delayed, <span class="kw">aes</span>(<span class="dt">x =</span> avg_dep_delay, prop_canceled)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
@@ -1647,9 +1637,11 @@ benefit of easily incorporating canceled flights.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="co"># unknown why flights have sched_arr_time, arr_time but missing arr_delay.</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">canceled =</span> <span class="kw">is.na</span>(arr_time),
-         <span class="dt">late =</span> <span class="op">!</span>canceled <span class="op">&amp;</span><span class="st"> </span>arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(tailnum) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">canceled =</span> <span class="kw">is.na</span>(arr_time),
+    <span class="dt">late =</span> <span class="op">!</span>canceled <span class="op">&amp;</span><span class="st"> </span>arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(tailnum) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">on_time =</span> <span class="kw">mean</span>(<span class="op">!</span>late)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="kw">min_rank</span>(on_time) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)
 <span class="co">#&gt; # A tibble: 104 x 2</span>
@@ -1704,10 +1696,12 @@ benefit of easily incorporating canceled flights.</p>
 </div>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay), arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay), arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">arr_delay_total =</span> <span class="kw">sum</span>(arr_delay),
-         <span class="dt">arr_delay_prop =</span> arr_delay <span class="op">/</span><span class="st"> </span>arr_delay_total)
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">arr_delay_total =</span> <span class="kw">sum</span>(arr_delay),
+    <span class="dt">arr_delay_prop =</span> arr_delay <span class="op">/</span><span class="st"> </span>arr_delay_total
+  )
 <span class="co">#&gt; # A tibble: 133,004 x 21</span>
 <span class="co">#&gt; # Groups:   dest [103]</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time</span>
@@ -1770,9 +1764,11 @@ we only consider only delayed flights, and ignore on-time or early flights.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights_with_zscore &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(air_time)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(dest, origin) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">air_time_mean =</span> <span class="kw">mean</span>(air_time),
-         <span class="dt">air_time_sd =</span> <span class="kw">sd</span>(air_time),
-         <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">air_time_mean =</span> <span class="kw">mean</span>(air_time),
+    <span class="dt">air_time_sd =</span> <span class="kw">sd</span>(air_time),
+    <span class="dt">n =</span> <span class="kw">n</span>()
+  ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z_score =</span> (air_time <span class="op">-</span><span class="st"> </span>air_time_mean) <span class="op">/</span><span class="st"> </span>air_time_sd)</code></pre>
 <p>Possible unusual flights are the

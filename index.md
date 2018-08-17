@@ -2,6 +2,8 @@
 ---
 knit: "bookdown::render_book"
 title: "R for Data Science Solutions"
+date: >-
+  August 17, 2018
 author: ["Jeffrey B. Arnold"]
 description: >
   This contains the solutions to the exercises in the book,

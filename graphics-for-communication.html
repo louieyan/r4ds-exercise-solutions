@@ -25,6 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
+<meta name="date" content="2018-08-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,24 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#organization"><i class="fa fa-check"></i>Organization</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#dependencies"><i class="fa fa-check"></i>Dependencies</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#bugscontributing"><i class="fa fa-check"></i>Bugs/Contributing</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#updates"><i class="fa fa-check"></i>Updates</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section"><i class="fa fa-check"></i>2018-08-06</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-1"><i class="fa fa-check"></i>2018-08-05</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-2"><i class="fa fa-check"></i>2018-08-04</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-3"><i class="fa fa-check"></i>2018-08-03</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-4"><i class="fa fa-check"></i>2018-08-01</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-5"><i class="fa fa-check"></i>2018-07-31</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-6"><i class="fa fa-check"></i>2018-07-30</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-7"><i class="fa fa-check"></i>2018-07-29</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-8"><i class="fa fa-check"></i>2018-07-28</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-9"><i class="fa fa-check"></i>2018-07-24</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-10"><i class="fa fa-check"></i>2018-07-23</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-11"><i class="fa fa-check"></i>2018-07-22</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-12"><i class="fa fa-check"></i>2018-07-21</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-13"><i class="fa fa-check"></i>2018-07-15</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-14"><i class="fa fa-check"></i>2018-07-14</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-15"><i class="fa fa-check"></i>2018-05-08</a></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Explore</b></span></li>
@@ -714,21 +697,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="introduction-18" class="section level2">
 <h2><span class="header-section-number">28.1</span> Introduction</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
-<span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
-<span class="co">#&gt; ✔ ggplot2 3.0.0     ✔ purrr   0.2.5</span>
-<span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.6</span>
-<span class="co">#&gt; ✔ tidyr   0.8.1     ✔ stringr 1.3.1</span>
-<span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.3.0</span>
-<span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
-<span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
-<span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span>
 <span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;lubridate&quot;</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: &#39;lubridate&#39;</span>
-<span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     date</span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;lubridate&quot;</span>)</code></pre>
 </div>
 <div id="label" class="section level2">
 <h2><span class="header-section-number">28.2</span> Label</h2>
@@ -739,8 +709,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <code>subtitle</code>, <code>caption</code>, <code>x</code>, <code>y</code>, and <code>colour</code> labels.</p>
 </div>
 <div class="answer">
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,
-       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, median), <span class="dt">y =</span> hwy)) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(
+  <span class="dt">data =</span> mpg,
+  <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, median), <span class="dt">y =</span> hwy)
+) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(
@@ -809,10 +781,10 @@ However, I need to use <code>vjust</code> and <code>hjust</code> in order for th
 But, <code>geom_text()</code> takes <code>hjust</code> and <code>vjust</code> as aesthetics, I can add them to the data and mappings, and use a single <code>geom_text()</code> call instead of four different <code>geom_text()</code> calls with four different data arguments, and four different values of <code>hjust</code> and <code>vjust</code> arguments.</p>
 <pre class="sourceCode r"><code class="sourceCode r">label &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>displ, <span class="op">~</span>hwy, <span class="op">~</span>label, <span class="op">~</span>vjust, <span class="op">~</span>hjust,
-     <span class="ot">Inf</span>,  <span class="ot">Inf</span>,    <span class="st">&quot;Top right&quot;</span>, <span class="st">&quot;top&quot;</span>, <span class="st">&quot;right&quot;</span>,
-     <span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>,    <span class="st">&quot;Bottom right&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;right&quot;</span>,
-    <span class="op">-</span><span class="ot">Inf</span>,  <span class="ot">Inf</span>,    <span class="st">&quot;Top left&quot;</span>, <span class="st">&quot;top&quot;</span>, <span class="st">&quot;left&quot;</span>,
-    <span class="op">-</span><span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>,    <span class="st">&quot;Bottom left&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;left&quot;</span>
+  <span class="ot">Inf</span>, <span class="ot">Inf</span>, <span class="st">&quot;Top right&quot;</span>, <span class="st">&quot;top&quot;</span>, <span class="st">&quot;right&quot;</span>,
+  <span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>, <span class="st">&quot;Bottom right&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;right&quot;</span>,
+  <span class="op">-</span><span class="ot">Inf</span>, <span class="ot">Inf</span>, <span class="st">&quot;Top left&quot;</span>, <span class="st">&quot;top&quot;</span>, <span class="st">&quot;left&quot;</span>,
+  <span class="op">-</span><span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>, <span class="st">&quot;Bottom left&quot;</span>, <span class="st">&quot;bottom&quot;</span>, <span class="st">&quot;left&quot;</span>
 )
 
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
@@ -830,8 +802,10 @@ But, <code>geom_text()</code> takes <code>hjust</code> and <code>vjust</code> as
 <p>With annotate you use what would be aesthetic mappings directly as arguments:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>,
-           <span class="dt">label =</span> <span class="st">&quot;Increasing engine size is </span><span class="ch">\n</span><span class="st">related to decreasing fuel economy.&quot;</span>, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>)</code></pre>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,
+    <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>,
+    <span class="dt">label =</span> <span class="st">&quot;Increasing engine size is </span><span class="ch">\n</span><span class="st">related to decreasing fuel economy.&quot;</span>, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>
+  )</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -853,9 +827,11 @@ How can you put a different label in each facet?
 
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label), <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
-            <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class)</code></pre>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label),
+    <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">2</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class)</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>To draw the label in only one facet, add a column to the label data frame with the value of the faceting variable(s) in which to draw it.</p>
 <pre class="sourceCode r"><code class="sourceCode r">label &lt;-<span class="st"> </span><span class="kw">tibble</span>(
@@ -867,9 +843,11 @@ How can you put a different label in each facet?
 
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label), <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
-            <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class)</code></pre>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label),
+    <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">2</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class)</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>To draw labels in different plots, simply have the facetting variable(s):</p>
 <pre class="sourceCode r"><code class="sourceCode r">label &lt;-<span class="st"> </span><span class="kw">tibble</span>(
@@ -881,9 +859,11 @@ How can you put a different label in each facet?
 
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label), <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
-            <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class)</code></pre>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label),
+    <span class="dt">data =</span> label, <span class="dt">vjust =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">3</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class)</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -983,20 +963,23 @@ It is equivalent to using the <code>labs</code> function.</p>
 </div>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">make_date</span>(<span class="kw">seq</span>(<span class="kw">year</span>(<span class="kw">min</span>(presidential<span class="op">$</span>start)),
-             <span class="kw">year</span>(<span class="kw">max</span>(presidential<span class="op">$</span>end)),
-             <span class="dt">by =</span> <span class="dv">4</span>), <span class="dv">1</span>, <span class="dv">1</span>)
+  <span class="kw">year</span>(<span class="kw">max</span>(presidential<span class="op">$</span>end)),
+  <span class="dt">by =</span> <span class="dv">4</span>
+), <span class="dv">1</span>, <span class="dv">1</span>)
 
 presidential <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> <span class="op">+</span><span class="st"> </span><span class="kw">row_number</span>(),
-         <span class="dt">name_id =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(name, <span class="st">&quot; (&quot;</span>, id, <span class="st">&quot;)&quot;</span>),
-         <span class="dt">name_id =</span> <span class="kw">factor</span>(name_id, <span class="dt">levels =</span> name_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">id =</span> <span class="dv">33</span> <span class="op">+</span><span class="st"> </span><span class="kw">row_number</span>(),
+    <span class="dt">name_id =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(name, <span class="st">&quot; (&quot;</span>, id, <span class="st">&quot;)&quot;</span>),
+    <span class="dt">name_id =</span> <span class="kw">factor</span>(name_id, <span class="dt">levels =</span> name_id)
+  ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, name_id, <span class="dt">colour =</span> party)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> name_id)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_y_discrete</span>(<span class="ot">NULL</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> years, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</code></pre>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> name_id)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_discrete</span>(<span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> years, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1007,13 +990,13 @@ presidential <span class="op">%&gt;%</span>
 </div>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>)</code></pre>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">20</span>)</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The problem with the legend is that the <code>alpha</code> value make the colors hard to see. So I’ll override the alpha value to make the points solid in the legend.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>)  <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">20</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">override.aes =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="dv">1</span>)))  </code></pre>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">override.aes =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="dv">1</span>)))</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>

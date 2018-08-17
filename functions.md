@@ -180,7 +180,7 @@ where the sample mean is $\bar{x} = (\sum x_i) / n$.
 variance <- function(x, na.rm = TRUE) {
   n <- length(x)
   m <- mean(x, na.rm = TRUE)
-  sq_err <- (x - m) ^ 2
+  sq_err <- (x - m)^2
   sum(sq_err) / (n - 1)
 }
 var(1:10)
@@ -206,7 +206,7 @@ skewness <- function(x, na.rm = FALSE) {
   n <- length(x)
   m <- mean(x, na.rm = na.rm)
   s <- sd(x, na.rm = na.rm)
-  n * sum(((x - m) / s) ^ 3) / (n - 1) / (n - 2)
+  n * sum(((x - m) / s)^3) / (n - 1) / (n - 2)
 }
 skewness(c(1, 2, 5, 100))
 #> [1] 1.99
@@ -229,11 +229,15 @@ Write `both_na()`, a function that takes two vectors of the same length and retu
 both_na <- function(x, y) {
   sum(is.na(x) & is.na(y))
 }
-both_na(c(NA, NA,  1, 2),
-        c(NA,  1, NA, 2))
+both_na(
+  c(NA, NA, 1, 2),
+  c(NA, 1, NA, 2)
+)
 #> [1] 1
-both_na(c(NA, NA,  1, 2, NA, NA, 1),
-        c(NA,  1, NA, 2, NA, NA, 1))
+both_na(
+  c(NA, NA, 1, 2, NA, NA, 1),
+  c(NA, 1, NA, 2, NA, NA, 1)
+)
 #> [1] 3
 ```
 
@@ -293,13 +297,16 @@ When there are no chances left, the Good Fairy says
 > And the moral of this story is: *hare today, goon tomorrow.*
 
 Here's one way of writing this
+
 ```r
 threat <- function(chances) {
-  give_chances(from = Good_Fairy,
-               to = foo_foo,
-               number = chances,
-               condition = "Don't behave",
-               consequence = turn_into_goon)  
+  give_chances(
+    from = Good_Fairy,
+    to = foo_foo,
+    number = chances,
+    condition = "Don't behave",
+    consequence = turn_into_goon
+  )
 }
 
 lyric <- function() {
@@ -309,11 +316,15 @@ lyric <- function() {
     bop(on = head)
 
   down_came(Good_Fairy)
-  said(Good_Fairy,
-      c("Little bunny Foo Foo",
-        "I don't want to see you",
-        "Scooping up the field mice",
-        "And bopping them on the head.")
+  said(
+    Good_Fairy,
+    c(
+      "Little bunny Foo Foo",
+      "I don't want to see you",
+      "Scooping up the field mice",
+      "And bopping them on the head."
+    )
+  )
 }
 
 lyric()
@@ -324,7 +335,6 @@ lyric()
 threat(1)
 lyric()
 turn_into_goon(Good_Fairy, foo_foo)
-
 ```
 
 </div>
@@ -478,7 +488,7 @@ greet <- function(time = lubridate::now()) {
   }
 }
 greet()
-#> [1] "good afternoon"
+#> [1] "good morning"
 greet(ymd_h("2017-01-08:05"))
 #> [1] "good morning"
 greet(ymd_h("2017-01-08:13"))
@@ -559,8 +569,10 @@ How would you change the call to `cut()` if I’d used `<` instead of `<=`? What
 
 ```r
 temp <- seq(-10, 50, by = 5)
-cut(temp, c(-Inf, 0, 10, 20, 30, Inf), right = TRUE,
-    labels = c("freezing", "cold", "cool", "warm", "hot"))
+cut(temp, c(-Inf, 0, 10, 20, 30, Inf),
+  right = TRUE,
+  labels = c("freezing", "cold", "cool", "warm", "hot")
+)
 #>  [1] freezing freezing freezing cold     cold     cool     cool    
 #>  [8] warm     warm     hot      hot      hot      hot     
 #> Levels: freezing cold cool warm hot
@@ -570,8 +582,10 @@ To have intervals open on the left (using `<`), I change the argument to `right 
 
 ```r
 temp <- seq(-10, 50, by = 5)
-cut(temp, c(-Inf, 0, 10, 20, 30, Inf), right = FALSE,
-    labels = c("freezing", "cold", "cool", "warm", "hot"))
+cut(temp, c(-Inf, 0, 10, 20, 30, Inf),
+  right = FALSE,
+  labels = c("freezing", "cold", "cool", "warm", "hot")
+)
 #>  [1] freezing freezing cold     cold     cool     cool     warm    
 #>  [8] warm     hot      hot      hot      hot      hot     
 #> Levels: freezing cold cool warm hot
@@ -622,6 +636,7 @@ While it is possible to use non-integer numbers with `switch()`, you should avoi
 
 <div class="question">
 What does this `switch()` call do? What happens if `x` is `"e"`?
+
 
 ```r
 x <- "e"
@@ -676,13 +691,14 @@ Since `"e"` is not one of the named arguments in `switch()` (`a`, `b`, `c`, `d`)
 and no other unnamed default value is present, this code will return `NULL`.
 
 The code in the question is shorter way of writing the following.
+
 ```r
 switch(x,
   a = "ab",
   b = "ab",
   c = "cd",
   d = "cd",
-  NULL  # value to return if x not matched
+  NULL # value to return if x not matched
 )
 ```
 
@@ -776,8 +792,10 @@ and `stringr::str_length()` to calculate the number of characters in the `pad` a
 rule <- function(..., pad = "-") {
   title <- paste0(...)
   width <- getOption("width") - nchar(title) - 5
-  padding <- stringr::str_dup(pad,
-                              ceiling(width / stringr::str_length(title))) %>%
+  padding <- stringr::str_dup(
+    pad,
+    ceiling(width / stringr::str_length(title))
+  ) %>%
     stringr::str_trunc(width)
   cat(title, " ", padding, "\n", sep = "")
 }

@@ -143,8 +143,10 @@ After doing that, the only remaining responses are "Protestant".
 
 ```r
 gss_cat %>%
-  filter(!denom %in% c("No answer", "Other", "Don't know", "Not applicable",
-                       "No denomination")) %>%
+  filter(!denom %in% c(
+    "No answer", "Other", "Don't know", "Not applicable",
+    "No denomination"
+  )) %>%
   count(relig)
 #> # A tibble: 1 x 2
 #>   relig          n
@@ -369,17 +371,22 @@ levels(gss_cat$partyid)
 
 ```r
 gss_cat %>%
-  mutate(partyid =
-           fct_collapse(partyid,
-                        other = c("No answer", "Don't know", "Other party"),
-                        rep = c("Strong republican", "Not str republican"),
-                        ind = c("Ind,near rep", "Independent", "Ind,near dem"),
-                        dem = c("Not str democrat", "Strong democrat"))) %>%
-  count(year, partyid)  %>%
+  mutate(
+    partyid =
+      fct_collapse(partyid,
+        other = c("No answer", "Don't know", "Other party"),
+        rep = c("Strong republican", "Not str republican"),
+        ind = c("Ind,near rep", "Independent", "Ind,near dem"),
+        dem = c("Not str democrat", "Strong democrat")
+      )
+  ) %>%
+  count(year, partyid) %>%
   group_by(year) %>%
   mutate(p = n / sum(n)) %>%
-  ggplot(aes(x = year, y = p,
-             colour = fct_reorder2(partyid, year, p))) +
+  ggplot(aes(
+    x = year, y = p,
+    colour = fct_reorder2(partyid, year, p)
+  )) +
   geom_point() +
   geom_line() +
   labs(colour = "Party ID.")
@@ -413,15 +420,21 @@ levels(gss_cat$rincome)
 ```r
 library("stringr")
 gss_cat %>%
-  mutate(rincome =
-           fct_collapse(
-             rincome,
-             `Unknown` = c("No answer", "Don't know", "Refused", "Not applicable"),
-             `Lt $5000` = c("Lt $1000", str_c("$", c("1000", "3000", "4000"),
-                                              " to ", c("2999", "3999", "4999"))),
-             `$5000 to 10000` = str_c("$", c("5000", "6000", "7000", "8000"),
-                                      " to ", c("5999", "6999", "7999", "9999"))
-           )) %>%
+  mutate(
+    rincome =
+      fct_collapse(
+        rincome,
+        `Unknown` = c("No answer", "Don't know", "Refused", "Not applicable"),
+        `Lt $5000` = c("Lt $1000", str_c(
+          "$", c("1000", "3000", "4000"),
+          " to ", c("2999", "3999", "4999")
+        )),
+        `$5000 to 10000` = str_c(
+          "$", c("5000", "6000", "7000", "8000"),
+          " to ", c("5999", "6999", "7999", "9999")
+        )
+      )
+  ) %>%
   ggplot(aes(x = rincome)) +
   geom_bar() +
   coord_flip()

@@ -25,6 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
+<meta name="date" content="2018-08-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,24 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#organization"><i class="fa fa-check"></i>Organization</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#dependencies"><i class="fa fa-check"></i>Dependencies</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#bugscontributing"><i class="fa fa-check"></i>Bugs/Contributing</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#updates"><i class="fa fa-check"></i>Updates</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section"><i class="fa fa-check"></i>2018-08-06</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-1"><i class="fa fa-check"></i>2018-08-05</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-2"><i class="fa fa-check"></i>2018-08-04</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-3"><i class="fa fa-check"></i>2018-08-03</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-4"><i class="fa fa-check"></i>2018-08-01</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-5"><i class="fa fa-check"></i>2018-07-31</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-6"><i class="fa fa-check"></i>2018-07-30</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-7"><i class="fa fa-check"></i>2018-07-29</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-8"><i class="fa fa-check"></i>2018-07-28</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-9"><i class="fa fa-check"></i>2018-07-24</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-10"><i class="fa fa-check"></i>2018-07-23</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-11"><i class="fa fa-check"></i>2018-07-22</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-12"><i class="fa fa-check"></i>2018-07-21</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-13"><i class="fa fa-check"></i>2018-07-15</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-14"><i class="fa fa-check"></i>2018-07-14</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#section-15"><i class="fa fa-check"></i>2018-05-08</a></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Explore</b></span></li>
@@ -783,7 +766,7 @@ numeric and special values.</caption>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     abs(x - y) &lt; tol</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x55c37fc01238&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x7fe8ee532978&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:dplyr&gt;</span></code></pre>
 <p>Instead of checking for exact equality, it checks that two numbers are within a certain tolerance, <code>tol</code>.
 By default the tolerance is set to the square root of <code>.Machine$double.eps</code>, which is the smallest floating point number that the computer can represent.</p>
@@ -1077,7 +1060,7 @@ provided (the opposite of <code>setNames()</code> behavior).</p>
 <pre class="sourceCode r"><code class="sourceCode r">purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), toupper)
 <span class="co">#&gt; A B C </span>
 <span class="co">#&gt; 1 2 3</span>
-purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), <span class="op">~</span><span class="st"> </span><span class="kw">toupper</span>(.))
+purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), <span class="op">~</span><span class="kw">toupper</span>(.))
 <span class="co">#&gt; A B C </span>
 <span class="co">#&gt; 1 2 3</span></code></pre>
 <p>The <code>set_names()</code> function also checks that the length of the names argument is the
@@ -1109,7 +1092,7 @@ named, and will set the missing names to <code>NA</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">last_value &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
   <span class="co"># check for case with no length</span>
   <span class="cf">if</span> (<span class="kw">length</span>(x)) {
-    x[[<span class="kw">length</span>(x)]]  
+    x[[<span class="kw">length</span>(x)]]
   } <span class="cf">else</span> {
     x
   }
@@ -1127,7 +1110,7 @@ named, and will set the missing names to <code>NA</code>.</p>
     x[<span class="kw">seq_along</span>(x) <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]
   } <span class="cf">else</span> {
     x
-  }  
+  }
 }
 <span class="kw">even_indices</span>(<span class="kw">numeric</span>())
 <span class="co">#&gt; numeric(0)</span>
@@ -1310,12 +1293,12 @@ You could also use various diagramming, drawing, or presentation software, inclu
 <code>list(a, b, list(c, d), list(e, f))</code>
 is</p>
 <div id="htmlwidget-14d5992801777f4abbc5" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_1.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"digraph nested_set_1 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_abcdef {\n    node[style=filled,fillcolor=gray90]\n    \"b\"\n    \"a\"\n    subgraph cluster_ef {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"f\"\n      \"e\"\n    }\n    subgraph cluster_cd {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"d\"\n      \"c\"\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 <li><p>The nested set diagram for
 <code>list(list(list(list(list(list(a))))))1</code>
 is as follows.</p>
 <div id="htmlwidget-df2c08526632671063f9" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_2.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"digraph nested_set_2 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_1 {\n    subgraph cluster_2 {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      subgraph cluster_3 {\n        graph[fillcolor=gray80]\n        subgraph cluster_4 {\n          graph[fillcolor=gray70]\n          subgraph cluster_5 {\n            graph[fillcolor=gray60]\n            subgraph cluster_6 {\n              graph[fillcolor=gray50]\n              node[style=filled,fillcolor=gray40]\n              \"a\"\n            }\n          }\n        }\n      }\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 </ol>
 </div>
 </div>

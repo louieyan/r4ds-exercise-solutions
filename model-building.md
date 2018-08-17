@@ -74,10 +74,12 @@ Does the final model, `mod_diamonds2`, do a good job of predicting diamond price
 diamonds2 %>%
   add_predictions(mod_diamond2) %>%
   add_residuals(mod_diamond2) %>%
-  summarise(sq_err = sqrt(mean(resid^2)),
-            abs_err = mean(abs(resid)),
-            p975_err = quantile(resid, 0.975),
-            p025_err = quantile(resid, 0.025))
+  summarise(
+    sq_err = sqrt(mean(resid^2)),
+    abs_err = mean(abs(resid)),
+    p975_err = quantile(resid, 0.975),
+    p025_err = quantile(resid, 0.025)
+  )
 #> # A tibble: 1 x 4
 #>   sq_err abs_err p975_err p025_err
 #>    <dbl>   <dbl>    <dbl>    <dbl>
@@ -179,11 +181,15 @@ I'll use the function `case_when()` to do this, though there are other ways whic
 
 ```r
 daily <- daily %>%
-  mutate(wday2 =
-         case_when(.$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
-         .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
-         .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
-         TRUE ~ as.character(.$wday)))
+  mutate(
+    wday2 =
+      case_when(
+        .$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
+        .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
+        .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
+        TRUE ~ as.character(.$wday)
+      )
+  )
 ```
 
 
@@ -193,7 +199,7 @@ mod4 <- lm(n ~ wday2, data = daily)
 daily %>%
   gather_residuals(sat_term = mod4, all_interact = mod2) %>%
   ggplot(aes(date, resid, colour = model)) +
-    geom_line(alpha = 0.75)
+  geom_line(alpha = 0.75)
 ```
 
 
@@ -209,7 +215,7 @@ daily %>%
   spread_residuals(sat_term = mod4, all_interact = mod2) %>%
   mutate(resid_diff = sat_term - all_interact) %>%
   ggplot(aes(date, resid_diff)) +
-    geom_line(alpha = 0.75)
+  geom_line(alpha = 0.75)
 ```
 
 
@@ -223,14 +229,18 @@ More importantly for prediction purposes, it has a higher AIC - which is an esti
 
 ```r
 glance(mod4) %>% select(r.squared, sigma, AIC, df)
-#>   r.squared sigma  AIC df
-#> 1     0.736  47.4 3863  9
+#> # A tibble: 1 x 4
+#>   r.squared sigma   AIC    df
+#> *     <dbl> <dbl> <dbl> <int>
+#> 1     0.736  47.4 3863.     9
 ```
 
 ```r
 glance(mod2) %>% select(r.squared, sigma, AIC, df)
-#>   r.squared sigma  AIC df
-#> 1     0.757  46.2 3856 21
+#> # A tibble: 1 x 4
+#>   r.squared sigma   AIC    df
+#> *     <dbl> <dbl> <dbl> <int>
+#> 1     0.757  46.2 3856.    21
 ```
 
 </div>
@@ -250,30 +260,36 @@ Including a level for the public holidays themselves is insufficient because (1)
 
 ```r
 daily <- daily %>%
-  mutate(wday3 =
-         case_when(
-           .$date %in% lubridate::ymd(c(20130101, # new years
-                                        20130121, # mlk
-                                        20130218, # presidents
-                                        20130527, # memorial
-                                        20130704, # independence
-                                        20130902, # labor
-                                        20131028, # columbus
-                                        20131111, # veterans
-                                        20131128, # thanksgiving
-                                        20131225)) ~
-             "holiday",
-           .$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
-           .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
-           .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
-           TRUE ~ as.character(.$wday)))
+  mutate(
+    wday3 =
+      case_when(
+        .$date %in% lubridate::ymd(c(
+          20130101, # new years
+          20130121, # mlk
+          20130218, # presidents
+          20130527, # memorial
+          20130704, # independence
+          20130902, # labor
+          20131028, # columbus
+          20131111, # veterans
+          20131128, # thanksgiving
+          20131225
+        )) ~
+        "holiday",
+        .$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
+        .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
+        .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
+        TRUE ~ as.character(.$wday)
+      )
+  )
 
 mod5 <- lm(n ~ wday3, data = daily)
 
 daily %>%
   spread_residuals(mod5) %>%
   arrange(desc(abs(resid))) %>%
-  slice(1:20) %>% select(date, wday, resid)
+  slice(1:20) %>%
+  select(date, wday, resid)
 #> # A tibble: 20 x 3
 #>   date       wday  resid
 #>   <date>     <ord> <dbl>
@@ -317,11 +333,15 @@ Looking at only day of the week, we see that Sunday flights are on average longe
 
 ```r
 flights %>%
-  mutate(date = make_date(year, month, day),
-         wday = wday(date, label = TRUE)) %>%
+  mutate(
+    date = make_date(year, month, day),
+    wday = wday(date, label = TRUE)
+  ) %>%
   group_by(wday) %>%
-  summarise(dist_mean =  mean(distance),
-            dist_median = median(distance)) %>%
+  summarise(
+    dist_mean = mean(distance),
+    dist_median = median(distance)
+  ) %>%
   ggplot(aes(y = dist_mean, x = wday)) +
   geom_point()
 ```
@@ -336,11 +356,15 @@ Conditional on hour, the distance of Sunday flights seems similar to that of oth
 
 ```r
 flights %>%
-  mutate(date = make_date(year, month, day),
-         wday = wday(date, label = TRUE)) %>%
+  mutate(
+    date = make_date(year, month, day),
+    wday = wday(date, label = TRUE)
+  ) %>%
   group_by(wday, hour) %>%
-  summarise(dist_mean =  mean(distance),
-            dist_median = median(distance)) %>%
+  summarise(
+    dist_mean = mean(distance),
+    dist_median = median(distance)
+  ) %>%
   ggplot(aes(y = dist_mean, x = hour, colour = wday)) +
   geom_point() +
   geom_line()
@@ -368,7 +392,7 @@ Use `fct_relevel()` to put all levels in-front of the first level ("Sunday").
 
 ```r
 monday_first <- function(x) {
-  forcats::fct_relevel(x, levels(x)[-1])  
+  forcats::fct_relevel(x, levels(x)[-1])
 }
 ```
 

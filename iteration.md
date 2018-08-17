@@ -205,7 +205,7 @@ For this I'm going to rename the variable `sd` to something different because `s
 x <- sample(100)
 sd. <- 0
 for (i in seq_along(x)) {
-  sd. <- sd. + (x[i] - mean(x)) ^ 2
+  sd. <- sd. + (x[i] - mean(x))^2
 }
 sd. <- sqrt(sd. / (length(x) - 1))
 sd.
@@ -222,7 +222,7 @@ Or if there was a need to use the equation (e.g. for pedagogical reasons), then
 the functions `mean()` and `sum()` already work with vectors:
 
 ```r
-sqrt(sum((x - mean(x)) ^ 2) / (length(x) - 1))
+sqrt(sum((x - mean(x))^2) / (length(x) - 1))
 #> [1] 29
 ```
 
@@ -250,7 +250,7 @@ out
 The code above is calculating a cumulative sum. Use the function `cumsum()`
 
 ```r
-all.equal(cumsum(x),out)
+all.equal(cumsum(x), out)
 #> [1] TRUE
 ```
 
@@ -297,7 +297,8 @@ The answers to each part follow.
     humps <- c("five", "four", "three", "two", "one", "no")
     for (i in humps) {
       cat(str_c("Alice the camel has ", rep(i, 3), " humps.",
-                 collapse = "\n"), "\n")
+        collapse = "\n"
+      ), "\n")
       if (i == "no") {
         cat("Now Alice is a horse.\n")
       } else {
@@ -353,8 +354,10 @@ The answers to each part follow.
 
     
     ```r
-    numbers <- c("ten", "nine", "eight", "seven", "six", "five",
-                 "four", "three", "two", "one")
+    numbers <- c(
+      "ten", "nine", "eight", "seven", "six", "five",
+      "four", "three", "two", "one"
+    )
     for (i in numbers) {
       cat(str_c("There were ", i, " in the bed\n"))
       cat("and the little one said\n")
@@ -433,11 +436,11 @@ The answers to each part follow.
     ```r
     bottles <- function(i) {
       if (i > 2) {
-       bottles <- str_c(i - 1, " bottles")
+        bottles <- str_c(i - 1, " bottles")
       } else if (i == 2) {
-       bottles <- "1 bottle"
+        bottles <- "1 bottle"
       } else {
-       bottles <- "no more bottles"
+        bottles <- "no more bottles"
       }
       bottles
     }
@@ -445,9 +448,11 @@ The answers to each part follow.
     beer_bottles <- function(n) {
       # should test whether n >= 1.
       for (i in seq(n, 1)) {
-         cat(str_c(bottles(i), " of beer on the wall, ", bottles(i), " of beer.\n"))
-         cat(str_c("Take one down and pass it around, ", bottles(i - 1),
-                    " of beer on the wall.\n\n"))
+        cat(str_c(bottles(i), " of beer on the wall, ", bottles(i), " of beer.\n"))
+        cat(str_c(
+          "Take one down and pass it around, ", bottles(i - 1),
+          " of beer on the wall.\n\n"
+        ))
       }
       cat("No more bottles of beer on the wall, no more bottles of beer.\n")
       cat(str_c("Go to the store and buy some more, ", bottles(n), " of beer on the wall.\n"))
@@ -496,12 +501,12 @@ add_to_vector <- function(n) {
   for (i in seq_len(n)) {
     output <- c(output, i)
   }
-  output  
+  output
 }
 microbenchmark(add_to_vector(10000), times = 3)
 #> Unit: milliseconds
 #>                  expr min  lq mean median  uq max neval
-#>  add_to_vector(10000) 215 222  276    228 307 385     3
+#>  add_to_vector(10000) 204 209  229    213 241 269     3
 ```
 
 And one that pre-allocates it.
@@ -517,7 +522,7 @@ add_to_vector_2 <- function(n) {
 microbenchmark(add_to_vector_2(10000), times = 3)
 #> Unit: microseconds
 #>                    expr min   lq mean median   uq  max neval
-#>  add_to_vector_2(10000) 665 2528 4349   4390 6192 7993     3
+#>  add_to_vector_2(10000) 653 2935 5148   5216 7395 9573     3
 ```
 
 The pre-allocated vector is about **10** times faster!
@@ -639,10 +644,10 @@ For example, `show_mean(iris)` would print:
 
 ```r
 show_mean(iris)
-#> Sepal.Length: 5.84
-#> Sepal.Width:  3.06
-#> Petal.Length: 3.76
-#> Petal.Width:  1.20
+# > Sepal.Length: 5.84
+# > Sepal.Width:  3.06
+# > Petal.Length: 3.76
+# > Petal.Width:  1.20
 ```
 
 > (Extra challenge: what function did I use to make sure that the numbers lined up nicely, even though the variable names had different lengths?)
@@ -656,10 +661,13 @@ show_mean <- function(df, digits = 2) {
   maxstr <- max(str_length(names(df)))
   for (nm in names(df)) {
     if (is.numeric(df[[nm]])) {
-      cat(str_c(str_pad(str_c(nm, ":"), maxstr + 1L, side = "right"),
-                format(mean(df[[nm]]), digits = digits, nsmall = digits),
-                sep = " "),
-          "\n")
+      cat(
+        str_c(str_pad(str_c(nm, ":"), maxstr + 1L, side = "right"),
+          format(mean(df[[nm]]), digits = digits, nsmall = digits),
+          sep = " "
+        ),
+        "\n"
+      )
     }
   }
 }
@@ -893,7 +901,7 @@ map_chr(nycflights13::flights, typeof)
 To calculate the number of unique values in each column of `iris`:
 
 ```r
-map_int(iris, ~ length(unique(.)))
+map_int(iris, ~length(unique(.)))
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
 #>           35           23           43           22            3
 ```
@@ -1028,7 +1036,7 @@ Rewrite `map(x, function(df) lm(mpg ~ wt, data = df))` to eliminate the anonymou
 
 
 ```r
-map(list(mtcars), ~ lm(mpg ~ wt, data = .))
+map(list(mtcars), ~lm(mpg ~ wt, data = .))
 #> [[1]]
 #> 
 #> Call:
@@ -1076,12 +1084,16 @@ every2 <- function(.x, .p, ...) {
     }
   }
   # if nothing was FALSE, then it is TRUE
-  TRUE  
+  TRUE
 }
 
-every2(1:3, function(x) {x > 1})
+every2(1:3, function(x) {
+  x > 1
+})
 #> [1] FALSE
-every2(1:3, function(x) {x > 0})
+every2(1:3, function(x) {
+  x > 0
+})
 #> [1] TRUE
 ```
 

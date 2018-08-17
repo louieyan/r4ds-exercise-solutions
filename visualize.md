@@ -453,7 +453,7 @@ Take the first faceted plot in this section:
 ```r
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_wrap(~ class, nrow = 2)
+  facet_wrap(~class, nrow = 2)
 ```
 
 
@@ -801,8 +801,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 
 ```r
 ggplot(mpg, aes(x = displ, y = hwy)) +
-   geom_point(size = 4, color = "white") +
-   geom_point(aes(colour = drv))
+  geom_point(size = 4, color = "white") +
+  geom_point(aes(colour = drv))
 ```
 
 

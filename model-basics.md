@@ -68,7 +68,7 @@ sims <- map_df(1:12, simt)
 ggplot(sims, aes(x = x, y = y)) +
   geom_point() +
   geom_smooth(method = "lm", colour = "red") +
-  facet_wrap(~ .id, ncol = 4)
+  facet_wrap(~.id, ncol = 4)
 ```
 
 
@@ -91,7 +91,7 @@ simdf_norm <- map_df(1:12, sim_norm)
 ggplot(simdf_norm, aes(x = x, y = y)) +
   geom_point() +
   geom_smooth(method = "lm", colour = "red") +
-  facet_wrap(~ .id, ncol = 4)
+  facet_wrap(~.id, ncol = 4)
 ```
 
 
@@ -169,7 +169,7 @@ Using the `sim1a` data, while the parameters the minimize the least squares obje
 ```r
 measure_distance_ls <- function(mod, data) {
   diff <- data$y - (mod[1] + mod[2] * data$x)
-  sqrt(mean(diff ^ 2))
+  sqrt(mean(diff^2))
 }
 
 best <- optim(c(0, 0), measure_distance_ls, data = sim1a)
@@ -203,7 +203,7 @@ The problem is that you for any values `a[1] = a1` and `a[3] = a3`, any other va
 ```r
 measure_distance_3 <- function(a, data) {
   diff <- data$y - model3(a, data)
-  sqrt(mean(diff ^ 2))
+  sqrt(mean(diff^2))
 }
 ```
 Depending on our starting points, we can find different optimal values:
@@ -579,12 +579,13 @@ mod2 <- lm(y ~ x1 * x2, data = sim3)
 ```r
 model_matrix_mod1 <- function(.data) {
   mutate(.data,
-         `x2b` = as.numeric(x2 == "b"),
-         `x2c` = as.numeric(x2 == "c"),
-         `x2d` = as.numeric(x2 == "d"),
-         `x1:x2b` = x1 * x2b,
-         `x1:x2c` = x1 * x2c,
-         `x1:x2d` = x1 * x2d) %>%
+    `x2b` = as.numeric(x2 == "b"),
+    `x2c` = as.numeric(x2 == "c"),
+    `x2d` = as.numeric(x2 == "d"),
+    `x1:x2b` = x1 * x2b,
+    `x1:x2c` = x1 * x2c,
+    `x1:x2d` = x1 * x2d
+  ) %>%
     select(x1, x2b, x2c, x2d, `x1:x2b`, `x1:x2c`, `x1:x2d`)
 }
 ```
@@ -626,7 +627,7 @@ A more general function for model `mod1` is:
 
 ```r
 model_matrix_mod1 <- function(x1, x2) {
-  out <- tibble(x1 = x1)  
+  out <- tibble(x1 = x1)
   # find levels of x2
   x2 <- as.factor(x2)
   x2lvls <- levels(x2)
@@ -644,9 +645,11 @@ model_matrix_mod1 <- function(x1, x2) {
 
 ```r
 model_matrix_mod2 <- function(x1, x2) {
-  out <- tibble(x1 = x1,
-                x2 = x2,
-                `x1:x2` = x1 * x2)
+  out <- tibble(
+    x1 = x1,
+    x2 = x2,
+    `x1:x2` = x1 * x2
+  )
 }
 ```
 
