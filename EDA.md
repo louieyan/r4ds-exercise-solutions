@@ -232,7 +232,7 @@ ggplot(diamonds) +
   ylim(0, 3000)
 #> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 #> Warning: Removed 14714 rows containing non-finite values (stat_bin).
-#> Warning: Removed 6 rows containing missing values (geom_bar).
+#> Warning: Removed 5 rows containing missing values (geom_bar).
 ```
 
 

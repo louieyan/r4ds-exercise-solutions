@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{August 29, 2018}
+    \date{August 30, 2018}
 
 \usepackage{amsthm}
 
@@ -133,6 +133,20 @@
 \theoremstyle{remark}
 \newtheorem*{answer}{Solution}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -165,6 +179,10 @@ International License
 All the credit should go to Garrett Grolemund and Hadley Wickham for
 writing the truly fantastic \emph{R for Data Science} book, without
 which these solutions would not exist---literally.
+
+Special thanks to \href{https://github.com/dongzhuoer}{@dongzhuoer} for
+a careful reading of the book and noticing numerous issues and proposing
+fixes.
 
 These solutions have benefited from those who fixed problems and
 contributed solutions. Thank you to all of those who contributed on
@@ -238,7 +256,7 @@ turn R markdown files into HTML, PDF, and EPUB.
 The source of this book is available at
 \url{https://github.com/jrnold/r4ds-exercise-solutions} This book was
 built from commit
-\href{https://github.com/jrnold/r4ds-exercise-solutions/tree/f931e4649fbf755249acad1ea2c38e47c5b05309}{f931e46}.
+\href{https://github.com/jrnold/r4ds-exercise-solutions/tree/e7026854f20a01876ca9df8f87a25362587e58b7}{e702685}.
 
 This book was built with:
 
@@ -248,102 +266,94 @@ This book was built with:
 \CommentTok{#> Session info -------------------------------------------------------------}
 \CommentTok{#>  setting  value                       }
 \CommentTok{#>  version  R version 3.5.1 (2018-07-02)}
-\CommentTok{#>  system   x86_64, darwin15.6.0        }
+\CommentTok{#>  system   x86_64, linux-gnu           }
 \CommentTok{#>  ui       X11                         }
 \CommentTok{#>  language (EN)                        }
 \CommentTok{#>  collate  en_US.UTF-8                 }
-\CommentTok{#>  tz       America/Los_Angeles         }
-\CommentTok{#>  date     2018-08-29}
+\CommentTok{#>  tz       Etc/UTC                     }
+\CommentTok{#>  date     2018-08-30}
 \CommentTok{#> Packages -----------------------------------------------------------------}
 \CommentTok{#>  package        * version    date      }
 \CommentTok{#>  assertthat       0.2.0      2017-04-11}
 \CommentTok{#>  babynames        0.3.0      2017-04-14}
 \CommentTok{#>  backports        1.1.2      2017-12-13}
 \CommentTok{#>  base64enc        0.1-3      2015-07-28}
+\CommentTok{#>  beeswarm         0.2.3      2016-04-25}
 \CommentTok{#>  BH               1.66.0-1   2018-02-13}
 \CommentTok{#>  bindr            0.1.1      2018-03-13}
 \CommentTok{#>  bindrcpp       * 0.2.2      2018-03-29}
-\CommentTok{#>  bookdown         0.7.17     2018-08-10}
 \CommentTok{#>  brew             1.0-6      2011-04-13}
 \CommentTok{#>  broom            0.5.0      2018-07-17}
-\CommentTok{#>  callr            3.0.0      2018-08-24}
+\CommentTok{#>  callr            2.0.4      2018-05-15}
 \CommentTok{#>  cellranger       1.1.0      2016-07-27}
 \CommentTok{#>  cli              1.0.0      2017-11-05}
 \CommentTok{#>  clipr            0.4.1      2018-06-23}
-\CommentTok{#>  codetools        0.2-15     2016-10-05}
 \CommentTok{#>  colorspace       1.3-2      2016-12-14}
-\CommentTok{#>  condvis          0.4-2      2017-10-11}
 \CommentTok{#>  crayon           1.3.4      2017-09-16}
-\CommentTok{#>  crosstalk        1.0.0      2016-12-21}
 \CommentTok{#>  curl             3.2        2018-03-28}
-\CommentTok{#>  datamodelr       0.2.2.9002 2018-05-27}
+\CommentTok{#>  datamodelr       0.2.2.9002 2018-08-13}
 \CommentTok{#>  DBI              1.0.0      2018-05-02}
 \CommentTok{#>  dbplyr           1.2.2      2018-07-25}
 \CommentTok{#>  DiagrammeR       1.0.0      2018-03-01}
-\CommentTok{#>  digest           0.6.16     2018-08-22}
+\CommentTok{#>  digest           0.6.15     2018-01-28}
 \CommentTok{#>  downloader       0.4        2015-07-09}
 \CommentTok{#>  dplyr          * 0.7.6      2018-06-29}
 \CommentTok{#>  evaluate         0.11       2018-07-17}
-\CommentTok{#>  fansi            0.3.0      2018-08-13}
+\CommentTok{#>  fansi            0.2.3      2018-05-06}
 \CommentTok{#>  forcats          0.3.0      2018-02-19}
+\CommentTok{#>  fueleconomy      0.1        2014-07-22}
 \CommentTok{#>  gapminder        0.3.0      2017-10-31}
-\CommentTok{#>  ggplot2          3.0.0.9000 2018-08-24}
-\CommentTok{#>  ggrepel          0.8.0.9000 2018-08-10}
-\CommentTok{#>  glue             1.3.0      2018-08-24}
-\CommentTok{#>  graphics       * 3.5.1      2018-07-05}
-\CommentTok{#>  grDevices      * 3.5.1      2018-07-05}
-\CommentTok{#>  grid             3.5.1      2018-07-05}
+\CommentTok{#>  ggbeeswarm       0.6.0      2017-08-07}
+\CommentTok{#>  ggplot2          3.0.0      2018-07-03}
+\CommentTok{#>  ggstance         0.3.1      2018-07-20}
+\CommentTok{#>  glue             1.3.0      2018-07-17}
+\CommentTok{#>  graphics       * 3.5.1      2018-08-08}
+\CommentTok{#>  grDevices      * 3.5.1      2018-08-08}
+\CommentTok{#>  grid             3.5.1      2018-08-08}
 \CommentTok{#>  gridExtra        2.3        2017-09-09}
 \CommentTok{#>  gtable           0.2.0      2016-02-26}
 \CommentTok{#>  haven            1.1.2      2018-06-27}
+\CommentTok{#>  here             0.1        2017-05-28}
 \CommentTok{#>  hexbin           1.27.2     2018-01-15}
 \CommentTok{#>  highr            0.7        2018-06-09}
 \CommentTok{#>  hms              0.4.2      2018-03-10}
-\CommentTok{#>  htmldeps         0.1.1      2018-08-10}
 \CommentTok{#>  htmltools        0.3.6      2017-04-28}
 \CommentTok{#>  htmlwidgets      1.2        2018-04-19}
-\CommentTok{#>  httpuv           1.4.5      2018-07-19}
 \CommentTok{#>  httr             1.3.1      2017-08-20}
 \CommentTok{#>  igraph           1.2.2      2018-07-27}
 \CommentTok{#>  influenceR       0.1.0      2015-09-03}
-\CommentTok{#>  jpeg             0.1-8      2014-01-23}
 \CommentTok{#>  jsonlite         1.5        2017-06-01}
 \CommentTok{#>  knitr            1.20       2018-02-20}
 \CommentTok{#>  labeling         0.3        2014-08-23}
 \CommentTok{#>  Lahman           6.0-0      2017-08-15}
-\CommentTok{#>  later            0.7.3      2018-06-08}
 \CommentTok{#>  lattice          0.20-35    2017-03-25}
 \CommentTok{#>  lazyeval         0.2.1      2017-10-29}
-\CommentTok{#>  leaflet          2.0.1      2018-06-04}
 \CommentTok{#>  lubridate        1.7.4      2018-04-11}
+\CommentTok{#>  lvplot           0.2.0      2016-05-01}
 \CommentTok{#>  magrittr       * 1.5        2014-11-22}
 \CommentTok{#>  maps             3.3.0      2018-04-03}
 \CommentTok{#>  markdown         0.8        2017-04-20}
 \CommentTok{#>  MASS             7.3-50     2018-04-30}
-\CommentTok{#>  Matrix           1.2-14     2018-04-13}
-\CommentTok{#>  methods        * 3.5.1      2018-07-05}
-\CommentTok{#>  mgcv             1.8-24     2018-06-23}
+\CommentTok{#>  Matrix           1.2-14     2018-04-09}
+\CommentTok{#>  methods        * 3.5.1      2018-08-08}
+\CommentTok{#>  mgcv             1.8-24     2018-06-18}
 \CommentTok{#>  microbenchmark   1.4-4      2018-01-24}
 \CommentTok{#>  mime             0.5        2016-07-07}
 \CommentTok{#>  modelr           0.1.2      2018-05-11}
 \CommentTok{#>  munsell          0.5.0      2018-06-12}
+\CommentTok{#>  nasaweather      0.1        2014-07-22}
 \CommentTok{#>  nlme             3.1-137    2018-04-07}
 \CommentTok{#>  nycflights13     1.0.0      2018-06-26}
 \CommentTok{#>  openssl          1.0.2      2018-07-30}
 \CommentTok{#>  pillar           1.3.0      2018-07-14}
-\CommentTok{#>  pkgconfig        2.0.2      2018-08-16}
+\CommentTok{#>  pkgconfig        2.0.1      2017-03-21}
 \CommentTok{#>  plogr            0.2.0      2018-03-25}
 \CommentTok{#>  plyr             1.8.4      2016-06-08}
-\CommentTok{#>  png              0.1-7      2013-12-03}
-\CommentTok{#>  processx         3.2.0      2018-08-16}
-\CommentTok{#>  promises         1.0.1      2018-04-13}
-\CommentTok{#>  pryr             0.1.4      2018-02-18}
-\CommentTok{#>  ps               1.1.0      2018-08-10}
+\CommentTok{#>  praise           1.0.0      2015-08-11}
+\CommentTok{#>  processx         3.1.0      2018-05-15}
 \CommentTok{#>  purrr            0.2.5      2018-05-29}
-\CommentTok{#>  r4ds             0.1        2018-08-10}
-\CommentTok{#>  R4DSSolutions    0.1        2018-08-10}
+\CommentTok{#>  R4DSSolutions    0.1        2018-08-13}
 \CommentTok{#>  R6               2.2.2      2017-06-17}
-\CommentTok{#>  raster           2.6-7      2017-11-13}
 \CommentTok{#>  RColorBrewer     1.1-2      2014-12-07}
 \CommentTok{#>  Rcpp             0.12.18    2018-07-23}
 \CommentTok{#>  readr            1.1.1      2017-05-16}
@@ -352,165 +362,155 @@ This book was built with:
 \CommentTok{#>  reprex           0.2.0      2018-06-22}
 \CommentTok{#>  reshape2         1.4.3      2017-12-11}
 \CommentTok{#>  rgexf            0.15.3     2015-03-24}
-\CommentTok{#>  rlang            0.2.2      2018-08-16}
-\CommentTok{#>  rmarkdown        1.10.12    2018-08-24}
+\CommentTok{#>  rlang            0.2.1      2018-05-30}
+\CommentTok{#>  rmarkdown        1.10       2018-06-11}
 \CommentTok{#>  Rook             1.1-1      2014-10-20}
+\CommentTok{#>  rprojroot        1.3-2      2018-01-03}
 \CommentTok{#>  rstudioapi       0.7        2017-09-07}
 \CommentTok{#>  rvest            0.3.2      2016-06-17}
 \CommentTok{#>  scales           1.0.0      2018-08-09}
 \CommentTok{#>  selectr          0.4-1      2018-04-06}
-\CommentTok{#>  shiny            1.1.0      2018-05-17}
-\CommentTok{#>  sourcetools      0.1.7      2018-04-25}
-\CommentTok{#>  sp               1.3-1      2018-06-05}
-\CommentTok{#>  stats          * 3.5.1      2018-07-05}
+\CommentTok{#>  stats          * 3.5.1      2018-08-08}
 \CommentTok{#>  stringi          1.2.4      2018-07-20}
 \CommentTok{#>  stringr          1.3.1      2018-05-10}
+\CommentTok{#>  testthat         2.0.0      2017-12-13}
 \CommentTok{#>  tibble           1.4.2      2018-01-22}
 \CommentTok{#>  tidyr            0.8.1      2018-05-18}
 \CommentTok{#>  tidyselect       0.2.4      2018-02-26}
 \CommentTok{#>  tidyverse        1.2.1      2017-11-14}
-\CommentTok{#>  tinytex          0.7        2018-08-22}
-\CommentTok{#>  tools            3.5.1      2018-07-05}
+\CommentTok{#>  tinytex          0.6.6      2018-08-08}
+\CommentTok{#>  tools            3.5.1      2018-08-08}
 \CommentTok{#>  utf8             1.1.4      2018-05-24}
-\CommentTok{#>  utils          * 3.5.1      2018-07-05}
+\CommentTok{#>  utils          * 3.5.1      2018-08-08}
+\CommentTok{#>  vipor            0.4.5      2017-03-22}
 \CommentTok{#>  viridis          0.5.1      2018-03-29}
 \CommentTok{#>  viridisLite      0.3.0      2018-02-01}
 \CommentTok{#>  visNetwork       2.0.4      2018-06-14}
 \CommentTok{#>  whisker          0.3-2      2013-04-28}
 \CommentTok{#>  withr            2.1.2      2018-03-15}
 \CommentTok{#>  xfun             0.3        2018-07-06}
-\CommentTok{#>  XML              3.98-1.16  2018-08-19}
+\CommentTok{#>  XML              3.98-1.15  2018-08-10}
 \CommentTok{#>  xml2             1.2.0      2018-01-24}
-\CommentTok{#>  xtable           1.8-2      2016-02-05}
 \CommentTok{#>  yaml             2.2.0      2018-07-25}
-\CommentTok{#>  source                                   }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  Github (rstudio/bookdown@02b0fd1)        }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.4-2)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  Github (bergant/datamodelr@68ea364)      }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  cran (@0.11)                             }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.3.0)                            }
-\CommentTok{#>  Github (tidyverse/ggplot2@adce4e2)       }
-\CommentTok{#>  Github (slowkow/ggrepel@200571c)         }
-\CommentTok{#>  Github (tidyverse/glue@4e74901)          }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  Github (rstudio/htmldeps@c1023e0)        }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.1-8)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@1.20)                             }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@2.0.1)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  cran (@1.4-4)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.1.2)                            }
-\CommentTok{#>  cran (@0.5.0)                            }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.1-7)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.2.5)                            }
-\CommentTok{#>  Github (hadley/r4ds@03eb8d0)             }
-\CommentTok{#>  local (jrnold/r4ds-exercise-solutions@NA)}
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@2.6-7)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.12.18)                          }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.2.2)                            }
-\CommentTok{#>  Github (rstudio/rmarkdown@6e56ad8)       }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@1.3.1)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@0.8.1)                            }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  local                                    }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.1)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  CRAN (R 3.5.0)                           }
-\CommentTok{#>  cran (@2.2.0)}
+\CommentTok{#>  source                             }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.3.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.2.3)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  Github (bergant/datamodelr@68ea364)}
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@1.0.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.4)                        }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.1)                        }
+\CommentTok{#>  cran (@0.3.0)                      }
+\CommentTok{#>  cran (@0.6.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.3.1)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  local                              }
+\CommentTok{#>  local                              }
+\CommentTok{#>  local                              }
+\CommentTok{#>  cran (@2.3)                        }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.1)                        }
+\CommentTok{#>  cran (@1.27.2)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.1.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.2.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@3.3.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  local                              }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.1)                        }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  local (@0.1)                       }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@0.15.3)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@1.1-1)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@1.0.0)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  local                              }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  Github (yihui/tinytex@446f17c)     }
+\CommentTok{#>  local                              }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  local                              }
+\CommentTok{#>  cran (@0.4.5)                      }
+\CommentTok{#>  cran (@0.5.1)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@2.0.4)                      }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  cran (@3.98-1.)                    }
+\CommentTok{#>  CRAN (R 3.5.1)                     }
+\CommentTok{#>  CRAN (R 3.5.1)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1577,7 +1577,7 @@ With \texttt{width\ =\ 0} there is no horizontal jitter.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ cty, }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{width =} \DecValTok{0}\NormalTok{))}
+\StringTok{  }\KeywordTok{geom_jitter}\NormalTok{(}\DataTypeTok{width =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1588,7 +1588,7 @@ With \texttt{width\ =\ 20}, there is too much horizontal jitter.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ cty, }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{width =} \DecValTok{20}\NormalTok{))}
+\StringTok{  }\KeywordTok{geom_jitter}\NormalTok{(}\DataTypeTok{width =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1599,7 +1599,7 @@ With \texttt{height\ =\ 0}, there is no vertical horizontal jitter:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ cty, }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{height =} \DecValTok{0}\NormalTok{))}
+\StringTok{  }\KeywordTok{geom_jitter}\NormalTok{(}\DataTypeTok{height =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1610,13 +1610,14 @@ With \texttt{height\ =\ 15}, there is too much vertical jitter.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ cty, }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{height =} \DecValTok{15}\NormalTok{))}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{height =} \DecValTok{15}\NormalTok{)}
+\CommentTok{#> Warning: Ignoring unknown parameters: height}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
-Note that the \texttt{height} and \texttt{width} parameters are in the
+Note that the \texttt{height} and \texttt{width} arguments are in the
 units of the data. Thus \texttt{height\ =\ 1} corresponds to different
 relative amounts of jittering depending on the scale of the \texttt{y}
 variable. The default values of \texttt{height} and \texttt{width} are
@@ -4140,7 +4141,7 @@ looks.
 \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3000}\NormalTok{)}
 \CommentTok{#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.}
 \CommentTok{#> Warning: Removed 14714 rows containing non-finite values (stat_bin).}
-\CommentTok{#> Warning: Removed 6 rows containing missing values (geom_bar).}
+\CommentTok{#> Warning: Removed 5 rows containing missing values (geom_bar).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5553,8 +5554,8 @@ If the decimal and grouping marks are set to the same character,
 \end{Highlighting}
 \end{Shaded}
 
-If the \texttt{decimal\_mark} is set to the comma ``\texttt{,"}, then
-the grouping mark is set to the period \texttt{"."}:
+If the \texttt{decimal\_mark} is set to the comma "\texttt{,"}, then the
+grouping mark is set to the period \texttt{"."}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -10383,7 +10384,7 @@ Scooping up the field mice\\
 And bopping them on the head
 
 Down came the Good Fairy, and she said\\
-``Little bunny Foo Foo\\
+"Little bunny Foo Foo\\
 I don't want to see you ~ Scooping up the field mice
 
 And bopping them on the head.\\
@@ -10606,7 +10607,7 @@ will make it easier to test your function.)
 \NormalTok{  \}}
 \NormalTok{\}}
 \KeywordTok{greet}\NormalTok{()}
-\CommentTok{#> [1] "good evening"}
+\CommentTok{#> [1] "good afternoon"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:05"}\NormalTok{))}
 \CommentTok{#> [1] "good morning"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:13"}\NormalTok{))}
@@ -11076,7 +11077,7 @@ The source for \texttt{dplyr::near} is:
 \CommentTok{#> \{}
 \CommentTok{#>     abs(x - y) < tol}
 \CommentTok{#> \}}
-\CommentTok{#> <bytecode: 0x7f969a2277c0>}
+\CommentTok{#> <bytecode: 0x55a36e94e500>}
 \CommentTok{#> <environment: namespace:dplyr>}
 \end{Highlighting}
 \end{Shaded}
@@ -12743,7 +12744,7 @@ Define a function that appends to an integer vector.
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: milliseconds}
 \CommentTok{#>                  expr min  lq mean median  uq max neval}
-\CommentTok{#>  add_to_vector(10000) 208 211  217    214 221 228     3}
+\CommentTok{#>  add_to_vector(10000) 170 177  182    184 188 192     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12760,8 +12761,8 @@ And one that pre-allocates it.
 \NormalTok{\}}
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector_2}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: microseconds}
-\CommentTok{#>                    expr min   lq mean median   uq   max neval}
-\CommentTok{#>  add_to_vector_2(10000) 711 2601 5188   4491 7427 10363     3}
+\CommentTok{#>                    expr min   lq mean median   uq  max neval}
+\CommentTok{#>  add_to_vector_2(10000) 660 2810 4752   4960 6798 8635     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -15931,7 +15932,7 @@ No exercises
 \leavevmode\hypertarget{ref-Cleveland1993a}{}%
 Cleveland, William S. 1993a. ``A Model for Studying Display Methods of
 Statistical Graphics.'' \emph{Journal of Computational and Graphical
-Statistics} 2 (4). Taylor \& Francis:323--43.
+Statistics} 2 (4). Taylor \& Francis: 323--43.
 \url{https://doi.org/10.1080/10618600.1993.10474616}.
 
 \leavevmode\hypertarget{ref-Cleveland1993}{}%
@@ -15944,13 +15945,13 @@ Statistics} 2 (4). Taylor \& Francis:323--43.
 Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. ``The
 Shape Parameter of a Two-Variable Graph.'' \emph{Journal of the American
 Statistical Association} 83 (402). {[}American Statistical Association,
-Taylor \& Francis, Ltd.{]}:289--300.
+Taylor \& Francis, Ltd.{]}: 289--300.
 \url{https://www.jstor.org/stable/2288843}.
 
 \leavevmode\hypertarget{ref-DoaneSeward2011}{}%
 Doane, David P., and Lori E. Seward. 2011. ``Measuring Skewness: A
 Forgotten Statistic?'' \emph{Journal of Statistics Education} 19 (2).
-Taylor \& Francis:null.
+Taylor \& Francis: null.
 \url{https://doi.org/10.1080/10691898.2011.11889611}.
 
 \leavevmode\hypertarget{ref-HeerAgrawala2006}{}%
@@ -15961,13 +15962,13 @@ Heer, Jeffrey, and Maneesh Agrawala. 2006. ``Multi-Scale Banking to
 \leavevmode\hypertarget{ref-HintzeNelson1998}{}%
 Hintze, Jerry L., and Ray D. Nelson. 1998. ``Violin Plots: A Box
 Plot-Density Trace Synergism.'' \emph{The American Statistician} 52 (2).
-Taylor \& Francis:181--84.
+Taylor \& Francis: 181--84.
 \url{https://doi.org/10.1080/00031305.1998.10480559}.
 
 \leavevmode\hypertarget{ref-HofmannWickhamKafadar2017}{}%
 Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. ``Letter-Value
 Plots: Boxplots for Large Data.'' \emph{Journal of Computational and
-Graphical Statistics} 26 (3). Taylor \& Francis:469--77.
+Graphical Statistics} 26 (3). Taylor \& Francis: 469--77.
 \url{https://doi.org/10.1080/10618600.2017.1305277}.
 
 \leavevmode\hypertarget{ref-WickhamGrolemund2017}{}%

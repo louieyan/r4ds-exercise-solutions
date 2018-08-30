@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>R for Data Science Solutions</title>
   <meta name="description" content="This contains the solutions to the exercises in the book, R for Data Science, by Garrett Grolemund and Hadley Wickham.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="R for Data Science Solutions" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,18 +47,12 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +65,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -700,7 +692,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="refs" class="references">
 <div>
-<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis:323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
+<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis: 323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
 </div>
 <div>
 <p>———. 1993b. <em>Visualizing Information</em>. Hobart Press.</p>
@@ -709,19 +701,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>———. 1994. <em>The Elements of Graphing Data</em>. Hobart Press.</p>
 </div>
 <div>
-<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]:289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
+<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]: 289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
 </div>
 <div>
-<p>Doane, David P., and Lori E. Seward. 2011. “Measuring Skewness: A Forgotten Statistic?” <em>Journal of Statistics Education</em> 19 (2). Taylor &amp; Francis:null. <a href="https://doi.org/10.1080/10691898.2011.11889611" class="uri">https://doi.org/10.1080/10691898.2011.11889611</a>.</p>
+<p>Doane, David P., and Lori E. Seward. 2011. “Measuring Skewness: A Forgotten Statistic?” <em>Journal of Statistics Education</em> 19 (2). Taylor &amp; Francis: null. <a href="https://doi.org/10.1080/10691898.2011.11889611" class="uri">https://doi.org/10.1080/10691898.2011.11889611</a>.</p>
 </div>
 <div>
 <p>Heer, Jeffrey, and Maneesh Agrawala. 2006. “Multi-Scale Banking to 45º.” <em>Ieee Transactions on Visualization and Computer Graphics</em> 12 (5, September/October). <a href="https://doi.org/10.1109/TVCG.2006.163" class="uri">https://doi.org/10.1109/TVCG.2006.163</a>.</p>
 </div>
 <div>
-<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis:181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
+<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis: 181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
 </div>
 <div>
-<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis:469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
+<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis: 469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
 </div>
 <div>
 <p>Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. O’Reilly Media.</p>

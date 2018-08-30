@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>R for Data Science Solutions</title>
   <meta name="description" content="This contains the solutions to the exercises in the book, R for Data Science, by Garrett Grolemund and Hadley Wickham.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="R for Data Science Solutions" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,18 +47,12 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +65,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -698,7 +690,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> Workflow: basics</h1>
 <div id="prerequisites" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
 </div>
 <div id="coding-basics" class="section level2">
 <h2><span class="header-section-number">4.1</span> Coding basics</h2>
@@ -718,9 +710,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Exercise <span class="exercise-number">4.4.1</span></h3>
 <div class="question">
 <p>Why does this code not work?</p>
-<pre class="sourceCode r"><code class="sourceCode r">my_variable &lt;-<span class="st"> </span><span class="dv">10</span>
-my_varıable
-<span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;my_varıable&#39; not found</span></code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">my_variable &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2">my_varıable</a>
+<a class="sourceLine" id="cb68-3" data-line-number="3"><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;my_varıable&#39; not found</span></a></code></pre></div>
 </div>
 <div class="answer">
 <p>The variable being printed is <code>my_varıable</code>, not <code>my_variable</code>:
@@ -754,47 +746,47 @@ it is a good indication that the original name was not a good one.</p></li>
 <p>Tweak each of the following R commands so that they run correctly:</p>
 </div>
 <div class="answer">
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">dota =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))
-<span class="co">#&gt; Error in FUN(X[[i]], ...): object &#39;displ&#39; not found</span></code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">dota =</span> mpg) <span class="op">+</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"><span class="co">#&gt; Error in FUN(X[[i]], ...): object &#39;displ&#39; not found</span></a></code></pre></div>
 <p><img src="workflow-basics_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
 The error message is <code>argument &quot;data&quot; is missing, with no default</code>.</p>
 <p>It looks like a typo, <code>dota</code> instead of <code>data</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</a></code></pre></div>
 <p><img src="workflow-basics_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fliter</span>(mpg, <span class="dt">cyl =</span> <span class="dv">8</span>)
-<span class="co">#&gt; Error in fliter(mpg, cyl = 8): could not find function &quot;fliter&quot;</span></code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">fliter</span>(mpg, <span class="dt">cyl =</span> <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="co">#&gt; Error in fliter(mpg, cyl = 8): could not find function &quot;fliter&quot;</span></a></code></pre></div>
 <p>R could not find the function <code>fliter()</code> because we made a typo: <code>fliter</code> instead of <code>filter</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(mpg, <span class="dt">cyl =</span> <span class="dv">8</span>)
-<span class="co">#&gt; Error: `cyl` (`cyl = 8`) must not be named, do you need `==`?</span></code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">filter</span>(mpg, <span class="dt">cyl =</span> <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="co">#&gt; Error: `cyl` (`cyl = 8`) must not be named, do you need `==`?</span></a></code></pre></div>
 <p>We aren’t done yet. But the error message gives a suggestion. Let’s follow it.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(mpg, cyl <span class="op">==</span><span class="st"> </span><span class="dv">8</span>)
-<span class="co">#&gt; # A tibble: 70 x 11</span>
-<span class="co">#&gt;   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class</span>
-<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt; 1 audi         a6 q…   4.2  2008     8 auto… 4        16    23 p     mids…</span>
-<span class="co">#&gt; 2 chevrolet    c150…   5.3  2008     8 auto… r        14    20 r     suv  </span>
-<span class="co">#&gt; 3 chevrolet    c150…   5.3  2008     8 auto… r        11    15 e     suv  </span>
-<span class="co">#&gt; 4 chevrolet    c150…   5.3  2008     8 auto… r        14    20 r     suv  </span>
-<span class="co">#&gt; 5 chevrolet    c150…   5.7  1999     8 auto… r        13    17 r     suv  </span>
-<span class="co">#&gt; 6 chevrolet    c150…   6    2008     8 auto… r        12    17 r     suv  </span>
-<span class="co">#&gt; # ... with 64 more rows</span></code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(diamond, carat <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)
-<span class="co">#&gt; Error in filter(diamond, carat &gt; 3): object &#39;diamond&#39; not found</span></code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">filter</span>(mpg, cyl <span class="op">==</span><span class="st"> </span><span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="co">#&gt; # A tibble: 70 x 11</span></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="co">#&gt;   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class</span></a>
+<a class="sourceLine" id="cb73-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb73-5" data-line-number="5"><span class="co">#&gt; 1 audi         a6 q…   4.2  2008     8 auto… 4        16    23 p     mids…</span></a>
+<a class="sourceLine" id="cb73-6" data-line-number="6"><span class="co">#&gt; 2 chevrolet    c150…   5.3  2008     8 auto… r        14    20 r     suv  </span></a>
+<a class="sourceLine" id="cb73-7" data-line-number="7"><span class="co">#&gt; 3 chevrolet    c150…   5.3  2008     8 auto… r        11    15 e     suv  </span></a>
+<a class="sourceLine" id="cb73-8" data-line-number="8"><span class="co">#&gt; 4 chevrolet    c150…   5.3  2008     8 auto… r        14    20 r     suv  </span></a>
+<a class="sourceLine" id="cb73-9" data-line-number="9"><span class="co">#&gt; 5 chevrolet    c150…   5.7  1999     8 auto… r        13    17 r     suv  </span></a>
+<a class="sourceLine" id="cb73-10" data-line-number="10"><span class="co">#&gt; 6 chevrolet    c150…   6    2008     8 auto… r        12    17 r     suv  </span></a>
+<a class="sourceLine" id="cb73-11" data-line-number="11"><span class="co">#&gt; # ... with 64 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">filter</span>(diamond, carat <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="co">#&gt; Error in filter(diamond, carat &gt; 3): object &#39;diamond&#39; not found</span></a></code></pre></div>
 <p>R says it can’t find the object <code>diamond</code>.
 This is a typo; the data frame is named <code>diamonds</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(diamonds, carat <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)
-<span class="co">#&gt; # A tibble: 32 x 10</span>
-<span class="co">#&gt;   carat cut     color clarity depth table price     x     y     z</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  3.01 Premium I     I1       62.7    58  8040  9.1   8.97  5.67</span>
-<span class="co">#&gt; 2  3.11 Fair    J     I1       65.9    57  9823  9.15  9.02  5.98</span>
-<span class="co">#&gt; 3  3.01 Premium F     I1       62.2    56  9925  9.24  9.13  5.73</span>
-<span class="co">#&gt; 4  3.05 Premium E     I1       60.9    58 10453  9.26  9.25  5.66</span>
-<span class="co">#&gt; 5  3.02 Fair    I     I1       65.2    56 10577  9.11  9.02  5.91</span>
-<span class="co">#&gt; 6  3.01 Fair    H     I1       56.1    62 10761  9.54  9.38  5.31</span>
-<span class="co">#&gt; # ... with 26 more rows</span></code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">filter</span>(diamonds, carat <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="co">#&gt; # A tibble: 32 x 10</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="co">#&gt;   carat cut     color clarity depth table price     x     y     z</span></a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb75-5" data-line-number="5"><span class="co">#&gt; 1  3.01 Premium I     I1       62.7    58  8040  9.1   8.97  5.67</span></a>
+<a class="sourceLine" id="cb75-6" data-line-number="6"><span class="co">#&gt; 2  3.11 Fair    J     I1       65.9    57  9823  9.15  9.02  5.98</span></a>
+<a class="sourceLine" id="cb75-7" data-line-number="7"><span class="co">#&gt; 3  3.01 Premium F     I1       62.2    56  9925  9.24  9.13  5.73</span></a>
+<a class="sourceLine" id="cb75-8" data-line-number="8"><span class="co">#&gt; 4  3.05 Premium E     I1       60.9    58 10453  9.26  9.25  5.66</span></a>
+<a class="sourceLine" id="cb75-9" data-line-number="9"><span class="co">#&gt; 5  3.02 Fair    I     I1       65.2    56 10577  9.11  9.02  5.91</span></a>
+<a class="sourceLine" id="cb75-10" data-line-number="10"><span class="co">#&gt; 6  3.01 Fair    H     I1       56.1    62 10761  9.54  9.38  5.31</span></a>
+<a class="sourceLine" id="cb75-11" data-line-number="11"><span class="co">#&gt; # ... with 26 more rows</span></a></code></pre></div>
 <p>How did I know? I started typing in <code>diamond</code> and RStudio completed it to <code>diamonds</code>.
 Since <code>diamonds</code> includes the variable <code>carat</code> and the code works, that appears to have been the problem.</p>
 </div>

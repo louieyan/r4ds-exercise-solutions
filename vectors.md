@@ -65,7 +65,7 @@ dplyr::near
 #> {
 #>     abs(x - y) < tol
 #> }
-#> <bytecode: 0x7f969a2277c0>
+#> <bytecode: 0x55a36e94e500>
 #> <environment: namespace:dplyr>
 ```
 
@@ -758,7 +758,7 @@ For these examples, I generated these diagrams programmatically using the
     `list(a, b, list(c, d), list(e, f))`
     is
 
-
+    
 
     
 
@@ -766,7 +766,7 @@ For these examples, I generated these diagrams programmatically using the
     `list(list(list(list(list(list(a))))))1`
     is as follows.
 
-
+    
 
     
 
