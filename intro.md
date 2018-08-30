@@ -45,7 +45,7 @@ Please open an issue at <https://github.com/jrnold/r4ds-exercise-solutions/issue
 
 
 
-HTML and PDF versions of this book are available at <http:/jrnold.github.ior4ds-exercise-solutions>.
+HTML and PDF versions of this book are available at <http://jrnold.github.io/r4ds-exercise-solutions>.
 The book is powered by [bookdown](https://bookdown.org) which makes it easy to turn R markdown files into HTML, PDF, and EPUB.
 
 The source of this book is available at <https://github.com/jrnold/r4ds-exercise-solutions>
