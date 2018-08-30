@@ -100,8 +100,7 @@ sched_dep <- flights_dt %>%
   group_by(minute) %>%
   summarise(
     avg_delay = mean(arr_delay, na.rm = TRUE),
-    n = n()
-  )
+    n = n())
 ```
 In the previous code, the difference between rounded and un-rounded dates provides the within-period time.
 
@@ -118,11 +117,9 @@ Let's try plotting this by month:
 
 ```r
 flights_dt %>%
-  mutate(
-    time = hour(dep_time) * 100 + minute(dep_time),
-    mon = as.factor(month
-    (dep_time))
-  ) %>%
+  mutate(time = hour(dep_time) * 100 + minute(dep_time),
+         mon = as.factor(month
+                         (dep_time))) %>%
   ggplot(aes(x = time, group = mon, colour = mon)) +
   geom_freqpoly(binwidth = 100)
 ```
@@ -136,11 +133,9 @@ that February is lower is that there are fewer days and thus fewer flights.
 
 ```r
 flights_dt %>%
-  mutate(
-    time = hour(dep_time) * 100 + minute(dep_time),
-    mon = as.factor(month
-    (dep_time))
-  ) %>%
+  mutate(time = hour(dep_time) * 100 + minute(dep_time),
+         mon = as.factor(month
+                         (dep_time))) %>%
   ggplot(aes(x = time, y = ..density.., group = mon, colour = mon)) +
   geom_freqpoly(binwidth = 100)
 ```
@@ -192,11 +187,9 @@ Compare `air_time` with the duration between the departure and arrival. Explain 
 
 ```r
 flights_dt %>%
-  mutate(
-    flight_duration = as.numeric(arr_time - dep_time),
-    air_time_mins = air_time,
-    diff = flight_duration - air_time_mins
-  ) %>%
+  mutate(flight_duration = as.numeric(arr_time - dep_time),
+         air_time_mins = air_time,
+         diff = flight_duration - air_time_mins) %>%
   select(origin, dest, flight_duration, air_time_mins, diff)
 #> # A tibble: 328,063 x 5
 #>   origin dest  flight_duration air_time_mins  diff
@@ -243,10 +236,8 @@ Sunday has the lowest average departure delay time and the lowest average arriva
 flights_dt %>%
   mutate(dow = wday(sched_dep_time)) %>%
   group_by(dow) %>%
-  summarise(
-    dep_delay = mean(dep_delay),
-    arr_delay = mean(arr_delay, na.rm = TRUE)
-  )
+  summarise(dep_delay = mean(dep_delay),
+            arr_delay = mean(arr_delay, na.rm = TRUE))
 #> # A tibble: 7 x 3
 #>     dow dep_delay arr_delay
 #>   <dbl>     <dbl>     <dbl>
@@ -306,10 +297,8 @@ At the minute level, there doesn't appear to be anything:
 
 ```r
 flights_dt %>%
-  mutate(
-    early = dep_delay < 0,
-    minute = minute(sched_dep_time)
-  ) %>%
+  mutate(early = dep_delay < 0,
+         minute = minute(sched_dep_time)) %>%
   group_by(minute) %>%
   summarise(early = mean(early)) %>%
   ggplot(aes(x = minute, y = early)) +
@@ -325,10 +314,8 @@ But if grouped in 10 minute intervals, there is a higher proportion of early fli
 
 ```r
 flights_dt %>%
-  mutate(
-    early = dep_delay < 0,
-    minute = minute(sched_dep_time) %% 10
-  ) %>%
+  mutate(early = dep_delay < 0,
+         minute = minute(sched_dep_time) %% 10) %>%
   group_by(minute) %>%
   summarise(early = mean(early)) %>%
   ggplot(aes(x = minute, y = early)) +

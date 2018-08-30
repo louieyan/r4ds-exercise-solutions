@@ -273,7 +273,7 @@ The answer to each part follows.
 
     
     ```r
-    str_view(stringr::words, "^y", match = TRUE)
+    str_view(stringr::words, "^y", match =TRUE)
     ```
 
 1.  End with “x”
@@ -329,7 +329,7 @@ The answer to each part follows.
 
     
     ```r
-    str_view(stringr::words, "^[^aeiou]+$", match = TRUE)
+    str_view(stringr::words, "^[^aeiou]+$", match=TRUE)
     ```
 
     This seems to require using the `+` pattern introduced later, unless one wants to be very verbose and specify words of certain lengths.
@@ -725,12 +725,11 @@ The answer to each part follows.
     ```r
     pattern <-
       cross_n(rerun(5, c("a", "e", "i", "o", "u")),
-        .filter = function(...) {
-          x <- as.character(unlist(list(...)))
-          length(x) != length(unique(x))
-        }
-      ) %>%
-      map_chr(~str_c(unlist(.x), collapse = ".*")) %>%
+            .filter = function(...) {
+              x <- as.character(unlist(list(...)))
+              length(x) != length(unique(x))
+            }) %>%
+      map_chr(~ str_c(unlist(.x), collapse = ".*")) %>%
       str_c(collapse = "|")
     #> Warning: `cross_n()` is deprecated; please use `cross()` instead.
     ```
@@ -752,10 +751,10 @@ The answer to each part follows.
     #> character(0)
     
     words[str_detect(words, "a") &
-      str_detect(words, "e") &
-      str_detect(words, "i") &
-      str_detect(words, "o") &
-      str_detect(words, "u")]
+          str_detect(words, "e") &
+          str_detect(words, "i") &
+          str_detect(words, "o") &
+          str_detect(words, "u")]
     #> character(0)
     ```
 
@@ -946,7 +945,7 @@ Implement a simple version of `str_to_lower()` using `replace_all()`.
 <div class="answer">
 
 ```r
-lower <- str_replace_all(words, c("A" = "a", "B" = "b", "C" = "c", "D" = "d", "E" = "e", "F" = "f", "G" = "g", "H" = "h", "I" = "i", "J" = "j", "K" = "k", "L" = "l", "M" = "m", "N" = "n", "O" = "o", "P" = "p", "Q" = "q", "R" = "r", "S" = "s", "T" = "t", "U" = "u", "V" = "v", "W" = "w", "X" = "x", "Y" = "y", "Z" = "z"))
+lower <- str_replace_all(words, c("A"="a", "B"="b", "C"="c", "D"="d", "E"="e", "F"="f", "G"="g", "H"="h", "I"="i", "J"="j", "K"="k", "L"="l", "M"="m", "N"="n", "O"="o", "P"="p", "Q"="q", "R"="r", "S"="s", "T"="t", "U"="u", "V"="v", "W"="w", "X"="x", "Y"="y", "Z"="z"))
 ```
 
 </div>
@@ -967,7 +966,7 @@ swapped <- str_replace_all(words, "^([A-Za-z])(.*)([a-z])$", "\\3\\2\\1")
 Next, find what of "swapped" is also in the original list using the function `intersect()`,
 
 ```r
-intersect(swapped, words)
+intersect(swapped,words)
 #>  [1] "a"          "america"    "area"       "dad"        "dead"      
 #>  [6] "lead"       "read"       "depend"     "god"        "educate"   
 #> [11] "else"       "encourage"  "engine"     "europe"     "evidence"  

@@ -224,11 +224,9 @@ For the `Batting`, `Master`, and `Salaries` tables:
 
 
 ```r
-dm1 <- dm_from_data_frames(list(
-  Batting = Lahman::Batting,
-  Master = Lahman::Master,
-  Salaries = Lahman::Salaries
-)) %>%
+dm1 <- dm_from_data_frames(list(Batting = Lahman::Batting,
+                                Master = Lahman::Master,
+                                Salaries = Lahman::Salaries)) %>%
   dm_set_key("Batting", c("playerID", "yearID", "stint")) %>%
   dm_set_key("Master", "playerID") %>%
   dm_set_key("Salaries", c("yearID", "teamID", "playerID")) %>%
@@ -260,11 +258,9 @@ For the `Master`, `Manager`, and `AwardsManagers` tables:
 
 
 ```r
-dm2 <- dm_from_data_frames(list(
-  Master = Lahman::Master,
-  Managers = Lahman::Managers,
-  AwardsManagers = Lahman::AwardsManagers
-)) %>%
+dm2 <- dm_from_data_frames(list(Master = Lahman::Master,
+                                Managers = Lahman::Managers,
+                                AwardsManagers = Lahman::AwardsManagers)) %>%
   dm_set_key("Master", "playerID") %>%
   dm_set_key("Managers", c("yearID", "teamID", "inseason")) %>%
   dm_set_key("AwardsManagers", c("playerID", "awardID", "yearID")) %>%
@@ -305,9 +301,9 @@ Compute the average delay by destination, then join on the `airports` data frame
 airports %>%
   semi_join(flights, c("faa" = "dest")) %>%
   ggplot(aes(lon, lat)) +
-  borders("state") +
-  geom_point() +
-  coord_quickmap()
+    borders("state") +
+    geom_point() +
+    coord_quickmap()
 ```
 
 
@@ -327,9 +323,9 @@ avg_dest_delays <-
 
 avg_dest_delays %>%
   ggplot(aes(lon, lat, colour = delay)) +
-  borders("state") +
-  geom_point() +
-  coord_quickmap()
+    borders("state") +
+    geom_point() +
+    coord_quickmap()
 ```
 
 
@@ -355,7 +351,7 @@ airport_locations <- airports %>%
   select(faa, lat, lon)
 
 flights %>%
-  select(year:day, hour, origin, dest) %>%
+    select(year:day, hour, origin, dest) %>%
   left_join(
     airport_locations,
     by = c("origin" = "faa")
@@ -382,7 +378,7 @@ airport_locations <- airports %>%
   select(faa, lat, lon)
 
 flights %>%
-  select(year:day, hour, origin, dest) %>%
+    select(year:day, hour, origin, dest) %>%
   left_join(
     airport_locations,
     by = c("origin" = "faa")
@@ -457,19 +453,17 @@ Almost any amount or precipitation is associated with a delay, though not as str
 ```r
 flight_weather <-
   flights %>%
-  inner_join(weather, by = c(
-    "origin" = "origin",
-    "year" = "year",
-    "month" = "month",
-    "day" = "day",
-    "hour" = "hour"
-  ))
+  inner_join(weather, by = c("origin" = "origin",
+                            "year" = "year",
+                            "month" = "month",
+                            "day" = "day",
+                            "hour" = "hour"))
 
 flight_weather %>%
   group_by(precip) %>%
   summarise(delay = mean(dep_delay, na.rm = TRUE)) %>%
   ggplot(aes(x = precip, y = delay)) +
-  geom_line() + geom_point()
+    geom_line() + geom_point()
 ```
 
 
@@ -641,7 +635,7 @@ Find the 48 hours (over the course of the whole year) that have the worst delays
 ```r
 flights %>%
   group_by(year, month, day) %>%
-  summarise(total_24 = sum(dep_delay, na.rm = TRUE) + sum(arr_delay, na.rm = TRUE)) %>%
+  summarise(total_24 = sum(dep_delay, na.rm = TRUE)+ sum(arr_delay, na.rm = TRUE)) %>%
   mutate(total_48 = total_24 + lag(total_24)) %>%
   arrange(desc(total_48))
 #> # A tibble: 365 x 5

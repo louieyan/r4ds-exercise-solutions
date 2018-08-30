@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -736,7 +738,7 @@ sims &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="d
 <span class="kw">ggplot</span>(sims, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>.id, <span class="dt">ncol =</span> <span class="dv">4</span>)</code></pre>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>.id, <span class="dt">ncol =</span> <span class="dv">4</span>)</code></pre>
 <p><img src="model-basics_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>What if we did the same things with normal distributions?</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_norm &lt;-<span class="st"> </span><span class="cf">function</span>(i) {
@@ -752,7 +754,7 @@ simdf_norm &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span cl
 <span class="kw">ggplot</span>(simdf_norm, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>.id, <span class="dt">ncol =</span> <span class="dv">4</span>)</code></pre>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>.id, <span class="dt">ncol =</span> <span class="dv">4</span>)</code></pre>
 <p><img src="model-basics_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 There are not large outliers, and the slopes are more similar.</p>
 <p>The reason for this is that the Student’s <span class="math inline">\(t\)</span>-distribution, from which we sample with <code>rt()</code> has heavier tails than the normal distribution (<code>rnorm()</code>). This means that the Student’s t-distribution
@@ -796,7 +798,7 @@ best<span class="op">$</span>par
 <p>Using the <code>sim1a</code> data, while the parameters the minimize the least squares objective function are:</p>
 <pre class="sourceCode r"><code class="sourceCode r">measure_distance_ls &lt;-<span class="st"> </span><span class="cf">function</span>(mod, data) {
   diff &lt;-<span class="st"> </span>data<span class="op">$</span>y <span class="op">-</span><span class="st"> </span>(mod[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>mod[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>data<span class="op">$</span>x)
-  <span class="kw">sqrt</span>(<span class="kw">mean</span>(diff<span class="op">^</span><span class="dv">2</span>))
+  <span class="kw">sqrt</span>(<span class="kw">mean</span>(diff <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
 }
 
 best &lt;-<span class="st"> </span><span class="kw">optim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), measure_distance_ls, <span class="dt">data =</span> sim1a)
@@ -818,7 +820,7 @@ See the <strong>MASS</strong> package’s <code>rlm()</code> and <code>lqs()</co
 <p>The problem is that you for any values <code>a[1] = a1</code> and <code>a[3] = a3</code>, any other values of <code>a[1]</code> and <code>a[3]</code> where <code>a[1] + a[3] == (a1 + a3)</code> will have the same fit.</p>
 <pre class="sourceCode r"><code class="sourceCode r">measure_distance_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="cf">function</span>(a, data) {
   diff &lt;-<span class="st"> </span>data<span class="op">$</span>y <span class="op">-</span><span class="st"> </span><span class="kw">model3</span>(a, data)
-  <span class="kw">sqrt</span>(<span class="kw">mean</span>(diff<span class="op">^</span><span class="dv">2</span>))
+  <span class="kw">sqrt</span>(<span class="kw">mean</span>(diff <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
 }</code></pre>
 <p>Depending on our starting points, we can find different optimal values:</p>
 <pre class="sourceCode r"><code class="sourceCode r">best3a &lt;-<span class="st"> </span><span class="kw">optim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), measure_distance_<span class="dv">3</span>, <span class="dt">data =</span> sim1)
@@ -1081,13 +1083,12 @@ terms for <code>x1</code>, <code>x2</code>, and the product of <code>x1</code> a
 mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2, <span class="dt">data =</span> sim3)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">model_matrix_mod1 &lt;-<span class="st"> </span><span class="cf">function</span>(.data) {
   <span class="kw">mutate</span>(.data,
-    <span class="st">`</span><span class="dt">x2b</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;b&quot;</span>),
-    <span class="st">`</span><span class="dt">x2c</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;c&quot;</span>),
-    <span class="st">`</span><span class="dt">x2d</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;d&quot;</span>),
-    <span class="st">`</span><span class="dt">x1:x2b</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2b,
-    <span class="st">`</span><span class="dt">x1:x2c</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2c,
-    <span class="st">`</span><span class="dt">x1:x2d</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2d
-  ) <span class="op">%&gt;%</span>
+         <span class="st">`</span><span class="dt">x2b</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;b&quot;</span>),
+         <span class="st">`</span><span class="dt">x2c</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;c&quot;</span>),
+         <span class="st">`</span><span class="dt">x2d</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(x2 <span class="op">==</span><span class="st"> &quot;d&quot;</span>),
+         <span class="st">`</span><span class="dt">x1:x2b</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2b,
+         <span class="st">`</span><span class="dt">x1:x2c</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2c,
+         <span class="st">`</span><span class="dt">x1:x2d</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2d) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">select</span>(x1, x2b, x2c, x2d, <span class="st">`</span><span class="dt">x1:x2b</span><span class="st">`</span>, <span class="st">`</span><span class="dt">x1:x2c</span><span class="st">`</span>, <span class="st">`</span><span class="dt">x1:x2d</span><span class="st">`</span>)
 }</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model_matrix_mod1</span>(sim3)
@@ -1118,7 +1119,7 @@ mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op"
 <span class="co">#&gt; # ... with 294 more rows</span></code></pre>
 <p>A more general function for model <code>mod1</code> is:</p>
 <pre class="sourceCode r"><code class="sourceCode r">model_matrix_mod1 &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2) {
-  out &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x1 =</span> x1)
+  out &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x1 =</span> x1)  
   <span class="co"># find levels of x2</span>
   x2 &lt;-<span class="st"> </span><span class="kw">as.factor</span>(x2)
   x2lvls &lt;-<span class="st"> </span><span class="kw">levels</span>(x2)
@@ -1133,11 +1134,9 @@ mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op"
   out
 }</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">model_matrix_mod2 &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2) {
-  out &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">x1 =</span> x1,
-    <span class="dt">x2 =</span> x2,
-    <span class="st">`</span><span class="dt">x1:x2</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2
-  )
+  out &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x1 =</span> x1,
+                <span class="dt">x2 =</span> x2,
+                <span class="st">`</span><span class="dt">x1:x2</span><span class="st">`</span> =<span class="st"> </span>x1 <span class="op">*</span><span class="st"> </span>x2)
 }</code></pre>
 </div>
 </div>

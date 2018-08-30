@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -863,11 +865,9 @@ For example, the diagrams in <em>R for Data Science</em> were created with <a hr
 </ul></li>
 </ul></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">dm1 &lt;-<span class="st"> </span><span class="kw">dm_from_data_frames</span>(<span class="kw">list</span>(
-  <span class="dt">Batting =</span> Lahman<span class="op">::</span>Batting,
-  <span class="dt">Master =</span> Lahman<span class="op">::</span>Master,
-  <span class="dt">Salaries =</span> Lahman<span class="op">::</span>Salaries
-)) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">dm1 &lt;-<span class="st"> </span><span class="kw">dm_from_data_frames</span>(<span class="kw">list</span>(<span class="dt">Batting =</span> Lahman<span class="op">::</span>Batting,
+                                <span class="dt">Master =</span> Lahman<span class="op">::</span>Master,
+                                <span class="dt">Salaries =</span> Lahman<span class="op">::</span>Salaries)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;Batting&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;playerID&quot;</span>, <span class="st">&quot;yearID&quot;</span>, <span class="st">&quot;stint&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;Master&quot;</span>, <span class="st">&quot;playerID&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;Salaries&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;yearID&quot;</span>, <span class="st">&quot;teamID&quot;</span>, <span class="st">&quot;playerID&quot;</span>)) <span class="op">%&gt;%</span>
@@ -896,11 +896,9 @@ For example, the diagrams in <em>R for Data Science</em> were created with <a hr
 <li><code>playerID</code> = <code>Master$playerID</code> (many-to-1)</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">dm2 &lt;-<span class="st"> </span><span class="kw">dm_from_data_frames</span>(<span class="kw">list</span>(
-  <span class="dt">Master =</span> Lahman<span class="op">::</span>Master,
-  <span class="dt">Managers =</span> Lahman<span class="op">::</span>Managers,
-  <span class="dt">AwardsManagers =</span> Lahman<span class="op">::</span>AwardsManagers
-)) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">dm2 &lt;-<span class="st"> </span><span class="kw">dm_from_data_frames</span>(<span class="kw">list</span>(<span class="dt">Master =</span> Lahman<span class="op">::</span>Master,
+                                <span class="dt">Managers =</span> Lahman<span class="op">::</span>Managers,
+                                <span class="dt">AwardsManagers =</span> Lahman<span class="op">::</span>AwardsManagers)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;Master&quot;</span>, <span class="st">&quot;playerID&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;Managers&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;yearID&quot;</span>, <span class="st">&quot;teamID&quot;</span>, <span class="st">&quot;inseason&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">dm_set_key</span>(<span class="st">&quot;AwardsManagers&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;playerID&quot;</span>, <span class="st">&quot;awardID&quot;</span>, <span class="st">&quot;yearID&quot;</span>)) <span class="op">%&gt;%</span>
@@ -930,9 +928,9 @@ They all have a 1-1 relationship to each other.</p>
 <pre class="sourceCode r"><code class="sourceCode r">airports <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">semi_join</span>(flights, <span class="kw">c</span>(<span class="st">&quot;faa&quot;</span> =<span class="st"> &quot;dest&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(lon, lat)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="st">&quot;state&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_quickmap</span>()</code></pre>
+<span class="st">    </span><span class="kw">borders</span>(<span class="st">&quot;state&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_quickmap</span>()</code></pre>
 <p><img src="relational-data_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>(Don’t worry if you don’t understand what <code>semi_join()</code> does — you’ll learn about it next.)</p>
 <pre class="sourceCode r"><code class="sourceCode r">avg_dest_delays &lt;-
@@ -944,9 +942,9 @@ They all have a 1-1 relationship to each other.</p>
 
 avg_dest_delays <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(lon, lat, <span class="dt">colour =</span> delay)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">borders</span>(<span class="st">&quot;state&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_quickmap</span>()</code></pre>
+<span class="st">    </span><span class="kw">borders</span>(<span class="st">&quot;state&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_quickmap</span>()</code></pre>
 <p><img src="relational-data_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>You might want to use the size or color of the points to display the average delay for each airport.</p>
 </div>
@@ -962,7 +960,7 @@ avg_dest_delays <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(faa, lat, lon)
 
 flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(year<span class="op">:</span>day, hour, origin, dest) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(year<span class="op">:</span>day, hour, origin, dest) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(
     airport_locations,
     <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span> =<span class="st"> &quot;faa&quot;</span>)
@@ -986,7 +984,7 @@ flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(faa, lat, lon)
 
 flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(year<span class="op">:</span>day, hour, origin, dest) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(year<span class="op">:</span>day, hour, origin, dest) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(
     airport_locations,
     <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span> =<span class="st"> &quot;faa&quot;</span>)
@@ -1046,19 +1044,17 @@ flights <span class="op">%&gt;%</span>
 <p>Almost any amount or precipitation is associated with a delay, though not as strong a trend after 0.02 in as one would expect</p>
 <pre class="sourceCode r"><code class="sourceCode r">flight_weather &lt;-
 <span class="st">  </span>flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">inner_join</span>(weather, <span class="dt">by =</span> <span class="kw">c</span>(
-    <span class="st">&quot;origin&quot;</span> =<span class="st"> &quot;origin&quot;</span>,
-    <span class="st">&quot;year&quot;</span> =<span class="st"> &quot;year&quot;</span>,
-    <span class="st">&quot;month&quot;</span> =<span class="st"> &quot;month&quot;</span>,
-    <span class="st">&quot;day&quot;</span> =<span class="st"> &quot;day&quot;</span>,
-    <span class="st">&quot;hour&quot;</span> =<span class="st"> &quot;hour&quot;</span>
-  ))
+<span class="st">  </span><span class="kw">inner_join</span>(weather, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span> =<span class="st"> &quot;origin&quot;</span>,
+                            <span class="st">&quot;year&quot;</span> =<span class="st"> &quot;year&quot;</span>,
+                            <span class="st">&quot;month&quot;</span> =<span class="st"> &quot;month&quot;</span>,
+                            <span class="st">&quot;day&quot;</span> =<span class="st"> &quot;day&quot;</span>,
+                            <span class="st">&quot;hour&quot;</span> =<span class="st"> &quot;hour&quot;</span>))
 
 flight_weather <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(precip) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> precip, <span class="dt">y =</span> delay)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
 <p><img src="relational-data_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1190,7 +1186,7 @@ flights <span class="op">%&gt;%</span>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total_24 =</span> <span class="kw">sum</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total_24 =</span> <span class="kw">sum</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)<span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">total_48 =</span> total_<span class="dv">24</span> <span class="op">+</span><span class="st"> </span><span class="kw">lag</span>(total_<span class="dv">24</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(total_<span class="dv">48</span>))
 <span class="co">#&gt; # A tibble: 365 x 5</span>

@@ -65,7 +65,7 @@ dplyr::near
 #> {
 #>     abs(x - y) < tol
 #> }
-#> <bytecode: 0x7fd85ad59da8>
+#> <bytecode: 0x7f969a2277c0>
 #> <environment: namespace:dplyr>
 ```
 
@@ -430,7 +430,7 @@ The biggest difference between `set_names()` and `setNames()` is that `set_names
 purrr::set_names(c(a = 1, b = 2, c = 3), toupper)
 #> A B C 
 #> 1 2 3
-purrr::set_names(c(a = 1, b = 2, c = 3), ~toupper(.))
+purrr::set_names(c(a = 1, b = 2, c = 3), ~ toupper(.))
 #> A B C 
 #> 1 2 3
 ```
@@ -476,7 +476,7 @@ The answers to the parts follow.
     last_value <- function(x) {
       # check for case with no length
       if (length(x)) {
-        x[[length(x)]]
+        x[[length(x)]]  
       } else {
         x
       }
@@ -500,7 +500,7 @@ The answers to the parts follow.
         x[seq_along(x) %% 2 == 0]
       } else {
         x
-      }
+      }  
     }
     even_indices(numeric())
     #> numeric(0)

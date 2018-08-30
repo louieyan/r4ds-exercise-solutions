@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -698,11 +700,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Acknowledgments</h2>
 <p>All the credit should go to Garrett Grolemund and Hadley Wickham for writing the truly fantastic <em>R for Data Science</em> book,
 without which these solutions would not exist—literally.</p>
-<p>These solutions have benefitted from those who fixed problems and contributed
+<p>These solutions have benefited from those who fixed problems and contributed
 solutions. Thank you to all of those who contributed on
 <a href="https://github.com/jrnold/r4ds-exercise-solutions/graphs/contributors">GitHub</a>
 (in alphabetical order):
-(in alphabetical order) <a href="https://github.com/adamblake">@adamblake</a>, <a href="https://github.com/benherbertson">@benherbertson</a>, <a href="https://github.com/dcgreaves">@dcgreaves</a>, <a href="https://github.com/decoursin">@decoursin</a>, <a href="https://github.com/dongzhuoer">@dongzhuoer</a>, <a href="https://github.com/JamesCuster">@JamesCuster</a>, <a href="https://github.com/jmclawson">@jmclawson</a>, <a href="https://github.com/KleinGeard">@KleinGeard</a>, <a href="https://github.com/mjones01">@mjones01</a>, <a href="https://github.com/nickcorona">@nickcorona</a>, <a href="https://github.com/nzxwang">@nzxwang</a>, and<a href="https://github.com/tinhb92">@tinhb92</a>.</p>
+(in alphabetical order) <a href="https://github.com/adamblake">@adamblake</a>, <a href="https://github.com/benherbertson">@benherbertson</a>, <a href="https://github.com/carajoos">@carajoos</a>, <a href="https://github.com/dcgreaves">@dcgreaves</a>, <a href="https://github.com/decoursin">@decoursin</a>, <a href="https://github.com/dongzhuoer">@dongzhuoer</a>, <a href="https://github.com/JamesCuster">@JamesCuster</a>, <a href="https://github.com/jmclawson">@jmclawson</a>, <a href="https://github.com/KleinGeard">@KleinGeard</a>, <a href="https://github.com/mjones01">@mjones01</a>, <a href="https://github.com/nickcorona">@nickcorona</a>, <a href="https://github.com/nzxwang">@nzxwang</a>, and<a href="https://github.com/tinhb92">@tinhb92</a>.</p>
 </div>
 <div id="organization" class="section level2 unnumbered">
 <h2>Organization</h2>
@@ -734,19 +736,17 @@ Please open an issue at <a href="https://github.com/jrnold/r4ds-exercise-solutio
 <p>HTML and PDF versions of this book are available at <a href="http:/jrnold.github.ior4ds-exercise-solutions" class="uri">http:/jrnold.github.ior4ds-exercise-solutions</a>.
 The book is powered by <a href="https://bookdown.org">bookdown</a> which makes it easy to turn R markdown files into HTML, PDF, and EPUB.</p>
 <p>The source of this book is available at <a href="https://github.com/jrnold/r4ds-exercise-solutions" class="uri">https://github.com/jrnold/r4ds-exercise-solutions</a>
-This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise-solutions/tree/268a80afa987ba60b515483d4423f162ed56ad1d">268a80a</a>.</p>
+This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise-solutions/tree/63014b2922938a6cc9b642dc43a6fef4ecf534a1">63014b2</a>.</p>
 <p>This book was built with:</p>
 <pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">session_info</span>(<span class="st">&quot;R4DSSolutions&quot;</span>)
-<span class="co">#&gt; Warning: &#39;DESCRIPTION&#39; file has an &#39;Encoding&#39; field and re-encoding is not</span>
-<span class="co">#&gt; possible</span>
 <span class="co">#&gt; Session info -------------------------------------------------------------</span>
 <span class="co">#&gt;  setting  value                       </span>
 <span class="co">#&gt;  version  R version 3.5.1 (2018-07-02)</span>
-<span class="co">#&gt;  system   x86_64, darwin15.6.0        </span>
+<span class="co">#&gt;  system   x86_64, linux-gnu           </span>
 <span class="co">#&gt;  ui       X11                         </span>
 <span class="co">#&gt;  language (EN)                        </span>
 <span class="co">#&gt;  collate  en_US.UTF-8                 </span>
-<span class="co">#&gt;  tz       America/Los_Angeles         </span>
+<span class="co">#&gt;  tz       Etc/UTC                     </span>
 <span class="co">#&gt;  date     2018-08-17</span>
 <span class="co">#&gt; Packages -----------------------------------------------------------------</span>
 <span class="co">#&gt;  package        * version    date      </span>
@@ -754,23 +754,20 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  babynames        0.3.0      2017-04-14</span>
 <span class="co">#&gt;  backports        1.1.2      2017-12-13</span>
 <span class="co">#&gt;  base64enc        0.1-3      2015-07-28</span>
+<span class="co">#&gt;  beeswarm         0.2.3      2016-04-25</span>
 <span class="co">#&gt;  BH               1.66.0-1   2018-02-13</span>
 <span class="co">#&gt;  bindr            0.1.1      2018-03-13</span>
 <span class="co">#&gt;  bindrcpp       * 0.2.2      2018-03-29</span>
-<span class="co">#&gt;  bookdown         0.7.17     2018-08-10</span>
 <span class="co">#&gt;  brew             1.0-6      2011-04-13</span>
 <span class="co">#&gt;  broom            0.5.0      2018-07-17</span>
 <span class="co">#&gt;  callr            2.0.4      2018-05-15</span>
 <span class="co">#&gt;  cellranger       1.1.0      2016-07-27</span>
 <span class="co">#&gt;  cli              1.0.0      2017-11-05</span>
 <span class="co">#&gt;  clipr            0.4.1      2018-06-23</span>
-<span class="co">#&gt;  codetools        0.2-15     2016-10-05</span>
 <span class="co">#&gt;  colorspace       1.3-2      2016-12-14</span>
-<span class="co">#&gt;  condvis          0.4-2      2017-10-11</span>
 <span class="co">#&gt;  crayon           1.3.4      2017-09-16</span>
-<span class="co">#&gt;  crosstalk        1.0.0      2016-12-21</span>
 <span class="co">#&gt;  curl             3.2        2018-03-28</span>
-<span class="co">#&gt;  datamodelr       0.2.2.9002 2018-05-27</span>
+<span class="co">#&gt;  datamodelr       0.2.2.9002 2018-08-13</span>
 <span class="co">#&gt;  DBI              1.0.0      2018-05-02</span>
 <span class="co">#&gt;  dbplyr           1.2.2      2018-07-25</span>
 <span class="co">#&gt;  DiagrammeR       1.0.0      2018-03-01</span>
@@ -778,49 +775,49 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  downloader       0.4        2015-07-09</span>
 <span class="co">#&gt;  dplyr          * 0.7.6      2018-06-29</span>
 <span class="co">#&gt;  evaluate         0.11       2018-07-17</span>
-<span class="co">#&gt;  fansi            0.3.0      2018-08-13</span>
+<span class="co">#&gt;  fansi            0.2.3      2018-05-06</span>
 <span class="co">#&gt;  forcats          0.3.0      2018-02-19</span>
+<span class="co">#&gt;  fueleconomy      0.1        2014-07-22</span>
 <span class="co">#&gt;  gapminder        0.3.0      2017-10-31</span>
-<span class="co">#&gt;  ggplot2          3.0.0.9000 2018-08-10</span>
-<span class="co">#&gt;  ggrepel          0.8.0.9000 2018-08-10</span>
-<span class="co">#&gt;  glue             1.3.0      2018-07-20</span>
-<span class="co">#&gt;  graphics       * 3.5.1      2018-07-05</span>
-<span class="co">#&gt;  grDevices      * 3.5.1      2018-07-05</span>
-<span class="co">#&gt;  grid             3.5.1      2018-07-05</span>
+<span class="co">#&gt;  ggbeeswarm       0.6.0      2017-08-07</span>
+<span class="co">#&gt;  ggplot2          3.0.0      2018-07-03</span>
+<span class="co">#&gt;  ggstance         0.3.1      2018-07-20</span>
+<span class="co">#&gt;  glue             1.3.0      2018-07-17</span>
+<span class="co">#&gt;  graphics       * 3.5.1      2018-08-08</span>
+<span class="co">#&gt;  grDevices      * 3.5.1      2018-08-08</span>
+<span class="co">#&gt;  grid             3.5.1      2018-08-08</span>
 <span class="co">#&gt;  gridExtra        2.3        2017-09-09</span>
 <span class="co">#&gt;  gtable           0.2.0      2016-02-26</span>
 <span class="co">#&gt;  haven            1.1.2      2018-06-27</span>
+<span class="co">#&gt;  here             0.1        2017-05-28</span>
 <span class="co">#&gt;  hexbin           1.27.2     2018-01-15</span>
 <span class="co">#&gt;  highr            0.7        2018-06-09</span>
 <span class="co">#&gt;  hms              0.4.2      2018-03-10</span>
-<span class="co">#&gt;  htmldeps         0.1.1      2018-08-10</span>
 <span class="co">#&gt;  htmltools        0.3.6      2017-04-28</span>
 <span class="co">#&gt;  htmlwidgets      1.2        2018-04-19</span>
-<span class="co">#&gt;  httpuv           1.4.5      2018-07-19</span>
 <span class="co">#&gt;  httr             1.3.1      2017-08-20</span>
 <span class="co">#&gt;  igraph           1.2.2      2018-07-27</span>
 <span class="co">#&gt;  influenceR       0.1.0      2015-09-03</span>
-<span class="co">#&gt;  jpeg             0.1-8      2014-01-23</span>
 <span class="co">#&gt;  jsonlite         1.5        2017-06-01</span>
-<span class="co">#&gt;  knitr            1.20.12    2018-08-15</span>
+<span class="co">#&gt;  knitr            1.20       2018-02-20</span>
 <span class="co">#&gt;  labeling         0.3        2014-08-23</span>
 <span class="co">#&gt;  Lahman           6.0-0      2017-08-15</span>
-<span class="co">#&gt;  later            0.7.3      2018-06-08</span>
 <span class="co">#&gt;  lattice          0.20-35    2017-03-25</span>
 <span class="co">#&gt;  lazyeval         0.2.1      2017-10-29</span>
-<span class="co">#&gt;  leaflet          2.0.1      2018-06-04</span>
 <span class="co">#&gt;  lubridate        1.7.4      2018-04-11</span>
+<span class="co">#&gt;  lvplot           0.2.0      2016-05-01</span>
 <span class="co">#&gt;  magrittr       * 1.5        2014-11-22</span>
 <span class="co">#&gt;  maps             3.3.0      2018-04-03</span>
 <span class="co">#&gt;  markdown         0.8        2017-04-20</span>
 <span class="co">#&gt;  MASS             7.3-50     2018-04-30</span>
-<span class="co">#&gt;  Matrix           1.2-14     2018-04-13</span>
-<span class="co">#&gt;  methods        * 3.5.1      2018-07-05</span>
-<span class="co">#&gt;  mgcv             1.8-24     2018-06-23</span>
+<span class="co">#&gt;  Matrix           1.2-14     2018-04-09</span>
+<span class="co">#&gt;  methods        * 3.5.1      2018-08-08</span>
+<span class="co">#&gt;  mgcv             1.8-24     2018-06-18</span>
 <span class="co">#&gt;  microbenchmark   1.4-4      2018-01-24</span>
 <span class="co">#&gt;  mime             0.5        2016-07-07</span>
 <span class="co">#&gt;  modelr           0.1.2      2018-05-11</span>
 <span class="co">#&gt;  munsell          0.5.0      2018-06-12</span>
+<span class="co">#&gt;  nasaweather      0.1        2014-07-22</span>
 <span class="co">#&gt;  nlme             3.1-137    2018-04-07</span>
 <span class="co">#&gt;  nycflights13     1.0.0      2018-06-26</span>
 <span class="co">#&gt;  openssl          1.0.2      2018-07-30</span>
@@ -828,16 +825,11 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  pkgconfig        2.0.1      2017-03-21</span>
 <span class="co">#&gt;  plogr            0.2.0      2018-03-25</span>
 <span class="co">#&gt;  plyr             1.8.4      2016-06-08</span>
-<span class="co">#&gt;  png              0.1-7      2013-12-03</span>
 <span class="co">#&gt;  praise           1.0.0      2015-08-11</span>
 <span class="co">#&gt;  processx         3.1.0      2018-05-15</span>
-<span class="co">#&gt;  promises         1.0.1      2018-04-13</span>
-<span class="co">#&gt;  pryr             0.1.4      2018-02-18</span>
 <span class="co">#&gt;  purrr            0.2.5      2018-05-29</span>
-<span class="co">#&gt;  r4ds             0.1        2018-08-10</span>
-<span class="co">#&gt;  R4DSSolutions    0.1        2018-08-10</span>
+<span class="co">#&gt;  R4DSSolutions    0.1        2018-08-13</span>
 <span class="co">#&gt;  R6               2.2.2      2017-06-17</span>
-<span class="co">#&gt;  raster           2.6-7      2017-11-13</span>
 <span class="co">#&gt;  RColorBrewer     1.1-2      2014-12-07</span>
 <span class="co">#&gt;  Rcpp             0.12.18    2018-07-23</span>
 <span class="co">#&gt;  readr            1.1.1      2017-05-16</span>
@@ -847,16 +839,14 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  reshape2         1.4.3      2017-12-11</span>
 <span class="co">#&gt;  rgexf            0.15.3     2015-03-24</span>
 <span class="co">#&gt;  rlang            0.2.1      2018-05-30</span>
-<span class="co">#&gt;  rmarkdown        1.10.11    2018-08-10</span>
+<span class="co">#&gt;  rmarkdown        1.10       2018-06-11</span>
 <span class="co">#&gt;  Rook             1.1-1      2014-10-20</span>
+<span class="co">#&gt;  rprojroot        1.3-2      2018-01-03</span>
 <span class="co">#&gt;  rstudioapi       0.7        2017-09-07</span>
 <span class="co">#&gt;  rvest            0.3.2      2016-06-17</span>
 <span class="co">#&gt;  scales           1.0.0      2018-08-09</span>
 <span class="co">#&gt;  selectr          0.4-1      2018-04-06</span>
-<span class="co">#&gt;  shiny            1.1.0      2018-05-17</span>
-<span class="co">#&gt;  sourcetools      0.1.7      2018-04-25</span>
-<span class="co">#&gt;  sp               1.3-1      2018-06-05</span>
-<span class="co">#&gt;  stats          * 3.5.1      2018-07-05</span>
+<span class="co">#&gt;  stats          * 3.5.1      2018-08-08</span>
 <span class="co">#&gt;  stringi          1.2.4      2018-07-20</span>
 <span class="co">#&gt;  stringr          1.3.1      2018-05-10</span>
 <span class="co">#&gt;  testthat         2.0.0      2017-12-13</span>
@@ -864,10 +854,11 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  tidyr            0.8.1      2018-05-18</span>
 <span class="co">#&gt;  tidyselect       0.2.4      2018-02-26</span>
 <span class="co">#&gt;  tidyverse        1.2.1      2017-11-14</span>
-<span class="co">#&gt;  tinytex          0.6        2018-07-07</span>
-<span class="co">#&gt;  tools            3.5.1      2018-07-05</span>
+<span class="co">#&gt;  tinytex          0.6.6      2018-08-08</span>
+<span class="co">#&gt;  tools            3.5.1      2018-08-08</span>
 <span class="co">#&gt;  utf8             1.1.4      2018-05-24</span>
-<span class="co">#&gt;  utils          * 3.5.1      2018-07-05</span>
+<span class="co">#&gt;  utils          * 3.5.1      2018-08-08</span>
+<span class="co">#&gt;  vipor            0.4.5      2017-03-22</span>
 <span class="co">#&gt;  viridis          0.5.1      2018-03-29</span>
 <span class="co">#&gt;  viridisLite      0.3.0      2018-02-01</span>
 <span class="co">#&gt;  visNetwork       2.0.4      2018-06-14</span>
@@ -876,137 +867,126 @@ This book was built from commit <a href="https://github.com/jrnold/r4ds-exercise
 <span class="co">#&gt;  xfun             0.3        2018-07-06</span>
 <span class="co">#&gt;  XML              3.98-1.15  2018-08-10</span>
 <span class="co">#&gt;  xml2             1.2.0      2018-01-24</span>
-<span class="co">#&gt;  xtable           1.8-2      2016-02-05</span>
 <span class="co">#&gt;  yaml             2.2.0      2018-07-25</span>
-<span class="co">#&gt;  source                                   </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  Github (rstudio/bookdown@02b0fd1)        </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.4-2)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  Github (bergant/datamodelr@68ea364)      </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  cran (@0.11)                             </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.3.0)                            </span>
-<span class="co">#&gt;  Github (tidyverse/ggplot2@5f868c5)       </span>
-<span class="co">#&gt;  Github (slowkow/ggrepel@200571c)         </span>
-<span class="co">#&gt;  Github (tidyverse/glue@66de125)          </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  Github (rstudio/htmldeps@c1023e0)        </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.1-8)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  local (jrnold/knitr@NA)                  </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@2.0.1)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  cran (@1.4-4)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.1.2)                            </span>
-<span class="co">#&gt;  cran (@0.5.0)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.1-7)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@3.1.0)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.2.5)                            </span>
-<span class="co">#&gt;  Github (hadley/r4ds@03eb8d0)             </span>
-<span class="co">#&gt;  local (jrnold/r4ds-exercise-solutions@NA)</span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@2.6-7)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.12.18)                          </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.2.1)                            </span>
-<span class="co">#&gt;  Github (rstudio/rmarkdown@adb0279)       </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@1.3.1)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@0.8.1)                            </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  local                                    </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.1)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  CRAN (R 3.5.0)                           </span>
-<span class="co">#&gt;  cran (@2.2.0)</span></code></pre>
+<span class="co">#&gt;  source                             </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.3.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.2.3)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  Github (bergant/datamodelr@68ea364)</span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@1.0.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.4)                        </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.1)                        </span>
+<span class="co">#&gt;  cran (@0.3.0)                      </span>
+<span class="co">#&gt;  cran (@0.6.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.3.1)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  cran (@2.3)                        </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.1)                        </span>
+<span class="co">#&gt;  cran (@1.27.2)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.1.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.2.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@3.3.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.1)                        </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  local (@0.1)                       </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@0.15.3)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@1.1-1)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@1.0.0)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  Github (yihui/tinytex@446f17c)     </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  local                              </span>
+<span class="co">#&gt;  cran (@0.4.5)                      </span>
+<span class="co">#&gt;  cran (@0.5.1)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@2.0.4)                      </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  cran (@3.98-1.)                    </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)                     </span>
+<span class="co">#&gt;  CRAN (R 3.5.1)</span></code></pre>
 <!-- match unopened div -->
 <div>
 

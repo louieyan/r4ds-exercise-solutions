@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -991,7 +993,7 @@ This plot facets by values of <code>cyl</code> on the x-axis:</p>
 <p>Take the first faceted plot in this section:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
 What are the advantages to using faceting instead of the colour aesthetic?
 What are the disadvantages?
@@ -1204,8 +1206,8 @@ In that example, the legend isn’t necessary since looking up the values associ
 <span class="co">#&gt; `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</span></code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> drv))</code></pre>
+<span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
+<span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> drv))</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1246,7 +1248,7 @@ In that example, the legend isn’t necessary since looking up the values associ
 </div>
 <div class="answer">
 <p>The <code>geom_col()</code> function has different default than <code>geom_bar()</code>.
-The default stat of <code>geom_col() is</code>identity()<code>stat. This means that</code>geom_col()<code>expects that the data is already preprocessed into</code>x<code>values and</code>y<code>values representing the bar height. The defult stat of</code>geom_bar()<code>is</code>count()<code>. This means that</code>geom_bar()<code>expects the</code>x<code>variable to contain multiple observations for each values, and it will handle counting the number of observations for each value of</code>x` in order to create the bar heights.ß</p>
+The default stat of <code>geom_col() is</code>identity()<code>stat. This means that</code>geom_col()<code>expects that the data is already preprocessed into</code>x<code>values and</code>y<code>values representing the bar height. The defult stat of</code>geom_bar()<code>is</code>count()<code>. This means that</code>geom_bar()<code>expects the</code>x<code>variable to contain multiple observations for each values, and it will handle counting the number of observations for each value of</code>x` in order to create the bar heights.</p>
 </div>
 </div>
 <div id="exercise-3.7.3." class="section level3 unnumbered exercise">
@@ -1330,23 +1332,40 @@ I’d fix it by using a jitter position adjustment.</p>
 <p>What parameters to <code>geom_jitter()</code> control the amount of jittering?</p>
 </div>
 <div class="answer">
-<p>From the <a href="http://docs.ggplot2.org/current/position_jitter.html">position_jitter</a> documentation, there are two arguments to jitter: <code>width</code> and <code>height</code>, which control the amount of vertical and horizontal jitter.</p>
-<p>No horizontal jitter</p>
+<p>From the <a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html"><code>geom_jitter()</code></a> documentation, there are two arguments to jitter:</p>
+<ul>
+<li><code>width</code> controls the amount of vertical displacement, and</li>
+<li><code>height</code> controls the amount of horizontal displacement.</li>
+</ul>
+<p>The defaults values of <code>width</code> and <code>height</code> will introduce noise in both directions.
+Here is what the plot looks like with the default values of <code>height</code> and <code>width</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="dv">0</span>))</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Way too much vertical jitter</p>
+<p>However, we can adjust them. Here are few examples to understand how adjusting
+these parameters affects the look of the plot.</p>
+<p>With <code>width = 0</code> there is no horizontal jitter.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="dv">0</span>, <span class="dt">height =</span> <span class="dv">15</span>))</code></pre>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="dv">0</span>))</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Only horizontal jitter:</p>
+<p>With <code>width = 20</code>, there is too much horizontal jitter.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="dv">20</span>))</code></pre>
+<p><img src="visualize_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>With <code>height = 0</code>, there is no vertical horizontal jitter:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>))</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Way too much horizontal jitter:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>, <span class="dt">width =</span> <span class="dv">20</span>))</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>With <code>height = 15</code>, there is too much vertical jitter.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">height =</span> <span class="dv">15</span>))</code></pre>
+<p><img src="visualize_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Note that the <code>height</code> and <code>width</code> parameters are in the units of the data.
+Thus <code>height = 1</code> corresponds to different relative amounts of jittering depending on the scale of the <code>y</code> variable.
+The default values of <code>height</code> and <code>width</code> are defined to be 80% of the
+<code>resolution()</code> of the data, which is the smallest non-zero distance between adjacent values of a variable.
+This means that if <code>x</code> and <code>y</code> are discrete variables, their resolutions are both
+equal to 1, and <code>height = 0.8</code> and <code>width = 0.8</code>.</p>
 </div>
 </div>
 <div id="exercise-3.8.3." class="section level3 unnumbered exercise">
@@ -1361,24 +1380,24 @@ This method reduces overplotting since no two points
 are likely to have the same location after the random noise is added to their locations.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_jitter</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>However, the reduction in overlapping comes at the cost of changing the <code>x</code> and <code>y</code>
 values of the points.</p>
 <p><code>geom_count()</code> resizes the points relative to the number of observations at each location.
 In other words, points with more observations will be larger than those with fewer observations.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_count</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This method does not change the <code>x</code> and <code>y</code> coordinates of the points.
 However, if the points are close together and counts are large, the size of some
 points can itself introduce overplotting.
 For example, in the following example a third variable mapped to color is added to the plot. In this case, <code>geom_count()</code> is less readable than <code>geom_jitter()</code> when adding a third variable as color aesthetic.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy, <span class="dt">color =</span> class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_jitter</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy, <span class="dt">color =</span> class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_count</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Unfortunately, there is no universal solution to overplotting. The costs and
 benefits of different approaches will depend on the structure of the data and the goal
 of the data scientist.</p>
@@ -1394,10 +1413,10 @@ of the data scientist.</p>
 <p>When we add <code>colour = class</code> to the box plot, the different classes within <code>drv</code> are placed side by side, i.e. dodged. If it was <code>position_identity()</code>, they would be overlapping.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(<span class="dt">x =</span> drv, <span class="dt">y =</span> hwy, <span class="dt">colour =</span> class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(<span class="dt">x =</span> drv, <span class="dt">y =</span> hwy, <span class="dt">colour =</span> class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>)</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -1412,26 +1431,26 @@ of the data scientist.</p>
 <p>This is a stacked bar chart with a single category</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>See the documentation for <a href="http://docs.ggplot2.org/current/coord_polar.html">coord_polar</a> for an example of making a pie chart. In particular, <code>theta = &quot;y&quot;</code>, meaning that the angle of the chart is the <code>y</code> variable which has to be specified.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-54-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>If <code>theta = &quot;y&quot;</code> is not specified, then you get a bull’s-eye chart</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_polar</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-54-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>If you had a multiple stacked bar chart,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity), <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>and apply polar coordinates to it, you end up with a multi-doughnut chart,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity), <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-57-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercise-3.9.2" class="section level3 unnumbered exercise">
@@ -1445,7 +1464,7 @@ of the data scientist.</p>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Highway MPG&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Highway MPG by car class&quot;</span>)</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-57-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-58-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercise-3.9.3" class="section level3 unnumbered exercise">
@@ -1477,10 +1496,10 @@ The 45 degree line makes it easy to compare the highway and city mileage to the 
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_abline</span>()
 p <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-58-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>If we didn’t include <code>geom_coord()</code>, then the line would no longer have an angle of 45 degrees.</p>
 <pre class="sourceCode r"><code class="sourceCode r">p</code></pre>
-<p><img src="visualize_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="visualize_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>On average, humans are best able to perceive differences in angles relative to 45 degrees.
 See <span class="citation">Cleveland (<a href="#ref-Cleveland1993">1993</a><a href="#ref-Cleveland1993">b</a>)</span>, <span class="citation">Cleveland (<a href="#ref-Cleveland1994">1994</a>)</span>,<span class="citation">Cleveland (<a href="#ref-Cleveland1993a">1993</a><a href="#ref-Cleveland1993a">a</a>)</span>, <span class="citation">Cleveland, McGill, and McGill (<a href="#ref-ClevelandMcGillMcGill1988">1988</a>)</span>, <span class="citation">Heer and Agrawala (<a href="#ref-HeerAgrawala2006">2006</a>)</span> for discussion on how the aspect ratio of a plot affects perception of the values it encodes, evidence that 45 degrees is generally optimal, and methods to calculate the an aspect ratio to achieve it.
 The function <code>ggthemes::bank_slopes()</code> will calculate the optimal aspect ratio to bank slopes to 45 degrees.</p>
@@ -1502,10 +1521,10 @@ The function <code>ggthemes::bank_slopes()</code> will calculate the optimal asp
 <p>Cleveland, William S. 1994. <em>The Elements of Graphing Data</em>. Hobart Press.</p>
 </div>
 <div id="ref-Cleveland1993a">
-<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis: 323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
+<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis:323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
 </div>
 <div id="ref-ClevelandMcGillMcGill1988">
-<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]: 289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
+<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]:289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
 </div>
 <div id="ref-HeerAgrawala2006">
 <p>Heer, Jeffrey, and Maneesh Agrawala. 2006. “Multi-Scale Banking to 45º.” <em>Ieee Transactions on Visualization and Computer Graphics</em> 12 (5, September/October). <a href="https://doi.org/10.1109/TVCG.2006.163" class="uri">https://doi.org/10.1109/TVCG.2006.163</a>.</p>

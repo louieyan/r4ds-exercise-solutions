@@ -308,7 +308,7 @@ Why is `FALSE & NA` not missing? Can you figure out the general rule?
 `NA ^ 0 == 1` since for all numeric values $x ^ 0 = 1$.
 
 ```r
-NA^0
+NA ^ 0
 #> [1] 1
 ```
 
@@ -674,9 +674,8 @@ To get the departure times in the number of minutes, (integer) divide `dep_time`
 
 ```r
 mutate(flights,
-  dep_time_mins = dep_time %/% 100 * 60 + dep_time %% 100,
-  sched_dep_time_mins = sched_dep_time %/% 100 * 60 + sched_dep_time %% 100
-) %>%
+       dep_time_mins = dep_time %/% 100 * 60 + dep_time %% 100,
+       sched_dep_time_mins = sched_dep_time %/% 100 * 60 + sched_dep_time %% 100) %>%
   select(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)
 #> # A tibble: 336,776 x 4
 #>   dep_time dep_time_mins sched_dep_time sched_dep_time_mins
@@ -697,9 +696,8 @@ time2mins <- function(x) {
   x %/% 100 * 60 + x %% 100
 }
 mutate(flights,
-  dep_time_mins = time2mins(dep_time),
-  sched_dep_time_mins = time2mins(sched_dep_time)
-) %>%
+       dep_time_mins = time2mins(dep_time),
+       sched_dep_time_mins = time2mins(sched_dep_time)) %>%
   select(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)
 #> # A tibble: 336,776 x 4
 #>   dep_time dep_time_mins sched_dep_time sched_dep_time_mins
@@ -729,11 +727,10 @@ Since `arr_time` and `dep_time` may be in different time zones, the `air_time` d
 
 ```r
 air_times <- mutate(flights,
-  arr_time_min = arr_time %/% 100 * 60 + arr_time %% 100,
-  dep_time_min = dep_time %/% 100 * 60 + dep_time %% 100,
-  air_time_2 = (arr_time_min - dep_time_min + 1440) %% 1440,
-  air_time_diff = air_time_2 - air_time
-)
+       arr_time_min = arr_time %/% 100 * 60 + arr_time %% 100,
+       dep_time_min = dep_time %/% 100 * 60 + dep_time %% 100,
+       air_time_2 = (arr_time_min - dep_time_min + 1440) %% 1440,
+       air_time_diff = air_time_2 - air_time)
 
 air_times %>%
   arrange(desc(abs(air_time_diff))) %>%
@@ -765,8 +762,7 @@ equation `dep_time - sched_dep_time = dep_delay`.
 
 ```r
 mutate(flights,
-  dep_delay2 = time2mins(dep_time) - time2mins(sched_dep_time)
-) %>%
+       dep_delay2 = time2mins(dep_time) - time2mins(sched_dep_time)) %>%
   filter(dep_delay2 != dep_delay) %>%
   select(dep_time, sched_dep_time, dep_delay, dep_delay2)
 #> # A tibble: 1,207 x 4
@@ -802,8 +798,7 @@ first, not tied for third or second.
 
 ```r
 mutate(flights,
-  dep_delay_rank = min_rank(-dep_delay)
-) %>%
+       dep_delay_rank = min_rank(-dep_delay)) %>%
   arrange(dep_delay_rank) %>%
   filter(dep_delay_rank <= 10)
 #> # A tibble: 10 x 20
@@ -1120,10 +1115,8 @@ canceled_delayed <-
   flights %>%
   mutate(canceled = (is.na(arr_delay) | is.na(dep_delay))) %>%
   group_by(year, month, day) %>%
-  summarise(
-    prop_canceled = mean(canceled),
-    avg_dep_delay = mean(dep_delay, na.rm = TRUE)
-  )
+  summarise(prop_canceled = mean(canceled),
+            avg_dep_delay = mean(dep_delay, na.rm = TRUE))
 
 ggplot(canceled_delayed, aes(x = avg_dep_delay, prop_canceled)) +
   geom_point() +
@@ -1225,11 +1218,9 @@ benefit of easily incorporating canceled flights.
 flights %>%
   # unknown why flights have sched_arr_time, arr_time but missing arr_delay.
   filter(!is.na(arr_delay)) %>%
-  mutate(
-    canceled = is.na(arr_time),
-    late = !canceled & arr_delay > 0
-  ) %>%
-  group_by(tailnum) %>%
+  mutate(canceled = is.na(arr_time),
+         late = !canceled & arr_delay > 0) %>%
+  group_by(tailnum) %>%  
   summarise(on_time = mean(!late)) %>%
   filter(min_rank(on_time) <= 1)
 #> # A tibble: 104 x 2
@@ -1300,12 +1291,10 @@ For each destination, compute the total minutes of delay. For each flight, compu
 
 ```r
 flights %>%
-  filter(!is.na(arr_delay), arr_delay > 0) %>%
+  filter(!is.na(arr_delay), arr_delay > 0) %>%  
   group_by(dest) %>%
-  mutate(
-    arr_delay_total = sum(arr_delay),
-    arr_delay_prop = arr_delay / arr_delay_total
-  )
+  mutate(arr_delay_total = sum(arr_delay),
+         arr_delay_prop = arr_delay / arr_delay_total)
 #> # A tibble: 133,004 x 21
 #> # Groups:   dest [103]
 #>    year month   day dep_time sched_dep_time dep_delay arr_time
@@ -1393,11 +1382,9 @@ A common approach to finding unusual observations would be to calculate the z-sc
 flights_with_zscore <- flights %>%
   filter(!is.na(air_time)) %>%
   group_by(dest, origin) %>%
-  mutate(
-    air_time_mean = mean(air_time),
-    air_time_sd = sd(air_time),
-    n = n()
-  ) %>%
+  mutate(air_time_mean = mean(air_time),
+         air_time_sd = sd(air_time),
+         n = n()) %>%
   ungroup() %>%
   mutate(z_score = (air_time - air_time_mean) / air_time_sd)
 ```

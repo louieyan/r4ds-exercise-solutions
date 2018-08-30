@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -717,7 +719,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">row_number</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(x, y, z, id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>id) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>id)  <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_rug</span>() <span class="op">+</span>
@@ -766,7 +768,7 @@ I don’t know if I would have figured that out before; maybe if there was data 
 <p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ending =</span> price <span class="op">%%</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(ending <span class="op">&gt;=</span><span class="st"> </span><span class="dv">500</span>, ending <span class="op">&lt;=</span><span class="st"> </span><span class="dv">800</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(ending <span class="op">&gt;=</span><span class="st"> </span><span class="dv">500</span>, ending <span class="op">&lt;=</span><span class="st"> </span><span class="dv">800</span>)  <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ending)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
@@ -791,9 +793,9 @@ I don’t know if I would have figured that out before; maybe if there was data 
 <p>I don’t know exactly the process behind how carats are measured, but some way or another some diamonds carat values are being “rounded up”, because presumably there is a premium for a 1 carat diamond vs. a 0.99 carat diamond beyond the expected increase in price due to a 0.01 carat increase.</p>
 <p>To check this intuition, we’d want to look at the number of diamonds in each carat range to seem if there is an abnormally low number at 0.99 carats, and an abnormally high number at 1 carat.</p>
 <pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(carat <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.9</span>, carat <span class="op">&lt;=</span><span class="st"> </span><span class="fl">1.1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">count</span>(carat) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">30</span>)
+<span class="st">   </span><span class="kw">filter</span>(carat <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.9</span>, carat <span class="op">&lt;=</span><span class="st"> </span><span class="fl">1.1</span>) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">count</span>(carat) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">30</span>)
 <span class="co">#&gt; # A tibble: 21 x 2</span>
 <span class="co">#&gt;    carat     n</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;int&gt;</span>
@@ -844,7 +846,7 @@ the histogram looks.</p>
 <span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">3000</span>)
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
 <span class="co">#&gt; Warning: Removed 14714 rows containing non-finite values (stat_bin).</span>
-<span class="co">#&gt; Warning: Removed 6 rows containing missing values (geom_bar).</span></code></pre>
+<span class="co">#&gt; Warning: Removed 5 rows containing missing values (geom_bar).</span></code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -911,7 +913,7 @@ Since the numeric value of the <code>NA</code> observations is unknown, they can
     <span class="dt">sched_dep_time =</span> sched_hour <span class="op">+</span><span class="st"> </span>sched_min <span class="op">/</span><span class="st"> </span><span class="dv">60</span>
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> sched_dep_time, <span class="dt">x =</span> canceled))</code></pre>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> sched_dep_time, <span class="dt">x =</span> canceled))</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1031,7 +1033,7 @@ smoothness of the distribution.</p>
 <p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cut, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>cut, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price)) <span class="op">+</span>
@@ -1057,52 +1059,32 @@ List them and briefly describe what each one does.</p>
 <p>I’ll use the <code>mpg</code> box plot example since these methods display individual points, they are better suited for smaller datasets.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ggbeeswarm&quot;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(
-    <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-    <span class="dt">y =</span> hwy
-  ))</code></pre>
+<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy))</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_quasirandom</span>(
-    <span class="dt">mapping =</span> <span class="kw">aes</span>(
-      <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-      <span class="dt">y =</span> hwy
-    ),
-    <span class="dt">method =</span> <span class="st">&quot;tukey&quot;</span>
-  )</code></pre>
+<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy),
+                   <span class="dt">method =</span> <span class="st">&quot;tukey&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_quasirandom</span>(
-    <span class="dt">mapping =</span> <span class="kw">aes</span>(
-      <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-      <span class="dt">y =</span> hwy
-    ),
-    <span class="dt">method =</span> <span class="st">&quot;tukeyDense&quot;</span>
-  )</code></pre>
+<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy),
+                   <span class="dt">method =</span> <span class="st">&quot;tukeyDense&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_quasirandom</span>(
-    <span class="dt">mapping =</span> <span class="kw">aes</span>(
-      <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-      <span class="dt">y =</span> hwy
-    ),
-    <span class="dt">method =</span> <span class="st">&quot;frowney&quot;</span>
-  )</code></pre>
+<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy),
+                   <span class="dt">method =</span> <span class="st">&quot;frowney&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_quasirandom</span>(
-    <span class="dt">mapping =</span> <span class="kw">aes</span>(
-      <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-      <span class="dt">y =</span> hwy
-    ),
-    <span class="dt">method =</span> <span class="st">&quot;smiley&quot;</span>
-  )</code></pre>
+<span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy),
+                   <span class="dt">method =</span> <span class="st">&quot;smiley&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_beeswarm</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(
-    <span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
-    <span class="dt">y =</span> hwy
-  ))</code></pre>
+<span class="st">  </span><span class="kw">geom_beeswarm</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, <span class="dt">FUN =</span> median),
+                                 <span class="dt">y =</span> hwy))</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1125,7 +1107,7 @@ diamonds <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> cut)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> prop)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_viridis</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="co"># from the viridis colour palette library</span></code></pre>
+<span class="st">  </span><span class="kw">scale_fill_viridis</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="co">#from the viridis colour palette library</span></code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Similarly, to scale by the distribution of <code>color</code> within <code>cut</code>,</p>
 <pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
@@ -1192,9 +1174,9 @@ flights <span class="op">%&gt;%</span>
 If at all possible, labels should be horizontal because that is easier to read.</p>
 <p>However, switching the order doesn’t result in overlapping labels.</p>
 <pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">count</span>(color, cut) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(color, cut) <span class="op">%&gt;%</span><span class="st">  </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> color, <span class="dt">x =</span> cut)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> n))</code></pre>
+<span class="st">    </span><span class="kw">geom_tile</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> n))</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Another justification, for switching the order is that the larger numbers are at the top when <code>x = color</code> and <code>y = cut</code>, and that lowers the cognitive burden of interpreting the plot.</p>
 </div>
@@ -1218,17 +1200,13 @@ but not so much as to remove all patterns.</p>
 <p>The number of bins in the frequency plots will generally
 need to be less than those in the box plots in order to be
 interpretable.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(
-  <span class="dt">data =</span> diamonds,
-  <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">cut_number</span>(carat, <span class="dv">5</span>), <span class="dt">x =</span> price)
-) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">cut_number</span>(carat, <span class="dv">5</span>), <span class="dt">x =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_freqpoly</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Carat&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(
-  <span class="dt">data =</span> diamonds,
-  <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">cut_width</span>(carat, <span class="fl">0.5</span>, <span class="dt">boundary =</span> <span class="dv">0</span>), <span class="dt">x =</span> price)
-) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">cut_width</span>(carat, <span class="fl">0.5</span>, <span class="dt">boundary =</span> <span class="dv">0</span>), <span class="dt">x =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_freqpoly</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Carat&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-38-1.png" width="70%" style="display: block; margin: auto;" /></p>
@@ -1281,7 +1259,7 @@ Thus we will observe large diamonds with a wider variety of cut, clarity, and co
 Here are a few options that I tried.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hex</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cut, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>cut, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_viridis</span>()</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">cut_number</span>(carat, <span class="dv">5</span>), <span class="dt">y =</span> price, <span class="dt">colour =</span> cut)) <span class="op">+</span>
@@ -1328,10 +1306,10 @@ A binned plot would not reveal these outliers, and may lead us to conclude that 
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-HofmannWickhamKafadar2017">
-<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis: 469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
+<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis:469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
 </div>
 <div id="ref-HintzeNelson1998">
-<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis: 181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
+<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis:181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
 </div>
 </div>
             </section>

@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -785,10 +787,8 @@ Let’s filter out the non-responses, no answers, others, not-applicable, or
 no denomination, to leave only answers to denominations.
 After doing that, the only remaining responses are “Protestant”.</p>
 <pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>denom <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(
-    <span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Other&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Not applicable&quot;</span>,
-    <span class="st">&quot;No denomination&quot;</span>
-  )) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>denom <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Other&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Not applicable&quot;</span>,
+                       <span class="st">&quot;No denomination&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>(relig)
 <span class="co">#&gt; # A tibble: 1 x 2</span>
 <span class="co">#&gt;   relig          n</span>
@@ -929,22 +929,17 @@ values.</p>
 <span class="co">#&gt;  [7] &quot;Independent&quot;        &quot;Ind,near dem&quot;       &quot;Not str democrat&quot;  </span>
 <span class="co">#&gt; [10] &quot;Strong democrat&quot;</span></code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">partyid =</span>
-      <span class="kw">fct_collapse</span>(partyid,
-        <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Other party&quot;</span>),
-        <span class="dt">rep =</span> <span class="kw">c</span>(<span class="st">&quot;Strong republican&quot;</span>, <span class="st">&quot;Not str republican&quot;</span>),
-        <span class="dt">ind =</span> <span class="kw">c</span>(<span class="st">&quot;Ind,near rep&quot;</span>, <span class="st">&quot;Independent&quot;</span>, <span class="st">&quot;Ind,near dem&quot;</span>),
-        <span class="dt">dem =</span> <span class="kw">c</span>(<span class="st">&quot;Not str democrat&quot;</span>, <span class="st">&quot;Strong democrat&quot;</span>)
-      )
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">count</span>(year, partyid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">partyid =</span>
+           <span class="kw">fct_collapse</span>(partyid,
+                        <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Other party&quot;</span>),
+                        <span class="dt">rep =</span> <span class="kw">c</span>(<span class="st">&quot;Strong republican&quot;</span>, <span class="st">&quot;Not str republican&quot;</span>),
+                        <span class="dt">ind =</span> <span class="kw">c</span>(<span class="st">&quot;Ind,near rep&quot;</span>, <span class="st">&quot;Independent&quot;</span>, <span class="st">&quot;Ind,near dem&quot;</span>),
+                        <span class="dt">dem =</span> <span class="kw">c</span>(<span class="st">&quot;Not str democrat&quot;</span>, <span class="st">&quot;Strong democrat&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(year, partyid)  <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(
-    <span class="dt">x =</span> year, <span class="dt">y =</span> p,
-    <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(partyid, year, p)
-  )) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> p,
+             <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(partyid, year, p))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Party ID.&quot;</span>)</code></pre>
@@ -965,21 +960,15 @@ values.</p>
 <span class="co">#&gt; [13] &quot;$3000 to 3999&quot;  &quot;$1000 to 2999&quot;  &quot;Lt $1000&quot;       &quot;Not applicable&quot;</span></code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;stringr&quot;</span>)
 gss_cat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">rincome =</span>
-      <span class="kw">fct_collapse</span>(
-        rincome,
-        <span class="st">`</span><span class="dt">Unknown</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Refused&quot;</span>, <span class="st">&quot;Not applicable&quot;</span>),
-        <span class="st">`</span><span class="dt">Lt $5000</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Lt $1000&quot;</span>, <span class="kw">str_c</span>(
-          <span class="st">&quot;$&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;1000&quot;</span>, <span class="st">&quot;3000&quot;</span>, <span class="st">&quot;4000&quot;</span>),
-          <span class="st">&quot; to &quot;</span>, <span class="kw">c</span>(<span class="st">&quot;2999&quot;</span>, <span class="st">&quot;3999&quot;</span>, <span class="st">&quot;4999&quot;</span>)
-        )),
-        <span class="st">`</span><span class="dt">$5000 to 10000</span><span class="st">`</span> =<span class="st"> </span><span class="kw">str_c</span>(
-          <span class="st">&quot;$&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;5000&quot;</span>, <span class="st">&quot;6000&quot;</span>, <span class="st">&quot;7000&quot;</span>, <span class="st">&quot;8000&quot;</span>),
-          <span class="st">&quot; to &quot;</span>, <span class="kw">c</span>(<span class="st">&quot;5999&quot;</span>, <span class="st">&quot;6999&quot;</span>, <span class="st">&quot;7999&quot;</span>, <span class="st">&quot;9999&quot;</span>)
-        )
-      )
-  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rincome =</span>
+           <span class="kw">fct_collapse</span>(
+             rincome,
+             <span class="st">`</span><span class="dt">Unknown</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Refused&quot;</span>, <span class="st">&quot;Not applicable&quot;</span>),
+             <span class="st">`</span><span class="dt">Lt $5000</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Lt $1000&quot;</span>, <span class="kw">str_c</span>(<span class="st">&quot;$&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;1000&quot;</span>, <span class="st">&quot;3000&quot;</span>, <span class="st">&quot;4000&quot;</span>),
+                                              <span class="st">&quot; to &quot;</span>, <span class="kw">c</span>(<span class="st">&quot;2999&quot;</span>, <span class="st">&quot;3999&quot;</span>, <span class="st">&quot;4999&quot;</span>))),
+             <span class="st">`</span><span class="dt">$5000 to 10000</span><span class="st">`</span> =<span class="st"> </span><span class="kw">str_c</span>(<span class="st">&quot;$&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;5000&quot;</span>, <span class="st">&quot;6000&quot;</span>, <span class="st">&quot;7000&quot;</span>, <span class="st">&quot;8000&quot;</span>),
+                                      <span class="st">&quot; to &quot;</span>, <span class="kw">c</span>(<span class="st">&quot;5999&quot;</span>, <span class="st">&quot;6999&quot;</span>, <span class="st">&quot;7999&quot;</span>, <span class="st">&quot;9999&quot;</span>))
+           )) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rincome)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>

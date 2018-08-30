@@ -453,7 +453,7 @@ Take the first faceted plot in this section:
 ```r
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_wrap(~class, nrow = 2)
+  facet_wrap(~ class, nrow = 2)
 ```
 
 
@@ -801,8 +801,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 
 ```r
 ggplot(mpg, aes(x = displ, y = hwy)) +
-  geom_point(size = 4, color = "white") +
-  geom_point(aes(colour = drv))
+   geom_point(size = 4, color = "white") +
+   geom_point(aes(colour = drv))
 ```
 
 
@@ -869,7 +869,7 @@ The default stat of `geom_col() is `identity()` stat.
 This means that `geom_col()` expects that the data is already preprocessed into `x` values and `y` values representing the bar height.
 The defult stat of `geom_bar()` is `count()`.
 This means that `geom_bar()` expects the `x` variable to contain multiple observations for each values, and it will handle counting the number of observations
-for each value of `x` in order to create the bar heights.ß
+for each value of `x` in order to create the bar heights.
 
 </div>
 
@@ -1000,9 +1000,13 @@ What parameters to `geom_jitter()` control the amount of jittering?
 
 <div class="answer">
 
-From the [position_jitter](http://docs.ggplot2.org/current/position_jitter.html) documentation, there are two arguments to jitter: `width` and `height`, which control the amount of vertical and horizontal jitter.
+From the [`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html) documentation, there are two arguments to jitter:
 
-No horizontal jitter
+- `width` controls the amount of vertical displacement, and
+- `height` controls the amount of horizontal displacement.
+
+The defaults values of `width` and `height` will introduce noise in both directions.
+Here is what the plot looks like with the default values of `height` and `width`.
 
 ```r
 ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
@@ -1013,18 +1017,35 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 
 \begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
-Way too much vertical jitter
+However, we can adjust them. Here are few examples to understand how adjusting
+these parameters affects the look of the plot.
+
+With `width = 0` there is no horizontal jitter.
+
 
 ```r
 ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
-  geom_point(position = position_jitter(width = 0, height = 15))
+  geom_point(position = position_jitter(width = 0))
 ```
 
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
-Only horizontal jitter:
+With `width = 20`, there is too much horizontal jitter.
+
+
+```r
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point(position = position_jitter(width = 20))
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-44-1} \end{center}
+
+With `height = 0`, there is no vertical  horizontal jitter:
+
 
 ```r
 ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
@@ -1033,18 +1054,26 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
-Way too much horizontal jitter:
+With `height = 15`, there is too much vertical jitter.
+
 
 ```r
 ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
-  geom_point(position = position_jitter(height = 0, width = 20))
+  geom_point(position = position_jitter(height = 15))
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-46-1} \end{center}
+
+Note that the `height` and `width` parameters are in the units of the data.
+Thus `height = 1` corresponds to different relative amounts of jittering depending on the scale of the `y` variable.
+The default values of `height` and `width` are defined to be 80% of the 
+`resolution()` of the data, which is the smallest non-zero distance between adjacent values of a variable. 
+This means that if `x` and `y` are discrete variables, their resolutions are both
+equal to 1, and `height = 0.8` and `width = 0.8`.
 
 </div>
 
@@ -1069,7 +1098,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 However, the reduction in overlapping comes at the cost of changing the `x` and `y`
 values of the points.
@@ -1085,7 +1114,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 This method does not change the `x` and `y` coordinates of the points.
 However, if the points are close together and counts are large, the size of some
@@ -1100,7 +1129,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy, color = class)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 
 ```r
@@ -1110,7 +1139,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy, color = class)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Unfortunately, there is no universal solution to overplotting. The costs and
 benefits of different approaches will depend on the structure of the data and the goal
@@ -1137,7 +1166,7 @@ ggplot(data = mpg, aes(x = drv, y = hwy, colour = class)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 
 ```r
@@ -1147,7 +1176,7 @@ ggplot(data = mpg, aes(x = drv, y = hwy, colour = class)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 </div>
 
@@ -1169,7 +1198,7 @@ ggplot(mpg, aes(x = factor(1), fill = drv)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 See the documentation for [coord_polar](http://docs.ggplot2.org/current/coord_polar.html) for an example of making a pie chart. In particular, `theta = "y"`, meaning that the angle of the chart is the `y` variable which has to be specified.
 
@@ -1182,7 +1211,7 @@ ggplot(mpg, aes(x = factor(1), fill = drv)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 If `theta = "y"` is not specified, then you get a bull’s-eye chart
 
@@ -1194,7 +1223,7 @@ ggplot(mpg, aes(x = factor(1), fill = drv)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 If you had a multiple stacked bar chart,
 
@@ -1205,7 +1234,7 @@ ggplot(data = diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 and apply polar coordinates to it, you end up with a multi-doughnut chart,
 
@@ -1217,7 +1246,7 @@ ggplot(data = diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 </div>
 
@@ -1241,7 +1270,7 @@ ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-58-1} \end{center}
 
 </div>
 
@@ -1287,7 +1316,7 @@ p + coord_fixed()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-59-1} \end{center}
 
 If we didn't include `geom_coord()`, then the line would no longer have an angle of 45 degrees.
 
@@ -1297,7 +1326,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-59-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 On average, humans are best able to perceive differences in angles relative to 45 degrees.
 See @Cleveland1993, @Cleveland1994,@Cleveland1993a, @ClevelandMcGillMcGill1988,  @HeerAgrawala2006 for discussion on how the aspect ratio of a plot affects perception of the values it encodes, evidence that 45 degrees is generally optimal, and methods to calculate the an aspect ratio to achieve it.

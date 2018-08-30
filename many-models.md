@@ -58,7 +58,7 @@ by_country
 
 ```r
 unnest(by_country, resids) %>%
-  ggplot(aes(year, resid)) +
+ggplot(aes(year, resid)) +
   geom_line(aes(group = country), alpha = 1 / 3) +
   geom_smooth(se = FALSE)
 #> `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'

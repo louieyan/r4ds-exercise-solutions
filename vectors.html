@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -766,7 +768,7 @@ numeric and special values.</caption>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     abs(x - y) &lt; tol</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x7fe8ee532978&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x560511f2ce48&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:dplyr&gt;</span></code></pre>
 <p>Instead of checking for exact equality, it checks that two numbers are within a certain tolerance, <code>tol</code>.
 By default the tolerance is set to the square root of <code>.Machine$double.eps</code>, which is the smallest floating point number that the computer can represent.</p>
@@ -1060,7 +1062,7 @@ provided (the opposite of <code>setNames()</code> behavior).</p>
 <pre class="sourceCode r"><code class="sourceCode r">purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), toupper)
 <span class="co">#&gt; A B C </span>
 <span class="co">#&gt; 1 2 3</span>
-purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), <span class="op">~</span><span class="kw">toupper</span>(.))
+purrr<span class="op">::</span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>), <span class="op">~</span><span class="st"> </span><span class="kw">toupper</span>(.))
 <span class="co">#&gt; A B C </span>
 <span class="co">#&gt; 1 2 3</span></code></pre>
 <p>The <code>set_names()</code> function also checks that the length of the names argument is the
@@ -1092,7 +1094,7 @@ named, and will set the missing names to <code>NA</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">last_value &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
   <span class="co"># check for case with no length</span>
   <span class="cf">if</span> (<span class="kw">length</span>(x)) {
-    x[[<span class="kw">length</span>(x)]]
+    x[[<span class="kw">length</span>(x)]]  
   } <span class="cf">else</span> {
     x
   }
@@ -1110,7 +1112,7 @@ named, and will set the missing names to <code>NA</code>.</p>
     x[<span class="kw">seq_along</span>(x) <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]
   } <span class="cf">else</span> {
     x
-  }
+  }  
 }
 <span class="kw">even_indices</span>(<span class="kw">numeric</span>())
 <span class="co">#&gt; numeric(0)</span>
@@ -1293,12 +1295,12 @@ You could also use various diagramming, drawing, or presentation software, inclu
 <code>list(a, b, list(c, d), list(e, f))</code>
 is</p>
 <div id="htmlwidget-14d5992801777f4abbc5" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"digraph nested_set_1 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_abcdef {\n    node[style=filled,fillcolor=gray90]\n    \"b\"\n    \"a\"\n    subgraph cluster_ef {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"f\"\n      \"e\"\n    }\n    subgraph cluster_cd {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"d\"\n      \"c\"\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_1.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 <li><p>The nested set diagram for
 <code>list(list(list(list(list(list(a))))))1</code>
 is as follows.</p>
 <div id="htmlwidget-df2c08526632671063f9" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"digraph nested_set_2 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_1 {\n    subgraph cluster_2 {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      subgraph cluster_3 {\n        graph[fillcolor=gray80]\n        subgraph cluster_4 {\n          graph[fillcolor=gray70]\n          subgraph cluster_5 {\n            graph[fillcolor=gray60]\n            subgraph cluster_6 {\n              graph[fillcolor=gray50]\n              node[style=filled,fillcolor=gray40]\n              \"a\"\n            }\n          }\n        }\n      }\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_2.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 </ol>
 </div>
 </div>

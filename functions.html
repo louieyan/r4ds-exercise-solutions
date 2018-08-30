@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-17">
+<meta name="date" content="2018-08-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -812,7 +814,7 @@ where the sample mean is <span class="math inline">\(\bar{x} = (\sum x_i) / n\)<
 <pre class="sourceCode r"><code class="sourceCode r">variance &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) {
   n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
   m &lt;-<span class="st"> </span><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-  sq_err &lt;-<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>m)<span class="op">^</span><span class="dv">2</span>
+  sq_err &lt;-<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>m) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>
   <span class="kw">sum</span>(sq_err) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
 }
 <span class="kw">var</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
@@ -834,7 +836,7 @@ The corresponding function is:</p>
   n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
   m &lt;-<span class="st"> </span><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> na.rm)
   s &lt;-<span class="st"> </span><span class="kw">sd</span>(x, <span class="dt">na.rm =</span> na.rm)
-  n <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(((x <span class="op">-</span><span class="st"> </span>m) <span class="op">/</span><span class="st"> </span>s)<span class="op">^</span><span class="dv">3</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)
+  n <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(((x <span class="op">-</span><span class="st"> </span>m) <span class="op">/</span><span class="st"> </span>s) <span class="op">^</span><span class="st"> </span><span class="dv">3</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)
 }
 <span class="kw">skewness</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">100</span>))
 <span class="co">#&gt; [1] 1.99</span></code></pre>
@@ -849,15 +851,11 @@ The corresponding function is:</p>
 <pre class="sourceCode r"><code class="sourceCode r">both_na &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
   <span class="kw">sum</span>(<span class="kw">is.na</span>(x) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.na</span>(y))
 }
-<span class="kw">both_na</span>(
-  <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),
-  <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">2</span>)
-)
+<span class="kw">both_na</span>(<span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>,  <span class="dv">1</span>, <span class="dv">2</span>),
+        <span class="kw">c</span>(<span class="ot">NA</span>,  <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">2</span>))
 <span class="co">#&gt; [1] 1</span>
-<span class="kw">both_na</span>(
-  <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>),
-  <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>)
-)
+<span class="kw">both_na</span>(<span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>,  <span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>),
+        <span class="kw">c</span>(<span class="ot">NA</span>,  <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">1</span>))
 <span class="co">#&gt; [1] 3</span></code></pre>
 </div>
 </div>
@@ -887,7 +885,7 @@ Hopping through the forest<br />
 Scooping up the field mice<br />
 And bopping them on the head</p>
 <p>Down came the Good Fairy, and she said<br />
-&quot;Little bunny Foo Foo<br />
+“Little bunny Foo Foo<br />
 I don’t want to see you  
 Scooping up the field mice</p>
 <p>And bopping them on the head.<br />
@@ -904,13 +902,11 @@ And the moral of this story is: <em>hare today, goon tomorrow.</em></p>
 </blockquote>
 <p>Here’s one way of writing this</p>
 <pre class="sourceCode r"><code class="sourceCode r">threat &lt;-<span class="st"> </span><span class="cf">function</span>(chances) {
-  <span class="kw">give_chances</span>(
-    <span class="dt">from =</span> Good_Fairy,
-    <span class="dt">to =</span> foo_foo,
-    <span class="dt">number =</span> chances,
-    <span class="dt">condition =</span> <span class="st">&quot;Don&#39;t behave&quot;</span>,
-    <span class="dt">consequence =</span> turn_into_goon
-  )
+  <span class="kw">give_chances</span>(<span class="dt">from =</span> Good_Fairy,
+               <span class="dt">to =</span> foo_foo,
+               <span class="dt">number =</span> chances,
+               <span class="dt">condition =</span> <span class="st">&quot;Don&#39;t behave&quot;</span>,
+               <span class="dt">consequence =</span> turn_into_goon)  
 }
 
 lyric &lt;-<span class="st"> </span><span class="cf">function</span>() {
@@ -920,15 +916,11 @@ lyric &lt;-<span class="st"> </span><span class="cf">function</span>() {
 <span class="st">    </span><span class="kw">bop</span>(<span class="dt">on =</span> head)
 
   <span class="kw">down_came</span>(Good_Fairy)
-  <span class="kw">said</span>(
-    Good_Fairy,
-    <span class="kw">c</span>(
-      <span class="st">&quot;Little bunny Foo Foo&quot;</span>,
-      <span class="st">&quot;I don&#39;t want to see you&quot;</span>,
-      <span class="st">&quot;Scooping up the field mice&quot;</span>,
-      <span class="st">&quot;And bopping them on the head.&quot;</span>
-    )
-  )
+  <span class="kw">said</span>(Good_Fairy,
+      <span class="kw">c</span>(<span class="st">&quot;Little bunny Foo Foo&quot;</span>,
+        <span class="st">&quot;I don&#39;t want to see you&quot;</span>,
+        <span class="st">&quot;Scooping up the field mice&quot;</span>,
+        <span class="st">&quot;And bopping them on the head.&quot;</span>))
 }
 
 <span class="kw">lyric</span>()
@@ -1056,7 +1048,7 @@ For example, <code>dnorm()</code>, <code>dbinom()</code>, <code>dunif()</code>, 
   }
 }
 <span class="kw">greet</span>()
-<span class="co">#&gt; [1] &quot;good morning&quot;</span>
+<span class="co">#&gt; [1] &quot;good afternoon&quot;</span>
 <span class="kw">greet</span>(<span class="kw">ymd_h</span>(<span class="st">&quot;2017-01-08:05&quot;</span>))
 <span class="co">#&gt; [1] &quot;good morning&quot;</span>
 <span class="kw">greet</span>(<span class="kw">ymd_h</span>(<span class="st">&quot;2017-01-08:13&quot;</span>))
@@ -1119,19 +1111,15 @@ you create the function.</p>
 }</code></pre>
 <p>How would you change the call to <code>cut()</code> if I’d used <code>&lt;</code> instead of <code>&lt;=</code>? What is the other chief advantage of cut() for this problem? (Hint: what happens if you have many values in temp?)</p>
 <pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">50</span>, <span class="dt">by =</span> <span class="dv">5</span>)
-<span class="kw">cut</span>(temp, <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="ot">Inf</span>),
-  <span class="dt">right =</span> <span class="ot">TRUE</span>,
-  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;freezing&quot;</span>, <span class="st">&quot;cold&quot;</span>, <span class="st">&quot;cool&quot;</span>, <span class="st">&quot;warm&quot;</span>, <span class="st">&quot;hot&quot;</span>)
-)
+<span class="kw">cut</span>(temp, <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="ot">Inf</span>), <span class="dt">right =</span> <span class="ot">TRUE</span>,
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;freezing&quot;</span>, <span class="st">&quot;cold&quot;</span>, <span class="st">&quot;cool&quot;</span>, <span class="st">&quot;warm&quot;</span>, <span class="st">&quot;hot&quot;</span>))
 <span class="co">#&gt;  [1] freezing freezing freezing cold     cold     cool     cool    </span>
 <span class="co">#&gt;  [8] warm     warm     hot      hot      hot      hot     </span>
 <span class="co">#&gt; Levels: freezing cold cool warm hot</span></code></pre>
 <p>To have intervals open on the left (using <code>&lt;</code>), I change the argument to <code>right = FALSE</code>,</p>
 <pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">50</span>, <span class="dt">by =</span> <span class="dv">5</span>)
-<span class="kw">cut</span>(temp, <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="ot">Inf</span>),
-  <span class="dt">right =</span> <span class="ot">FALSE</span>,
-  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;freezing&quot;</span>, <span class="st">&quot;cold&quot;</span>, <span class="st">&quot;cool&quot;</span>, <span class="st">&quot;warm&quot;</span>, <span class="st">&quot;hot&quot;</span>)
-)
+<span class="kw">cut</span>(temp, <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="ot">Inf</span>), <span class="dt">right =</span> <span class="ot">FALSE</span>,
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;freezing&quot;</span>, <span class="st">&quot;cold&quot;</span>, <span class="st">&quot;cool&quot;</span>, <span class="st">&quot;warm&quot;</span>, <span class="st">&quot;hot&quot;</span>))
 <span class="co">#&gt;  [1] freezing freezing cold     cold     cool     cool     warm    </span>
 <span class="co">#&gt;  [8] warm     hot      hot      hot      hot      hot     </span>
 <span class="co">#&gt; Levels: freezing cold cool warm hot</span></code></pre>
@@ -1213,7 +1201,7 @@ and no other unnamed default value is present, this code will return <code>NULL<
   <span class="dt">b =</span> <span class="st">&quot;ab&quot;</span>,
   <span class="dt">c =</span> <span class="st">&quot;cd&quot;</span>,
   <span class="dt">d =</span> <span class="st">&quot;cd&quot;</span>,
-  <span class="ot">NULL</span> <span class="co"># value to return if x not matched</span>
+  <span class="ot">NULL</span>  <span class="co"># value to return if x not matched</span>
 )</code></pre>
 </div>
 </div>
@@ -1272,10 +1260,8 @@ and <code>stringr::str_length()</code> to calculate the number of characters in 
 <pre class="sourceCode r"><code class="sourceCode r">rule &lt;-<span class="st"> </span><span class="cf">function</span>(..., <span class="dt">pad =</span> <span class="st">&quot;-&quot;</span>) {
   title &lt;-<span class="st"> </span><span class="kw">paste0</span>(...)
   width &lt;-<span class="st"> </span><span class="kw">getOption</span>(<span class="st">&quot;width&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="kw">nchar</span>(title) <span class="op">-</span><span class="st"> </span><span class="dv">5</span>
-  padding &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_dup</span>(
-    pad,
-    <span class="kw">ceiling</span>(width <span class="op">/</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_length</span>(title))
-  ) <span class="op">%&gt;%</span>
+  padding &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_dup</span>(pad,
+                              <span class="kw">ceiling</span>(width <span class="op">/</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_length</span>(title))) <span class="op">%&gt;%</span>
 <span class="st">    </span>stringr<span class="op">::</span><span class="kw">str_trunc</span>(width)
   <span class="kw">cat</span>(title, <span class="st">&quot; &quot;</span>, padding, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
 }
@@ -1323,7 +1309,7 @@ The first value, <code>&quot;pearson&quot;</code>, is used by default.</p>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-DoaneSeward2011">
-<p>Doane, David P., and Lori E. Seward. 2011. “Measuring Skewness: A Forgotten Statistic?” <em>Journal of Statistics Education</em> 19 (2). Taylor &amp; Francis: null. <a href="https://doi.org/10.1080/10691898.2011.11889611" class="uri">https://doi.org/10.1080/10691898.2011.11889611</a>.</p>
+<p>Doane, David P., and Lori E. Seward. 2011. “Measuring Skewness: A Forgotten Statistic?” <em>Journal of Statistics Education</em> 19 (2). Taylor &amp; Francis:null. <a href="https://doi.org/10.1080/10691898.2011.11889611" class="uri">https://doi.org/10.1080/10691898.2011.11889611</a>.</p>
 </div>
 </div>
             </section>
