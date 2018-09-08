@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-07">
+<meta name="date" content="2018-09-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1220,8 +1220,8 @@ In that example, the legend isn’t necessary since looking up the values associ
 <p>What is the default geom associated with <code>stat_summary()</code>? How could you rewrite the previous plot to use that geom function instead of the stat function?</p>
 </div>
 <div class="answer">
-<p>The default geom for <a href="http://docs.ggplot2.org/current/stat_summary.html"><code>stat_summary()</code></a> is <code>geom_pointrange()</code> (see the <code>stat</code>) argument.</p>
-<p>But, the default <code>stat</code> for <a href="http://docs.ggplot2.org/current/geom_linerange.html"><code>geom_pointrange()</code></a> is <code>identity()</code>, so use <code>geom_pointrange(stat = &quot;summary&quot;)</code>.</p>
+<p>The default geom for <a href="https://ggplot2.tidyverse.org/reference/stat_summary.html"><code>stat_summary()</code></a> is <code>geom_pointrange()</code> (see the <code>stat</code>) argument.</p>
+<p>But, the default <code>stat</code> for <a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html"><code>geom_pointrange()</code></a> is <code>identity()</code>, so use <code>geom_pointrange(stat = &quot;summary&quot;)</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>(
     <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> depth),
@@ -1259,7 +1259,8 @@ Read through the documentation and make a list of all the pairs.
 What do they have in common?</p>
 </div>
 <div class="answer">
-<p>See the <a href="http://docs.ggplot2.org/current/">ggplot2 documentation</a></p>
+<p>See the <a href="https://ggplot2.tidyverse.org/reference/">ggplot2 documentation</a>.</p>
+<p><strong>TODO</strong></p>
 </div>
 </div>
 <div id="exercise-3.7.4." class="section level3 unnumbered exercise">
@@ -1410,7 +1411,7 @@ of the data scientist.</p>
 <p>What’s the default position adjustment for <code>geom_boxplot()</code>? Create a visualization of the mpg dataset that demonstrates it.</p>
 </div>
 <div class="answer">
-<p>The default position for <code>geom_boxplot()</code> is <code>position_dodge()</code> (see its <a href="http://docs.ggplot2.org/current/geom_boxplot.html">docs</a>).</p>
+<p>The default position for <code>geom_boxplot()</code> is <code>position_dodge()</code> (see its <a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">docs</a>).</p>
 <p>When we add <code>colour = class</code> to the box plot, the different classes within <code>drv</code> are placed side by side, i.e. dodged. If it was <code>position_identity()</code>, they would be overlapping.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(<span class="dt">x =</span> drv, <span class="dt">y =</span> hwy, <span class="dt">colour =</span> class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre>
@@ -1433,7 +1434,7 @@ of the data scientist.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
 <p><img src="visualize_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>See the documentation for <a href="http://docs.ggplot2.org/current/coord_polar.html">coord_polar</a> for an example of making a pie chart. In particular, <code>theta = &quot;y&quot;</code>, meaning that the angle of the chart is the <code>y</code> variable which has to be specified.</p>
+<p>See the documentation for <a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a> for an example of making a pie chart. In particular, <code>theta = &quot;y&quot;</code>, meaning that the angle of the chart is the <code>y</code> variable which has to be specified.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre>
@@ -1480,7 +1481,7 @@ However, this projection must be applied to all geoms in the plot.
 <code>coord_quickmap()</code> uses a faster, but approximate map projection.
 This approximation ignores the curvature of Earth and adjusts the map for the latitude/longitude ratio.
 This transformation is quicker than <code>coord_map()</code> because the coordinates of the individual geoms do not need to be transformed.</p>
-<p>The <strong>ggplot2</strong> <a href="http://docs.ggplot2.org/current/coord_map.html">documentation</a>
+<p>The <strong>ggplot2</strong> <a href="https://ggplot2.tidyverse.org/reference/coord_map.html">documentation</a>
 contains more information on and examples for these two functions.</p>
 </div>
 </div>

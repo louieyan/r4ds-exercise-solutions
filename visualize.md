@@ -820,9 +820,9 @@ What is the default geom associated with `stat_summary()`? How could you rewrite
 
 <div class="answer">
 
-The default geom for [`stat_summary()`](http://docs.ggplot2.org/current/stat_summary.html) is `geom_pointrange()` (see the `stat`) argument.
+The default geom for [`stat_summary()`](https://ggplot2.tidyverse.org/reference/stat_summary.html) is `geom_pointrange()` (see the `stat`) argument.
 
-But, the default `stat` for [`geom_pointrange()`](http://docs.ggplot2.org/current/geom_linerange.html) is `identity()`, so use `geom_pointrange(stat = "summary")`.
+But, the default `stat` for [`geom_pointrange()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html) is `identity()`, so use `geom_pointrange(stat = "summary")`.
 
 ```r
 ggplot(data = diamonds) +
@@ -883,7 +883,9 @@ What do they have in common?
 
 <div class="answer">
 
-See the [ggplot2 documentation](http://docs.ggplot2.org/current/)
+See the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/).
+
+**TODO**
 
 </div>
 
@@ -1156,7 +1158,7 @@ What’s the default position adjustment for `geom_boxplot()`? Create a visualiz
 
 <div class="answer">
 
-The default position for `geom_boxplot()` is `position_dodge()` (see its [docs](http://docs.ggplot2.org/current/geom_boxplot.html)).
+The default position for `geom_boxplot()` is `position_dodge()` (see its [docs](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)).
 
 When we add `colour = class` to the box plot, the different classes within `drv` are placed side by side, i.e. dodged. If it was `position_identity()`, they would be overlapping.
 
@@ -1201,7 +1203,7 @@ ggplot(mpg, aes(x = factor(1), fill = drv)) +
 
 \begin{center}\includegraphics[width=0.7\linewidth]{visualize_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
-See the documentation for [coord_polar](http://docs.ggplot2.org/current/coord_polar.html) for an example of making a pie chart. In particular, `theta = "y"`, meaning that the angle of the chart is the `y` variable which has to be specified.
+See the documentation for [coord_polar](https://ggplot2.tidyverse.org/reference/coord_polar.html) for an example of making a pie chart. In particular, `theta = "y"`, meaning that the angle of the chart is the `y` variable which has to be specified.
 
 
 ```r
@@ -1290,7 +1292,7 @@ However, this projection must be applied to all geoms in the plot.
 This approximation ignores the curvature of Earth and adjusts the map for the  latitude/longitude ratio.
 This transformation is quicker than `coord_map()` because the coordinates of the individual geoms do not need to be transformed.
 
-The **ggplot2** [documentation](http://docs.ggplot2.org/current/coord_map.html)
+The **ggplot2** [documentation](https://ggplot2.tidyverse.org/reference/coord_map.html)
 contains more information on and examples for these two functions.
 
 </div>

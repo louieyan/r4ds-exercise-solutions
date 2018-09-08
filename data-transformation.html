@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-07">
+<meta name="date" content="2018-09-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -854,7 +854,7 @@ If a flight was delayed by at least an hour, then <code>dep_delay &gt;= 60</code
 didn’t make up any time in the air, then its arrival would be delayed by
 the same amount as its departure, meaning <code>dep_delay == arr_delay</code>, or alternatively,
 <code>dep_delay - arr_delay == 0</code>. If it makes up over 30 minutes in the air, then
-the the arrival delay must be at least 30 minutes less than the departure delay, whic
+the the arrival delay must be at least 30 minutes less than the departure delay, which
 is stated as <code>dep_delay - arr_delay &gt; 30</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, dep_delay <span class="op">&gt;=</span><span class="st"> </span><span class="dv">60</span>, dep_delay <span class="op">-</span><span class="st"> </span>arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">30</span>)
 <span class="co">#&gt; # A tibble: 1,844 x 19</span>
@@ -889,7 +889,7 @@ to consider the special case of midnight.</p>
 <span class="co">#&gt; #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,</span>
 <span class="co">#&gt; #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre>
-<p>Alternativley, we could use the <a href="https://en.wikipedia.org/wiki/Modulo_operation">modulo operator</a>, <code>%%</code>.
+<p>Alternatively, we could use the <a href="https://en.wikipedia.org/wiki/Modulo_operation">modulo operator</a>, <code>%%</code>.
 The modulo operator returns the remainder of division.
 Let’s see how how this affects our times.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">600</span>, <span class="dv">1200</span>, <span class="dv">2400</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">2400</span>
@@ -945,7 +945,7 @@ familiarity of the reader with modular arithmetic.</p></li>
 <p>How many flights have a missing <code>dep_time</code>? What other variables are missing? What might these rows represent?</p>
 </div>
 <div class="answer">
-<p>Find the rows of flights with a missing depature time (<code>dep_time</code>) using the <code>is.na()</code> function.</p>
+<p>Find the rows of flights with a missing departure time (<code>dep_time</code>) using the <code>is.na()</code> function.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, <span class="kw">is.na</span>(dep_time))
 <span class="co">#&gt; # A tibble: 8,255 x 19</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time</span>
@@ -1078,7 +1078,7 @@ be placed at the end.</p>
 <span class="co">#&gt; #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre>
 <p>The most delayed flight was HA 51, JFK to HNL, which was scheduled to leave on January 09, 2013 09:00.
 Note that the departure time is given as 641, which seems to be less than the scheduled departure time.
-But the departure was delayed 1,301 minutes, which is 21 hours, 41 mintues.
+But the departure was delayed 1,301 minutes, which is 21 hours, 41 minutes.
 The departure time is the day after the scheduled departure time.
 Be happy that you weren’t on that flight, and if you happened to have been on that flight and are reading this, I’m sorry for you.</p>
 <p>Similarly, the earliest departing flight can can be found by sorting <code>dep_delay</code> in ascending order.</p>
@@ -1151,7 +1151,7 @@ earlier seen with <code>desc()</code>.</p>
 <p>Which flights traveled the longest? Which traveled the shortest?</p>
 </div>
 <div class="answer">
-<p>By longest (shortest), I assume that the question is asking about the distance travelled, which is given in the variable <code>distance</code>, rather than air-time.</p>
+<p>By longest (shortest), I assume that the question is asking about the distance traveled, which is given in the variable <code>distance</code>, rather than air-time.</p>
 <p>To find the longest flight, sort <code>distance</code> in descending order using <code>desc()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(flights, <span class="kw">desc</span>(distance))
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
@@ -1377,7 +1377,7 @@ include all these variables without incorrectly including others.</p>
 <span class="co">#&gt; # ... with 3.368e+05 more rows</span></code></pre>
 <p>This behavior is useful because it means that we can use <code>select()</code> with <code>everything()</code>
 in order to easily change the order of columns without having to specify the names
-of all the columsn.</p>
+of all the columns.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, arr_delay, <span class="kw">everything</span>())
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
 <span class="co">#&gt;   arr_delay  year month   day dep_time sched_dep_time dep_delay arr_time</span>
@@ -1536,7 +1536,7 @@ from the format used in <code>flights</code> to minutes since midnight.</p>
 </div>
 <div class="answer">
 <p>I would expect that the air time is the difference between the arrival and departure times, <code>air_time =  arr_time - dep_time</code>.</p>
-<p>To check this, I need to first convert the times to a form more ammenable to arithmetic
+<p>To check this, I need to first convert the times to a form more amenable to arithmetic
 using the same calculations as in the previous exercise.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights_airtime &lt;-<span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(flights,
@@ -1562,16 +1562,16 @@ using the same calculations as in the previous exercise.</p>
 <p>No. So why not? Apart from data error, I can think of two reasons why <code>air_time</code> may
 not equal <code>arr_time - dep_time</code>.</p>
 <ol style="list-style-type: decimal">
-<li>The flight passes midnight, so <code>arr_time &lt; dep_time</code>. This will result in times that are off by 24 hours (1,440 minutes).
-incorrect negative flight times.</li>
-<li>The flight crosses time zones, and the total air time will be off by hours (multiples of 60). Additionally, all these discrepencies should be positive.
+<li><p>The flight passes midnight, so <code>arr_time &lt; dep_time</code>. This will result in times that are off by 24 hours (1,440 minutes).
+incorrect negative flight times.</p></li>
+<li><p>The flight crosses time zones, and the total air time will be off by hours (multiples of 60). Additionally, all these discrepancies should be positive.
 All the flights in the <strong>nycflights13</strong> data departed from New York City and are domestic (within the US), meaning that flights will all be to the same or more
-westerly time zones.</li>
+westerly time zones.</p></li>
 </ol>
 <p>Both of these explanations have clear patterns that I would expect to see if they
 were true.
 In particular, in both cases all differences should be divisible by 60.
-However, there are many flights in which the difference between <code>arr_time</code> and <code>dest_time</code> is not divisble by 60.</p>
+However, there are many flights in which the difference between <code>arr_time</code> and <code>dest_time</code> is not divisible by 60.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights_airtime, air_time_diff <span class="op">%%</span><span class="st"> </span><span class="dv">60</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
 <span class="co">#&gt; # A tibble: 6,823 x 22</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time</span>
@@ -1592,11 +1592,11 @@ However, there are many flights in which the difference between <code>arr_time</
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>)
 <span class="co">#&gt; Warning: Removed 9430 rows containing non-finite values (stat_bin).</span></code></pre>
 <p><img src="transform_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
-The distribution is bimodal, which with one mode comprising discrepencies up to several hours, suggesting the time-zone problem, and a second node around 24 hours, suggesting the overnight flights.
-However, in both cases, the discrepencies are not all at values divisible by 60.</p>
-<p>I can also confirm my guess about time zones by looking at discrepencies from
+The distribution is bimodal, which with one mode comprising discrepancies up to several hours, suggesting the time-zone problem, and a second node around 24 hours, suggesting the overnight flights.
+However, in both cases, the discrepancies are not all at values divisible by 60.</p>
+<p>I can also confirm my guess about time zones by looking at discrepancies from
 flights to a destinations in another air zone (or even all flights to different time zones using the time zone of the airport from the <code>airports</code> data frame).
-In this case, I’ll look at the distribution of the discrepencies for flights
+In this case, I’ll look at the distribution of the discrepancies for flights
 to Los Angeles (LAX).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">filter</span>(flights_airtime, dest <span class="op">==</span><span class="st"> &quot;LAX&quot;</span>), <span class="kw">aes</span>(<span class="dt">x =</span> air_time_diff)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>)
@@ -1605,7 +1605,7 @@ to Los Angeles (LAX).</p>
 <p>So what else might be going on? There seem to be too many “problems” for this to
 be a data issue, so I’m probably missing something. So I’ll reread the documentation
 to make sure that I understand the definitions of <code>arr_time</code>, <code>dep_time</code>, and
-<code>air_time</code>. The documenation contains a link to the source of the <code>flights</code> data, <a href="https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236" class="uri">https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236</a>.
+<code>air_time</code>. The documentation contains a link to the source of the <code>flights</code> data, <a href="https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236" class="uri">https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236</a>.
 Reading the page at that link, I see that there are some other variables:
 <code>TaxiIn</code>, <code>TaxiOff</code>, <code>WheelsIn</code>, <code>WheelsOff</code> that are not included in <code>flights</code>.
 The <code>air_time</code> variable refers to flight time, which must be defined as the time between wheels off (take-off) and wheels in (landing).
@@ -1652,9 +1652,9 @@ departure delay calculated from the scheduled and actual departure times.</p>
 <span class="co">#&gt; #   sched_dep_time_min &lt;dbl&gt;, dep_delay_diff &lt;dbl&gt;</span></code></pre>
 <p>No. Unlike the last question, time zones are not an issue since we are only
 considering departure times.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
-However, the discprencies could be because a flight was scheduled to depart
+However, the discrepancies could be because a flight was scheduled to depart
 before midnight, but was delayed after midnight.
-All of these discrepencies are exactly equal to 1440 (24 hours), and the flights with these discrepencies were scheduled to depart later in the day.</p>
+All of these discrepancies are exactly equal to 1440 (24 hours), and the flights with these discrepancies were scheduled to depart later in the day.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">filter</span>(flights_deptime, dep_delay_diff <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>), 
        <span class="kw">aes</span>(<span class="dt">y =</span> sched_dep_time_min, <span class="dt">x =</span> dep_delay_diff)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>

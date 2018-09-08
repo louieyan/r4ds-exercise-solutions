@@ -203,7 +203,7 @@ The answer to each part follows.
     didn't make up any time in the air, then its arrival would be delayed by
     the same amount as its departure, meaning `dep_delay == arr_delay`, or alternatively,
     `dep_delay - arr_delay == 0`. If it makes up over 30 minutes in the air, then
-    the the arrival delay must be at least 30 minutes less than the departure delay, whic
+    the the arrival delay must be at least 30 minutes less than the departure delay, which
     is stated as `dep_delay - arr_delay > 30`.
     
     ```r
@@ -247,7 +247,7 @@ The answer to each part follows.
     #> #   minute <dbl>, time_hour <dttm>
     ```
 
-    Alternativley, we could use the [modulo operator](https://en.wikipedia.org/wiki/Modulo_operation), `%%`. 
+    Alternatively, we could use the [modulo operator](https://en.wikipedia.org/wiki/Modulo_operation), `%%`. 
     The modulo operator returns the remainder of division.
     Let's see how how this affects our times.
     
@@ -321,7 +321,7 @@ How many flights have a missing `dep_time`? What other variables are missing? Wh
 
 <div class="answer">
 
-Find the rows of flights with a missing depature time (`dep_time`) using the `is.na()` function.
+Find the rows of flights with a missing departure time (`dep_time`) using the `is.na()` function.
 
 ```r
 filter(flights, is.na(dep_time))
@@ -501,7 +501,7 @@ arrange(flights, desc(dep_delay))
 ```
 The most delayed flight was HA 51, JFK to HNL, which was scheduled to leave on January 09, 2013 09:00.
 Note that the departure time is given as 641, which seems to be less than the scheduled departure time.
-But the departure was delayed 1,301 minutes, which is 21 hours, 41 mintues.
+But the departure was delayed 1,301 minutes, which is 21 hours, 41 minutes.
 The departure time is the day after the scheduled departure time.
 Be happy that you weren't on that flight, and if you happened to have been on that flight and are reading this, I'm sorry for you.
 
@@ -591,7 +591,7 @@ Which flights traveled the longest? Which traveled the shortest?
 
 <div class="answer">
 
-By longest (shortest), I assume that the question is asking about the distance travelled, which is given in the variable `distance`, rather than air-time.
+By longest (shortest), I assume that the question is asking about the distance traveled, which is given in the variable `distance`, rather than air-time.
 
 
 To find the longest flight, sort `distance` in descending order using `desc()`.
@@ -704,7 +704,7 @@ A few ways include:
     #> 6      554        -4      740        12
     #> # ... with 3.368e+05 more rows
     ```
-    
+
 -   Specifying all the variables as strings.
     
     ```r
@@ -720,7 +720,7 @@ A few ways include:
     #> 6      554        -4      740        12
     #> # ... with 3.368e+05 more rows
     ```
-    
+
 -   Specifying the column numbers of the variables.
     
     ```r
@@ -742,7 +742,7 @@ A few ways include:
     Second code is obfuscated, since it is not clear from the code which 
     variables are being selected. What variable does column 5 correspond to? 
     I just wrote the code, and I've already forgotten.
-    
+
 -   Specifying the names of the variables with character vector and `one_of()`.
     
     ```r
@@ -792,7 +792,7 @@ A few ways include:
     #> 6      554        -4      740        12
     #> # ... with 3.368e+05 more rows
     ```
-    
+
 -   Selecting the variables using `matches()` and regular expressions, which are 
     discussed in the [Strings](http://r4ds.had.co.nz/strings.html) chapter.
     
@@ -828,7 +828,7 @@ Some things that **don't** work are
     #> 6      740            728      554            558
     #> # ... with 3.368e+05 more rows
     ```
-    
+
 -   Matching the names using `contains()` since there is not a pattern that can
     include all these variables without incorrectly including others.
     
@@ -874,7 +874,7 @@ select(flights, year, month, day, year, year)
 
 This behavior is useful because it means that we can use `select()` with `everything()` 
 in order to easily change the order of columns without having to specify the names 
-of all the columsn.
+of all the columns.
 
 ```r
 select(flights, arr_delay, everything())
@@ -1085,7 +1085,7 @@ Compare `air_time` with `arr_time - dep_time`. What do you expect to see? What d
 
 I would expect that the air time is the difference between the arrival and departure times, `air_time =  arr_time - dep_time`.
 
-To check this, I need to first convert the times to a form more ammenable to arithmetic
+To check this, I need to first convert the times to a form more amenable to arithmetic
 using the same calculations as in the previous exercise.
 
 ```r
@@ -1121,14 +1121,15 @@ not equal `arr_time - dep_time`.
 
 1.  The flight passes midnight, so `arr_time < dep_time`. This will result in times that are off by 24 hours (1,440 minutes).
     incorrect negative flight times.
-1.  The flight crosses time zones, and the total air time will be off by hours (multiples of 60). Additionally, all these discrepencies should be positive.
+
+1.  The flight crosses time zones, and the total air time will be off by hours (multiples of 60). Additionally, all these discrepancies should be positive.
     All the flights in the **nycflights13** data departed from New York City and are domestic (within the US), meaning that flights will all be to the same or more
     westerly time zones.
 
 Both of these explanations have clear patterns that I would expect to see if they 
 were true. 
 In particular, in both cases all differences should be divisible by 60.
-However, there are many flights in which the difference between `arr_time` and `dest_time` is not divisble by 60.
+However, there are many flights in which the difference between `arr_time` and `dest_time` is not divisible by 60.
 
 ```r
 filter(flights_airtime, air_time_diff %% 60 == 0)
@@ -1159,12 +1160,12 @@ ggplot(flights_airtime, aes(x = air_time_diff)) +
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-60-1} \end{center}
-The distribution is bimodal, which with one mode comprising discrepencies up to several hours, suggesting the time-zone problem, and a second node around 24 hours, suggesting the overnight flights.
-However, in both cases, the discrepencies are not all at values divisible by 60.
+The distribution is bimodal, which with one mode comprising discrepancies up to several hours, suggesting the time-zone problem, and a second node around 24 hours, suggesting the overnight flights.
+However, in both cases, the discrepancies are not all at values divisible by 60.
 
-I can also confirm my guess about time zones by looking at discrepencies from
+I can also confirm my guess about time zones by looking at discrepancies from
 flights to a destinations in another air zone (or even all flights to different time zones using the time zone of the airport from the `airports` data frame).
-In this case, I'll look at the distribution of the discrepencies for flights
+In this case, I'll look at the distribution of the discrepancies for flights
 to Los Angeles (LAX).
 
 ```r
@@ -1180,7 +1181,7 @@ ggplot(filter(flights_airtime, dest == "LAX"), aes(x = air_time_diff)) +
 So what else might be going on? There seem to be too many "problems" for this to 
 be a data issue, so I'm probably missing something. So I'll reread the documentation
 to make sure that I understand the definitions of `arr_time`, `dep_time`, and
-`air_time`. The documenation contains a link to the source of the `flights` data, <https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236>.
+`air_time`. The documentation contains a link to the source of the `flights` data, <https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236>.
 Reading the page at that link, I see that there are some other variables: 
 `TaxiIn`, `TaxiOff`, `WheelsIn`, `WheelsOff` that are not included in `flights`.
 The `air_time` variable refers to flight time, which must be defined as the time between wheels off (take-off) and wheels in (landing).
@@ -1237,9 +1238,9 @@ filter(flights_deptime, dep_delay_diff != 0)
 ```
 No. Unlike the last question, time zones are not an issue since we are only 
 considering departure times.[^daylight]
-However, the discprencies could be because a flight was scheduled to depart 
+However, the discrepancies could be because a flight was scheduled to depart 
 before midnight, but was delayed after midnight.
-All of these discrepencies are exactly equal to 1440 (24 hours), and the flights with these discrepencies were scheduled to depart later in the day.
+All of these discrepancies are exactly equal to 1440 (24 hours), and the flights with these discrepancies were scheduled to depart later in the day.
 
 ```r
 ggplot(filter(flights_deptime, dep_delay_diff > 0), 
@@ -1985,4 +1986,3 @@ flights %>%
     ended (November 3). But since daylight savings goes into effect at 02:00,
     and generally flights are not scheduled to depart between midnight and 2 am,
     the only flights which would be scheduled to depart in Eastern Daylight Savings Time (Eastern Standard Time) time but departed in Eastern Standard Time (Daylight Savings Time), would have been scheduled before midnight, meaning they were delayed across days.
-    

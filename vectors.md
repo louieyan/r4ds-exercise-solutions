@@ -758,7 +758,7 @@ For these examples, I generated these diagrams programmatically using the
     `list(a, b, list(c, d), list(e, f))`
     is
 
-    
+
 
     
 
@@ -766,7 +766,7 @@ For these examples, I generated these diagrams programmatically using the
     `list(list(list(list(list(list(a))))))1`
     is as follows.
 
-    
+
 
     
 

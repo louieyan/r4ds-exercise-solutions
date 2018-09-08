@@ -223,9 +223,6 @@ tidy4b <- table4b %>%
 <div class="question">
 Why are `gather()` and `spread()` not perfectly symmetrical?
 Carefully consider the following example:
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -236,7 +233,7 @@ stocks <- tibble(
 )
 stocks %>%
   spread(year, return) %>%
-  gather("year", "return", `2015`:`2016`)
+  gather(`2015`:`2016`, key = "year", value = "return")
 #> # A tibble: 4 x 3
 #>    half year  return
 #>   <dbl> <chr>  <dbl>
@@ -246,17 +243,27 @@ stocks %>%
 #> 4     2 2016    0.17
 ```
 
-The functions `spread()` and `gather()` are not perfectly symmetrical because column type information is not transferred between them.
-In the original table the column `year` was numeric, but after running `spread()` and `gather()` it is a character vector.
-This is because variable names are always converted to a character vector by `gather()`.
+</div>
 
-The `convert` argument tries to convert character vectors to the appropriate type.
-In the background this uses the `type.convert()` function.
+<div class="answer">
+
+The functions `spread()` and `gather()` are not perfectly symmetrical because column type information is not transferred between them.
+When we use `gather()` on a data frame, it throws away all the information about the original column types. 
+Additionally, it has to coerce all the varaibles that are being gathered into 
+a single type, since they are going into a single vector.
+Later if we `spread()` that data frame, the `spread()` function has no way to 
+know what the original data types of the columns that were earlier gathered.
+
+In this example, in the original table, the column `year` was numeric.
+After running `spread()` and `gather()` it is a character vector.
+Variable names are always converted to a character vector by `gather()`.
+
+The functions `spread()` and `gather()` can be closer to symmetrical if we use the `convert` argument. It will try to convert character vectors to the appropriate type using `type.convert()`.
 
 ```r
 stocks %>%
-  spread(year, return) %>%
-  gather("year", "return", `2015`:`2016`, convert = TRUE)
+  spread(key = "year", value = "return") %>%
+  gather(`2015`:`2016`, key = "year", value = "return", convert = TRUE)
 #> # A tibble: 4 x 3
 #>    half  year return
 #>   <dbl> <int>  <dbl>
@@ -265,6 +272,7 @@ stocks %>%
 #> 3     1  2016   0.92
 #> 4     2  2016   0.17
 ```
+However, since `convert = TRUE` is guessing the appropriate type it still may not work.
 
 </div>
 
@@ -272,9 +280,6 @@ stocks %>%
 
 <div class="question">
 Why does this code fail?
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -282,6 +287,9 @@ table4a %>%
   gather(1999, 2000, key = "year", value = "cases")
 #> Error in inds_combine(.vars, ind_list): Position must be between 0 and n
 ```
+</div>
+
+<div class="answer">
 
 The code fails because the column names `1999` and `2000` are not standard and thus needs to be quoted.
 The tidyverse functions will interpret `1999` and `2000` without quotes as looking for the 1999th and 2000th column of the data frame.
@@ -307,9 +315,6 @@ table4a %>%
 
 <div class="question">
 Why does spreading this tibble fail? How could you add a new column to fix the problem?
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -336,8 +341,13 @@ spread(people, key, value)
 #> Error: Duplicate identifiers for rows (1, 3)
 ```
 
+</div>
+
+<div class="answer">
+
 Spreading the data frame fails because there are two rows with "age" for "Phillip Woods".
-We would need to add another column with an indicator for the number observation it is,
+If we added another column with an indicator for the number observation it is,
+the code will work.
 
 
 ```r
@@ -365,9 +375,6 @@ spread(people, key, value)
 
 <div class="question">
 Tidy the simple tibble below. Do you need to spread or gather it? What are the variables?
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -378,27 +385,92 @@ preg <- tribble(
 )
 ```
 
-You need to gather it. The variables are:
+</div>
 
--   pregnant: logical ("yes", "no")
--   female: logical
--   count: integer
+<div class="answer">
+
+To tidy `preg`, we need to use `gather()`. The variables in this data are
+
+-   `sex` ("female", "male")
+-   `pregnant` ("yes", "no")
+-   `count`, which is a non-negative integer representing the number of observations.
+
+The observations in this data are unique combinations of sex and pregnancy status.
 
 
 ```r
-gather(preg, sex, count, male, female) %>%
-  mutate(pregnant = pregnant == "yes",
-         female = sex == "female") %>%
-  select(-sex)
-#> # A tibble: 4 x 3
-#>   pregnant count female
-#>   <lgl>    <dbl> <lgl> 
-#> 1 TRUE        NA FALSE 
-#> 2 FALSE       20 FALSE 
-#> 3 TRUE        10 TRUE  
-#> 4 FALSE       12 TRUE
+preg_tidy <- preg %>%
+  gather(male, female, key = "sex", value = "count", na.rm = TRUE)
+preg_tidy
+#> # A tibble: 3 x 3
+#>   pregnant sex    count
+#> * <chr>    <chr>  <dbl>
+#> 1 no       male      20
+#> 2 yes      female    10
+#> 3 no       female    12
 ```
-Converting `pregnant` and `female` from character vectors to logical was not necessary to tidy it, but it makes it easier to work with.
+
+However, we should consider the missing value in the male, non-pregnant row.
+Is it missing due to missing data, or missing due to structural reasons? 
+This will be discussed in the upcoming section on [Missing Values](http://r4ds.had.co.nz/tidy-data.html#missing-values-3).
+Supposing that these data represent observations from a species in which it is
+impossible for males to get pregnant (not seahorses), then that missing value
+is structural. In the non-tidy data frame we had to include that structural missing value explicitly with an `NA` entry.
+However, in the tidy version we can drop that row since it is an impossible 
+combination.
+We can do that by adding the argument `na.rm = TRUE` to `gather()`.
+
+```r
+preg_tidy2 <- preg %>%
+  gather(male, female, key = "sex", value = "count", na.rm = TRUE)
+preg_tidy2
+#> # A tibble: 3 x 3
+#>   pregnant sex    count
+#> * <chr>    <chr>  <dbl>
+#> 1 no       male      20
+#> 2 yes      female    10
+#> 3 no       female    12
+```
+
+Though not necessary, there is one more way in which we can improve this data.
+If a variable takes two values, like `pregnant` and `sex` do, it is often
+preferable to store them as logical vectors.
+I will 
+
+```r
+preg_tidy3 <- preg_tidy2 %>%
+  mutate(female = sex == "female",
+         pregnant = pregnant == "yes") %>%
+  select(female, pregnant, count)
+preg_tidy3
+#> # A tibble: 3 x 3
+#>   female pregnant count
+#>   <lgl>  <lgl>    <dbl>
+#> 1 FALSE  FALSE       20
+#> 2 TRUE   TRUE        10
+#> 3 TRUE   FALSE       12
+```
+Note that I named the logical variable representing the sex `female`, not `sex`.
+This makes the meaning of the variable self-documenting.
+If the variable were named `sex` with values `TRUE` and `FALSE`, without reading the documentation, we wouldn't know whether `TRUE` means male or female.
+
+Apart from some minor memory savings, representing these variables as logical
+vectors results in more clear and concise code.
+Compare the `filter()` calls to select non-pregnant females from `preg_tidy2`
+and `preg_tidy`.
+
+```r
+filter(preg_tidy2, sex == "female", pregnant == "no")
+#> # A tibble: 1 x 3
+#>   pregnant sex    count
+#>   <chr>    <chr>  <dbl>
+#> 1 no       female    12
+filter(preg_tidy3, female, !pregnant)
+#> # A tibble: 1 x 3
+#>   female pregnant count
+#>   <lgl>  <lgl>    <dbl>
+#> 1 TRUE   FALSE       12
+```
 
 </div>
 
@@ -852,7 +924,7 @@ who5 %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{tidy_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{tidy_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 A small multiples plot faceting by country is difficult given the number of countries.
 Focusing on those countries with the largest changes or absolute magnitudes after providing the context above is another option.
