@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>R for Data Science Solutions</title>
   <meta name="description" content="This contains the solutions to the exercises in the book, R for Data Science, by Garrett Grolemund and Hadley Wickham.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
   <meta property="og:title" content="R for Data Science Solutions" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-08-30">
+<meta name="date" content="2018-09-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,12 +47,18 @@
 
 
 
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -65,11 +71,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -690,7 +698,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">10</span> Tibbles</h1>
 <div id="introduction-5" class="section level2">
 <h2><span class="header-section-number">10.1</span> Introduction</h2>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
 </div>
 <div id="creating-tibbles" class="section level2">
 <h2><span class="header-section-number">10.2</span> Creating Tibbles</h2>
@@ -717,74 +725,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="answer">
 <p>When we print <code>mtcars</code>, it prints all the columns.</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">mtcars</a>
-<a class="sourceLine" id="cb187-2" data-line-number="2"><span class="co">#&gt;                      mpg cyl  disp  hp drat   wt qsec vs am gear carb</span></a>
-<a class="sourceLine" id="cb187-3" data-line-number="3"><span class="co">#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.62 16.5  0  1    4    4</span></a>
-<a class="sourceLine" id="cb187-4" data-line-number="4"><span class="co">#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.88 17.0  0  1    4    4</span></a>
-<a class="sourceLine" id="cb187-5" data-line-number="5"><span class="co">#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.32 18.6  1  1    4    1</span></a>
-<a class="sourceLine" id="cb187-6" data-line-number="6"><span class="co">#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.21 19.4  1  0    3    1</span></a>
-<a class="sourceLine" id="cb187-7" data-line-number="7"><span class="co">#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.44 17.0  0  0    3    2</span></a>
-<a class="sourceLine" id="cb187-8" data-line-number="8"><span class="co">#&gt; Valiant             18.1   6 225.0 105 2.76 3.46 20.2  1  0    3    1</span></a>
-<a class="sourceLine" id="cb187-9" data-line-number="9"><span class="co">#&gt; Duster 360          14.3   8 360.0 245 3.21 3.57 15.8  0  0    3    4</span></a>
-<a class="sourceLine" id="cb187-10" data-line-number="10"><span class="co">#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.19 20.0  1  0    4    2</span></a>
-<a class="sourceLine" id="cb187-11" data-line-number="11"><span class="co">#&gt; Merc 230            22.8   4 140.8  95 3.92 3.15 22.9  1  0    4    2</span></a>
-<a class="sourceLine" id="cb187-12" data-line-number="12"><span class="co">#&gt; Merc 280            19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4</span></a>
-<a class="sourceLine" id="cb187-13" data-line-number="13"><span class="co">#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4</span></a>
-<a class="sourceLine" id="cb187-14" data-line-number="14"><span class="co">#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.07 17.4  0  0    3    3</span></a>
-<a class="sourceLine" id="cb187-15" data-line-number="15"><span class="co">#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.73 17.6  0  0    3    3</span></a>
-<a class="sourceLine" id="cb187-16" data-line-number="16"><span class="co">#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.78 18.0  0  0    3    3</span></a>
-<a class="sourceLine" id="cb187-17" data-line-number="17"><span class="co">#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.25 18.0  0  0    3    4</span></a>
-<a class="sourceLine" id="cb187-18" data-line-number="18"><span class="co">#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.42 17.8  0  0    3    4</span></a>
-<a class="sourceLine" id="cb187-19" data-line-number="19"><span class="co">#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.34 17.4  0  0    3    4</span></a>
-<a class="sourceLine" id="cb187-20" data-line-number="20"><span class="co">#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.20 19.5  1  1    4    1</span></a>
-<a class="sourceLine" id="cb187-21" data-line-number="21"><span class="co">#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.61 18.5  1  1    4    2</span></a>
-<a class="sourceLine" id="cb187-22" data-line-number="22"><span class="co">#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.83 19.9  1  1    4    1</span></a>
-<a class="sourceLine" id="cb187-23" data-line-number="23"><span class="co">#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.46 20.0  1  0    3    1</span></a>
-<a class="sourceLine" id="cb187-24" data-line-number="24"><span class="co">#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.52 16.9  0  0    3    2</span></a>
-<a class="sourceLine" id="cb187-25" data-line-number="25"><span class="co">#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.44 17.3  0  0    3    2</span></a>
-<a class="sourceLine" id="cb187-26" data-line-number="26"><span class="co">#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.84 15.4  0  0    3    4</span></a>
-<a class="sourceLine" id="cb187-27" data-line-number="27"><span class="co">#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.85 17.1  0  0    3    2</span></a>
-<a class="sourceLine" id="cb187-28" data-line-number="28"><span class="co">#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.94 18.9  1  1    4    1</span></a>
-<a class="sourceLine" id="cb187-29" data-line-number="29"><span class="co">#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.14 16.7  0  1    5    2</span></a>
-<a class="sourceLine" id="cb187-30" data-line-number="30"><span class="co">#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.51 16.9  1  1    5    2</span></a>
-<a class="sourceLine" id="cb187-31" data-line-number="31"><span class="co">#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.17 14.5  0  1    5    4</span></a>
-<a class="sourceLine" id="cb187-32" data-line-number="32"><span class="co">#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.77 15.5  0  1    5    6</span></a>
-<a class="sourceLine" id="cb187-33" data-line-number="33"><span class="co">#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.57 14.6  0  1    5    8</span></a>
-<a class="sourceLine" id="cb187-34" data-line-number="34"><span class="co">#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.78 18.6  1  1    4    2</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">mtcars
+<span class="co">#&gt;                      mpg cyl  disp  hp drat   wt qsec vs am gear carb</span>
+<span class="co">#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.62 16.5  0  1    4    4</span>
+<span class="co">#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.88 17.0  0  1    4    4</span>
+<span class="co">#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.32 18.6  1  1    4    1</span>
+<span class="co">#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.21 19.4  1  0    3    1</span>
+<span class="co">#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.44 17.0  0  0    3    2</span>
+<span class="co">#&gt; Valiant             18.1   6 225.0 105 2.76 3.46 20.2  1  0    3    1</span>
+<span class="co">#&gt; Duster 360          14.3   8 360.0 245 3.21 3.57 15.8  0  0    3    4</span>
+<span class="co">#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.19 20.0  1  0    4    2</span>
+<span class="co">#&gt; Merc 230            22.8   4 140.8  95 3.92 3.15 22.9  1  0    4    2</span>
+<span class="co">#&gt; Merc 280            19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4</span>
+<span class="co">#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4</span>
+<span class="co">#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.07 17.4  0  0    3    3</span>
+<span class="co">#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.73 17.6  0  0    3    3</span>
+<span class="co">#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.78 18.0  0  0    3    3</span>
+<span class="co">#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.25 18.0  0  0    3    4</span>
+<span class="co">#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.42 17.8  0  0    3    4</span>
+<span class="co">#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.34 17.4  0  0    3    4</span>
+<span class="co">#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.20 19.5  1  1    4    1</span>
+<span class="co">#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.61 18.5  1  1    4    2</span>
+<span class="co">#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.83 19.9  1  1    4    1</span>
+<span class="co">#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.46 20.0  1  0    3    1</span>
+<span class="co">#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.52 16.9  0  0    3    2</span>
+<span class="co">#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.44 17.3  0  0    3    2</span>
+<span class="co">#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.84 15.4  0  0    3    4</span>
+<span class="co">#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.85 17.1  0  0    3    2</span>
+<span class="co">#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.94 18.9  1  1    4    1</span>
+<span class="co">#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.14 16.7  0  1    5    2</span>
+<span class="co">#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.51 16.9  1  1    5    2</span>
+<span class="co">#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.17 14.5  0  1    5    4</span>
+<span class="co">#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.77 15.5  0  1    5    6</span>
+<span class="co">#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.57 14.6  0  1    5    8</span>
+<span class="co">#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.78 18.6  1  1    4    2</span></code></pre>
 <p>But when we first convert <code>mtcars</code> to a tibble using <code>as_tibble()</code>, it prints on the
 first ten observations. There are also some other differences in formatting
 of the printed data frame.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="kw">as_tibble</span>(mtcars)</a>
-<a class="sourceLine" id="cb188-2" data-line-number="2"><span class="co">#&gt; # A tibble: 32 x 11</span></a>
-<a class="sourceLine" id="cb188-3" data-line-number="3"><span class="co">#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></a>
-<a class="sourceLine" id="cb188-4" data-line-number="4"><span class="co">#&gt; * &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb188-5" data-line-number="5"><span class="co">#&gt; 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4</span></a>
-<a class="sourceLine" id="cb188-6" data-line-number="6"><span class="co">#&gt; 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4</span></a>
-<a class="sourceLine" id="cb188-7" data-line-number="7"><span class="co">#&gt; 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1</span></a>
-<a class="sourceLine" id="cb188-8" data-line-number="8"><span class="co">#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1</span></a>
-<a class="sourceLine" id="cb188-9" data-line-number="9"><span class="co">#&gt; 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2</span></a>
-<a class="sourceLine" id="cb188-10" data-line-number="10"><span class="co">#&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1</span></a>
-<a class="sourceLine" id="cb188-11" data-line-number="11"><span class="co">#&gt; # ... with 26 more rows</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_tibble</span>(mtcars)
+<span class="co">#&gt; # A tibble: 32 x 11</span>
+<span class="co">#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span>
+<span class="co">#&gt; * &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4</span>
+<span class="co">#&gt; 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4</span>
+<span class="co">#&gt; 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1</span>
+<span class="co">#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1</span>
+<span class="co">#&gt; 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2</span>
+<span class="co">#&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1</span>
+<span class="co">#&gt; # ... with 26 more rows</span></code></pre>
 <p>You can use the function <code>is_tibble()</code> to check whether a data frame is a tibble or not.
 The <code>mtcars</code> data frame is not a tibble.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">is_tibble</span>(mtcars)</a>
-<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="co">#&gt; [1] FALSE</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is_tibble</span>(mtcars)
+<span class="co">#&gt; [1] FALSE</span></code></pre>
 <p>But the <code>diamonds</code> and <code>flights</code> data are tibbles.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw">is_tibble</span>(ggplot2<span class="op">::</span>diamonds)</a>
-<a class="sourceLine" id="cb190-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb190-3" data-line-number="3"><span class="kw">is_tibble</span>(nycflights13<span class="op">::</span>flights)</a>
-<a class="sourceLine" id="cb190-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb190-5" data-line-number="5"><span class="kw">is_tibble</span>(<span class="kw">as_tibble</span>(mtcars))</a>
-<a class="sourceLine" id="cb190-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is_tibble</span>(ggplot2<span class="op">::</span>diamonds)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="kw">is_tibble</span>(nycflights13<span class="op">::</span>flights)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="kw">is_tibble</span>(<span class="kw">as_tibble</span>(mtcars))
+<span class="co">#&gt; [1] TRUE</span></code></pre>
 <p>More generally, you can use the <code>class()</code> function to find out the class of an
 object. Tibbles has the classes <code>c(&quot;tbl_df&quot;, &quot;tbl&quot;, &quot;data.frame&quot;)</code>, while old
 data frames will only have the class <code>&quot;data.frame&quot;</code>.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1"><span class="kw">class</span>(mtcars)</a>
-<a class="sourceLine" id="cb191-2" data-line-number="2"><span class="co">#&gt; [1] &quot;data.frame&quot;</span></a>
-<a class="sourceLine" id="cb191-3" data-line-number="3"><span class="kw">class</span>(ggplot2<span class="op">::</span>diamonds)</a>
-<a class="sourceLine" id="cb191-4" data-line-number="4"><span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></a>
-<a class="sourceLine" id="cb191-5" data-line-number="5"><span class="kw">class</span>(nycflights13<span class="op">::</span>flights)</a>
-<a class="sourceLine" id="cb191-6" data-line-number="6"><span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(mtcars)
+<span class="co">#&gt; [1] &quot;data.frame&quot;</span>
+<span class="kw">class</span>(ggplot2<span class="op">::</span>diamonds)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span>
+<span class="kw">class</span>(nycflights13<span class="op">::</span>flights)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></code></pre>
 <p>If you are interested in reading more on R’s classes, read the chapters on
 object oriented programming in <a href="http://adv-r.had.co.nz/S3.html">Advanced R</a>.</p>
 </div>
@@ -795,30 +803,30 @@ object oriented programming in <a href="http://adv-r.had.co.nz/S3.html">Advanced
 <p>Compare and contrast the following operations on a <code>data.frame</code> and equivalent tibble. What is different? Why might the default data frame behaviors cause you frustration?</p>
 </div>
 <div class="answer">
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">abc =</span> <span class="dv">1</span>, <span class="dt">xyz =</span> <span class="st">&quot;a&quot;</span>)</a>
-<a class="sourceLine" id="cb192-2" data-line-number="2">df<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb192-3" data-line-number="3"><span class="co">#&gt; [1] a</span></a>
-<a class="sourceLine" id="cb192-4" data-line-number="4"><span class="co">#&gt; Levels: a</span></a>
-<a class="sourceLine" id="cb192-5" data-line-number="5">df[, <span class="st">&quot;xyz&quot;</span>]</a>
-<a class="sourceLine" id="cb192-6" data-line-number="6"><span class="co">#&gt; [1] a</span></a>
-<a class="sourceLine" id="cb192-7" data-line-number="7"><span class="co">#&gt; Levels: a</span></a>
-<a class="sourceLine" id="cb192-8" data-line-number="8">df[, <span class="kw">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>)]</a>
-<a class="sourceLine" id="cb192-9" data-line-number="9"><span class="co">#&gt;   abc xyz</span></a>
-<a class="sourceLine" id="cb192-10" data-line-number="10"><span class="co">#&gt; 1   1   a</span></a></code></pre></div>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(df)</a>
-<a class="sourceLine" id="cb193-2" data-line-number="2">tbl<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb193-3" data-line-number="3"><span class="co">#&gt; Warning: Unknown or uninitialised column: &#39;x&#39;.</span></a>
-<a class="sourceLine" id="cb193-4" data-line-number="4"><span class="co">#&gt; NULL</span></a>
-<a class="sourceLine" id="cb193-5" data-line-number="5">tbl[, <span class="st">&quot;xyz&quot;</span>]</a>
-<a class="sourceLine" id="cb193-6" data-line-number="6"><span class="co">#&gt; # A tibble: 1 x 1</span></a>
-<a class="sourceLine" id="cb193-7" data-line-number="7"><span class="co">#&gt;   xyz  </span></a>
-<a class="sourceLine" id="cb193-8" data-line-number="8"><span class="co">#&gt;   &lt;fct&gt;</span></a>
-<a class="sourceLine" id="cb193-9" data-line-number="9"><span class="co">#&gt; 1 a</span></a>
-<a class="sourceLine" id="cb193-10" data-line-number="10">tbl[, <span class="kw">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>)]</a>
-<a class="sourceLine" id="cb193-11" data-line-number="11"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb193-12" data-line-number="12"><span class="co">#&gt;     abc xyz  </span></a>
-<a class="sourceLine" id="cb193-13" data-line-number="13"><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;</span></a>
-<a class="sourceLine" id="cb193-14" data-line-number="14"><span class="co">#&gt; 1     1 a</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">abc =</span> <span class="dv">1</span>, <span class="dt">xyz =</span> <span class="st">&quot;a&quot;</span>)
+df<span class="op">$</span>x
+<span class="co">#&gt; [1] a</span>
+<span class="co">#&gt; Levels: a</span>
+df[, <span class="st">&quot;xyz&quot;</span>]
+<span class="co">#&gt; [1] a</span>
+<span class="co">#&gt; Levels: a</span>
+df[, <span class="kw">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>)]
+<span class="co">#&gt;   abc xyz</span>
+<span class="co">#&gt; 1   1   a</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(df)
+tbl<span class="op">$</span>x
+<span class="co">#&gt; Warning: Unknown or uninitialised column: &#39;x&#39;.</span>
+<span class="co">#&gt; NULL</span>
+tbl[, <span class="st">&quot;xyz&quot;</span>]
+<span class="co">#&gt; # A tibble: 1 x 1</span>
+<span class="co">#&gt;   xyz  </span>
+<span class="co">#&gt;   &lt;fct&gt;</span>
+<span class="co">#&gt; 1 a</span>
+tbl[, <span class="kw">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;xyz&quot;</span>)]
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;     abc xyz  </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;</span>
+<span class="co">#&gt; 1     1 a</span></code></pre>
 <p>Using <code>$</code> a data.frame will partially complete the column. So even though we
 wrote <code>df$x</code> it returned <code>df$xyz</code>. This saves a few keystrokes, but can result
 in accidentally using a different variable than you thought you were using.</p>
@@ -854,33 +862,33 @@ situations or risk bugs.</p>
 <div class="answer">
 <p>For this example, I’ll create a dataset called annoying with
 columns named <code>1</code> and <code>2</code>.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">annoying &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb194-2" data-line-number="2">  <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb194-3" data-line-number="3">  <span class="st">`</span><span class="dt">2</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">1</span><span class="st">`</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span>))</a>
-<a class="sourceLine" id="cb194-4" data-line-number="4">)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">annoying &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
+  <span class="st">`</span><span class="dt">2</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">1</span><span class="st">`</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span>))
+)</code></pre>
 <ol style="list-style-type: decimal">
 <li><p>To extract the variable called 1 run</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1">annoying[[<span class="st">&quot;1&quot;</span>]]</a>
-<a class="sourceLine" id="cb195-2" data-line-number="2"><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">annoying[[<span class="st">&quot;1&quot;</span>]]
+<span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></code></pre>
 <p>or</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">annoying<span class="op">$</span><span class="st">`</span><span class="dt">1</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb196-2" data-line-number="2"><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></a></code></pre></div></li>
+<pre class="sourceCode r"><code class="sourceCode r">annoying<span class="op">$</span><span class="st">`</span><span class="dt">1</span><span class="st">`</span>
+<span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></code></pre></li>
 <li><p>To create a scatter plot of <code>1</code> vs. <code>2</code> run</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="kw">ggplot</span>(annoying, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb197-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(annoying, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
 <p><img src="tibble_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>To add a new column <code>3</code> which is <code>2</code> divided by <code>1</code> run</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">annoying[[<span class="st">&quot;3&quot;</span>]] &lt;-<span class="st"> </span>annoying<span class="op">$</span><span class="st">`</span><span class="dt">2</span><span class="st">`</span> <span class="op">/</span><span class="st"> </span>annoying<span class="op">$</span><span class="st">`</span><span class="dt">1</span><span class="st">`</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">annoying[[<span class="st">&quot;3&quot;</span>]] &lt;-<span class="st"> </span>annoying<span class="op">$</span><span class="st">`</span><span class="dt">2</span><span class="st">`</span> <span class="op">/</span><span class="st"> </span>annoying<span class="op">$</span><span class="st">`</span><span class="dt">1</span><span class="st">`</span></code></pre>
 <p>or</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1">annoying[[<span class="st">&quot;3&quot;</span>]] &lt;-<span class="st"> </span>annoying[[<span class="st">&quot;2&quot;</span>]] <span class="op">/</span><span class="st"> </span>annoying[[<span class="st">&quot;1&quot;</span>]]</a></code></pre></div></li>
+<pre class="sourceCode r"><code class="sourceCode r">annoying[[<span class="st">&quot;3&quot;</span>]] &lt;-<span class="st"> </span>annoying[[<span class="st">&quot;2&quot;</span>]] <span class="op">/</span><span class="st"> </span>annoying[[<span class="st">&quot;1&quot;</span>]]</code></pre></li>
 <li><p>To rename the columns to <code>one</code>, <code>two</code>, and <code>three</code>, run</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1">annoying &lt;-<span class="st"> </span><span class="kw">rename</span>(annoying, <span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>, <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>, <span class="dt">three =</span> <span class="st">`</span><span class="dt">3</span><span class="st">`</span>)</a>
-<a class="sourceLine" id="cb200-2" data-line-number="2"><span class="kw">glimpse</span>(annoying)</a>
-<a class="sourceLine" id="cb200-3" data-line-number="3"><span class="co">#&gt; Observations: 10</span></a>
-<a class="sourceLine" id="cb200-4" data-line-number="4"><span class="co">#&gt; Variables: 3</span></a>
-<a class="sourceLine" id="cb200-5" data-line-number="5"><span class="co">#&gt; $ one   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</span></a>
-<a class="sourceLine" id="cb200-6" data-line-number="6"><span class="co">#&gt; $ two   &lt;dbl&gt; 0.60, 4.26, 3.56, 7.99, 10.62, 13.15, 12.18, 15.75, 17.7...</span></a>
-<a class="sourceLine" id="cb200-7" data-line-number="7"><span class="co">#&gt; $ three &lt;dbl&gt; 0.60, 2.13, 1.19, 2.00, 2.12, 2.19, 1.74, 1.97, 1.97, 1.97</span></a></code></pre></div></li>
+<pre class="sourceCode r"><code class="sourceCode r">annoying &lt;-<span class="st"> </span><span class="kw">rename</span>(annoying, <span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>, <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>, <span class="dt">three =</span> <span class="st">`</span><span class="dt">3</span><span class="st">`</span>)
+<span class="kw">glimpse</span>(annoying)
+<span class="co">#&gt; Observations: 10</span>
+<span class="co">#&gt; Variables: 3</span>
+<span class="co">#&gt; $ one   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</span>
+<span class="co">#&gt; $ two   &lt;dbl&gt; 0.60, 4.26, 3.56, 7.99, 10.62, 13.15, 12.18, 15.75, 17.7...</span>
+<span class="co">#&gt; $ three &lt;dbl&gt; 0.60, 2.13, 1.19, 2.00, 2.12, 2.19, 1.74, 1.97, 1.97, 1.97</span></code></pre></li>
 </ol>
 </div>
 </div>
@@ -891,13 +899,13 @@ columns named <code>1</code> and <code>2</code>.</p>
 </div>
 <div class="answer">
 <p>The function <code>tibble::enframe()</code> converts named vectors to a data frame with names and values</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="kw">enframe</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="co">#&gt; # A tibble: 3 x 2</span></a>
-<a class="sourceLine" id="cb201-3" data-line-number="3"><span class="co">#&gt;   name  value</span></a>
-<a class="sourceLine" id="cb201-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb201-5" data-line-number="5"><span class="co">#&gt; 1 a         1</span></a>
-<a class="sourceLine" id="cb201-6" data-line-number="6"><span class="co">#&gt; 2 b         2</span></a>
-<a class="sourceLine" id="cb201-7" data-line-number="7"><span class="co">#&gt; 3 c         3</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">enframe</span>(<span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>))
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   name  value</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 a         1</span>
+<span class="co">#&gt; 2 b         2</span>
+<span class="co">#&gt; 3 c         3</span></code></pre>
 </div>
 </div>
 <div id="exercise-10.6.6" class="section level3 unnumbered exercise">

@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{August 30, 2018}
+    \date{September 07, 2018}
 
 \usepackage{amsthm}
 
@@ -133,20 +133,6 @@
 \theoremstyle{remark}
 \newtheorem*{answer}{Solution}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -256,7 +242,7 @@ turn R markdown files into HTML, PDF, and EPUB.
 The source of this book is available at
 \url{https://github.com/jrnold/r4ds-exercise-solutions} This book was
 built from commit
-\href{https://github.com/jrnold/r4ds-exercise-solutions/tree/e7026854f20a01876ca9df8f87a25362587e58b7}{e702685}.
+\href{https://github.com/jrnold/r4ds-exercise-solutions/tree/b457d90110cb86e5274c7c6fab56db0034c15e52}{b457d90}.
 
 This book was built with:
 
@@ -266,94 +252,102 @@ This book was built with:
 \CommentTok{#> Session info -------------------------------------------------------------}
 \CommentTok{#>  setting  value                       }
 \CommentTok{#>  version  R version 3.5.1 (2018-07-02)}
-\CommentTok{#>  system   x86_64, linux-gnu           }
+\CommentTok{#>  system   x86_64, darwin15.6.0        }
 \CommentTok{#>  ui       X11                         }
 \CommentTok{#>  language (EN)                        }
 \CommentTok{#>  collate  en_US.UTF-8                 }
-\CommentTok{#>  tz       Etc/UTC                     }
-\CommentTok{#>  date     2018-08-30}
+\CommentTok{#>  tz       America/Los_Angeles         }
+\CommentTok{#>  date     2018-09-07}
 \CommentTok{#> Packages -----------------------------------------------------------------}
 \CommentTok{#>  package        * version    date      }
 \CommentTok{#>  assertthat       0.2.0      2017-04-11}
 \CommentTok{#>  babynames        0.3.0      2017-04-14}
 \CommentTok{#>  backports        1.1.2      2017-12-13}
 \CommentTok{#>  base64enc        0.1-3      2015-07-28}
-\CommentTok{#>  beeswarm         0.2.3      2016-04-25}
 \CommentTok{#>  BH               1.66.0-1   2018-02-13}
 \CommentTok{#>  bindr            0.1.1      2018-03-13}
 \CommentTok{#>  bindrcpp       * 0.2.2      2018-03-29}
+\CommentTok{#>  bookdown         0.7.17     2018-08-10}
 \CommentTok{#>  brew             1.0-6      2011-04-13}
 \CommentTok{#>  broom            0.5.0      2018-07-17}
-\CommentTok{#>  callr            2.0.4      2018-05-15}
+\CommentTok{#>  callr            3.0.0      2018-08-24}
 \CommentTok{#>  cellranger       1.1.0      2016-07-27}
 \CommentTok{#>  cli              1.0.0      2017-11-05}
 \CommentTok{#>  clipr            0.4.1      2018-06-23}
+\CommentTok{#>  codetools        0.2-15     2016-10-05}
 \CommentTok{#>  colorspace       1.3-2      2016-12-14}
+\CommentTok{#>  condvis          0.4-2      2017-10-11}
 \CommentTok{#>  crayon           1.3.4      2017-09-16}
+\CommentTok{#>  crosstalk        1.0.0      2016-12-21}
 \CommentTok{#>  curl             3.2        2018-03-28}
-\CommentTok{#>  datamodelr       0.2.2.9002 2018-08-13}
+\CommentTok{#>  datamodelr       0.2.2.9002 2018-05-27}
 \CommentTok{#>  DBI              1.0.0      2018-05-02}
 \CommentTok{#>  dbplyr           1.2.2      2018-07-25}
 \CommentTok{#>  DiagrammeR       1.0.0      2018-03-01}
-\CommentTok{#>  digest           0.6.15     2018-01-28}
+\CommentTok{#>  digest           0.6.16     2018-08-22}
 \CommentTok{#>  downloader       0.4        2015-07-09}
 \CommentTok{#>  dplyr          * 0.7.6      2018-06-29}
 \CommentTok{#>  evaluate         0.11       2018-07-17}
-\CommentTok{#>  fansi            0.2.3      2018-05-06}
+\CommentTok{#>  fansi            0.3.0      2018-08-13}
 \CommentTok{#>  forcats          0.3.0      2018-02-19}
-\CommentTok{#>  fueleconomy      0.1        2014-07-22}
 \CommentTok{#>  gapminder        0.3.0      2017-10-31}
-\CommentTok{#>  ggbeeswarm       0.6.0      2017-08-07}
-\CommentTok{#>  ggplot2          3.0.0      2018-07-03}
-\CommentTok{#>  ggstance         0.3.1      2018-07-20}
-\CommentTok{#>  glue             1.3.0      2018-07-17}
-\CommentTok{#>  graphics       * 3.5.1      2018-08-08}
-\CommentTok{#>  grDevices      * 3.5.1      2018-08-08}
-\CommentTok{#>  grid             3.5.1      2018-08-08}
+\CommentTok{#>  ggplot2          3.0.0.9000 2018-08-24}
+\CommentTok{#>  ggrepel          0.8.0.9000 2018-08-10}
+\CommentTok{#>  glue             1.3.0      2018-08-24}
+\CommentTok{#>  graphics       * 3.5.1      2018-07-05}
+\CommentTok{#>  grDevices      * 3.5.1      2018-07-05}
+\CommentTok{#>  grid             3.5.1      2018-07-05}
 \CommentTok{#>  gridExtra        2.3        2017-09-09}
 \CommentTok{#>  gtable           0.2.0      2016-02-26}
 \CommentTok{#>  haven            1.1.2      2018-06-27}
-\CommentTok{#>  here             0.1        2017-05-28}
 \CommentTok{#>  hexbin           1.27.2     2018-01-15}
 \CommentTok{#>  highr            0.7        2018-06-09}
 \CommentTok{#>  hms              0.4.2      2018-03-10}
+\CommentTok{#>  htmldeps         0.1.1      2018-08-10}
 \CommentTok{#>  htmltools        0.3.6      2017-04-28}
 \CommentTok{#>  htmlwidgets      1.2        2018-04-19}
+\CommentTok{#>  httpuv           1.4.5      2018-07-19}
 \CommentTok{#>  httr             1.3.1      2017-08-20}
 \CommentTok{#>  igraph           1.2.2      2018-07-27}
 \CommentTok{#>  influenceR       0.1.0      2015-09-03}
+\CommentTok{#>  jpeg             0.1-8      2014-01-23}
 \CommentTok{#>  jsonlite         1.5        2017-06-01}
 \CommentTok{#>  knitr            1.20       2018-02-20}
 \CommentTok{#>  labeling         0.3        2014-08-23}
 \CommentTok{#>  Lahman           6.0-0      2017-08-15}
+\CommentTok{#>  later            0.7.3      2018-06-08}
 \CommentTok{#>  lattice          0.20-35    2017-03-25}
 \CommentTok{#>  lazyeval         0.2.1      2017-10-29}
+\CommentTok{#>  leaflet          2.0.1      2018-06-04}
 \CommentTok{#>  lubridate        1.7.4      2018-04-11}
-\CommentTok{#>  lvplot           0.2.0      2016-05-01}
 \CommentTok{#>  magrittr       * 1.5        2014-11-22}
 \CommentTok{#>  maps             3.3.0      2018-04-03}
 \CommentTok{#>  markdown         0.8        2017-04-20}
 \CommentTok{#>  MASS             7.3-50     2018-04-30}
-\CommentTok{#>  Matrix           1.2-14     2018-04-09}
-\CommentTok{#>  methods        * 3.5.1      2018-08-08}
-\CommentTok{#>  mgcv             1.8-24     2018-06-18}
+\CommentTok{#>  Matrix           1.2-14     2018-04-13}
+\CommentTok{#>  methods        * 3.5.1      2018-07-05}
+\CommentTok{#>  mgcv             1.8-24     2018-06-23}
 \CommentTok{#>  microbenchmark   1.4-4      2018-01-24}
 \CommentTok{#>  mime             0.5        2016-07-07}
 \CommentTok{#>  modelr           0.1.2      2018-05-11}
 \CommentTok{#>  munsell          0.5.0      2018-06-12}
-\CommentTok{#>  nasaweather      0.1        2014-07-22}
 \CommentTok{#>  nlme             3.1-137    2018-04-07}
 \CommentTok{#>  nycflights13     1.0.0      2018-06-26}
 \CommentTok{#>  openssl          1.0.2      2018-07-30}
 \CommentTok{#>  pillar           1.3.0      2018-07-14}
-\CommentTok{#>  pkgconfig        2.0.1      2017-03-21}
+\CommentTok{#>  pkgconfig        2.0.2      2018-08-16}
 \CommentTok{#>  plogr            0.2.0      2018-03-25}
 \CommentTok{#>  plyr             1.8.4      2016-06-08}
-\CommentTok{#>  praise           1.0.0      2015-08-11}
-\CommentTok{#>  processx         3.1.0      2018-05-15}
+\CommentTok{#>  png              0.1-7      2013-12-03}
+\CommentTok{#>  processx         3.2.0      2018-08-16}
+\CommentTok{#>  promises         1.0.1      2018-04-13}
+\CommentTok{#>  pryr             0.1.4      2018-02-18}
+\CommentTok{#>  ps               1.1.0      2018-08-10}
 \CommentTok{#>  purrr            0.2.5      2018-05-29}
-\CommentTok{#>  R4DSSolutions    0.1        2018-08-13}
+\CommentTok{#>  r4ds             0.1        2018-08-10}
+\CommentTok{#>  R4DSSolutions    0.1        2018-08-10}
 \CommentTok{#>  R6               2.2.2      2017-06-17}
+\CommentTok{#>  raster           2.6-7      2017-11-13}
 \CommentTok{#>  RColorBrewer     1.1-2      2014-12-07}
 \CommentTok{#>  Rcpp             0.12.18    2018-07-23}
 \CommentTok{#>  readr            1.1.1      2017-05-16}
@@ -362,155 +356,165 @@ This book was built with:
 \CommentTok{#>  reprex           0.2.0      2018-06-22}
 \CommentTok{#>  reshape2         1.4.3      2017-12-11}
 \CommentTok{#>  rgexf            0.15.3     2015-03-24}
-\CommentTok{#>  rlang            0.2.1      2018-05-30}
-\CommentTok{#>  rmarkdown        1.10       2018-06-11}
+\CommentTok{#>  rlang            0.2.2      2018-08-16}
+\CommentTok{#>  rmarkdown        1.10.12    2018-08-24}
 \CommentTok{#>  Rook             1.1-1      2014-10-20}
-\CommentTok{#>  rprojroot        1.3-2      2018-01-03}
 \CommentTok{#>  rstudioapi       0.7        2017-09-07}
 \CommentTok{#>  rvest            0.3.2      2016-06-17}
 \CommentTok{#>  scales           1.0.0      2018-08-09}
 \CommentTok{#>  selectr          0.4-1      2018-04-06}
-\CommentTok{#>  stats          * 3.5.1      2018-08-08}
+\CommentTok{#>  shiny            1.1.0      2018-05-17}
+\CommentTok{#>  sourcetools      0.1.7      2018-04-25}
+\CommentTok{#>  sp               1.3-1      2018-06-05}
+\CommentTok{#>  stats          * 3.5.1      2018-07-05}
 \CommentTok{#>  stringi          1.2.4      2018-07-20}
 \CommentTok{#>  stringr          1.3.1      2018-05-10}
-\CommentTok{#>  testthat         2.0.0      2017-12-13}
 \CommentTok{#>  tibble           1.4.2      2018-01-22}
 \CommentTok{#>  tidyr            0.8.1      2018-05-18}
 \CommentTok{#>  tidyselect       0.2.4      2018-02-26}
 \CommentTok{#>  tidyverse        1.2.1      2017-11-14}
-\CommentTok{#>  tinytex          0.6.6      2018-08-08}
-\CommentTok{#>  tools            3.5.1      2018-08-08}
+\CommentTok{#>  tinytex          0.7        2018-08-22}
+\CommentTok{#>  tools            3.5.1      2018-07-05}
 \CommentTok{#>  utf8             1.1.4      2018-05-24}
-\CommentTok{#>  utils          * 3.5.1      2018-08-08}
-\CommentTok{#>  vipor            0.4.5      2017-03-22}
+\CommentTok{#>  utils          * 3.5.1      2018-07-05}
 \CommentTok{#>  viridis          0.5.1      2018-03-29}
 \CommentTok{#>  viridisLite      0.3.0      2018-02-01}
 \CommentTok{#>  visNetwork       2.0.4      2018-06-14}
 \CommentTok{#>  whisker          0.3-2      2013-04-28}
 \CommentTok{#>  withr            2.1.2      2018-03-15}
 \CommentTok{#>  xfun             0.3        2018-07-06}
-\CommentTok{#>  XML              3.98-1.15  2018-08-10}
+\CommentTok{#>  XML              3.98-1.16  2018-08-19}
 \CommentTok{#>  xml2             1.2.0      2018-01-24}
+\CommentTok{#>  xtable           1.8-2      2016-02-05}
 \CommentTok{#>  yaml             2.2.0      2018-07-25}
-\CommentTok{#>  source                             }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.3.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.2.3)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  Github (bergant/datamodelr@68ea364)}
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@1.0.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.4)                        }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.1)                        }
-\CommentTok{#>  cran (@0.3.0)                      }
-\CommentTok{#>  cran (@0.6.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.3.1)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  local                              }
-\CommentTok{#>  local                              }
-\CommentTok{#>  local                              }
-\CommentTok{#>  cran (@2.3)                        }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.1)                        }
-\CommentTok{#>  cran (@1.27.2)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.1.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.2.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@3.3.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  local                              }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.1)                        }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  local (@0.1)                       }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@0.15.3)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@1.1-1)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@1.0.0)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  local                              }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  Github (yihui/tinytex@446f17c)     }
-\CommentTok{#>  local                              }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  local                              }
-\CommentTok{#>  cran (@0.4.5)                      }
-\CommentTok{#>  cran (@0.5.1)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@2.0.4)                      }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  cran (@3.98-1.)                    }
-\CommentTok{#>  CRAN (R 3.5.1)                     }
-\CommentTok{#>  CRAN (R 3.5.1)}
+\CommentTok{#>  source                                   }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  Github (rstudio/bookdown@02b0fd1)        }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.4-2)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  Github (bergant/datamodelr@68ea364)      }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  cran (@0.11)                             }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.3.0)                            }
+\CommentTok{#>  Github (tidyverse/ggplot2@adce4e2)       }
+\CommentTok{#>  Github (slowkow/ggrepel@200571c)         }
+\CommentTok{#>  Github (tidyverse/glue@4e74901)          }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  Github (rstudio/htmldeps@c1023e0)        }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.1-8)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@1.20)                             }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@2.0.1)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  cran (@1.4-4)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.1.2)                            }
+\CommentTok{#>  cran (@0.5.0)                            }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.1-7)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.2.5)                            }
+\CommentTok{#>  Github (hadley/r4ds@03eb8d0)             }
+\CommentTok{#>  local (jrnold/r4ds-exercise-solutions@NA)}
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@2.6-7)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.12.18)                          }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.2.2)                            }
+\CommentTok{#>  Github (rstudio/rmarkdown@6e56ad8)       }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@1.3.1)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@0.8.1)                            }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  local                                    }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.1)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  CRAN (R 3.5.0)                           }
+\CommentTok{#>  cran (@2.2.0)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2180,7 +2184,30 @@ The answer to each part follows.
 \end{Highlighting}
 \end{Shaded}
 \item
-  The flights that flew to Houston were:
+  The flights that flew to Houston were are those flights where the
+  destination (\texttt{dest}) is either ``IAH'' or ``HOU''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(flights, dest }\OperatorTok{==}\StringTok{ "IAH"} \OperatorTok{|}\StringTok{ }\NormalTok{dest }\OperatorTok{==}\StringTok{ "HOU"}\NormalTok{)}
+\CommentTok{#> # A tibble: 9,313 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1     1      517            515         2      830}
+\CommentTok{#> 2  2013     1     1      533            529         4      850}
+\CommentTok{#> 3  2013     1     1      623            627        -4      933}
+\CommentTok{#> 4  2013     1     1      728            732        -4     1041}
+\CommentTok{#> 5  2013     1     1      739            739         0     1104}
+\CommentTok{#> 6  2013     1     1      908            908         0     1228}
+\CommentTok{#> # ... with 9,307 more rows, and 12 more variables: sched_arr_time <int>,}
+\CommentTok{#> #   arr_delay <dbl>, carrier <chr>, flight <int>, tailnum <chr>,}
+\CommentTok{#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,}
+\CommentTok{#> #   minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
+  However, using \texttt{\%in\%} is more compact and would scale to
+  cases where there were more than two airports we were interested in.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2270,10 +2297,34 @@ The answer to each part follows.
 \CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
 \end{Highlighting}
 \end{Shaded}
+
+  The \texttt{\%in\%} and \texttt{\textbar{}} operators would also work,
+  but using relational operators like \texttt{\textgreater{}=} and
+  \texttt{\textless{}=} is preferred for numeric data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(flights, month }\OperatorTok{%in%}\StringTok{  }\KeywordTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{))}
+\CommentTok{#> # A tibble: 86,326 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     7     1        1           2029       212      236}
+\CommentTok{#> 2  2013     7     1        2           2359         3      344}
+\CommentTok{#> 3  2013     7     1       29           2245       104      151}
+\CommentTok{#> 4  2013     7     1       43           2130       193      322}
+\CommentTok{#> 5  2013     7     1       44           2150       174      300}
+\CommentTok{#> 6  2013     7     1       46           2051       235      304}
+\CommentTok{#> # ... with 8.632e+04 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
 \item
   Flights that arrived more than two hours late, but didn't leave late
-  will have an arrival delay of more than 120 minutes and either
-  departed on time or left early.
+  will have an arrival delay of more than 120 minutes
+  (\texttt{dep\_delay\ \textgreater{}\ 120}) and an non-positive
+  departure delay (\texttt{dep\_delay\ \textless{}=\ 0}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2295,7 +2346,14 @@ The answer to each part follows.
 \end{Shaded}
 \item
   Were delayed by at least an hour, but made up over 30 minutes in
-  flight
+  flight. If a flight was delayed by at least an hour, then
+  \texttt{dep\_delay\ \textgreater{}=\ 60}. If the flight didn't make up
+  any time in the air, then its arrival would be delayed by the same
+  amount as its departure, meaning \texttt{dep\_delay\ ==\ arr\_delay},
+  or alternatively, \texttt{dep\_delay\ -\ arr\_delay\ ==\ 0}. If it
+  makes up over 30 minutes in the air, then the the arrival delay must
+  be at least 30 minutes less than the departure delay, whic is stated
+  as \texttt{dep\_delay\ -\ arr\_delay\ \textgreater{}\ 30}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2317,10 +2375,11 @@ The answer to each part follows.
 \end{Shaded}
 \item
   Finding flights that departed between midnight and 6 am is complicated
-  by the way in which times are represented in the \texttt{dep\_time}
-  column. In \texttt{dep\_time}, midnight is \texttt{2400}, not
-  \texttt{0}. Thus we cannot simply check that
-  \texttt{dep\_time\ \textless{}\ 600}. Instead, we have to do this.
+  by the way in which times are represented in the data. In
+  \texttt{dep\_time}, midnight is represented by \texttt{2400}, not
+  \texttt{0}. This means we cannot simply check that
+  \texttt{dep\_time\ \textless{}\ 600}, because we also have to consider
+  the special case of midnight.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2341,22 +2400,21 @@ The answer to each part follows.
 \end{Highlighting}
 \end{Shaded}
 
-  We could avoid using an ``or'' statement by using the
+  Alternativley, we could use the
   \href{https://en.wikipedia.org/wiki/Modulo_operation}{modulo
   operator}, \texttt{\%\%}. The modulo operator returns the remainder of
-  division. What happens if we calculate \texttt{dep\_time} mod
-  \texttt{2400}?
+  division. Let's see how how this affects our times.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{c}\NormalTok{(}\DecValTok{2400}\NormalTok{, }\DecValTok{600}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{2400}
-\CommentTok{#> [1]   0 600}
+\KeywordTok{c}\NormalTok{(}\DecValTok{600}\NormalTok{, }\DecValTok{1200}\NormalTok{, }\DecValTok{2400}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{2400}
+\CommentTok{#> [1]  600 1200    0}
 \end{Highlighting}
 \end{Shaded}
 
   Since \texttt{2400\ \%\%\ 2400\ ==\ 0} and all other times are left
-  unchanged, we will only need to compare the result of the modulo
-  operation to \texttt{600},
+  unchanged, we can compare the result of the modulo operation to
+  \texttt{600},
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2377,8 +2435,8 @@ The answer to each part follows.
 \end{Highlighting}
 \end{Shaded}
 
-  This filter expression is more compact, but may or may not be more
-  readable and intuitive to a reader.
+  This filter expression is more compact, but its readability will
+  depends on the familiarity of the reader with modular arithmetic.
 \end{enumerate}
 
 \hypertarget{exercise-5.2.2}{%
@@ -2425,6 +2483,9 @@ of \emph{departed in summer}
 How many flights have a missing \texttt{dep\_time}? What other variables
 are missing? What might these rows represent?
 
+Find the rows of flights with a missing depature time
+(\texttt{dep\_time}) using the \texttt{is.na()} function.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{filter}\NormalTok{(flights, }\KeywordTok{is.na}\NormalTok{(dep_time))}
@@ -2444,7 +2505,8 @@ are missing? What might these rows represent?
 \end{Highlighting}
 \end{Shaded}
 
-Since \texttt{arr\_time} is also missing, these are canceled flights.
+Notably, the arrival time (\texttt{arr\_time}) is also missing for these
+rows. These seem to be canceled flights.
 
 \hypertarget{exercise-5.2.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -2534,8 +2596,10 @@ undefined results as \texttt{NaN}, which is an abbreviation of
 How could you use \texttt{arrange()} to sort all missing values to the
 start? (Hint: use \texttt{is.na()}).
 
-This sorts by increasing \texttt{dep\_time}, but with all missing values
-put first.
+We can put \texttt{NA} values first by sorting by both an indicator of
+whether the column has a missing value, and the column of interest. For
+example, to sort the data frame by departure time (\texttt{dep\_time})
+in ascending order, but place all missing values, run the following.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2556,6 +2620,47 @@ put first.
 \end{Highlighting}
 \end{Shaded}
 
+Otherwise, regardless of whether we use \texttt{desc()} or not, missing
+values will be placed at the end.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(flights, dep_time)}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1    13        1           2249        72      108}
+\CommentTok{#> 2  2013     1    31        1           2100       181      124}
+\CommentTok{#> 3  2013    11    13        1           2359         2      442}
+\CommentTok{#> 4  2013    12    16        1           2359         2      447}
+\CommentTok{#> 5  2013    12    20        1           2359         2      430}
+\CommentTok{#> 6  2013    12    26        1           2359         2      437}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(flights, }\KeywordTok{desc}\NormalTok{(dep_time))}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013    10    30     2400           2359         1      327}
+\CommentTok{#> 2  2013    11    27     2400           2359         1      515}
+\CommentTok{#> 3  2013    12     5     2400           2359         1      427}
+\CommentTok{#> 4  2013    12     9     2400           2359         1      432}
+\CommentTok{#> 5  2013    12     9     2400           2250        70       59}
+\CommentTok{#> 6  2013    12    13     2400           2359         1      432}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{exercise-5.3.2}{%
 \subsection*{\texorpdfstring{Exercise
 {5.3.2}}{Exercise 5.3.2}}\label{exercise-5.3.2}}
@@ -2564,8 +2669,8 @@ put first.
 Sort flights to find the most delayed flights. Find the flights that
 left earliest.
 
-The most delayed flights are found by sorting by \texttt{dep\_delay} in
-descending order.
+Find the most delayed flights by sorting the table by departure delay,
+\texttt{dep\_delay}, in descending order.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2586,8 +2691,16 @@ descending order.
 \end{Highlighting}
 \end{Shaded}
 
-If we sort \texttt{dep\_delay} in ascending order, we get those that
-left earliest. There was a flight that left 43 minutes early.
+The most delayed flight was HA 51, JFK to HNL, which was scheduled to
+leave on January 09, 2013 09:00. Note that the departure time is given
+as 641, which seems to be less than the scheduled departure time. But
+the departure was delayed 1,301 minutes, which is 21 hours, 41 mintues.
+The departure time is the day after the scheduled departure time. Be
+happy that you weren't on that flight, and if you happened to have been
+on that flight and are reading this, I'm sorry for you.
+
+Similarly, the earliest departing flight can can be found by sorting
+\texttt{dep\_delay} in ascending order.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2608,6 +2721,9 @@ left earliest. There was a flight that left 43 minutes early.
 \end{Highlighting}
 \end{Shaded}
 
+Flight B6 97 (JFK to DEN) scheduled to depart on Saturday 07, 2013 at
+21:23 departed 43 minutes early.
+
 \hypertarget{exercise-5.3.3}{%
 \subsection*{\texorpdfstring{Exercise
 {5.3.3}}{Exercise 5.3.3}}\label{exercise-5.3.3}}
@@ -2615,30 +2731,56 @@ left earliest. There was a flight that left 43 minutes early.
 
 Sort flights to find the fastest flights.
 
-I assume that by by ``fastest flights'' it means the flights with the
-minimum air time. So I sort by \texttt{air\_time}. The fastest flights
-are two flights between Newark
-(\href{https://en.wikipedia.org/wiki/Newark_Liberty_International_Airport}{EWR})
-and Bradley
-(\href{https://en.wikipedia.org/wiki/Bradley_International_Airport}{BDL}),
-an airport in Connecticut) with an air time of 20 minutes.
+By ``fastest'' flights, I assume that the question refers to the flights
+with the shortest time in the air. Find these by sorting by
+\texttt{air\_time}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{arrange}\NormalTok{(flights, air_time) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(origin, dest, air_time) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{head}\NormalTok{()}
-\CommentTok{#> # A tibble: 6 x 3}
-\CommentTok{#>   origin dest  air_time}
-\CommentTok{#>   <chr>  <chr>    <dbl>}
-\CommentTok{#> 1 EWR    BDL         20}
-\CommentTok{#> 2 EWR    BDL         20}
-\CommentTok{#> 3 EWR    BDL         21}
-\CommentTok{#> 4 EWR    PHL         21}
-\CommentTok{#> 5 EWR    BDL         21}
-\CommentTok{#> 6 EWR    PHL         21}
+\KeywordTok{arrange}\NormalTok{(flights, air_time) }
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1    16     1355           1315        40     1442}
+\CommentTok{#> 2  2013     4    13      537            527        10      622}
+\CommentTok{#> 3  2013    12     6      922            851        31     1021}
+\CommentTok{#> 4  2013     2     3     2153           2129        24     2247}
+\CommentTok{#> 5  2013     2     5     1303           1315       -12     1342}
+\CommentTok{#> 6  2013     2    12     2123           2130        -7     2211}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
 \end{Highlighting}
 \end{Shaded}
+
+However, ``fastest'' could also be interpreted as referring to the
+average air speed. We can find these flights by sorting by the result of
+\texttt{distance\ /\ air\_time\ /\ 60}, where the 60 is to convert the
+expression to miles per hour since \texttt{air\_time} is in minutes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(flights, distance }\OperatorTok{/}\StringTok{ }\NormalTok{air_time }\OperatorTok{*}\StringTok{ }\DecValTok{60}\NormalTok{)}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1    28     1917           1825        52     2118}
+\CommentTok{#> 2  2013     6    29      755            800        -5     1035}
+\CommentTok{#> 3  2013     8    28      932            940        -8     1116}
+\CommentTok{#> 4  2013     1    30     1037            955        42     1221}
+\CommentTok{#> 5  2013    11    27      556            600        -4      727}
+\CommentTok{#> 6  2013     5    21      558            600        -2      721}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
+This shows that we are not limited to sorting by columns in
+\texttt{arrange()}, but can sort by the results of arbitrary
+expressions, something which we had earlier seen with \texttt{desc()}.
 
 \hypertarget{exercise-5.3.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -2647,11 +2789,12 @@ an airport in Connecticut) with an air time of 20 minutes.
 
 Which flights traveled the longest? Which traveled the shortest?
 
-I'll assume hat traveled the longest or shortest refers to distance,
+By longest (shortest), I assume that the question is asking about the
+distance travelled, which is given in the variable \texttt{distance},
 rather than air-time.
 
-The longest flights are the Hawaii Air (HA 51) between JFK and HNL
-(Honolulu) at 4,983 miles.
+To find the longest flight, sort \texttt{distance} in descending order
+using \texttt{desc()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2672,8 +2815,11 @@ The longest flights are the Hawaii Air (HA 51) between JFK and HNL
 \end{Highlighting}
 \end{Shaded}
 
-Apart from an EWR to LGA flight that was canceled, the shortest flights
-are the Envoy Air Flights between EWR and PHL at 80 miles.
+The longest flight is HA 51, JFK to HNL, which is 4,983 miles.
+
+To find the shortest flight, sort \texttt{distance} in ascending order,
+which is the default sort order, so we don't need to use
+\texttt{desc()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2687,6 +2833,56 @@ are the Envoy Air Flights between EWR and PHL at 80 miles.
 \CommentTok{#> 4  2013     1     4     1829           1615       134     1937}
 \CommentTok{#> 5  2013     1     4     2128           2129        -1     2218}
 \CommentTok{#> 6  2013     1     5     1155           1200        -5     1241}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
+The shortest flight is US 1632, EWR to LGA, which is only 17 miles. This
+is a flight between two of the New York area airports. However, since
+this flight is missing a departure time so it either did not actually
+fly or there is a problem with the data.
+
+However, another reasonable interpretation of ``longest'' and
+``shortest'' is in terms of time, which could similarly be found by
+sorting by \texttt{air\_time}. The shortest flights in terms of air time
+are
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(flights, }\KeywordTok{desc}\NormalTok{(air_time))}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     3    17     1337           1335         2     1937}
+\CommentTok{#> 2  2013     2     6      853            900        -7     1542}
+\CommentTok{#> 3  2013     3    15     1001           1000         1     1551}
+\CommentTok{#> 4  2013     3    17     1006           1000         6     1607}
+\CommentTok{#> 5  2013     3    16     1001           1000         1     1544}
+\CommentTok{#> 6  2013     2     5      900            900         0     1555}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>}
+\end{Highlighting}
+\end{Shaded}
+
+and the longest are
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(flights, air_time)}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1    16     1355           1315        40     1442}
+\CommentTok{#> 2  2013     4    13      537            527        10      622}
+\CommentTok{#> 3  2013    12     6      922            851        31     1021}
+\CommentTok{#> 4  2013     2     3     2153           2129        24     2247}
+\CommentTok{#> 5  2013     2     5     1303           1315       -12     1342}
+\CommentTok{#> 6  2013     2    12     2123           2130        -7     2211}
 \CommentTok{#> # ... with 3.368e+05 more rows, and 12 more variables:}
 \CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
 \CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
@@ -2709,6 +2905,10 @@ flights.
 
 A few ways include:
 
+\begin{itemize}
+\item
+  Specifying all the variables with unquoted variable names.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{select}\NormalTok{(flights, dep_time, dep_delay, arr_time, arr_delay)}
@@ -2722,7 +2922,14 @@ A few ways include:
 \CommentTok{#> 5      554        -6      812       -25}
 \CommentTok{#> 6      554        -4      740        12}
 \CommentTok{#> # ... with 3.368e+05 more rows}
-\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"dep_"}\NormalTok{), }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"arr_"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Specifying all the variables as strings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\StringTok{"dep_time"}\NormalTok{, }\StringTok{"dep_delay"}\NormalTok{, }\StringTok{"arr_time"}\NormalTok{, }\StringTok{"arr_delay"}\NormalTok{)}
 \CommentTok{#> # A tibble: 336,776 x 4}
 \CommentTok{#>   dep_time dep_delay arr_time arr_delay}
 \CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
@@ -2733,7 +2940,40 @@ A few ways include:
 \CommentTok{#> 5      554        -6      812       -25}
 \CommentTok{#> 6      554        -4      740        12}
 \CommentTok{#> # ... with 3.368e+05 more rows}
-\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{matches}\NormalTok{(}\StringTok{"^(dep|arr)_(time|delay)$"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Specifying the column numbers of the variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\CommentTok{#> # A tibble: 336,776 x 4}
+\CommentTok{#>   dep_time sched_dep_time dep_delay arr_delay}
+\CommentTok{#>      <int>          <int>     <dbl>     <dbl>}
+\CommentTok{#> 1      517            515         2        11}
+\CommentTok{#> 2      533            529         4        20}
+\CommentTok{#> 3      542            540         2        33}
+\CommentTok{#> 4      544            545        -1       -18}
+\CommentTok{#> 5      554            600        -6       -25}
+\CommentTok{#> 6      554            558        -4        12}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+  This works, but is not good practice for two reasons. First, the
+  column location of variables may change, resulting in code that may
+  continue to run without error, but produce the wrong answer. Second
+  code is obfuscated, since it is not clear from the code which
+  variables are being selected. What variable does column 5 correspond
+  to? I just wrote the code, and I've already forgotten.
+\item
+  Specifying the names of the variables with character vector and
+  \texttt{one\_of()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{one_of}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"dep_time"}\NormalTok{, }\StringTok{"dep_delay"}\NormalTok{, }\StringTok{"arr_time"}\NormalTok{, }\StringTok{"arr_delay"}\NormalTok{)))}
 \CommentTok{#> # A tibble: 336,776 x 4}
 \CommentTok{#>   dep_time dep_delay arr_time arr_delay}
 \CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
@@ -2747,8 +2987,109 @@ A few ways include:
 \end{Highlighting}
 \end{Shaded}
 
-using \texttt{ends\_with()} doesn't work well since it would return both
-\texttt{sched\_arr\_time} and \texttt{sched\_dep\_time}.
+  This is useful because the names of the variables can be stored in a
+  variable and passed to \texttt{one\_of()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variables <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"dep_time"}\NormalTok{, }\StringTok{"dep_delay"}\NormalTok{, }\StringTok{"arr_time"}\NormalTok{, }\StringTok{"arr_delay"}\NormalTok{)}
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{one_of}\NormalTok{(variables))}
+\CommentTok{#> # A tibble: 336,776 x 4}
+\CommentTok{#>   dep_time dep_delay arr_time arr_delay}
+\CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
+\CommentTok{#> 1      517         2      830        11}
+\CommentTok{#> 2      533         4      850        20}
+\CommentTok{#> 3      542         2      923        33}
+\CommentTok{#> 4      544        -1     1004       -18}
+\CommentTok{#> 5      554        -6      812       -25}
+\CommentTok{#> 6      554        -4      740        12}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Selecting the variables by matching the start of their names using
+  \texttt{starts\_with()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"dep_"}\NormalTok{), }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"arr_"}\NormalTok{))}
+\CommentTok{#> # A tibble: 336,776 x 4}
+\CommentTok{#>   dep_time dep_delay arr_time arr_delay}
+\CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
+\CommentTok{#> 1      517         2      830        11}
+\CommentTok{#> 2      533         4      850        20}
+\CommentTok{#> 3      542         2      923        33}
+\CommentTok{#> 4      544        -1     1004       -18}
+\CommentTok{#> 5      554        -6      812       -25}
+\CommentTok{#> 6      554        -4      740        12}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Selecting the variables using \texttt{matches()} and regular
+  expressions, which are discussed in the
+  \href{http://r4ds.had.co.nz/strings.html}{Strings} chapter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{matches}\NormalTok{(}\StringTok{"^(dep|arr)_(time|delay)$"}\NormalTok{))}
+\CommentTok{#> # A tibble: 336,776 x 4}
+\CommentTok{#>   dep_time dep_delay arr_time arr_delay}
+\CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
+\CommentTok{#> 1      517         2      830        11}
+\CommentTok{#> 2      533         4      850        20}
+\CommentTok{#> 3      542         2      923        33}
+\CommentTok{#> 4      544        -1     1004       -18}
+\CommentTok{#> 5      554        -6      812       -25}
+\CommentTok{#> 6      554        -4      740        12}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+Some things that \textbf{don't} work are
+
+\begin{itemize}
+\item
+  Matching the ends of their names using \texttt{ends\_with()} since
+  this will incorrectly include other variables. For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{ends_with}\NormalTok{(}\StringTok{"arr_time"}\NormalTok{), }\KeywordTok{ends_with}\NormalTok{(}\StringTok{"dep_time"}\NormalTok{))}
+\CommentTok{#> # A tibble: 336,776 x 4}
+\CommentTok{#>   arr_time sched_arr_time dep_time sched_dep_time}
+\CommentTok{#>      <int>          <int>    <int>          <int>}
+\CommentTok{#> 1      830            819      517            515}
+\CommentTok{#> 2      850            830      533            529}
+\CommentTok{#> 3      923            850      542            540}
+\CommentTok{#> 4     1004           1022      544            545}
+\CommentTok{#> 5      812            837      554            600}
+\CommentTok{#> 6      740            728      554            558}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Matching the names using \texttt{contains()} since there is not a
+  pattern that can include all these variables without incorrectly
+  including others.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, }\KeywordTok{contains}\NormalTok{(}\StringTok{"_time"}\NormalTok{), }\KeywordTok{contains}\NormalTok{(}\StringTok{"arr_"}\NormalTok{))}
+\CommentTok{#> # A tibble: 336,776 x 6}
+\CommentTok{#>   dep_time sched_dep_time arr_time sched_arr_time air_time arr_delay}
+\CommentTok{#>      <int>          <int>    <int>          <int>    <dbl>     <dbl>}
+\CommentTok{#> 1      517            515      830            819      227        11}
+\CommentTok{#> 2      533            529      850            830      227        20}
+\CommentTok{#> 3      542            540      923            850      160        33}
+\CommentTok{#> 4      544            545     1004           1022      183       -18}
+\CommentTok{#> 5      554            600      812            837      116       -25}
+\CommentTok{#> 6      554            558      740            728      150        12}
+\CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
 
 \hypertarget{exercise-5.4.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -2756,10 +3097,12 @@ using \texttt{ends\_with()} doesn't work well since it would return both
 \addcontentsline{toc}{subsection}{Exercise {5.4.2}}
 
 What happens if you include the name of a variable multiple times in a
-select() call?
+\texttt{select()} call?
 
-It ignores the duplicates, and that variable is only included once. No
-error, warning, or message is emitted.
+The \texttt{select()} call ignores the duplication. Any duplicated
+variables are only included once, in the first location they appear. The
+\texttt{select()} function does not raise an error or warning or print
+any message if there are duplicated variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2774,6 +3117,30 @@ error, warning, or message is emitted.
 \CommentTok{#> 5  2013     1     1}
 \CommentTok{#> 6  2013     1     1}
 \CommentTok{#> # ... with 3.368e+05 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+This behavior is useful because it means that we can use
+\texttt{select()} with \texttt{everything()} in order to easily change
+the order of columns without having to specify the names of all the
+columsn.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(flights, arr_delay, }\KeywordTok{everything}\NormalTok{())}
+\CommentTok{#> # A tibble: 336,776 x 19}
+\CommentTok{#>   arr_delay  year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>       <dbl> <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1        11  2013     1     1      517            515         2      830}
+\CommentTok{#> 2        20  2013     1     1      533            529         4      850}
+\CommentTok{#> 3        33  2013     1     1      542            540         2      923}
+\CommentTok{#> 4       -18  2013     1     1      544            545        -1     1004}
+\CommentTok{#> 5       -25  2013     1     1      554            600        -6      812}
+\CommentTok{#> 6        12  2013     1     1      554            558        -4      740}
+\CommentTok{#> # ... with 3.368e+05 more rows, and 11 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, carrier <chr>, flight <int>, tailnum <chr>,}
+\CommentTok{#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,}
+\CommentTok{#> #   minute <dbl>, time_hour <dttm>}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2833,11 +3200,12 @@ default?
 \end{Highlighting}
 \end{Shaded}
 
-The default behavior for contains is to ignore case. It may or may not
-surprise you. One reason for this behavior is that most users expect
-searching to be case insensitive by default, so it is a useful default.
-A second, technical, reason is that dplyr works with more than R data
-frames. It can also work with a variety of
+The default behavior for \texttt{contains()} is to ignore case. This may
+or may not surprise you. If this behavior does not surprise you, that
+could be why it is the default. Users searching for variable names
+probably have a better sense of the letters in the variable than their
+capitalization. A second, technical, reason is that dplyr works with
+more than R data frames. It can also work with a variety of
 \href{https://db.rstudio.com/dplyr/}{databases}. Some of these database
 engines have case insensitive column names, so making functions that
 match variable names case insensitive by default will make the behavior
@@ -2853,8 +3221,6 @@ To change the behavior add the argument \texttt{ignore.case\ =\ FALSE}.
 \end{Highlighting}
 \end{Shaded}
 
-Now this expression selects not variables from the table.
-
 \hypertarget{add-new-variables-with-mutate}{%
 \section{\texorpdfstring{Add new variables with
 \texttt{mutate()}}{Add new variables with mutate()}}\label{add-new-variables-with-mutate}}
@@ -2869,16 +3235,76 @@ convenient to look at, but hard to compute with because they're not
 really continuous numbers. Convert them to a more convenient
 representation of number of minutes since midnight.
 
-To get the departure times in the number of minutes, (integer) divide
+To get the departure times in the number of minutes, divide
 \texttt{dep\_time} by 100 to get the hours since midnight and multiply
-by 60 and add the remainder of \texttt{dep\_time} divided by 100.
+by 60 and add the remainder of \texttt{dep\_time} divided by 100. For
+example, \texttt{1504} represents 15:04 (or 3:04 PM), which is
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(flights,}
-       \DataTypeTok{dep_time_mins =}\NormalTok{ dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{,}
-       \DataTypeTok{sched_dep_time_mins =}\NormalTok{ sched_dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{sched_dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)}
+\DecValTok{15} \OperatorTok{*}\StringTok{ }\DecValTok{9} \OperatorTok{+}\StringTok{ }\DecValTok{4}
+\CommentTok{#> [1] 139}
+\end{Highlighting}
+\end{Shaded}
+
+minutes after midnight. In order to generalize this approach, we need a
+way to split out the hour digits from the minutes digits. Dividing by
+100 and discarding the remainder using the integer division operator,
+\texttt{\%/\%} gives us the
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1504} \OperatorTok{%/%}\StringTok{ }\DecValTok{100}
+\CommentTok{#> [1] 15}
+\end{Highlighting}
+\end{Shaded}
+
+Instead of \texttt{\%/\%} could also use \texttt{/} along with
+\texttt{trunc()} or \texttt{floor()}, but \texttt{round()} would not
+work. To get the minutes, instead of discarding the remainder of the
+division by \texttt{100}, we only want the remainder. So we use the
+modulo operator, \texttt{\%\%}, discussed in the
+\href{http://r4ds.had.co.nz/transform.html\#select}{Other Useful
+Functions} section.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1504} \OperatorTok{%%}\StringTok{ }\DecValTok{100}
+\CommentTok{#> [1] 4}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we can combine the hours (multiplied by 60 to convert them to
+minutes) and minutes to get the number of minutes after midnight.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1504} \OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\DecValTok{1504} \OperatorTok{%%}\StringTok{ }\DecValTok{100}
+\CommentTok{#> [1] 904}
+\end{Highlighting}
+\end{Shaded}
+
+There is one remaining issue. Midnight is represented by \texttt{2400},
+which would correspond to \texttt{1440} minutes since midnight, but it
+should correspond to \texttt{0}. After converting all the times to
+minutes after midnight, \texttt{x\ \%\%\ 1440} will convert
+\texttt{1440} to zero, while keeping all the other times the same.
+
+Putting it all together, the following code creates a new data frame
+\texttt{flights\_times} with the new columns, \texttt{dep\_time\_mins}
+and \texttt{sched\_dep\_time\_mins} which convert \texttt{dep\_time} and
+\texttt{sched\_dep\_time}, respectively, to minutes since midnight.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights_times <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(flights,}
+    \DataTypeTok{dep_time_mins =}\NormalTok{ (dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
+    \DataTypeTok{sched_dep_time_mins =}\NormalTok{ (sched_dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }
+\StringTok{                             }\NormalTok{sched_dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}
+\NormalTok{  )}
+\CommentTok{# view only relevant columns}
+\KeywordTok{select}\NormalTok{(flights_times, dep_time, dep_time_mins, sched_dep_time, }
+\NormalTok{       sched_dep_time_mins)}
 \CommentTok{#> # A tibble: 336,776 x 4}
 \CommentTok{#>   dep_time dep_time_mins sched_dep_time sched_dep_time_mins}
 \CommentTok{#>      <int>         <dbl>          <int>               <dbl>}
@@ -2892,18 +3318,31 @@ by 60 and add the remainder of \texttt{dep\_time} divided by 100.
 \end{Highlighting}
 \end{Shaded}
 
-This would be more cleanly done by first defining a function and reusing
-that:
+Looking ahead to the
+\href{http://r4ds.had.co.nz/functions.html}{Functions} chapter, this is
+precisely the sort of situation in which it would make sense to write a
+function to avoid copying and pasting code. We could define a function
+\texttt{time2mins()}, which converts a vector of times in from the
+format used in \texttt{flights} to minutes since midnight.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{time2mins <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{  x }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{x }\OperatorTok{%%}\StringTok{ }\DecValTok{100}
+\NormalTok{  (x }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{x }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}
 \NormalTok{\}}
-\KeywordTok{mutate}\NormalTok{(flights,}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{time2mins}, the previous code simplifies to the following.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flights_times <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(flights,}
        \DataTypeTok{dep_time_mins =} \KeywordTok{time2mins}\NormalTok{(dep_time),}
-       \DataTypeTok{sched_dep_time_mins =} \KeywordTok{time2mins}\NormalTok{(sched_dep_time)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)}
+       \DataTypeTok{sched_dep_time_mins =} \KeywordTok{time2mins}\NormalTok{(sched_dep_time))}
+\CommentTok{# show only the relevant columns}
+\KeywordTok{select}\NormalTok{(flights_times, dep_time, dep_time_mins, sched_dep_time, }
+\NormalTok{       sched_dep_time_mins)}
 \CommentTok{#> # A tibble: 336,776 x 4}
 \CommentTok{#>   dep_time dep_time_mins sched_dep_time sched_dep_time_mins}
 \CommentTok{#>      <int>         <dbl>          <int>               <dbl>}
@@ -2925,33 +3364,143 @@ that:
 Compare \texttt{air\_time} with \texttt{arr\_time\ -\ dep\_time}. What
 do you expect to see? What do you see? What do you need to do to fix it?
 
-As with the previous question, we will need to Since \texttt{arr\_time}
-and \texttt{dep\_time} may be in different time zones, the
-\texttt{air\_time} does not equal the differences.
+I would expect that the air time is the difference between the arrival
+and departure times, \texttt{air\_time\ =\ \ arr\_time\ -\ dep\_time}.
+
+To check this, I need to first convert the times to a form more
+ammenable to arithmetic using the same calculations as in the previous
+exercise.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{air_times <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(flights,}
-       \DataTypeTok{arr_time_min =}\NormalTok{ arr_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{arr_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{,}
-       \DataTypeTok{dep_time_min =}\NormalTok{ dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{,}
-       \DataTypeTok{air_time_2 =}\NormalTok{ (arr_time_min }\OperatorTok{-}\StringTok{ }\NormalTok{dep_time_min }\OperatorTok{+}\StringTok{ }\DecValTok{1440}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
-       \DataTypeTok{air_time_diff =}\NormalTok{ air_time_}\DecValTok{2} \OperatorTok{-}\StringTok{ }\NormalTok{air_time)}
-
-\NormalTok{air_times }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(}\KeywordTok{abs}\NormalTok{(air_time_diff))) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(air_time_diff)}
-\CommentTok{#> # A tibble: 336,776 x 1}
-\CommentTok{#>   air_time_diff}
-\CommentTok{#>           <dbl>}
-\CommentTok{#> 1          -345}
-\CommentTok{#> 2          -345}
-\CommentTok{#> 3          -345}
-\CommentTok{#> 4          -345}
-\CommentTok{#> 5          -344}
-\CommentTok{#> 6          -344}
-\CommentTok{#> # ... with 3.368e+05 more rows}
+\NormalTok{flights_airtime <-}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(flights,}
+         \DataTypeTok{dep_time_min =}\NormalTok{ (dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
+         \DataTypeTok{arr_time_min =}\NormalTok{ (arr_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{arr_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
+         \DataTypeTok{air_time_diff =}\NormalTok{ air_time }\OperatorTok{-}\StringTok{ }\NormalTok{arr_time }\OperatorTok{+}\StringTok{ }\NormalTok{dep_time)}
 \end{Highlighting}
 \end{Shaded}
+
+Is my expectation correct? Does
+\texttt{air\_time\ =\ arr\_time\ -\ dep\_time}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(flights_airtime, air_time_diff }\OperatorTok{!=}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\CommentTok{#> # A tibble: 326,128 x 22}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1     1      517            515         2      830}
+\CommentTok{#> 2  2013     1     1      533            529         4      850}
+\CommentTok{#> 3  2013     1     1      542            540         2      923}
+\CommentTok{#> 4  2013     1     1      544            545        -1     1004}
+\CommentTok{#> 5  2013     1     1      554            600        -6      812}
+\CommentTok{#> 6  2013     1     1      554            558        -4      740}
+\CommentTok{#> # ... with 3.261e+05 more rows, and 15 more variables:}
+\CommentTok{#> #   sched_arr_time <int>, arr_delay <dbl>, carrier <chr>, flight <int>,}
+\CommentTok{#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>,}
+\CommentTok{#> #   distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>,}
+\CommentTok{#> #   dep_time_min <dbl>, arr_time_min <dbl>, air_time_diff <dbl>}
+\end{Highlighting}
+\end{Shaded}
+
+No.~So why not? Apart from data error, I can think of two reasons why
+\texttt{air\_time} may not equal \texttt{arr\_time\ -\ dep\_time}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The flight passes midnight, so
+  \texttt{arr\_time\ \textless{}\ dep\_time}. This will result in times
+  that are off by 24 hours (1,440 minutes). incorrect negative flight
+  times.
+\item
+  The flight crosses time zones, and the total air time will be off by
+  hours (multiples of 60). Additionally, all these discrepencies should
+  be positive. All the flights in the \textbf{nycflights13} data
+  departed from New York City and are domestic (within the US), meaning
+  that flights will all be to the same or more westerly time zones.
+\end{enumerate}
+
+Both of these explanations have clear patterns that I would expect to
+see if they were true. In particular, in both cases all differences
+should be divisible by 60. However, there are many flights in which the
+difference between \texttt{arr\_time} and \texttt{dest\_time} is not
+divisble by 60.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(flights_airtime, air_time_diff }\OperatorTok{%%}\StringTok{ }\DecValTok{60} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\CommentTok{#> # A tibble: 6,823 x 22}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1     1      608            600         8      807}
+\CommentTok{#> 2  2013     1     1      746            746         0     1119}
+\CommentTok{#> 3  2013     1     1      857            900        -3     1516}
+\CommentTok{#> 4  2013     1     1      903            820        43     1045}
+\CommentTok{#> 5  2013     1     1      908            910        -2     1020}
+\CommentTok{#> 6  2013     1     1     1158           1200        -2     1256}
+\CommentTok{#> # ... with 6,817 more rows, and 15 more variables: sched_arr_time <int>,}
+\CommentTok{#> #   arr_delay <dbl>, carrier <chr>, flight <int>, tailnum <chr>,}
+\CommentTok{#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,}
+\CommentTok{#> #   minute <dbl>, time_hour <dttm>, dep_time_min <dbl>,}
+\CommentTok{#> #   arr_time_min <dbl>, air_time_diff <dbl>}
+\end{Highlighting}
+\end{Shaded}
+
+I'll try plotting the data to see if that is more informative.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(flights_airtime, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ air_time_diff)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\CommentTok{#> Warning: Removed 9430 rows containing non-finite values (stat_bin).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-60-1} \end{center}
+
+The distribution is bimodal, which with one mode comprising
+discrepencies up to several hours, suggesting the time-zone problem, and
+a second node around 24 hours, suggesting the overnight flights.
+However, in both cases, the discrepencies are not all at values
+divisible by 60.
+
+I can also confirm my guess about time zones by looking at discrepencies
+from flights to a destinations in another air zone (or even all flights
+to different time zones using the time zone of the airport from the
+\texttt{airports} data frame). In this case, I'll look at the
+distribution of the discrepencies for flights to Los Angeles (LAX).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{filter}\NormalTok{(flights_airtime, dest }\OperatorTok{==}\StringTok{ "LAX"}\NormalTok{), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ air_time_diff)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\CommentTok{#> Warning: Removed 148 rows containing non-finite values (stat_bin).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-61-1} \end{center}
+
+So what else might be going on? There seem to be too many ``problems''
+for this to be a data issue, so I'm probably missing something. So I'll
+reread the documentation to make sure that I understand the definitions
+of \texttt{arr\_time}, \texttt{dep\_time}, and \texttt{air\_time}. The
+documenation contains a link to the source of the \texttt{flights} data,
+\url{https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236}.
+Reading the page at that link, I see that there are some other
+variables: \texttt{TaxiIn}, \texttt{TaxiOff}, \texttt{WheelsIn},
+\texttt{WheelsOff} that are not included in \texttt{flights}. The
+\texttt{air\_time} variable refers to flight time, which must be defined
+as the time between wheels off (take-off) and wheels in (landing). Thus
+\texttt{air\_time} does not include the time spent on the runway taxiing
+to and from gates. With this new understanding of the data, I now know
+that the relationship between \texttt{air\_time}, \texttt{arr\_time},
+and \texttt{dep\_time} is
+\texttt{air\_time\ \textless{}=\ arr\_time\ -\ dep\_time} once
+\texttt{arr\_time} and \texttt{dep\_time} are corrected for differing
+time zones and dates.
 
 \hypertarget{exercise-5.5.3}{%
 \subsection*{\texorpdfstring{Exercise
@@ -2962,34 +3511,78 @@ Compare \texttt{dep\_time}, \texttt{sched\_dep\_time}, and
 \texttt{dep\_delay}. How would you expect those three numbers to be
 related?
 
-I would expect \texttt{dep\_time}, \texttt{sched\_dep\_time}, and
-\texttt{dep\_delay} to be related by the equation
+I would expect the departure delay (\texttt{dep\_time}) to be equal to
+the difference between scheduled departure time
+(\texttt{sched\_dep\_time}), and actual departure time
+(\texttt{dep\_time}),
 \texttt{dep\_time\ -\ sched\_dep\_time\ =\ dep\_delay}.
+
+As with the previous question, the first step is to convert all times to
+the number of minutes since midnight. The column,
+\texttt{dep\_delay\_diff} will the difference between
+\texttt{dep\_delay} and departure delay calculated from the scheduled
+and actual departure times.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(flights,}
-       \DataTypeTok{dep_delay2 =} \KeywordTok{time2mins}\NormalTok{(dep_time) }\OperatorTok{-}\StringTok{ }\KeywordTok{time2mins}\NormalTok{(sched_dep_time)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(dep_delay2 }\OperatorTok{!=}\StringTok{ }\NormalTok{dep_delay) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(dep_time, sched_dep_time, dep_delay, dep_delay2)}
-\CommentTok{#> # A tibble: 1,207 x 4}
-\CommentTok{#>   dep_time sched_dep_time dep_delay dep_delay2}
-\CommentTok{#>      <int>          <int>     <dbl>      <dbl>}
-\CommentTok{#> 1      848           1835       853       -587}
-\CommentTok{#> 2       42           2359        43      -1397}
-\CommentTok{#> 3      126           2250       156      -1284}
-\CommentTok{#> 4       32           2359        33      -1407}
-\CommentTok{#> 5       50           2145       185      -1255}
-\CommentTok{#> 6      235           2359       156      -1284}
-\CommentTok{#> # ... with 1,201 more rows}
+\NormalTok{flights_deptime <-}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(flights,}
+         \DataTypeTok{dep_time_min =}\NormalTok{ (dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}\StringTok{ }\NormalTok{dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
+         \DataTypeTok{sched_dep_time_min =}\NormalTok{ (sched_dep_time }\OperatorTok{%/%}\StringTok{ }\DecValTok{100} \OperatorTok{*}\StringTok{ }\DecValTok{60} \OperatorTok{+}
+\StringTok{                               }\NormalTok{sched_dep_time }\OperatorTok{%%}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%%}\StringTok{ }\DecValTok{1440}\NormalTok{,}
+         \DataTypeTok{dep_delay_diff =}\NormalTok{ dep_delay }\OperatorTok{-}\StringTok{ }\NormalTok{dep_time_min }\OperatorTok{+}\StringTok{ }\NormalTok{sched_dep_time_min)}
 \end{Highlighting}
 \end{Shaded}
 
-This uses the \texttt{time2mins()} function from a previous exercise.
+Does \texttt{dep\_delay\_diff} equal zero for all rows?
 
-That solved most discrepancies, but there are still some non matches
-because we have not accounted for the cases in which the departure time
-is the next day from the scheduled departure time.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(flights_deptime, dep_delay_diff }\OperatorTok{!=}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\CommentTok{#> # A tibble: 1,236 x 22}
+\CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
+\CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
+\CommentTok{#> 1  2013     1     1      848           1835       853     1001}
+\CommentTok{#> 2  2013     1     2       42           2359        43      518}
+\CommentTok{#> 3  2013     1     2      126           2250       156      233}
+\CommentTok{#> 4  2013     1     3       32           2359        33      504}
+\CommentTok{#> 5  2013     1     3       50           2145       185      203}
+\CommentTok{#> 6  2013     1     3      235           2359       156      700}
+\CommentTok{#> # ... with 1,230 more rows, and 15 more variables: sched_arr_time <int>,}
+\CommentTok{#> #   arr_delay <dbl>, carrier <chr>, flight <int>, tailnum <chr>,}
+\CommentTok{#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,}
+\CommentTok{#> #   minute <dbl>, time_hour <dttm>, dep_time_min <dbl>,}
+\CommentTok{#> #   sched_dep_time_min <dbl>, dep_delay_diff <dbl>}
+\end{Highlighting}
+\end{Shaded}
+
+No.~Unlike the last question, time zones are not an issue since we are
+only considering departure times.\footnote{Except for flights daylight
+  savings started (March 10) or ended (November 3). But since daylight
+  savings goes into effect at 02:00, and generally flights are not
+  scheduled to depart between midnight and 2 am, the only flights which
+  would be scheduled to depart in Eastern Daylight Savings Time (Eastern
+  Standard Time) time but departed in Eastern Standard Time (Daylight
+  Savings Time), would have been scheduled before midnight, meaning they
+  were delayed across days.} However, the discprencies could be because
+a flight was scheduled to depart before midnight, but was delayed after
+midnight. All of these discrepencies are exactly equal to 1440 (24
+hours), and the flights with these discrepencies were scheduled to
+depart later in the day.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{filter}\NormalTok{(flights_deptime, dep_delay_diff }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{), }
+       \KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ sched_dep_time_min, }\DataTypeTok{x =}\NormalTok{ dep_delay_diff)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-64-1} \end{center}
+
+Thus the only cases in which the departure delay is not equal to the
+difference in scheduled departure and actual departure times is due to a
+quirk in how these columns were stored.
 
 \hypertarget{exercise-5.5.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -3006,11 +3599,10 @@ are tied for first, not tied for third or second.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(flights,}
-       \DataTypeTok{dep_delay_rank =} \KeywordTok{min_rank}\NormalTok{(}\OperatorTok{-}\NormalTok{dep_delay)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(dep_delay_rank) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(dep_delay_rank }\OperatorTok{<=}\StringTok{ }\DecValTok{10}\NormalTok{)}
-\CommentTok{#> # A tibble: 10 x 20}
+\NormalTok{flights_delayed <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(flights, }\DataTypeTok{dep_delay_rank =} \KeywordTok{min_rank}\NormalTok{(}\OperatorTok{-}\NormalTok{dep_delay))}
+\NormalTok{flights_delayed <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(flights_delayed, dep_delay_rank }\OperatorTok{<=}\StringTok{ }\DecValTok{20}\NormalTok{)}
+\KeywordTok{arrange}\NormalTok{(flights_delayed, dep_delay_rank)}
+\CommentTok{#> # A tibble: 20 x 20}
 \CommentTok{#>    year month   day dep_time sched_dep_time dep_delay arr_time}
 \CommentTok{#>   <int> <int> <int>    <int>          <int>     <dbl>    <int>}
 \CommentTok{#> 1  2013     1     9      641            900      1301     1242}
@@ -3019,7 +3611,7 @@ are tied for first, not tied for third or second.
 \CommentTok{#> 4  2013     9    20     1139           1845      1014     1457}
 \CommentTok{#> 5  2013     7    22      845           1600      1005     1044}
 \CommentTok{#> 6  2013     4    10     1100           1900       960     1342}
-\CommentTok{#> # ... with 4 more rows, and 13 more variables: sched_arr_time <int>,}
+\CommentTok{#> # ... with 14 more rows, and 13 more variables: sched_arr_time <int>,}
 \CommentTok{#> #   arr_delay <dbl>, carrier <chr>, flight <int>, tailnum <chr>,}
 \CommentTok{#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,}
 \CommentTok{#> #   minute <dbl>, time_hour <dttm>, dep_delay_rank <int>}
@@ -3069,22 +3661,19 @@ are provided:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{tibble}\NormalTok{(}
-  \DataTypeTok{x =} \KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1} \OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{),}
-  \DataTypeTok{cosx =} \KeywordTok{cos}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x),}
-  \DataTypeTok{sinx =} \KeywordTok{cos}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x),}
-  \DataTypeTok{tanx =} \KeywordTok{tan}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x)}
-\NormalTok{)}
-\CommentTok{#> # A tibble: 21 x 4}
-\CommentTok{#>       x      cosx      sinx      tanx}
-\CommentTok{#>   <dbl>     <dbl>     <dbl>     <dbl>}
-\CommentTok{#> 1  -3   -1.00e+ 0 -1.00e+ 0  3.67e-16}
-\CommentTok{#> 2  -2.5  3.06e-16  3.06e-16 -3.27e+15}
-\CommentTok{#> 3  -2    1.00e+ 0  1.00e+ 0  2.45e-16}
-\CommentTok{#> 4  -1.5 -1.84e-16 -1.84e-16 -5.44e+15}
-\CommentTok{#> 5  -1   -1.00e+ 0 -1.00e+ 0  1.22e-16}
-\CommentTok{#> 6  -0.5  6.12e-17  6.12e-17 -1.63e+16}
-\CommentTok{#> # ... with 15 more rows}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1} \OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\KeywordTok{cos}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x)}
+\CommentTok{#>  [1] -1.00e+00  3.06e-16  1.00e+00 -1.84e-16 -1.00e+00  6.12e-17  1.00e+00}
+\CommentTok{#>  [8]  6.12e-17 -1.00e+00 -1.84e-16  1.00e+00  3.06e-16 -1.00e+00 -4.29e-16}
+\CommentTok{#> [15]  1.00e+00  5.51e-16 -1.00e+00 -2.45e-15  1.00e+00 -9.80e-16 -1.00e+00}
+\KeywordTok{cos}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x)}
+\CommentTok{#>  [1] -1.00e+00  3.06e-16  1.00e+00 -1.84e-16 -1.00e+00  6.12e-17  1.00e+00}
+\CommentTok{#>  [8]  6.12e-17 -1.00e+00 -1.84e-16  1.00e+00  3.06e-16 -1.00e+00 -4.29e-16}
+\CommentTok{#> [15]  1.00e+00  5.51e-16 -1.00e+00 -2.45e-15  1.00e+00 -9.80e-16 -1.00e+00}
+\KeywordTok{tan}\NormalTok{(pi }\OperatorTok{*}\StringTok{ }\NormalTok{x)}
+\CommentTok{#>  [1]  3.67e-16 -3.27e+15  2.45e-16 -5.44e+15  1.22e-16 -1.63e+16  0.00e+00}
+\CommentTok{#>  [8]  1.63e+16 -1.22e-16  5.44e+15 -2.45e-16  3.27e+15 -3.67e-16  2.33e+15}
+\CommentTok{#> [15] -4.90e-16  1.81e+15 -6.12e-16  4.08e+14 -7.35e-16 -1.02e+15 -8.57e-16}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3094,22 +3683,16 @@ similarly defined,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{tibble}\NormalTok{(}
-  \DataTypeTok{x =} \KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1} \OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{),}
-  \DataTypeTok{cosx =} \KeywordTok{cospi}\NormalTok{(x),}
-  \DataTypeTok{sinx =} \KeywordTok{cos}\NormalTok{(x),}
-  \DataTypeTok{tanx =} \KeywordTok{tan}\NormalTok{(x)}
-\NormalTok{)}
-\CommentTok{#> # A tibble: 21 x 4}
-\CommentTok{#>       x  cosx    sinx    tanx}
-\CommentTok{#>   <dbl> <dbl>   <dbl>   <dbl>}
-\CommentTok{#> 1  -3      -1 -0.990    0.143}
-\CommentTok{#> 2  -2.5     0 -0.801    0.747}
-\CommentTok{#> 3  -2       1 -0.416    2.19 }
-\CommentTok{#> 4  -1.5     0  0.0707 -14.1  }
-\CommentTok{#> 5  -1      -1  0.540   -1.56 }
-\CommentTok{#> 6  -0.5     0  0.878   -0.546}
-\CommentTok{#> # ... with 15 more rows}
+\KeywordTok{cospi}\NormalTok{(x)}
+\CommentTok{#>  [1] -1  0  1  0 -1  0  1  0 -1  0  1  0 -1  0  1  0 -1  0  1  0 -1}
+\KeywordTok{cos}\NormalTok{(x)}
+\CommentTok{#>  [1] -0.9900 -0.8011 -0.4161  0.0707  0.5403  0.8776  1.0000  0.8776}
+\CommentTok{#>  [9]  0.5403  0.0707 -0.4161 -0.8011 -0.9900 -0.9365 -0.6536 -0.2108}
+\CommentTok{#> [17]  0.2837  0.7087  0.9602  0.9766  0.7539}
+\KeywordTok{tan}\NormalTok{(x)}
+\CommentTok{#>  [1]   0.143   0.747   2.185 -14.101  -1.557  -0.546   0.000   0.546}
+\CommentTok{#>  [9]   1.557  14.101  -2.185  -0.747  -0.143   0.375   1.158   4.637}
+\CommentTok{#> [17]  -3.381  -0.996  -0.291   0.220   0.871}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3118,22 +3701,13 @@ The inverse function arc-cosine (\texttt{acos()}), arc-sine
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{tibble}\NormalTok{(}
-  \DataTypeTok{x =} \KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1} \OperatorTok{/}\StringTok{ }\DecValTok{4}\NormalTok{),}
-  \DataTypeTok{acosx =} \KeywordTok{acos}\NormalTok{(x),}
-  \DataTypeTok{asinx =} \KeywordTok{asin}\NormalTok{(x),}
-  \DataTypeTok{atanx =} \KeywordTok{atan}\NormalTok{(x)}
-\NormalTok{)}
-\CommentTok{#> # A tibble: 9 x 4}
-\CommentTok{#>       x acosx  asinx  atanx}
-\CommentTok{#>   <dbl> <dbl>  <dbl>  <dbl>}
-\CommentTok{#> 1 -1     3.14 -1.57  -0.785}
-\CommentTok{#> 2 -0.75  2.42 -0.848 -0.644}
-\CommentTok{#> 3 -0.5   2.09 -0.524 -0.464}
-\CommentTok{#> 4 -0.25  1.82 -0.253 -0.245}
-\CommentTok{#> 5  0     1.57  0      0    }
-\CommentTok{#> 6  0.25  1.32  0.253  0.245}
-\CommentTok{#> # ... with 3 more rows}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1} \OperatorTok{/}\StringTok{ }\DecValTok{4}\NormalTok{)}
+\KeywordTok{acos}\NormalTok{(x)}
+\CommentTok{#> [1] 3.142 2.419 2.094 1.823 1.571 1.318 1.047 0.723 0.000}
+\KeywordTok{asin}\NormalTok{(x)}
+\CommentTok{#> [1] -1.571 -0.848 -0.524 -0.253  0.000  0.253  0.524  0.848  1.571}
+\KeywordTok{atan}\NormalTok{(x)}
+\CommentTok{#> [1] -0.785 -0.644 -0.464 -0.245  0.000  0.245  0.464  0.644  0.785}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3389,7 +3963,7 @@ the proportion of canceled flights related to the average delay?
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 \hypertarget{exercise-5.6.5}{%
 \subsection*{\texorpdfstring{Exercise
@@ -3628,7 +4202,7 @@ values of the previous flight.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 We can summarize this relationship by the average difference in delays:
 
@@ -4141,7 +4715,7 @@ looks.
 \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3000}\NormalTok{)}
 \CommentTok{#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.}
 \CommentTok{#> Warning: Removed 14714 rows containing non-finite values (stat_bin).}
-\CommentTok{#> Warning: Removed 5 rows containing missing values (geom_bar).}
+\CommentTok{#> Warning: Removed 6 rows containing missing values (geom_bar).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5554,8 +6128,8 @@ If the decimal and grouping marks are set to the same character,
 \end{Highlighting}
 \end{Shaded}
 
-If the \texttt{decimal\_mark} is set to the comma "\texttt{,"}, then the
-grouping mark is set to the period \texttt{"."}:
+If the \texttt{decimal\_mark} is set to the comma ``\texttt{,"}, then
+the grouping mark is set to the period \texttt{"."}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -10384,7 +10958,7 @@ Scooping up the field mice\\
 And bopping them on the head
 
 Down came the Good Fairy, and she said\\
-"Little bunny Foo Foo\\
+``Little bunny Foo Foo\\
 I don't want to see you ~ Scooping up the field mice
 
 And bopping them on the head.\\
@@ -10607,7 +11181,7 @@ will make it easier to test your function.)
 \NormalTok{  \}}
 \NormalTok{\}}
 \KeywordTok{greet}\NormalTok{()}
-\CommentTok{#> [1] "good afternoon"}
+\CommentTok{#> [1] "good morning"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:05"}\NormalTok{))}
 \CommentTok{#> [1] "good morning"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:13"}\NormalTok{))}
@@ -11077,7 +11651,7 @@ The source for \texttt{dplyr::near} is:
 \CommentTok{#> \{}
 \CommentTok{#>     abs(x - y) < tol}
 \CommentTok{#> \}}
-\CommentTok{#> <bytecode: 0x55a36e94e500>}
+\CommentTok{#> <bytecode: 0x7fdd581b1928>}
 \CommentTok{#> <environment: namespace:dplyr>}
 \end{Highlighting}
 \end{Shaded}
@@ -12744,7 +13318,7 @@ Define a function that appends to an integer vector.
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: milliseconds}
 \CommentTok{#>                  expr min  lq mean median  uq max neval}
-\CommentTok{#>  add_to_vector(10000) 170 177  182    184 188 192     3}
+\CommentTok{#>  add_to_vector(10000) 209 209  214    209 216 223     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12762,7 +13336,7 @@ And one that pre-allocates it.
 \KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{add_to_vector_2}\NormalTok{(}\DecValTok{10000}\NormalTok{), }\DataTypeTok{times =} \DecValTok{3}\NormalTok{)}
 \CommentTok{#> Unit: microseconds}
 \CommentTok{#>                    expr min   lq mean median   uq  max neval}
-\CommentTok{#>  add_to_vector_2(10000) 660 2810 4752   4960 6798 8635     3}
+\CommentTok{#>  add_to_vector_2(10000) 668 2663 4705   4657 6723 8789     3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -15932,7 +16506,7 @@ No exercises
 \leavevmode\hypertarget{ref-Cleveland1993a}{}%
 Cleveland, William S. 1993a. ``A Model for Studying Display Methods of
 Statistical Graphics.'' \emph{Journal of Computational and Graphical
-Statistics} 2 (4). Taylor \& Francis: 323--43.
+Statistics} 2 (4). Taylor \& Francis:323--43.
 \url{https://doi.org/10.1080/10618600.1993.10474616}.
 
 \leavevmode\hypertarget{ref-Cleveland1993}{}%
@@ -15945,13 +16519,13 @@ Statistics} 2 (4). Taylor \& Francis: 323--43.
 Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. ``The
 Shape Parameter of a Two-Variable Graph.'' \emph{Journal of the American
 Statistical Association} 83 (402). {[}American Statistical Association,
-Taylor \& Francis, Ltd.{]}: 289--300.
+Taylor \& Francis, Ltd.{]}:289--300.
 \url{https://www.jstor.org/stable/2288843}.
 
 \leavevmode\hypertarget{ref-DoaneSeward2011}{}%
 Doane, David P., and Lori E. Seward. 2011. ``Measuring Skewness: A
 Forgotten Statistic?'' \emph{Journal of Statistics Education} 19 (2).
-Taylor \& Francis: null.
+Taylor \& Francis:null.
 \url{https://doi.org/10.1080/10691898.2011.11889611}.
 
 \leavevmode\hypertarget{ref-HeerAgrawala2006}{}%
@@ -15962,13 +16536,13 @@ Heer, Jeffrey, and Maneesh Agrawala. 2006. ``Multi-Scale Banking to
 \leavevmode\hypertarget{ref-HintzeNelson1998}{}%
 Hintze, Jerry L., and Ray D. Nelson. 1998. ``Violin Plots: A Box
 Plot-Density Trace Synergism.'' \emph{The American Statistician} 52 (2).
-Taylor \& Francis: 181--84.
+Taylor \& Francis:181--84.
 \url{https://doi.org/10.1080/00031305.1998.10480559}.
 
 \leavevmode\hypertarget{ref-HofmannWickhamKafadar2017}{}%
 Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. ``Letter-Value
 Plots: Boxplots for Large Data.'' \emph{Journal of Computational and
-Graphical Statistics} 26 (3). Taylor \& Francis: 469--77.
+Graphical Statistics} 26 (3). Taylor \& Francis:469--77.
 \url{https://doi.org/10.1080/10618600.2017.1305277}.
 
 \leavevmode\hypertarget{ref-WickhamGrolemund2017}{}%
