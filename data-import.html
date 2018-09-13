@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-08">
+<meta name="date" content="2018-09-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -324,7 +324,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="data-import.html#exercise-11.3.3">Exercise <span class="exercise-number">11.3.3</span></a></li>
 <li><a href="data-import.html#exercise-11.3.4">Exercise <span class="exercise-number">11.3.4</span></a></li>
 <li><a href="data-import.html#exercise-11.3.5">Exercise <span class="exercise-number">11.3.5</span></a></li>
+<li><a href="data-import.html#exercise-11.3.6">Exercise <span class="exercise-number">11.3.6</span></a></li>
+<li><a href="data-import.html#exercise-11.3.7">Exercise <span class="exercise-number">11.3.7</span></a></li>
 </ul></li>
+<li class="chapter" data-level="11.4" data-path="data-import.html"><a href="data-import.html#parsing-a-file"><i class="fa fa-check"></i><b>11.4</b> Parsing a file</a></li>
+<li class="chapter" data-level="11.5" data-path="data-import.html"><a href="data-import.html#writing-to-a-file"><i class="fa fa-check"></i><b>11.5</b> Writing to a file</a></li>
+<li class="chapter" data-level="11.6" data-path="data-import.html"><a href="data-import.html#other-types-of-data"><i class="fa fa-check"></i><b>11.6</b> Other Types of Data</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>12</b> Tidy Data</a><ul>
 <li class="chapter" data-level="12.1" data-path="tidy-data.html"><a href="tidy-data.html#introduction-7"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -944,8 +949,10 @@ Most of the defaults values are valid, except that the date format is “(d)d/mm
 </div>
 <div class="answer">
 <p>The delimiter. The function <code>read_csv()</code> uses a comma, while <code>read_csv2()</code> uses a semi-colon (<code>;</code>). Using a semi-colon is useful when commas are used as the decimal point (as in Europe).</p>
-<p>div&gt;</p>
-<h3 id="exercise-11.3.6" class="unnumbered exercise">Exercise <span class="exercise-number">11.3.6</span></h3>
+</div>
+</div>
+<div id="exercise-11.3.6" class="section level3 unnumbered exercise">
+<h3>Exercise <span class="exercise-number">11.3.6</span></h3>
 <div class="question">
 <p>What are the most common encodings used in Europe?
 What are the most common encodings used in Asia?
@@ -989,7 +996,9 @@ There is also Mac OS Roman.</p>
 <li><a href="https://github.com/chardet/chardet">chardet</a> (Python)</li>
 </ul>
 </div>
-<h3 id="exercise-11.3.7" class="unnumbered exercise">Exercise <span class="exercise-number">11.3.7</span></h3>
+</div>
+<div id="exercise-11.3.7" class="section level3 unnumbered exercise">
+<h3>Exercise <span class="exercise-number">11.3.7</span></h3>
 <div class="question">
 <p>Generate the correct format string to parse each of the following dates and times:</p>
 </div>
@@ -1018,16 +1027,20 @@ t2 &lt;-<span class="st"> &quot;11:15:10.12 PM&quot;</span></code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">parse_time</span>(t2, <span class="st">&quot;%H:%M:%OS %p&quot;</span>)
 <span class="co">#&gt; 23:15:10.12</span></code></pre>
 </div>
-<h2 id="parsing-a-file">Parsing a file</h2>
+</div>
+</div>
+<div id="parsing-a-file" class="section level2">
+<h2><span class="header-section-number">11.4</span> Parsing a file</h2>
 <p>No exercises</p>
-<h2 id="writing-to-a-file">Writing to a file</h2>
+</div>
+<div id="writing-to-a-file" class="section level2">
+<h2><span class="header-section-number">11.5</span> Writing to a file</h2>
 <p>No exercises</p>
-<h2 id="other-types-of-data">Other Types of Data</h2>
+</div>
+<div id="other-types-of-data" class="section level2">
+<h2><span class="header-section-number">11.6</span> Other Types of Data</h2>
 <p>No code</p>
-</div>
-<!-- close unclosed div -->
 
-</div>
 </div>
 </div>
             </section>

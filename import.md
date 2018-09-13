@@ -359,7 +359,7 @@ What’s the difference between `read_csv()` and `read_csv2()`?
 
 The delimiter. The function `read_csv()` uses a comma, while `read_csv2()` uses a semi-colon (`;`). Using a semi-colon is useful when commas are used as the decimal point (as in Europe).
 
-div>
+</div>
 
 ### Exercise <span class="exercise-number">11.3.6</span> {.unnumbered .exercise}
 
@@ -466,5 +466,3 @@ No exercises
 ## Other Types of Data
 
 No code
-
-</div><!-- close unclosed div -->
