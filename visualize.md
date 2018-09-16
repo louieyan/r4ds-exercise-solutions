@@ -17,7 +17,7 @@ No exercises.
 
 ## First Steps
 
-### Exercise <span class="exercise-number">3.2.1</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.2.4.1</span>. {.unnumbered .exercise}
 
 <div class="question">
 Run `ggplot(data = mpg)` what do you see?
@@ -38,7 +38,7 @@ An empty plot. The background of the plot is created by `ggplot()`, but nothing 
 
 </div>
 
-### Exercise <span class="exercise-number">3.2.2</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.2.4.2</span>. {.unnumbered .exercise}
 
 <div class="question">
 How many rows are in `mtcars`? How many columns?
@@ -75,7 +75,7 @@ glimpse(mtcars)
 
 </div>
 
-### Exercise <span class="exercise-number">3.2.3</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.2.4.3</span>. {.unnumbered .exercise}
 
 <div class="question">
 What does the `drv` variable describe? Read the help for `?mpg` to find out.
@@ -95,7 +95,7 @@ The `drv` categorizes cars by which wheels the engine provides torque to, or dri
 
 </div>
 
-### Exercise <span class="exercise-number">3.2.4</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.2.4.4</span>. {.unnumbered .exercise}
 
 <div class="question">
 Make a scatter plot of `hwy` vs `cyl`.
@@ -115,7 +115,7 @@ ggplot(mpg, aes(x = hwy, y = cyl)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.2.5</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.2.4.5</span>. {.unnumbered .exercise}
 
 <div class="question">
 What happens if you make a scatter plot of `class` vs `drv`. Why is the plot not useful?
@@ -153,7 +153,7 @@ Later chapters discuss means to deal with this, including alternative plots and 
 
 ## Aesthetic mappings
 
-### Exercise <span class="exercise-number">3.3.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 What’s gone wrong with this code? Why are the points not blue?
@@ -176,7 +176,7 @@ The expression, `color="blue"`, treats `"blue"` as a variable with only one valu
 
 </div>
 
-### Exercise <span class="exercise-number">3.3.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -229,7 +229,7 @@ glimpse(mpg)
 ```
 </div>
 
-### Exercise <span class="exercise-number">3.3.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Map a continuous variable to color, size, and shape.
@@ -281,7 +281,7 @@ It is clear that smaller points correspond to smaller values, or once the color 
 
 </div>
 
-### Exercise <span class="exercise-number">3.3.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What happens if you map the same variable to multiple aesthetics?
@@ -306,7 +306,7 @@ Because it is redundant information, in most cases avoid mapping a single variab
 
 </div>
 
-### Exercise <span class="exercise-number">3.3.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.5</span> {.unnumbered .exercise}
 
 <div class="question">
 What does the stroke aesthetic do? What shapes does it work with? (Hint: use `?geom_point`)
@@ -330,7 +330,7 @@ ggplot(mtcars, aes(wt, mpg)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.3.6</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.3.1.6</span>. {.unnumbered .exercise}
 
 <div class="question">
 What happens if you map an aesthetic to something other than a variable name, like `aes(colour = displ < 5)`?
@@ -361,7 +361,7 @@ No exercises
 
 ## Facets
 
-### Exercise <span class="exercise-number">3.5.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 What happens if you facet on a continuous variable?
@@ -385,7 +385,7 @@ It converts the continuous variable to a factor and creates facets for **all** u
 
 </div>
 
-### Exercise <span class="exercise-number">3.5.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
@@ -409,7 +409,7 @@ The locations in the above plot without points are the same cells in `facet_grid
 
 </div>
 
-### Exercise <span class="exercise-number">3.5.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 What plots does the following code make? What does `.` do?
@@ -444,7 +444,7 @@ ggplot(data = mpg) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.5.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 Take the first faceted plot in this section:
@@ -513,7 +513,7 @@ visually distinct.
 
 </div>
 
-### Exercise <span class="exercise-number">3.5.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.5</span> {.unnumbered .exercise}
 
 <div class="question">
 Read `?facet_wrap`. What does `nrow` do? What does `ncol` do? What other options control the layout of the individual panels? Why doesn’t `facet_grid()` have `nrow` and `ncol` variables?
@@ -527,7 +527,7 @@ These arguments are unnecessary for `facet_grid()` since the number of rows and 
 
 </div>
 
-### Exercise <span class="exercise-number">3.5.6</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.5.1.6</span> {.unnumbered .exercise}
 
 <div class="question">
 When using `facet_grid()` you should usually put the variable with more unique levels in the columns. Why?
@@ -543,7 +543,7 @@ It is easier to compare relative levels of y by scanning horizontally, so it may
 
 ## Geometric Objects
 
-### Exercise <span class="exercise-number">3.6.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
@@ -558,7 +558,7 @@ What geom would you use to draw a line chart? A boxplot? A histogram? An area ch
 
 </div>
 
-### Exercise <span class="exercise-number">3.6.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.
@@ -591,7 +591,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, colour = drv)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.6.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 What does `show.legend = FALSE` do? What happens if you remove it?
@@ -656,7 +656,7 @@ In that example, the legend isn't necessary since looking up the values associat
 
 </div>
 
-### Exercise <span class="exercise-number">3.6.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What does the `se` argument to `geom_smooth()` do?
@@ -694,7 +694,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, colour = drv)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.6.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.5</span> {.unnumbered .exercise}
 
 <div class="question">
 Will these two graphs look different? Why/why not?
@@ -730,7 +730,7 @@ ggplot() +
 
 </div>
 
-### Exercise <span class="exercise-number">3.6.6</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.6.1.6</span> {.unnumbered .exercise}
 
 <div class="question">
 Recreate the R code necessary to generate the following graphs.
@@ -962,7 +962,7 @@ ggplot(data = diamonds) +
 
 ## Position Adjustments
 
-### Exercise <span class="exercise-number">3.8.1</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.8.1.1</span>. {.unnumbered .exercise}
 
 <div class="question">
 What is the problem with this plot?
@@ -994,7 +994,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.8.2</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.8.1.2</span>. {.unnumbered .exercise}
 
 <div class="question">
 What parameters to `geom_jitter()` control the amount of jittering?
@@ -1080,7 +1080,7 @@ equal to 1, and `height = 0.8` and `width = 0.8`.
 
 </div>
 
-### Exercise <span class="exercise-number">3.8.3</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.8.1.3</span>. {.unnumbered .exercise}
 
 <div class="question">
 Compare and contrast `geom_jitter()` with `geom_count()`.
@@ -1150,7 +1150,7 @@ of the data scientist.
 
 </div>
 
-### Exercise <span class="exercise-number">3.8.4</span>. {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.8.1.4</span>. {.unnumbered .exercise}
 
 <div class="question">
 What’s the default position adjustment for `geom_boxplot()`? Create a visualization of the mpg dataset that demonstrates it.
@@ -1185,7 +1185,7 @@ ggplot(data = mpg, aes(x = drv, y = hwy, colour = class)) +
 
 ## Coordinate Systems
 
-### Exercise <span class="exercise-number">3.9.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.9.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Turn a stacked bar chart into a pie chart using `coord_polar()`.
@@ -1253,7 +1253,7 @@ ggplot(data = diamonds) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.9.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.9.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 What does `labs()` do? Read the documentation.
@@ -1277,7 +1277,7 @@ ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">3.9.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.9.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 What’s the difference between `coord_quickmap()` and `coord_map()`?
@@ -1297,7 +1297,7 @@ contains more information on and examples for these two functions.
 
 </div>
 
-### Exercise <span class="exercise-number">3.9.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">3.9.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What does the plot below tell you about the relationship between city and highway mpg? Why is `coord_fixed()` important?

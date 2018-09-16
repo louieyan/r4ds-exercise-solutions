@@ -12,7 +12,7 @@ library("lubridate")
 
 ## Label
 
-### Exercise <span class="exercise-number">28.2.1</span>  {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.2.1.1</span>  {.unnumbered .exercise}
 
 <div class="question">
 Create one plot on the fuel economy data with customized `title`,
@@ -42,7 +42,7 @@ ggplot(data = mpg,
 
 </div>
 
-### Exercise <span class="exercise-number">28.2.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.2.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 The `geom_smooth()` is somewhat misleading because the `hwy` for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines.
@@ -91,7 +91,7 @@ mpg %>%
 
 </div>
 
-### Exercise <span class="exercise-number">28.2.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.2.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Take an exploratory graphic that you've created in the last month, and add informative titles to make it easier for others to understand.
@@ -105,7 +105,7 @@ By its very nature, this exercise is left to readers.
 
 ## Annotations
 
-### Exercise <span class="exercise-number">28.3.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.3.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Use `geom_text()` with infinite positions to place text at the four corners of the plot.
@@ -137,7 +137,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">28.3.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.3.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Read the documentation for `annotate()`. How can you use it to add a text label to a plot without having to create a tibble?
@@ -160,7 +160,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">28.3.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.3.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 How do labels with `geom_text()` interact with faceting?
@@ -235,7 +235,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">28.3.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.3.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What arguments to `geom_label()` control the appearance of the background box?
@@ -249,7 +249,7 @@ What arguments to `geom_label()` control the appearance of the background box?
 
 </div>
 
-### Exercise <span class="exercise-number">28.3.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.3.1.5</span> {.unnumbered .exercise}
 
 <div class="question">
 What are the four arguments to `arrow()`? How do they work?
@@ -269,7 +269,7 @@ The four arguments are: (from the help for [arrow](https://www.rdocumentation.or
 
 ## Scales
 
-### Exercise <span class="exercise-number">28.4.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.4.4.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Why doesn’t the following code override the default scale?
@@ -309,7 +309,7 @@ ggplot(df, aes(x, y)) +
 
 </div>
 
-### Exercise <span class="exercise-number">28.4.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.4.4.2</span> {.unnumbered .exercise}
 
 <div class="question">
 The first argument to every scale is the label for the scale.
@@ -352,7 +352,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 </div>
 
-### Exercise <span class="exercise-number">28.4.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.4.4.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Change the display of the presidential terms by:
@@ -392,7 +392,7 @@ presidential %>%
 
 </div>
 
-### Exercise <span class="exercise-number">28.4.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">28.4.4.4</span> {.unnumbered .exercise}
 
 <div class="question">
 Use `override.aes` to make the legend on the following plot easier to see.

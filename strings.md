@@ -11,7 +11,7 @@ library(stringr)
 
 ## String Basics
 
-### Exercise <span class="exercise-number">14.2.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.1</span> {.unnumbered .exercise}
 
 <div class="question">
 In code that doesn’t **stringr**, you’ll often see `paste()` and `paste0()`. What’s the difference between the two functions? What **stringr** function are they equivalent to? How do the functions differ in their handling of NA?
@@ -53,7 +53,7 @@ paste0("foo", NA)
 
 </div>
 
-### Exercise <span class="exercise-number">14.2.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.2</span> {.unnumbered .exercise}
 
 <div class="question">
 In your own words, describe the difference between the `sep` and `collapse` arguments to `str_c()`.
@@ -65,7 +65,7 @@ The `sep` argument is the string inserted between arguments to `str_c()`, while 
 
 </div>
 
-### Exercise <span class="exercise-number">14.2.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Use `str_length()` and `str_sub()` to extract the middle character from a string. What will you do if the string has an even number of characters?
@@ -87,7 +87,7 @@ str_sub(x, m, m)
 
 </div>
 
-### Exercise <span class="exercise-number">14.2.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What does `str_wrap()` do? When might you want to use it?
@@ -100,7 +100,7 @@ This is useful for wrapping long strings of text to be typeset.
 
 </div>
 
-### Exercise <span class="exercise-number">14.2.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.5</span> {.unnumbered .exercise}
 
 <div class="question">
 What does `str_trim()` do? What’s the opposite of `str_trim()`?
@@ -133,7 +133,7 @@ str_pad("abc", 4, side = "left")
 
 </div>
 
-### Exercise <span class="exercise-number">14.2.6</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.2.5.6</span> {.unnumbered .exercise}
 
 <div class="question">
 Write a function that turns (e.g.) a vector `c("a", "b", "c")` into the string `"a, b, and c"`. Think carefully about what it should do if given a vector of length 0, 1, or 2.
@@ -188,7 +188,7 @@ str_commasep(c("a", "b", "c", "d"))
 
 ### Basic Matches
 
-#### Exercise <span class="exercise-number">14.3.1.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.1.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Explain why each of these strings don’t match a `\`: `"\"`, `"\\"`, `"\\\"`.
@@ -202,7 +202,7 @@ Explain why each of these strings don’t match a `\`: `"\"`, `"\\"`, `"\\\"`.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.1.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.1.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 How would you match the sequence `"'\` ?
@@ -217,7 +217,7 @@ str_view("\"'\\", "\"'\\\\")
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.1.3</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.1.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 What patterns will the regular expression `\..\..\..` match? How would you represent it as a string?
@@ -236,7 +236,7 @@ str_view(c(".a.b.c", ".a.b", "....."), c("\\..\\..\\.."))
 
 ### Anchors
 
-#### Exercise <span class="exercise-number">14.3.2.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.2.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 How would you match the literal string `"$^$"`?
@@ -251,7 +251,7 @@ str_view(c("$^$", "ab$^$sfas"), "^\\$\\^\\$$")
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.2.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.2.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Given the corpus of common words in `stringr::words`, create regular expressions that find all words that:
@@ -301,7 +301,7 @@ The answer to each part follows.
 
 ### Character classes and alternatives
 
-#### Exercise <span class="exercise-number">14.3.3.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.3.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -350,7 +350,7 @@ The answer to each part follows.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.3.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.3.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -381,7 +381,7 @@ sum(str_detect(stringr::words, "(cie|[^c]ei)"))
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.3.3</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.3.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Is ``q'' always followed by a ``u''?
@@ -397,7 +397,7 @@ str_view(stringr::words, "q[^u]", match = TRUE)
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.3.4</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.3.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 Write a regular expression that matches a word if it’s probably written in British English, not American English.
@@ -420,7 +420,7 @@ It would require a dictionary with differences in spellings for different words.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.3.5</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.3.1.5</span> {.unnumbered .exercise}
 
 <div class="question">
 Create a regular expression that will match telephone numbers as commonly written in your country.
@@ -460,7 +460,7 @@ for a discussion of using a regex for phone number validation.
 
 ### Repetition
 
-#### Exercise <span class="exercise-number">14.3.4.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.4.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Describe the equivalents of `?`, `+`, `*` in `{m,n}` form.
@@ -495,7 +495,7 @@ str_view(x, "CC{1,}")
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.4.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.4.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Describe in words what these regular expressions match: (read carefully to see if I’m using a regular expression or a string that defines a regular expression.)
@@ -526,7 +526,7 @@ The answer to each part follows.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.4.3</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.4.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Create regular expressions to find all words that:
@@ -564,7 +564,7 @@ The answer to each part follows.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.4.4</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.4.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -580,7 +580,7 @@ Exercise left to reader. That site validates its solutions, so they aren't repea
 
 ### Grouping and backreferences
 
-#### Exercise <span class="exercise-number">14.3.5.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.5.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Describe, in words, what these expressions will match:
@@ -605,7 +605,7 @@ The answer to each part follows.
 
 </div>
 
-#### Exercise <span class="exercise-number">14.3.5.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.3.5.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Construct regular expressions to match words that:
@@ -781,7 +781,7 @@ The answer to each part follows.
 
 ### Extract Matches
 
-#### Exercise <span class="exercise-number">14.4.3.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.3.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a color. Modify the regex to fix the problem.
@@ -816,7 +816,7 @@ str_view_all(more2, colour_match2, match = TRUE)
 
 </div>
 
-#### Exercise <span class="exercise-number">14.4.3.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.3.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -869,7 +869,7 @@ The answer to each part follows.
 
 ### Grouped Matches
 
-#### Exercise <span class="exercise-number">14.4.4.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.4.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.
@@ -896,7 +896,7 @@ sentences[str_detect(sentences, numword)] %>%
 
 </div>
 
-#### Exercise <span class="exercise-number">14.4.4.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.4.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Find all contractions. Separate out the pieces before and after the apostrophe.
@@ -919,7 +919,7 @@ sentences %>%
 
 ### Replacing Matches
 
-#### Exercise <span class="exercise-number">14.4.5.1</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.5.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Replace all forward slashes in a string with backslashes.
@@ -936,7 +936,7 @@ writeLines(backslashed)
 
 </div>
 
-#### Exercise <span class="exercise-number">14.4.5.2</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.5.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Implement a simple version of `str_to_lower()` using `replace_all()`.
@@ -950,7 +950,7 @@ lower <- str_replace_all(words, c("A"="a", "B"="b", "C"="c", "D"="d", "E"="e", "
 
 </div>
 
-#### Exercise <span class="exercise-number">14.4.5.3</span> {.unnumbered .exercise}
+#### Exercise <span class="exercise-number">14.4.5.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Switch the first and last letters in `words`. Which of those strings are still words?
@@ -1059,7 +1059,7 @@ No exercises
 
 ## Other types of patterns
 
-### Exercise <span class="exercise-number">14.5.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.5.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 How would you find all strings containing `\` with `regex()` vs. with `fixed()`?
@@ -1077,7 +1077,7 @@ str_subset(c("a\\b", "ab"), fixed("\\"))
 
 </div>
 
-### Exercise <span class="exercise-number">14.5.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.5.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 What are the five most common words in sentences?
@@ -1114,7 +1114,7 @@ No exercises
 
 ## stringi
 
-### Exercise <span class="exercise-number">14.7.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.7.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -1142,7 +1142,7 @@ The answer to each part follows.
 
 </div>
 
-### Exercise <span class="exercise-number">14.7.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">14.7.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 How do you control the language that `stri_sort()` uses for sorting?

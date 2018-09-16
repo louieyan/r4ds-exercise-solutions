@@ -11,7 +11,7 @@ editor_options:
 
 ## R Markdown Basics
 
-### Exercise <span class="exercise-number">27.2.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.2.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -25,7 +25,7 @@ This exercise is left to the reader.
 
 </div>
 
-### Exercise <span class="exercise-number">27.2.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.2.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Create a new R Markdown document with *File > New File > R Markdown ...* Knit it by clicking the appropriate button. Knit it by using the appropriate keyboard short cut. Verify that you can modify the input and see the output update.
@@ -38,7 +38,7 @@ Recall that the keyboard shortcut to knit a file is `Cmd/Ctrl + Alt + K`.
 
 </div>
 
-### Exercise <span class="exercise-number">27.2.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.2.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Compare and contrast the R notebook and R markdown files you created above. How are the outputs similar? How are they different? How are the inputs similar? How are they different? What happens if you copy the YAML header from one to the other?
@@ -88,7 +88,7 @@ The RStudio IDE and the **rmarkdown** package both use the YAML header of an `.R
 
 </div>
 
-### Exercise <span class="exercise-number">27.2.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.2.1.4</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -111,7 +111,7 @@ documents.
 
 ## Text formatting with R Markdown
 
-### Exercise <span class="exercise-number">27.3.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.3.1.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Practice what you’ve learned by creating a brief CV. The title should be your name, and you should include headings for (at least) education or employment. Each of the sections should include a bulleted list of jobs/degrees. Highlight the year in bold.
@@ -149,7 +149,7 @@ Your own example could be much more detailed.
 
 </div>
 
-### Exercise <span class="exercise-number">27.3.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.3.1.2</span> {.unnumbered .exercise}
 
 <div class="question">
 
@@ -189,7 +189,7 @@ a YAML block if it is at the start of the document.
 
 </div>
 
-### Exercise <span class="exercise-number">27.3.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.3.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Copy and paste the contents of `diamond-sizes.Rmd` from <https://github.com/hadley/r4ds/tree/master/rmarkdown> in to a local R markdown document. Check that you can run it, then add text after the frequency polygon that describes its most striking features.
@@ -301,7 +301,7 @@ category (Fair) is the most common.
 
 ## Code Chunks
 
-### Exercise <span class="exercise-number">27.4.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.4.7.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Add a section that explores how diamond sizes vary by cut, color, and clarity. 
@@ -313,7 +313,7 @@ setting `echo = FALSE` on each chunk, set a global option.
 See the answer to [exercise-27.3.3].
 </div>
 
-### Exercise <span class="exercise-number">27.4.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.4.7.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Download `diamond-sizes.Rmd` from <https://github.com/hadley/r4ds/tree/master/rmarkdown>. Add a section that describes the largest 20 diamonds, including a table that displays their most important attributes.
@@ -327,7 +327,7 @@ I use `arrange()` and `slice()` to select the largest twenty diamonds, and
 
 </div>
 
-### Exercise <span class="exercise-number">27.4.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.4.7.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Modify `diamonds-sizes.Rmd` to use comma() to produce nicely formatted output. Also include the percentage of diamonds that are larger than 2.5 carats.
@@ -345,7 +345,7 @@ Calculating those objects in a code chunk with the `include = FALSE` option (as 
 
 </div>
 
-### Exercise <span class="exercise-number">27.4.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">27.4.7.4</span> {.unnumbered .exercise}
 
 <div class="question">
 

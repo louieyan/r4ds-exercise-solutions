@@ -30,7 +30,7 @@ flights_dt <- flights %>%
   select(origin, dest, ends_with("delay"), ends_with("time"))
 ```
 
-### Exercise <span class="exercise-number">16.2.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.2.4.1</span> {.unnumbered .exercise}
 
 <div class="question">
 What happens if you parse a string that
@@ -53,13 +53,13 @@ It produces an `NA` and an warning message.
 
 </div>
 
-### Exercise <span class="exercise-number">16.2.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.2.4.2</span> {.unnumbered .exercise}
 
 What does the `tzone` argument to `today()` do? Why is it important?
 
 It determines the time-zone of the date. Since different time-zones can have different dates, the value of `today()` can vary depending on the time-zone specified.
 
-### Exercise <span class="exercise-number">16.2.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.2.4.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Use the appropriate **lubridate** function to
@@ -104,7 +104,7 @@ sched_dep <- flights_dt %>%
 ```
 In the previous code, the difference between rounded and un-rounded dates provides the within-period time.
 
-### Exercise <span class="exercise-number">16.3.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.1</span> {.unnumbered .exercise}
 
 <div class="question">
 How does the distribution of flight times
@@ -148,7 +148,7 @@ At least to me there doesn't appear to much difference in within-day distributio
 
 </div>
 
-### Exercise <span class="exercise-number">16.3.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.2</span> {.unnumbered .exercise}
 
 Compare `dep_time`, `sched_dep_time` and `dep_delay`. Are they consistent? Explain your findings.
 
@@ -180,7 +180,7 @@ the scheduled departure time. Alternatively, simply adding the delay time is
 more robust because it will automatically account for crossing into the next
 day.
 
-### Exercise <span class="exercise-number">16.3.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.3</span> {.unnumbered .exercise}
 
 Compare `air_time` with the duration between the departure and arrival. Explain your findings.
 
@@ -203,7 +203,7 @@ flights_dt %>%
 #> # ... with 3.281e+05 more rows
 ```
 
-### Exercise <span class="exercise-number">16.3.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.4</span> {.unnumbered .exercise}
 
 How does the average delay time change over the course of a day? Should you use `dep_time` or `sched_dep_time`? Why?
 
@@ -225,7 +225,7 @@ flights_dt %>%
 
 \begin{center}\includegraphics[width=0.7\linewidth]{datetimes_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
-### Exercise <span class="exercise-number">16.3.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.5</span> {.unnumbered .exercise}
 
 On what day of the week should you leave if you want to minimize the chance of a delay?
 
@@ -250,7 +250,7 @@ flights_dt %>%
 #> # ... with 1 more row
 ```
 
-### Exercise <span class="exercise-number">16.3.6</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.6</span> {.unnumbered .exercise}
 
 What makes the distribution of `diamonds$carat` and `flights$sched_dep_time` similar?
 
@@ -289,7 +289,7 @@ ggplot(flights_dt, aes(x = minute(sched_dep_time))) +
 
 \begin{center}\includegraphics[width=0.7\linewidth]{datetimes_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
-### Exercise <span class="exercise-number">16.3.7</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.3.4.7</span> {.unnumbered .exercise}
 
 Confirm my hypothesis that the early departures of flights in minutes 20-30 and 50-60 are caused by scheduled flights that leave early. Hint: create a binary variable that tells you whether or not a flight was delayed.
 
@@ -328,7 +328,7 @@ flights_dt %>%
 
 ## Time Spans
 
-### Exercise <span class="exercise-number">16.4.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.4.5.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Why is there `months()` but no `dmonths()`?
@@ -346,7 +346,7 @@ Though in the past, in the pre-computer era, for arithmetic convenience, bankers
 
 </div>
 
-### Exercise <span class="exercise-number">16.4.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.4.5.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Explain `days(overnight * 1)` to someone who has just started learning R. How does it work?
@@ -359,7 +359,7 @@ If it is an overnight flight, this becomes 1 day, and if not, then overnight = 0
 
 </div>
 
-### Exercise <span class="exercise-number">16.4.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.4.5.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Create a vector of dates giving the first day of every month in 2015. Create a vector of dates giving the first day of every month in the current year.
@@ -388,7 +388,7 @@ floor_date(today(), unit = "year") + months(0:11)
 
 </div>
 
-### Exercise <span class="exercise-number">16.4.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.4.5.4</span> {.unnumbered .exercise}
 
 <div class="question">
 Write a function that given your birthday (as a date), returns how old you are in years.
@@ -410,7 +410,7 @@ age(ymd("1990-10-12"))
 
 </div>
 
-### Exercise <span class="exercise-number">16.4.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">16.4.5.5</span> {.unnumbered .exercise}
 
 <div class="question">
 Why can’t `(today() %--% (today() + years(1)) / months(1)` work?
