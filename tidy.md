@@ -433,9 +433,8 @@ preg_tidy2
 ```
 
 Though not necessary, there is one more way in which we can improve this data.
-If a variable takes two values, like `pregnant` and `sex` do, it is often
-preferable to store them as logical vectors.
-I will 
+If a variable takes two values, like `pregnant` and `sex` do, it is often preferable to store them as logical vectors.
+The following vector uses logical vectors ro represent pregnancy and sex.
 
 ```r
 preg_tidy3 <- preg_tidy2 %>%
@@ -450,14 +449,13 @@ preg_tidy3
 #> 2 TRUE   TRUE        10
 #> 3 TRUE   FALSE       12
 ```
-Note that I named the logical variable representing the sex `female`, not `sex`.
+In the previous data frame, I named the logical variable representing the sex `female`, not `sex`.
 This makes the meaning of the variable self-documenting.
 If the variable were named `sex` with values `TRUE` and `FALSE`, without reading the documentation, we wouldn't know whether `TRUE` means male or female.
 
 Apart from some minor memory savings, representing these variables as logical
 vectors results in more clear and concise code.
-Compare the `filter()` calls to select non-pregnant females from `preg_tidy2`
-and `preg_tidy`.
+Compare the `filter()` calls to select non-pregnant females from `preg_tidy2` and `preg_tidy`.
 
 ```r
 filter(preg_tidy2, sex == "female", pregnant == "no")
@@ -857,7 +855,7 @@ What happens if you neglect the `mutate()` step? (`mutate(key = stringr::str_rep
 <div class="answer">
 
 The `separate()` function emits the warning "too few values".
-If we check the rows for keys beginning with `"newrel_"`, we see that `sexage` is messing,
+If we check the rows for keys beginning with `"newrel_"`, we see that `sexage` is missing,
 and `type = m014`.
 
 

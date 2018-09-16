@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{September 13, 2018}
+    \date{September 15, 2018}
 
 \usepackage{amsthm}
 
@@ -6938,7 +6938,8 @@ impossible combination. We can do that by adding the argument
 Though not necessary, there is one more way in which we can improve this
 data. If a variable takes two values, like \texttt{pregnant} and
 \texttt{sex} do, it is often preferable to store them as logical
-vectors. I will
+vectors. The following vector uses logical vectors ro represent
+pregnancy and sex.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6956,8 +6957,8 @@ vectors. I will
 \end{Highlighting}
 \end{Shaded}
 
-Note that I named the logical variable representing the sex
-\texttt{female}, not \texttt{sex}. This makes the meaning of the
+In the previous data frame, I named the logical variable representing
+the sex \texttt{female}, not \texttt{sex}. This makes the meaning of the
 variable self-documenting. If the variable were named \texttt{sex} with
 values \texttt{TRUE} and \texttt{FALSE}, without reading the
 documentation, we wouldn't know whether \texttt{TRUE} means male or
@@ -7412,7 +7413,7 @@ What happens if you neglect the \texttt{mutate()} step?
 
 The \texttt{separate()} function emits the warning ``too few values''.
 If we check the rows for keys beginning with \texttt{"newrel\_"}, we see
-that \texttt{sexage} is messing, and \texttt{type\ =\ m014}.
+that \texttt{sexage} is missing, and \texttt{type\ =\ m014}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7507,10 +7508,13 @@ The package datamodelr is used to draw database schema:
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.1.1}{%
+\hypertarget{nycflights13}{%
+\section{nycflights13}\label{nycflights13}}
+
+\hypertarget{exercise-13.2.1}{%
 \subsection*{\texorpdfstring{Exercise
-{13.1.1}}{Exercise 13.1.1}}\label{exercise-13.1.1}}
-\addcontentsline{toc}{subsection}{Exercise {13.1.1}}
+{13.2.1}}{Exercise 13.2.1}}\label{exercise-13.2.1}}
+\addcontentsline{toc}{subsection}{Exercise {13.2.1}}
 
 Imagine you wanted to draw (approximately) the route each plane flies
 from its origin to its destination. What variables would you need? What
@@ -7528,10 +7532,10 @@ tables would you need to combine?
   join adds the location of destination airport (\texttt{dest}).
 \end{itemize}
 
-\hypertarget{exercise-13.1.2}{%
+\hypertarget{exercise-13.2.2}{%
 \subsection*{\texorpdfstring{Exercise
-{13.1.2}}{Exercise 13.1.2}}\label{exercise-13.1.2}}
-\addcontentsline{toc}{subsection}{Exercise {13.1.2}}
+{13.2.2}}{Exercise 13.2.2}}\label{exercise-13.2.2}}
+\addcontentsline{toc}{subsection}{Exercise {13.2.2}}
 
 I forgot to draw the relationship between weather and airports. What is
 the relationship and how should it appear in the diagram?
@@ -7539,12 +7543,12 @@ the relationship and how should it appear in the diagram?
 The variable \texttt{origin} in \texttt{weather} is matched with
 \texttt{faa} in \texttt{airports}.
 
-\hypertarget{exercise-13.1.3}{%
+\hypertarget{exercise-13.2.3}{%
 \subsection*{\texorpdfstring{Exercise
-{13.1.3}}{Exercise 13.1.3}}\label{exercise-13.1.3}}
-\addcontentsline{toc}{subsection}{Exercise {13.1.3}}
+{13.2.3}}{Exercise 13.2.3}}\label{exercise-13.2.3}}
+\addcontentsline{toc}{subsection}{Exercise {13.2.3}}
 
-weather only contains information for the origin (NYC) airports. If it
+Weather only contains information for the origin (NYC) airports. If it
 contained weather records for all airports in the USA, what additional
 relation would it define with \texttt{flights}?
 
@@ -7554,27 +7558,41 @@ relation would it define with \texttt{flights}?
 \texttt{flight} (though it should use the arrival date-time values for
 \texttt{dest} if possible).
 
-\hypertarget{exercise-13.1.4}{%
+\hypertarget{exercise-13.2.4}{%
 \subsection*{\texorpdfstring{Exercise
-{13.1.4}}{Exercise 13.1.4}}\label{exercise-13.1.4}}
-\addcontentsline{toc}{subsection}{Exercise {13.1.4}}
+{13.2.4}}{Exercise 13.2.4}}\label{exercise-13.2.4}}
+\addcontentsline{toc}{subsection}{Exercise {13.2.4}}
 
 We know that some days of the year are ``special'', and fewer people
 than usual fly on them. How might you represent that data as a data
 frame? What would be the primary keys of that table? How would it
 connect to the existing tables?
 
-I would add a table of special dates. The primary key would be date. It
-would match to the \texttt{year}, \texttt{month}, \texttt{day} columns
-of `flights.
+I would add a table of special dates. Its primary key would be
+\texttt{date}. This would match to the \texttt{year}, \texttt{month},
+and \texttt{day} columns of `flights.
+
+The table would resemble the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{special_days <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{year, }\OperatorTok{~}\NormalTok{month, }\OperatorTok{~}\NormalTok{day, }\OperatorTok{~}\NormalTok{holiday,}
+  \DecValTok{2013}\NormalTok{, }\DecValTok{01}\NormalTok{, }\DecValTok{01}\NormalTok{, }\StringTok{"New Years Day"}\NormalTok{,}
+  \DecValTok{2013}\NormalTok{, }\DecValTok{07}\NormalTok{, }\DecValTok{04}\NormalTok{, }\StringTok{"Independence Day"}\NormalTok{,}
+  \DecValTok{2013}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{29}\NormalTok{, }\StringTok{"Thanksgiving Day"}\NormalTok{,}
+  \DecValTok{2013}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{25}\NormalTok{, }\StringTok{"Christmas Day"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{keys}{%
 \section{Keys}\label{keys}}
 
-\hypertarget{exercise-13.2.1}{%
+\hypertarget{exercise-13.3.1}{%
 \subsection*{\texorpdfstring{Exercise
-{13.2.1}}{Exercise 13.2.1}}\label{exercise-13.2.1}}
-\addcontentsline{toc}{subsection}{Exercise {13.2.1}}
+{13.3.1}}{Exercise 13.3.1}}\label{exercise-13.3.1}}
+\addcontentsline{toc}{subsection}{Exercise {13.3.1}}
 
 Add a surrogate key to flights.
 
@@ -7613,10 +7631,10 @@ the order of the rows has some meaning.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.2.2}{%
+\hypertarget{exercise-13.3.2}{%
 \subsection*{\texorpdfstring{Exercise
-{13.2.2}}{Exercise 13.2.2}}\label{exercise-13.2.2}}
-\addcontentsline{toc}{subsection}{Exercise {13.2.2}}
+{13.3.2}}{Exercise 13.3.2}}\label{exercise-13.3.2}}
+\addcontentsline{toc}{subsection}{Exercise {13.3.2}}
 
 Identify the keys in the following datasets
 
@@ -7716,10 +7734,10 @@ The answer to each part follows.
 \end{Shaded}
 \end{enumerate}
 
-\hypertarget{exercise-13.2.3}{%
+\hypertarget{exercise-13.3.3}{%
 \subsection*{\texorpdfstring{Exercise
-{13.2.3}}{Exercise 13.2.3}}\label{exercise-13.2.3}}
-\addcontentsline{toc}{subsection}{Exercise {13.2.3}}
+{13.3.3}}{Exercise 13.3.3}}\label{exercise-13.3.3}}
+\addcontentsline{toc}{subsection}{Exercise {13.3.3}}
 
 Draw a diagram illustrating the connections between the
 \texttt{Batting}, \texttt{Master}, and \texttt{Salaries} tables in the
@@ -7874,10 +7892,10 @@ relationship to each other.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.3.1}{%
+\hypertarget{exercise-13.4.1}{%
 \subsection*{\texorpdfstring{Exercise
-{13.3.1}}{Exercise 13.3.1}}\label{exercise-13.3.1}}
-\addcontentsline{toc}{subsection}{Exercise {13.3.1}}
+{13.4.1}}{Exercise 13.4.1}}\label{exercise-13.4.1}}
+\addcontentsline{toc}{subsection}{Exercise {13.4.1}}
 
 Compute the average delay by destination, then join on the
 \texttt{airports} data frame so you can show the spatial distribution of
@@ -7894,7 +7912,7 @@ delays. Here's an easy way to draw a map of the United States:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 (Don't worry if you don't understand what \texttt{semi\_join()} does ---
 you'll learn about it next.)
@@ -7916,15 +7934,15 @@ you'll learn about it next.)
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 You might want to use the size or color of the points to display the
 average delay for each airport.
 
-\hypertarget{exercise-13.3.2}{%
+\hypertarget{exercise-13.4.2}{%
 \subsection*{\texorpdfstring{Exercise
-{13.3.2}}{Exercise 13.3.2}}\label{exercise-13.3.2}}
-\addcontentsline{toc}{subsection}{Exercise {13.3.2}}
+{13.4.2}}{Exercise 13.4.2}}\label{exercise-13.4.2}}
+\addcontentsline{toc}{subsection}{Exercise {13.4.2}}
 
 Add the location of the origin and destination (i.e.~the \texttt{lat}
 and \texttt{lon}) to \texttt{flights}.
@@ -7997,10 +8015,10 @@ This default can be over-ridden using the \texttt{suffix} argument.
 
 It's always good practice to have clear variable names.
 
-\hypertarget{exercise-13.3.3}{%
+\hypertarget{exercise-13.4.3}{%
 \subsection*{\texorpdfstring{Exercise
-{13.3.3}}{Exercise 13.3.3}}\label{exercise-13.3.3}}
-\addcontentsline{toc}{subsection}{Exercise {13.3.3}}
+{13.4.3}}{Exercise 13.4.3}}\label{exercise-13.4.3}}
+\addcontentsline{toc}{subsection}{Exercise {13.4.3}}
 
 Is there a relationship between the age of a plane and its delays?
 
@@ -8028,12 +8046,12 @@ how airlines allocate planes to airports.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
-\hypertarget{exercise-13.3.4}{%
+\hypertarget{exercise-13.4.4}{%
 \subsection*{\texorpdfstring{Exercise
-{13.3.4}}{Exercise 13.3.4}}\label{exercise-13.3.4}}
-\addcontentsline{toc}{subsection}{Exercise {13.3.4}}
+{13.4.4}}{Exercise 13.4.4}}\label{exercise-13.4.4}}
+\addcontentsline{toc}{subsection}{Exercise {13.4.4}}
 
 What weather conditions make it more likely to see a delay?
 
@@ -8058,12 +8076,12 @@ not as strong a trend after 0.02 in as one would expect
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-\hypertarget{exercise-13.3.5}{%
+\hypertarget{exercise-13.4.5}{%
 \subsection*{\texorpdfstring{Exercise
-{13.3.5}}{Exercise 13.3.5}}\label{exercise-13.3.5}}
-\addcontentsline{toc}{subsection}{Exercise {13.3.5}}
+{13.4.5}}{Exercise 13.4.5}}\label{exercise-13.4.5}}
+\addcontentsline{toc}{subsection}{Exercise {13.4.5}}
 
 What happened on June 13 2013? Display the spatial pattern of delays,
 and then use Google to cross-reference with the weather.
@@ -8093,15 +8111,15 @@ Midwest, which were the locations of the derechos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \hypertarget{filtering-joins}{%
 \section{Filtering Joins}\label{filtering-joins}}
 
-\hypertarget{exercise-13.4.1}{%
+\hypertarget{exercise-13.5.1}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.1}}{Exercise 13.4.1}}\label{exercise-13.4.1}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.1}}
+{13.5.1}}{Exercise 13.5.1}}\label{exercise-13.5.1}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.1}}
 
 What does it mean for a flight to have a missing \texttt{tailnum}? What
 do the tail numbers that don't have a matching record in planes have in
@@ -8129,10 +8147,10 @@ numbers.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.4.2}{%
+\hypertarget{exercise-13.5.2}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.2}}{Exercise 13.4.2}}\label{exercise-13.4.2}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.2}}
+{13.5.2}}{Exercise 13.5.2}}\label{exercise-13.5.2}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.2}}
 
 Filter flights to only show flights with planes that have flown at least
 100 flights.
@@ -8163,10 +8181,10 @@ Filter flights to only show flights with planes that have flown at least
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.4.3}{%
+\hypertarget{exercise-13.5.3}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.3}}{Exercise 13.4.3}}\label{exercise-13.4.3}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.3}}
+{13.5.3}}{Exercise 13.5.3}}\label{exercise-13.5.3}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.3}}
 
 Combine \texttt{fueleconomy::vehicles} and \texttt{fueleconomy::common}
 to find only the records for the most common models.
@@ -8218,10 +8236,10 @@ The table \texttt{fueleconomy::common} identifies vehicles by
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.4.4}{%
+\hypertarget{exercise-13.5.4}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.4}}{Exercise 13.4.4}}\label{exercise-13.4.4}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.4}}
+{13.5.4}}{Exercise 13.5.4}}\label{exercise-13.5.4}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.4}}
 
 Find the 48 hours (over the course of the whole year) that have the
 worst delays. Cross-reference it with the weather data. Can you see any
@@ -8248,10 +8266,10 @@ patterns?
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-13.4.5}{%
+\hypertarget{exercise-13.5.5}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.5}}{Exercise 13.4.5}}\label{exercise-13.4.5}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.5}}
+{13.5.5}}{Exercise 13.5.5}}\label{exercise-13.5.5}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.5}}
 
 What does
 \texttt{anti\_join(flights,\ airports,\ by\ =\ c("dest"\ =\ "faa"))}
@@ -8267,10 +8285,10 @@ likely foreign airports.
 US airports that don't have a flight in the data, meaning that there
 were no flights to that airport \textbf{from} New York in 2013.
 
-\hypertarget{exercise-13.4.6}{%
+\hypertarget{exercise-13.5.6}{%
 \subsection*{\texorpdfstring{Exercise
-{13.4.6}}{Exercise 13.4.6}}\label{exercise-13.4.6}}
-\addcontentsline{toc}{subsection}{Exercise {13.4.6}}
+{13.5.6}}{Exercise 13.5.6}}\label{exercise-13.5.6}}
+\addcontentsline{toc}{subsection}{Exercise {13.5.6}}
 
 You might expect that there's an implicit relationship between plane and
 airline, because each plane is flown by a single airline. Confirm or

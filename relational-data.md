@@ -15,7 +15,9 @@ The package datamodelr is used to draw database schema:
 library("datamodelr")
 ```
 
-### Exercise <span class="exercise-number">13.1.1</span> {.unnumbered .exercise}
+## nycflights13
+
+### Exercise <span class="exercise-number">13.2.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Imagine you wanted to draw (approximately) the route each plane flies from its origin to its destination. What variables would you need? What tables would you need to combine?
@@ -29,7 +31,7 @@ Imagine you wanted to draw (approximately) the route each plane flies from its o
 
 </div>
 
-### Exercise <span class="exercise-number">13.1.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.2.2</span> {.unnumbered .exercise}
 
 <div class="question">
 I forgot to draw the relationship between weather and airports. What is the relationship and how should it appear in the diagram?
@@ -41,10 +43,10 @@ The variable `origin` in `weather` is matched with `faa` in `airports`.
 
 </div>
 
-### Exercise <span class="exercise-number">13.1.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.2.3</span> {.unnumbered .exercise}
 
 <div class="question">
-weather only contains information for the origin (NYC) airports. If it contained weather records for all airports in the USA, what additional relation would it define with `flights`?
+Weather only contains information for the origin (NYC) airports. If it contained weather records for all airports in the USA, what additional relation would it define with `flights`?
 </div>
 
 <div class="answer">
@@ -53,7 +55,7 @@ weather only contains information for the origin (NYC) airports. If it contained
 
 </div>
 
-### Exercise <span class="exercise-number">13.1.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.2.4</span> {.unnumbered .exercise}
 
 <div class="question">
 We know that some days of the year are “special”, and fewer people than usual fly on them. How might you represent that data as a data frame? What would be the primary keys of that table? How would it connect to the existing tables?
@@ -62,14 +64,27 @@ We know that some days of the year are “special”, and fewer people than usua
 <div class="answer">
 
 I would add a table of special dates.
-The primary key would be date.
-It would match to the `year`, `month`, `day` columns of `flights.
+Its primary key would be  `date`.
+This would match to the `year`, `month`,
+and `day` columns of `flights.
+
+The table would resemble the following:
+
+```r
+special_days <- tribble(
+  ~year, ~month, ~day, ~holiday,
+  2013, 01, 01, "New Years Day",
+  2013, 07, 04, "Independence Day",
+  2013, 11, 29, "Thanksgiving Day",
+  2013, 12, 25, "Christmas Day"
+)
+```
 
 </div>
 
 ## Keys
 
-### Exercise <span class="exercise-number">13.2.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.3.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Add a surrogate key to flights.
@@ -111,7 +126,7 @@ flights %>%
 
 </div>
 
-### Exercise <span class="exercise-number">13.2.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.3.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Identify the keys in the following datasets
@@ -191,7 +206,7 @@ The answer to each part follows.
 
 </div>
 
-### Exercise <span class="exercise-number">13.2.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.3.3</span> {.unnumbered .exercise}
 
 Draw a diagram illustrating the connections between the `Batting`, `Master`, and `Salaries` tables in the **Lahman** package. Draw another diagram that shows the relationship between `Master`, `Managers`, `AwardsManagers`.
 
@@ -288,7 +303,7 @@ flights2 <- flights %>%
   select(year:day, hour, origin, dest, tailnum, carrier)
 ```
 
-### Exercise <span class="exercise-number">13.3.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.4.1</span> {.unnumbered .exercise}
 
 <div class="question">
 Compute the average delay by destination, then join on the `airports` data frame so you can show the spatial distribution of delays. Here’s an easy way to draw a map of the United States:
@@ -308,7 +323,7 @@ airports %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 (Don’t worry if you don’t understand what `semi_join()` does — you’ll learn about it next.)
 
@@ -330,13 +345,13 @@ avg_dest_delays %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 You might want to use the size or color of the points to display the average delay for each airport.
 
 </div>
 
-### Exercise <span class="exercise-number">13.3.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.4.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Add the location of the origin and destination (i.e. the `lat` and `lon`) to `flights`.
@@ -405,7 +420,7 @@ It's always good practice to have clear variable names.
 
 </div>
 
-### Exercise <span class="exercise-number">13.3.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.4.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Is there a relationship between the age of a plane and its delays?
@@ -436,11 +451,11 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 </div>
 
-### Exercise <span class="exercise-number">13.3.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.4.4</span> {.unnumbered .exercise}
 
 <div class="question">
 What weather conditions make it more likely to see a delay?
@@ -468,11 +483,11 @@ flight_weather %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 </div>
 
-### Exercise <span class="exercise-number">13.3.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.4.5</span> {.unnumbered .exercise}
 
 <div class="question">
 What happened on June 13 2013? Display the spatial pattern of delays, and then use Google to cross-reference with the weather.
@@ -501,13 +516,13 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 </div>
 
 ## Filtering Joins
 
-### Exercise <span class="exercise-number">13.4.1</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.1</span> {.unnumbered .exercise}
 
 <div class="question">
 What does it mean for a flight to have a missing `tailnum`? What do the tail numbers that don’t have a matching record in planes have in common? (Hint: one variable explains ~90% of the problems.)
@@ -535,7 +550,7 @@ flights %>%
 
 </div>
 
-### Exercise <span class="exercise-number">13.4.2</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.2</span> {.unnumbered .exercise}
 
 <div class="question">
 Filter flights to only show flights with planes that have flown at least 100 flights.
@@ -570,7 +585,7 @@ flights %>%
 
 </div>
 
-### Exercise <span class="exercise-number">13.4.3</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.3</span> {.unnumbered .exercise}
 
 <div class="question">
 Combine `fueleconomy::vehicles` and `fueleconomy::common` to find only the records for the most common models.
@@ -623,7 +638,7 @@ fueleconomy::vehicles %>%
 
 </div>
 
-### Exercise <span class="exercise-number">13.4.4</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.4</span> {.unnumbered .exercise}
 
 <div class="question">
 Find the 48 hours (over the course of the whole year) that have the worst delays. Cross-reference it with the weather data. Can you see any patterns?
@@ -653,7 +668,7 @@ flights %>%
 
 </div>
 
-### Exercise <span class="exercise-number">13.4.5</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.5</span> {.unnumbered .exercise}
 
 <div class="question">
 What does `anti_join(flights, airports, by = c("dest" = "faa"))` tell you? What does `anti_join(airports, flights, by = c("faa" = "dest"))` tell you?
@@ -667,7 +682,7 @@ What does `anti_join(flights, airports, by = c("dest" = "faa"))` tell you? What 
 
 </div>
 
-### Exercise <span class="exercise-number">13.4.6</span> {.unnumbered .exercise}
+### Exercise <span class="exercise-number">13.5.6</span> {.unnumbered .exercise}
 
 <div class="question">
 You might expect that there’s an implicit relationship between plane and airline, because each plane is flown by a single airline. Confirm or reject this hypothesis using the tools you’ve learned above.
