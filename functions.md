@@ -15,29 +15,49 @@ library("lubridate")
 
 <div class="question">
 
-Why is TRUE not a parameter to `rescale01()`?
+Why is `TRUE` not a parameter to `rescale01()`?
 What would happen if `x` contained a single missing value, and `na.rm` was `FALSE`?
 
 </div>
 
 <div class="answer">
 
-First, note that by a a single missing value, this means that the vector `x` has at least one element equal to `NA`.
-
-If there were any `NA` values, and `na.rm = FALSE`, then the function would
-return `NA`.
-
-I can confirm this by testing a function that allows for `na.rm` as an argument,
+The code for `rescale01()` is reproduced below.
 
 ```r
-rescale01_alt <- function(x, finite = TRUE) {
-  rng <- range(x, na.rm = finite, finite = finite)
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE, finite = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
 }
-rescale01_alt(c(NA, 1:5), finite = FALSE)
-#> [1] NA NA NA NA NA NA
-rescale01_alt(c(NA, 1:5), finite = TRUE)
+```
+
+If `x` contains a single missing value, and both `na.rm = FALSE`, then this function
+will still return a non-missing value.
+
+```r
+rescale01_alt <- function(x, na.rm = FALSE) {
+  rng <- range(x, na.rm = na.rm, finite = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01_alt(c(NA, 1:5), na.rm = FALSE)
 #> [1]   NA 0.00 0.25 0.50 0.75 1.00
+rescale01_alt(c(NA, 1:5), na.rm = TRUE)
+#> [1]   NA 0.00 0.25 0.50 0.75 1.00
+```
+This is because the option `finite = TRUE` to `range()` will drop all non-finite
+elements, and `NA` is a non-finite element.
+
+However, if both `finite = FALSE` and `na.rm = FALSE`, then this function will
+return a vector of `NA` values.
+Recall, artithmetic operations involving `NA` values will return `NA`.
+
+```r
+rescale01_alt2 <- function(x, na.rm = FALSE, finite = FALSE) {
+  rng <- range(x, na.rm = na.rm, finite = finite)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01_alt2(c(NA, 1:5), na.rm = FALSE, finite = FALSE)
+#> [1] NA NA NA NA NA NA
 ```
 
 </div>
@@ -335,9 +355,6 @@ turn_into_goon(Good_Fairy, foo_foo)
 
 <div class="question">
 Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -355,15 +372,20 @@ f3 <- function(x, y) {
 }
 ```
 
-The function `f1` returns whether a function has a common prefix.
+</div>
+
+<div class="answer">
+
+The function `f1` tests whether each element of the character vector `nchar`
+starts with the string `prefix`. For example,
 
 ```r
-f1(c("str_c", "str_foo", "abc"), "str_")
+f1(c("abc", "abcde", "ad"), "ab")
 #> [1]  TRUE  TRUE FALSE
 ```
 A better name for `f1` is `has_prefix()`
 
-The function `f2` drops the last element
+The function `f2` drops the last element of the vector `x`.
 
 ```r
 f2(1:3)
@@ -381,7 +403,7 @@ The function `f3` repeats `y` once for each element of `x`.
 f3(1:3, 4)
 #> [1] 4 4 4
 ```
-Good names would include `recycle()` (R's name for this behavior), or `expand()`.
+Good names would include `recycle()` (R's name for this behavior) or `expand()`.
 
 </div>
 
@@ -478,7 +500,7 @@ greet <- function(time = lubridate::now()) {
   }
 }
 greet()
-#> [1] "good morning"
+#> [1] "good evening"
 greet(ymd_h("2017-01-08:05"))
 #> [1] "good morning"
 greet(ymd_h("2017-01-08:13"))

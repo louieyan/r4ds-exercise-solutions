@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{September 15, 2018}
+    \date{September 17, 2018}
 
 \usepackage{amsthm}
 
@@ -180,6 +180,7 @@ contributed solutions. Thank you to all of those who contributed on
 \href{https://github.com/dcgreaves}{@dcgreaves},
 \href{https://github.com/decoursin}{@decoursin},
 \href{https://github.com/dongzhuoer}{@dongzhuoer},
+\href{https://github.com/GoldbergData}{@GoldbergData},
 \href{https://github.com/gvwilson}{@gvwilson},
 \href{https://github.com/JamesCuster}{@JamesCuster},
 \href{https://github.com/jmclawson}{@jmclawson},
@@ -10780,29 +10781,55 @@ function?}\label{when-should-you-write-a-function}}
 {19.2.1.1}}{Exercise 19.2.1.1}}\label{exercise-19.2.1.1}}
 \addcontentsline{toc}{subsection}{Exercise {19.2.1.1}}
 
-Why is TRUE not a parameter to \texttt{rescale01()}? What would happen
-if \texttt{x} contained a single missing value, and \texttt{na.rm} was
-\texttt{FALSE}?
+Why is \texttt{TRUE} not a parameter to \texttt{rescale01()}? What would
+happen if \texttt{x} contained a single missing value, and
+\texttt{na.rm} was \texttt{FALSE}?
 
-First, note that by a a single missing value, this means that the vector
-\texttt{x} has at least one element equal to \texttt{NA}.
-
-If there were any \texttt{NA} values, and \texttt{na.rm\ =\ FALSE}, then
-the function would return \texttt{NA}.
-
-I can confirm this by testing a function that allows for \texttt{na.rm}
-as an argument,
+The code for \texttt{rescale01()} is reproduced below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rescale01_alt <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{finite =} \OtherTok{TRUE}\NormalTok{) \{}
-\NormalTok{  rng <-}\StringTok{ }\KeywordTok{range}\NormalTok{(x, }\DataTypeTok{na.rm =}\NormalTok{ finite, }\DataTypeTok{finite =}\NormalTok{ finite)}
+\NormalTok{rescale01 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  rng <-}\StringTok{ }\KeywordTok{range}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{finite =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{  (x }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{]) }\OperatorTok{/}\StringTok{ }\NormalTok{(rng[}\DecValTok{2}\NormalTok{] }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{])}
 \NormalTok{\}}
-\KeywordTok{rescale01_alt}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{), }\DataTypeTok{finite =} \OtherTok{FALSE}\NormalTok{)}
-\CommentTok{#> [1] NA NA NA NA NA NA}
-\KeywordTok{rescale01_alt}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{), }\DataTypeTok{finite =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If \texttt{x} contains a single missing value, and both
+\texttt{na.rm\ =\ FALSE}, then this function will still return a
+non-missing value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rescale01_alt <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{) \{}
+\NormalTok{  rng <-}\StringTok{ }\KeywordTok{range}\NormalTok{(x, }\DataTypeTok{na.rm =}\NormalTok{ na.rm, }\DataTypeTok{finite =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  (x }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{]) }\OperatorTok{/}\StringTok{ }\NormalTok{(rng[}\DecValTok{2}\NormalTok{] }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{])}
+\NormalTok{\}}
+\KeywordTok{rescale01_alt}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{)}
 \CommentTok{#> [1]   NA 0.00 0.25 0.50 0.75 1.00}
+\KeywordTok{rescale01_alt}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{#> [1]   NA 0.00 0.25 0.50 0.75 1.00}
+\end{Highlighting}
+\end{Shaded}
+
+This is because the option \texttt{finite\ =\ TRUE} to \texttt{range()}
+will drop all non-finite elements, and \texttt{NA} is a non-finite
+element.
+
+However, if both \texttt{finite\ =\ FALSE} and \texttt{na.rm\ =\ FALSE},
+then this function will return a vector of \texttt{NA} values. Recall,
+artithmetic operations involving \texttt{NA} values will return
+\texttt{NA}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rescale01_alt2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{finite =} \OtherTok{FALSE}\NormalTok{) \{}
+\NormalTok{  rng <-}\StringTok{ }\KeywordTok{range}\NormalTok{(x, }\DataTypeTok{na.rm =}\NormalTok{ na.rm, }\DataTypeTok{finite =}\NormalTok{ finite)}
+\NormalTok{  (x }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{]) }\OperatorTok{/}\StringTok{ }\NormalTok{(rng[}\DecValTok{2}\NormalTok{] }\OperatorTok{-}\StringTok{ }\NormalTok{rng[}\DecValTok{1}\NormalTok{])}
+\NormalTok{\}}
+\KeywordTok{rescale01_alt2}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{finite =} \OtherTok{FALSE}\NormalTok{)}
+\CommentTok{#> [1] NA NA NA NA NA NA}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11145,18 +11172,21 @@ out what they do, and then brainstorm better names.
 \end{Highlighting}
 \end{Shaded}
 
-The function \texttt{f1} returns whether a function has a common prefix.
+The function \texttt{f1} tests whether each element of the character
+vector \texttt{nchar} starts with the string \texttt{prefix}. For
+example,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{f1}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"str_c"}\NormalTok{, }\StringTok{"str_foo"}\NormalTok{, }\StringTok{"abc"}\NormalTok{), }\StringTok{"str_"}\NormalTok{)}
+\KeywordTok{f1}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"abc"}\NormalTok{, }\StringTok{"abcde"}\NormalTok{, }\StringTok{"ad"}\NormalTok{), }\StringTok{"ab"}\NormalTok{)}
 \CommentTok{#> [1]  TRUE  TRUE FALSE}
 \end{Highlighting}
 \end{Shaded}
 
 A better name for \texttt{f1} is \texttt{has\_prefix()}
 
-The function \texttt{f2} drops the last element
+The function \texttt{f2} drops the last element of the vector
+\texttt{x}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11181,8 +11211,8 @@ The function \texttt{f3} repeats \texttt{y} once for each element of
 \end{Highlighting}
 \end{Shaded}
 
-Good names would include \texttt{recycle()} (R's name for this
-behavior), or \texttt{expand()}.
+Good names would include \texttt{recycle()} (R's name for this behavior)
+or \texttt{expand()}.
 
 \hypertarget{exercise-19.3.1.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -11284,7 +11314,7 @@ will make it easier to test your function.)
 \NormalTok{  \}}
 \NormalTok{\}}
 \KeywordTok{greet}\NormalTok{()}
-\CommentTok{#> [1] "good morning"}
+\CommentTok{#> [1] "good evening"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:05"}\NormalTok{))}
 \CommentTok{#> [1] "good morning"}
 \KeywordTok{greet}\NormalTok{(}\KeywordTok{ymd_h}\NormalTok{(}\StringTok{"2017-01-08:13"}\NormalTok{))}
@@ -15062,7 +15092,7 @@ human friendly numbers (fractions).
 If \texttt{log(price)\ =\ a\_0\ +\ a\_1\ *\ log(carat)}, what does that
 say about the relationship between \texttt{price} and \texttt{carat}?
 
-An 1\% increase in carat is associated with an \(a_1\)\% increase in
+A 1\% increase in carat is associated with an \(a_1\)\% increase in
 price.
 
 \hypertarget{exercise-24.2.3.3}{%
