@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{September 17, 2018}
+    \date{September 19, 2018}
 
 \usepackage{amsthm}
 
@@ -570,7 +570,7 @@ An empty plot. The background of the plot is created by
 
 How many rows are in \texttt{mtcars}? How many columns?
 
-There are 32 rows and 11 columns in the the \texttt{mtcars} data frame.
+There are 32 rows and 11 columns in the \texttt{mtcars} data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2328,7 +2328,7 @@ The answer to each part follows.
 \item
   Flights that arrived more than two hours late, but didn't leave late
   will have an arrival delay of more than 120 minutes
-  (\texttt{dep\_delay\ \textgreater{}\ 120}) and an non-positive
+  (\texttt{dep\_delay\ \textgreater{}\ 120}) and a non-positive
   departure delay (\texttt{dep\_delay\ \textless{}=\ 0}).
 
 \begin{Shaded}
@@ -2356,9 +2356,9 @@ The answer to each part follows.
   any time in the air, then its arrival would be delayed by the same
   amount as its departure, meaning \texttt{dep\_delay\ ==\ arr\_delay},
   or alternatively, \texttt{dep\_delay\ -\ arr\_delay\ ==\ 0}. If it
-  makes up over 30 minutes in the air, then the the arrival delay must
-  be at least 30 minutes less than the departure delay, which is stated
-  as \texttt{dep\_delay\ -\ arr\_delay\ \textgreater{}\ 30}.
+  makes up over 30 minutes in the air, then the arrival delay must be at
+  least 30 minutes less than the departure delay, which is stated as
+  \texttt{dep\_delay\ -\ arr\_delay\ \textgreater{}\ 30}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3716,7 +3716,7 @@ The inverse function arc-cosine (\texttt{acos()}), arc-sine
 \end{Shaded}
 
 The function \texttt{atan2()} is the angle between the x-axis and the
-the vector (0,0) to (\texttt{x}, \texttt{y}).
+vector (0,0) to (\texttt{x}, \texttt{y}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5356,8 +5356,8 @@ than those in the box plots in order to be interpretable.
 Visualize the distribution of \texttt{carat}, partitioned by
 \texttt{price}.
 
-With a box plot, partitioning into an 10 bins with the same number of
-observations:
+Plotted with a box plot with 10 bins with an equal number of
+observations, and the width determined by the number of observations.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5370,9 +5370,8 @@ observations:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
-With a box plot, partitioning into an bins of \$2,000 with the width of
-the box determined by the number of observations. I use
-\texttt{boundary\ =\ 0} to ensure the first bin goes from \$0--\$2,000.
+Plotted with a box plot with 10 equal-width bins of \$2,000. The
+argument \texttt{boundary\ =\ 0} ensures that first bin is \$0--\$2,000.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6132,8 +6131,8 @@ If the decimal and grouping marks are set to the same character,
 \end{Highlighting}
 \end{Shaded}
 
-If the \texttt{decimal\_mark} is set to the comma ``\texttt{,"}, then
-the grouping mark is set to the period \texttt{"."}:
+If the \texttt{decimal\_mark} is set to the comma "\texttt{,"}, then the
+grouping mark is set to the period \texttt{"."}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -10316,7 +10315,7 @@ What happens if you parse a string that contains invalid dates?
 \end{Highlighting}
 \end{Shaded}
 
-It produces an \texttt{NA} and an warning message.
+It produces an \texttt{NA} and a warning message.
 
 \hypertarget{exercise-16.2.4.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -11088,7 +11087,7 @@ Scooping up the field mice\\
 And bopping them on the head
 
 Down came the Good Fairy, and she said\\
-``Little bunny Foo Foo\\
+"Little bunny Foo Foo\\
 I don't want to see you ~ Scooping up the field mice
 
 And bopping them on the head.\\
@@ -11784,7 +11783,7 @@ The source for \texttt{dplyr::near} is:
 \CommentTok{#> \{}
 \CommentTok{#>     abs(x - y) < tol}
 \CommentTok{#> \}}
-\CommentTok{#> <bytecode: 0x7fdd581b1928>}
+\CommentTok{#> <bytecode: 0x7fcf202a6ba0>}
 \CommentTok{#> <environment: namespace:dplyr>}
 \end{Highlighting}
 \end{Shaded}
@@ -12130,26 +12129,42 @@ by the user.
 What does \texttt{mean(is.na(x))} tell you about a vector \texttt{x}?
 What about \texttt{sum(!is.finite(x))}?
 
-The expression \texttt{mean(is.na(x))} calculates the proportion of
-missing values in a vector
+I'll use the numeric vector \texttt{x} to compare the behaviors of
+\texttt{is.na()} and \texttt{is.finite()}. It contains numbers
+(\texttt{-1}, \texttt{0}, \texttt{1}) as well as all the special numeric
+values: infinity (\texttt{Inf}), missing (\texttt{NA}), and not-a-number
+(\texttt{NaN}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NaN}\NormalTok{, }\OtherTok{Inf}\NormalTok{, }\OperatorTok{-}\OtherTok{Inf}\NormalTok{)}
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x))}
-\CommentTok{#> [1] 0.143}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\OtherTok{Inf}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{Inf}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NaN}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-The expression \texttt{mean(!is.finite(x))} calculates the proportion of
-values that are \texttt{NA}, \texttt{NaN}, or infinite.
+The expression \texttt{mean(is.na(x))} calculates the proportion of
+missing values (values equal to \texttt{NA}) in a vector.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mean}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.finite}\NormalTok{(x))}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x))}
 \CommentTok{#> [1] 0.286}
 \end{Highlighting}
 \end{Shaded}
+
+The expression \texttt{sum(!is.finite(x))} calculates the number of
+elements in the vector that are equal to missing (\texttt{NA}),
+not-a-number (\texttt{NaN}), or inifinity (\texttt{Inf}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.finite}\NormalTok{(x))}
+\CommentTok{#> [1] 4}
+\end{Highlighting}
+\end{Shaded}
+
+Review the \href{http://r4ds.had.co.nz/vectors.html\#numeric}{Numeric}
+section for the differences between \texttt{is.na()} and
+\texttt{is.finite()}.
 
 \hypertarget{exercise-20.4.6.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -12226,7 +12241,8 @@ named and a vector of names to apply to its elements.
 \end{Highlighting}
 \end{Shaded}
 
-You can name an vector with itself if the \texttt{nm} argument is used.
+You can use the values of the vector as its names if the \texttt{nm}
+argument is used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12413,34 +12429,35 @@ The answers to the parts follow.
   In both these cases, \texttt{not\_last()} correctly returns an empty
   vector.
 \item
-  This function returns a the elements of a vector that are even
-  numbers.
+  This function returns the elements of a vector that are even numbers.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{even_numbers <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
 \NormalTok{  x[x }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{]}
 \NormalTok{\}}
-\KeywordTok{even_numbers}\NormalTok{(}\OperatorTok{-}\DecValTok{10}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
-\CommentTok{#>  [1] -10  -8  -6  -4  -2   0   2   4   6   8  10}
+\KeywordTok{even_numbers}\NormalTok{(}\OperatorTok{-}\DecValTok{4}\OperatorTok{:}\DecValTok{4}\NormalTok{)}
+\CommentTok{#> [1] -4 -2  0  2  4}
 \end{Highlighting}
 \end{Shaded}
 
-  We could improve this function by handling the cases of the special
-  values: \texttt{NA}, \texttt{NaN}, \texttt{Inf}. However, first we
-  need to decide how to handle them. Neither \texttt{NaN} nor
-  \texttt{Inf} are considered even numbers. What about \texttt{NA}?
-  Well, we don't know. The value of \texttt{NA} could be even or odd,
-  but it is missing. So we will follow the convention of many R
-  functions and keep the \texttt{NA} values. The revised function now
-  handles these cases.
+  We could improve this function by handling special numeric values:
+  \texttt{NA}, \texttt{NaN}, \texttt{Inf}. However, first we need to
+  decide how to handle them. Neither \texttt{NaN} nor \texttt{Inf} are
+  not numbers, and so they aren't even numbers. What about \texttt{NA}?
+  Well, we don't know. \texttt{NA} is a number, but we don't know its
+  value. The missing number could be even or odd, but we don't know its
+  value. When writing functions it is good practice to try to follow the
+  behavior of existing functions so as not to surprise users. The
+  behavior of many R functions is to return \texttt{NA} values instead
+  of dropping them.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{even_numbers <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{even_numbers2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
 \NormalTok{  x[}\OperatorTok{!}\KeywordTok{is.infinite}\NormalTok{(x) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.nan}\NormalTok{(x) }\OperatorTok{&}\StringTok{ }\NormalTok{(x }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)]}
 \NormalTok{\}}
-\KeywordTok{even_numbers}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NaN}\NormalTok{, }\OtherTok{Inf}\NormalTok{))}
+\KeywordTok{even_numbers2}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NaN}\NormalTok{, }\OtherTok{Inf}\NormalTok{))}
 \CommentTok{#> [1]  0  2  4 NA}
 \end{Highlighting}
 \end{Shaded}
@@ -12703,7 +12720,7 @@ R package to render \href{https://www.graphviz.org/}{Graphviz} diagrams.
   \texttt{list(a,\ b,\ list(c,\ d),\ list(e,\ f))} is
 \item
   The nested set diagram for
-  \texttt{list(list(list(list(list(list(a))))))1} is as follows.
+  \texttt{list(list(list(list(list(list(a))))))} is as follows.
 \end{enumerate}
 
 \hypertarget{exercise-20.5.4.2}{%
@@ -12864,11 +12881,6 @@ same length.
 It works! I even used a list with heterogeneous types and there wasn't
 an issue. In following chapters we'll see that list vectors can be very
 useful: for example, when processing many different models.
-
-{[}\^{}double-rounding: The built-in variable
-\texttt{.Machine\$double.rounding} indicates the rounding method used by
-R. It states that the round half to even method is expected to be used,
-but this may differ by operating system.
 
 \hypertarget{iteration}{%
 \chapter{Iteration}\label{iteration}}
@@ -14699,7 +14711,7 @@ Why might you want to look at a frequency polygon of absolute residuals?
 What are the pros and cons compared to looking at the raw residuals?
 
 Showing the absolute values of the residuals makes it easier to view the
-spread of the residuals. The model assumes the the residuals have mean
+spread of the residuals. The model assumes that the residuals have mean
 zero, and using the absolute values of the residuals effectively doubles
 the number of residuals.
 
@@ -16639,7 +16651,7 @@ No exercises
 \leavevmode\hypertarget{ref-Cleveland1993a}{}%
 Cleveland, William S. 1993a. ``A Model for Studying Display Methods of
 Statistical Graphics.'' \emph{Journal of Computational and Graphical
-Statistics} 2 (4). Taylor \& Francis:323--43.
+Statistics} 2 (4). Taylor \& Francis: 323--43.
 \url{https://doi.org/10.1080/10618600.1993.10474616}.
 
 \leavevmode\hypertarget{ref-Cleveland1993}{}%
@@ -16652,13 +16664,13 @@ Statistics} 2 (4). Taylor \& Francis:323--43.
 Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. ``The
 Shape Parameter of a Two-Variable Graph.'' \emph{Journal of the American
 Statistical Association} 83 (402). {[}American Statistical Association,
-Taylor \& Francis, Ltd.{]}:289--300.
+Taylor \& Francis, Ltd.{]}: 289--300.
 \url{https://www.jstor.org/stable/2288843}.
 
 \leavevmode\hypertarget{ref-DoaneSeward2011}{}%
 Doane, David P., and Lori E. Seward. 2011. ``Measuring Skewness: A
 Forgotten Statistic?'' \emph{Journal of Statistics Education} 19 (2).
-Taylor \& Francis:null.
+Taylor \& Francis: null.
 \url{https://doi.org/10.1080/10691898.2011.11889611}.
 
 \leavevmode\hypertarget{ref-HeerAgrawala2006}{}%
@@ -16669,13 +16681,13 @@ Heer, Jeffrey, and Maneesh Agrawala. 2006. ``Multi-Scale Banking to
 \leavevmode\hypertarget{ref-HintzeNelson1998}{}%
 Hintze, Jerry L., and Ray D. Nelson. 1998. ``Violin Plots: A Box
 Plot-Density Trace Synergism.'' \emph{The American Statistician} 52 (2).
-Taylor \& Francis:181--84.
+Taylor \& Francis: 181--84.
 \url{https://doi.org/10.1080/00031305.1998.10480559}.
 
 \leavevmode\hypertarget{ref-HofmannWickhamKafadar2017}{}%
 Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. ``Letter-Value
 Plots: Boxplots for Large Data.'' \emph{Journal of Computational and
-Graphical Statistics} 26 (3). Taylor \& Francis:469--77.
+Graphical Statistics} 26 (3). Taylor \& Francis: 469--77.
 \url{https://doi.org/10.1080/10618600.2017.1305277}.
 
 \leavevmode\hypertarget{ref-WickhamGrolemund2017}{}%

@@ -179,7 +179,7 @@ The answer to each part follows.
 
 1.  Flights that arrived more than two hours late, but didn’t leave late will 
     have an arrival delay of more than 120 minutes (`dep_delay > 120`) and 
-    an non-positive departure delay (`dep_delay <= 0`).
+    a non-positive departure delay (`dep_delay <= 0`).
     
     ```r
     filter(flights, dep_delay <= 0, arr_delay > 120)
@@ -203,7 +203,7 @@ The answer to each part follows.
     didn't make up any time in the air, then its arrival would be delayed by
     the same amount as its departure, meaning `dep_delay == arr_delay`, or alternatively,
     `dep_delay - arr_delay == 0`. If it makes up over 30 minutes in the air, then
-    the the arrival delay must be at least 30 minutes less than the departure delay, which
+    the arrival delay must be at least 30 minutes less than the departure delay, which
     is stated as `dep_delay - arr_delay > 30`.
     
     ```r
@@ -1370,7 +1370,7 @@ atan(x)
 #> [1] -0.785 -0.644 -0.464 -0.245  0.000  0.245  0.464  0.644  0.785
 ```
 
-The function `atan2()` is the angle between the x-axis and the the vector (0,0) to (`x`, `y`).
+The function `atan2()` is the angle between the x-axis and the vector (0,0) to (`x`, `y`).
 
 ```r
 atan2(c(1, 0, -1, 0), c(0, 1, 0, -1))

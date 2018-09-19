@@ -46,7 +46,7 @@ How many rows are in `mtcars`? How many columns?
 
 <div class="answer">
 
-There are 32 rows and 11 columns in the the `mtcars` data frame.
+There are 32 rows and 11 columns in the `mtcars` data frame.
 
 ```r
 nrow(mtcars)

@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-17">
+<meta name="date" content="2018-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +71,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -774,7 +772,7 @@ numeric and special values.</caption>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     abs(x - y) &lt; tol</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x560511f2ce48&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x7fd16790ba40&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:dplyr&gt;</span></code></pre>
 <p>Instead of checking for exact equality, it checks that two numbers are within a certain tolerance, <code>tol</code>.
 By default the tolerance is set to the square root of <code>.Machine$double.eps</code>, which is the smallest floating point number that the computer can represent.</p>
@@ -1001,13 +999,18 @@ This allows it to easily parse numeric fields that include currency symbols and 
 <p>What does <code>mean(is.na(x))</code> tell you about a vector <code>x</code>? What about <code>sum(!is.finite(x))</code>?</p>
 </div>
 <div class="answer">
-<p>The expression <code>mean(is.na(x))</code> calculates the proportion of missing values in a vector</p>
-<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="ot">NA</span>, <span class="ot">NaN</span>, <span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>)
-<span class="kw">mean</span>(<span class="kw">is.na</span>(x))
-<span class="co">#&gt; [1] 0.143</span></code></pre>
-<p>The expression <code>mean(!is.finite(x))</code> calculates the proportion of values that are <code>NA</code>, <code>NaN</code>, or infinite.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="op">!</span><span class="kw">is.finite</span>(x))
+<p>I’ll use the numeric vector <code>x</code> to compare the behaviors of <code>is.na()</code>
+and <code>is.finite()</code>. It contains numbers (<code>-1</code>, <code>0</code>, <code>1</code>) as
+well as all the special numeric values: infinity (<code>Inf</code>),
+missing (<code>NA</code>), and not-a-number (<code>NaN</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="ot">Inf</span>, <span class="ot">NA</span>, <span class="ot">NaN</span>)</code></pre>
+<p>The expression <code>mean(is.na(x))</code> calculates the proportion of missing values (values equal to <code>NA</code>) in a vector.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">is.na</span>(x))
 <span class="co">#&gt; [1] 0.286</span></code></pre>
+<p>The expression <code>sum(!is.finite(x))</code> calculates the number of elements in the vector that are equal to missing (<code>NA</code>), not-a-number (<code>NaN</code>), or inifinity (<code>Inf</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.finite</span>(x))
+<span class="co">#&gt; [1] 4</span></code></pre>
+<p>Review the <a href="http://r4ds.had.co.nz/vectors.html#numeric">Numeric</a> section for the differences between <code>is.na()</code> and <code>is.finite()</code>.</p>
 </div>
 </div>
 <div id="exercise-20.4.6.2" class="section level3 unnumbered exercise">
@@ -1046,7 +1049,7 @@ of names to apply to its elements.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setNames</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>))
 <span class="co">#&gt; a b c d </span>
 <span class="co">#&gt; 1 2 3 4</span></code></pre>
-<p>You can name an vector with itself if the <code>nm</code> argument is used.</p>
+<p>You can use the values of the vector as its names if the <code>nm</code> argument is used.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setNames</span>(<span class="dt">nm =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>))
 <span class="co">#&gt;   a   b   c   d </span>
 <span class="co">#&gt; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</span></code></pre>
@@ -1149,22 +1152,24 @@ a vector with one element, and a vector with zero elements.</p>
 <span class="kw">not_last</span>(<span class="kw">numeric</span>())
 <span class="co">#&gt; numeric(0)</span></code></pre>
 <p>In both these cases, <code>not_last()</code> correctly returns an empty vector.</p></li>
-<li><p>This function returns a the elements of a vector that are even numbers.</p>
+<li><p>This function returns the elements of a vector that are even numbers.</p>
 <pre class="sourceCode r"><code class="sourceCode r">even_numbers &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
   x[x <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]
 }
-<span class="kw">even_numbers</span>(<span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>)
-<span class="co">#&gt;  [1] -10  -8  -6  -4  -2   0   2   4   6   8  10</span></code></pre>
-<p>We could improve this function by handling the cases of the special values:
+<span class="kw">even_numbers</span>(<span class="op">-</span><span class="dv">4</span><span class="op">:</span><span class="dv">4</span>)
+<span class="co">#&gt; [1] -4 -2  0  2  4</span></code></pre>
+<p>We could improve this function by handling special numeric values:
 <code>NA</code>, <code>NaN</code>, <code>Inf</code>. However, first we need to decide how to handle them.
-Neither <code>NaN</code> nor <code>Inf</code> are considered even numbers. What about <code>NA</code>?
-Well, we don’t know. The value of <code>NA</code> could be even or odd, but it is missing.
-So we will follow the convention of many R functions and keep the <code>NA</code> values.
-The revised function now handles these cases.</p>
-<pre class="sourceCode r"><code class="sourceCode r">even_numbers &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+Neither <code>NaN</code> nor <code>Inf</code> are not numbers, and so they aren’t even numbers.
+What about <code>NA</code>? Well, we don’t know. <code>NA</code> is a number, but we don’t know its
+value. The missing number could be even or odd, but we don’t know its value.
+When writing functions it is good practice to try to follow the behavior
+of existing functions so as not to surprise users. The behavior of many
+R functions is to return <code>NA</code> values instead of dropping them.</p>
+<pre class="sourceCode r"><code class="sourceCode r">even_numbers2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
   x[<span class="op">!</span><span class="kw">is.infinite</span>(x) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.nan</span>(x) <span class="op">&amp;</span><span class="st"> </span>(x <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)]
 }
-<span class="kw">even_numbers</span>(<span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>, <span class="ot">NA</span>, <span class="ot">NaN</span>, <span class="ot">Inf</span>))
+<span class="kw">even_numbers2</span>(<span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>, <span class="ot">NA</span>, <span class="ot">NaN</span>, <span class="ot">Inf</span>))
 <span class="co">#&gt; [1]  0  2  4 NA</span></code></pre></li>
 </ol>
 </div>
@@ -1301,12 +1306,12 @@ You could also use various diagramming, drawing, or presentation software, inclu
 <code>list(a, b, list(c, d), list(e, f))</code>
 is</p>
 <div id="htmlwidget-14d5992801777f4abbc5" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_1.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-14d5992801777f4abbc5">{"x":{"diagram":"digraph nested_set_1 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_abcdef {\n    node[style=filled,fillcolor=gray90]\n    \"b\"\n    \"a\"\n    subgraph cluster_ef {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"f\"\n      \"e\"\n    }\n    subgraph cluster_cd {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      node[fillcolor=gray80]\n      \"d\"\n      \"c\"\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 <li><p>The nested set diagram for
-<code>list(list(list(list(list(list(a))))))1</code>
+<code>list(list(list(list(list(list(a))))))</code>
 is as follows.</p>
 <div id="htmlwidget-df2c08526632671063f9" style="width:70%;height:355.968px;" class="grViz html-widget"></div>
-    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"/home/rstudio/r4ds-exercise-solutions/diagrams/nested_set_2.dot","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
+    <script type="application/json" data-for="htmlwidget-df2c08526632671063f9">{"x":{"diagram":"digraph nested_set_2 {\n  node[shape=box]\n  graph[style=rounded]\n  # subgraph for R information\n  subgraph cluster_1 {\n    subgraph cluster_2 {\n      graph[fillcolor=gray90,style=\"rounded,filled\"]\n      subgraph cluster_3 {\n        graph[fillcolor=gray80]\n        subgraph cluster_4 {\n          graph[fillcolor=gray70]\n          subgraph cluster_5 {\n            graph[fillcolor=gray60]\n            subgraph cluster_6 {\n              graph[fillcolor=gray50]\n              node[style=filled,fillcolor=gray40]\n              \"a\"\n            }\n          }\n        }\n      }\n    }\n  }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></li>
 </ol>
 </div>
 </div>
@@ -1414,9 +1419,6 @@ So, maybe there won’t be an issue with a list vector as long as it is the same
 <p>It works! I even used a list with heterogeneous types and there wasn’t an issue.
 In following chapters we’ll see that list vectors can be very useful: for example, when processing many different models.</p>
 </div>
-<p>[^double-rounding: The built-in variable <code>.Machine$double.rounding</code> indicates
-the rounding method used by R. It states that the round half to even
-method is expected to be used, but this may differ by operating system.</p>
 
 </div>
 </div>

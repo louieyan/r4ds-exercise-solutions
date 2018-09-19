@@ -49,7 +49,7 @@ ret
 #> [1] "2010-10-10" NA
 ```
 
-It produces an `NA` and an warning message.
+It produces an `NA` and a warning message.
 
 </div>
 

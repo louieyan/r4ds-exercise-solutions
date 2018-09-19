@@ -65,7 +65,7 @@ dplyr::near
 #> {
 #>     abs(x - y) < tol
 #> }
-#> <bytecode: 0x7fdd581b1928>
+#> <bytecode: 0x7fcf202a6ba0>
 #> <environment: namespace:dplyr>
 ```
 
@@ -315,20 +315,30 @@ What does `mean(is.na(x))` tell you about a vector `x`? What about `sum(!is.fini
 
 <div class="answer">
 
-The expression `mean(is.na(x))` calculates the proportion of missing values in a vector
+I'll use the numeric vector `x` to compare the behaviors of `is.na()`
+and `is.finite()`. It contains numbers (`-1`, `0`, `1`) as 
+well as all the special numeric values: infinity (`Inf`), 
+missing (`NA`), and not-a-number (`NaN`). 
 
 ```r
-x <- c(1:10, NA, NaN, Inf, -Inf)
-mean(is.na(x))
-#> [1] 0.143
+x <- c(-Inf, -1, 0, 1, Inf, NA, NaN)
 ```
 
-The expression `mean(!is.finite(x))` calculates the proportion of values that are `NA`, `NaN`, or infinite.
+The expression `mean(is.na(x))` calculates the proportion of missing values (values equal to `NA`) in a vector.
 
 ```r
-mean(!is.finite(x))
+mean(is.na(x))
 #> [1] 0.286
 ```
+
+The expression `sum(!is.finite(x))` calculates the number of elements in the vector that are equal to missing (`NA`), not-a-number (`NaN`), or inifinity (`Inf`). 
+
+```r
+sum(!is.finite(x))
+#> [1] 4
+```
+
+Review the [Numeric](http://r4ds.had.co.nz/vectors.html#numeric) section for the differences between `is.na()` and `is.finite()`.
 
 </div>
 
@@ -392,7 +402,7 @@ setNames(1:4, c("a", "b", "c", "d"))
 #> a b c d 
 #> 1 2 3 4
 ```
-You can name an vector with itself if the `nm` argument is used.
+You can use the values of the vector as its names if the `nm` argument is used.
 
 ```r
 setNames(nm = c("a", "b", "c", "d"))
@@ -542,29 +552,31 @@ The answers to the parts follow.
     ```
     In both these cases, `not_last()` correctly returns an empty vector.
 
-1.  This function returns a the elements of a vector that are even numbers.
+1.  This function returns the elements of a vector that are even numbers.
 
     
     ```r
     even_numbers <- function(x) {
       x[x %% 2 == 0]
     }
-    even_numbers(-10:10)
-    #>  [1] -10  -8  -6  -4  -2   0   2   4   6   8  10
+    even_numbers(-4:4)
+    #> [1] -4 -2  0  2  4
     ```
 
-    We could improve this function by handling the cases of the special values:
+    We could improve this function by handling special numeric values:
     `NA`, `NaN`, `Inf`. However, first we need to decide how to handle them.
-    Neither `NaN` nor `Inf` are considered even numbers. What about `NA`?
-    Well, we don't know. The value of `NA` could be even or odd, but it is missing.
-    So we will follow the convention of many R functions and keep the `NA` values.
-    The revised function now handles these cases.
+    Neither `NaN` nor `Inf` are not numbers, and so they aren't even numbers. 
+    What about `NA`? Well, we don't know. `NA` is a number, but we don't know its
+    value. The missing number could be even or odd, but we don't know its value.
+    When writing functions it is good practice to try to follow the behavior
+    of existing functions so as not to surprise users. The behavior of many
+    R functions is to return `NA` values instead of dropping them.
     
     ```r
-    even_numbers <- function(x) {
+    even_numbers2 <- function(x) {
       x[!is.infinite(x) & !is.nan(x) & (x %% 2 == 0)]
     }
-    even_numbers(c(0:4, NA, NaN, Inf))
+    even_numbers2(c(0:4, NA, NaN, Inf))
     #> [1]  0  2  4 NA
     ```
 
@@ -763,7 +775,7 @@ For these examples, I generated these diagrams programmatically using the
     
 
 1.  The nested set diagram for
-    `list(list(list(list(list(list(a))))))1`
+    `list(list(list(list(list(list(a))))))`
     is as follows.
 
 
@@ -918,7 +930,3 @@ It works! I even used a list with heterogeneous types and there wasn't an issue.
 In following chapters we'll see that list vectors can be very useful: for example, when processing many different models.
 
 </div>
-
-[^double-rounding: The built-in variable `.Machine$double.rounding` indicates
-                   the rounding method used by R. It states that the round half to even
-                   method is expected to be used, but this may differ by operating system.

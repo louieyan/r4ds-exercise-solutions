@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-17">
+<meta name="date" content="2018-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +71,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -840,7 +838,7 @@ like <code>&gt;=</code> and <code>&lt;=</code> is preferred for numeric data.</p
 <span class="co">#&gt; #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre></li>
 <li><p>Flights that arrived more than two hours late, but didn’t leave late will
 have an arrival delay of more than 120 minutes (<code>dep_delay &gt; 120</code>) and
-an non-positive departure delay (<code>dep_delay &lt;= 0</code>).</p>
+a non-positive departure delay (<code>dep_delay &lt;= 0</code>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, dep_delay <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">120</span>)
 <span class="co">#&gt; # A tibble: 29 x 19</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time</span>
@@ -860,7 +858,7 @@ If a flight was delayed by at least an hour, then <code>dep_delay &gt;= 60</code
 didn’t make up any time in the air, then its arrival would be delayed by
 the same amount as its departure, meaning <code>dep_delay == arr_delay</code>, or alternatively,
 <code>dep_delay - arr_delay == 0</code>. If it makes up over 30 minutes in the air, then
-the the arrival delay must be at least 30 minutes less than the departure delay, which
+the arrival delay must be at least 30 minutes less than the departure delay, which
 is stated as <code>dep_delay - arr_delay &gt; 30</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, dep_delay <span class="op">&gt;=</span><span class="st"> </span><span class="dv">60</span>, dep_delay <span class="op">-</span><span class="st"> </span>arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">30</span>)
 <span class="co">#&gt; # A tibble: 1,844 x 19</span>
@@ -1753,7 +1751,7 @@ We get a warning vector since the shorter vector is not a multiple of the longer
 <span class="co">#&gt; [1] -1.571 -0.848 -0.524 -0.253  0.000  0.253  0.524  0.848  1.571</span>
 <span class="kw">atan</span>(x)
 <span class="co">#&gt; [1] -0.785 -0.644 -0.464 -0.245  0.000  0.245  0.464  0.644  0.785</span></code></pre>
-<p>The function <code>atan2()</code> is the angle between the x-axis and the the vector (0,0) to (<code>x</code>, <code>y</code>).</p>
+<p>The function <code>atan2()</code> is the angle between the x-axis and the vector (0,0) to (<code>x</code>, <code>y</code>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">atan2</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">-1</span>))
 <span class="co">#&gt; [1]  1.57  0.00 -1.57  3.14</span></code></pre>
 </div>

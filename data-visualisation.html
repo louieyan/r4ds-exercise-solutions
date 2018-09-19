@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-17">
+<meta name="date" content="2018-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +71,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -726,7 +724,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>How many rows are in <code>mtcars</code>? How many columns?</p>
 </div>
 <div class="answer">
-<p>There are 32 rows and 11 columns in the the <code>mtcars</code> data frame.</p>
+<p>There are 32 rows and 11 columns in the <code>mtcars</code> data frame.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(mtcars)
 <span class="co">#&gt; [1] 32</span>
 <span class="kw">ncol</span>(mtcars)
@@ -1529,10 +1527,10 @@ The function <code>ggthemes::bank_slopes()</code> will calculate the optimal asp
 <p>Cleveland, William S. 1994. <em>The Elements of Graphing Data</em>. Hobart Press.</p>
 </div>
 <div id="ref-Cleveland1993a">
-<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis:323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
+<p>Cleveland, William S. 1993a. “A Model for Studying Display Methods of Statistical Graphics.” <em>Journal of Computational and Graphical Statistics</em> 2 (4). Taylor &amp; Francis: 323–43. <a href="https://doi.org/10.1080/10618600.1993.10474616" class="uri">https://doi.org/10.1080/10618600.1993.10474616</a>.</p>
 </div>
 <div id="ref-ClevelandMcGillMcGill1988">
-<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]:289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
+<p>Cleveland, William S., Marylyn E. McGill, and Robert McGill. 1988. “The Shape Parameter of a Two-Variable Graph.” <em>Journal of the American Statistical Association</em> 83 (402). [American Statistical Association, Taylor &amp; Francis, Ltd.]: 289–300. <a href="https://www.jstor.org/stable/2288843" class="uri">https://www.jstor.org/stable/2288843</a>.</p>
 </div>
 <div id="ref-HeerAgrawala2006">
 <p>Heer, Jeffrey, and Maneesh Agrawala. 2006. “Multi-Scale Banking to 45º.” <em>Ieee Transactions on Visualization and Computer Graphics</em> 12 (5, September/October). <a href="https://doi.org/10.1109/TVCG.2006.163" class="uri">https://doi.org/10.1109/TVCG.2006.163</a>.</p>

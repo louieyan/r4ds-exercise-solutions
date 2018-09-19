@@ -845,7 +845,7 @@ Visualize the distribution of `carat`, partitioned by `price`.
 
 <div class="answer">
 
-With a box plot, partitioning into an 10 bins with the same number of observations:
+Plotted with a box plot with 10 bins with an equal number of observations, and the width determined by the number of observations.
 
 ```r
 ggplot(diamonds, aes(x = cut_number(price, 10), y = carat)) +
@@ -857,7 +857,7 @@ ggplot(diamonds, aes(x = cut_number(price, 10), y = carat)) +
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
-With a box plot, partitioning into an bins of \$2,000 with the width of the box determined by the number of observations. I use `boundary = 0` to ensure the first bin goes from \$0--\$2,000.
+Plotted with a box plot with 10 equal-width bins of \$2,000. The argument `boundary = 0` ensures that first bin is \$0--\$2,000.
 
 ```r
 ggplot(diamonds, aes(x = cut_width(price, 2000, boundary = 0), y = carat)) +

@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-17">
+<meta name="date" content="2018-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,13 +71,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -1224,13 +1222,13 @@ interpretable.</p>
 <p>Visualize the distribution of <code>carat</code>, partitioned by <code>price</code>.</p>
 </div>
 <div class="answer">
-<p>With a box plot, partitioning into an 10 bins with the same number of observations:</p>
+<p>Plotted with a box plot with 10 bins with an equal number of observations, and the width determined by the number of observations.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">cut_number</span>(price, <span class="dv">10</span>), <span class="dt">y =</span> carat)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Price&quot;</span>)</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" />
-With a box plot, partitioning into an bins of $2,000 with the width of the box determined by the number of observations. I use <code>boundary = 0</code> to ensure the first bin goes from $0–$2,000.</p>
+Plotted with a box plot with 10 equal-width bins of $2,000. The argument <code>boundary = 0</code> ensures that first bin is $0–$2,000.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">cut_width</span>(price, <span class="dv">2000</span>, <span class="dt">boundary =</span> <span class="dv">0</span>), <span class="dt">y =</span> carat)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">varwidth =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
@@ -1312,10 +1310,10 @@ A binned plot would not reveal these outliers, and may lead us to conclude that 
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-HofmannWickhamKafadar2017">
-<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis:469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
+<p>Hofmann, Heike, Hadley Wickham, and Karen Kafadar. 2017. “Letter-Value Plots: Boxplots for Large Data.” <em>Journal of Computational and Graphical Statistics</em> 26 (3). Taylor &amp; Francis: 469–77. <a href="https://doi.org/10.1080/10618600.2017.1305277" class="uri">https://doi.org/10.1080/10618600.2017.1305277</a>.</p>
 </div>
 <div id="ref-HintzeNelson1998">
-<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis:181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
+<p>Hintze, Jerry L., and Ray D. Nelson. 1998. “Violin Plots: A Box Plot-Density Trace Synergism.” <em>The American Statistician</em> 52 (2). Taylor &amp; Francis: 181–84. <a href="https://doi.org/10.1080/00031305.1998.10480559" class="uri">https://doi.org/10.1080/00031305.1998.10480559</a>.</p>
 </div>
 </div>
             </section>
