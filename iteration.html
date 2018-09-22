@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-19">
+<meta name="date" content="2018-09-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1143,15 +1143,15 @@ You may get different answers, but the longer the vector and the bigger the obje
 <h3>Exercise <span class="exercise-number">21.3.5.1</span></h3>
 <div class="question">
 <p>Imagine you have a directory full of CSV files that you want to read in.
-You have their paths in a vector,</p>
-</div>
-<div class="answer">
-<p><code>files &lt;- dir(&quot;data/&quot;, pattern = &quot;\\.csv$&quot;, full.names = TRUE)</code>, and now
+You have their paths in a vector,
+<code>files &lt;- dir(&quot;data/&quot;, pattern = &quot;\\.csv$&quot;, full.names = TRUE)</code>, and now
 want to read each one with <code>read_csv()</code>. Write the for loop that will
 load them into a single data frame.</p>
-<p>I will pre-allocate a list, read each file as data frame into an element in that list.
-This creates a list of data frames.
-I then use <code>bind_rows()</code> to create a single data frame from the list of data frames.</p>
+</div>
+<div class="answer">
+<p>First, I pre-allocate a list. Then, I read each file into a data frame, and assign it to an element in that list.
+The result is a list of data frames.
+I then use <code>bind_rows()</code> to combine the list of data frames into a single data frame.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(files))
 <span class="cf">for</span> (fname <span class="cf">in</span> <span class="kw">seq_along</span>(files)) {
   df[[i]] &lt;-<span class="st"> </span><span class="kw">read_csv</span>(files[[i]])
@@ -1343,72 +1343,17 @@ You might want to start with an <code>is_numeric()</code> function that returns 
 </ol>
 </div>
 <div class="answer">
-<p>To calculate the mean of every column in <code>mtcars</code>:</p>
+<ol style="list-style-type: decimal">
+<li><p>To calculate the mean of every column in <code>mtcars</code>, apply the function
+<code>mean()</code> to each column, and use <code>map_dbl</code>, since the results are numeric.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(mtcars, mean)
 <span class="co">#&gt;     mpg     cyl    disp      hp    drat      wt    qsec      vs      am </span>
 <span class="co">#&gt;  20.091   6.188 230.722 146.688   3.597   3.217  17.849   0.438   0.406 </span>
 <span class="co">#&gt;    gear    carb </span>
-<span class="co">#&gt;   3.688   2.812</span></code></pre>
-<p>To calculate the type of every column in <code>nycflights13::flights</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(nycflights13<span class="op">::</span>flights, class)
-<span class="co">#&gt; $year</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $month</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $day</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $dep_time</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $sched_dep_time</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $dep_delay</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $arr_time</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $sched_arr_time</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $arr_delay</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $carrier</span>
-<span class="co">#&gt; [1] &quot;character&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $flight</span>
-<span class="co">#&gt; [1] &quot;integer&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $tailnum</span>
-<span class="co">#&gt; [1] &quot;character&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $origin</span>
-<span class="co">#&gt; [1] &quot;character&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $dest</span>
-<span class="co">#&gt; [1] &quot;character&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $air_time</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $distance</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $hour</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $minute</span>
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $time_hour</span>
-<span class="co">#&gt; [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span></code></pre>
-<p>I had to use <code>map</code> rather than <code>map_chr</code> since the class
-Though if by type, <code>typeof</code> is meant:</p>
+<span class="co">#&gt;   3.688   2.812</span></code></pre></li>
+<li><p>To calculate the type of every column in <code>nycflights13::flights</code> apply
+the function <code>typeof()</code>, discussed in the section on <a href="http://r4ds.had.co.nz/vectors.html#vector-basics">Vector basics</a>,
+and use <code>map_chr()</code>, since the results are character.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(nycflights13<span class="op">::</span>flights, typeof)
 <span class="co">#&gt;           year          month            day       dep_time sched_dep_time </span>
 <span class="co">#&gt;      &quot;integer&quot;      &quot;integer&quot;      &quot;integer&quot;      &quot;integer&quot;      &quot;integer&quot; </span>
@@ -1417,13 +1362,27 @@ Though if by type, <code>typeof</code> is meant:</p>
 <span class="co">#&gt;         flight        tailnum         origin           dest       air_time </span>
 <span class="co">#&gt;      &quot;integer&quot;    &quot;character&quot;    &quot;character&quot;    &quot;character&quot;       &quot;double&quot; </span>
 <span class="co">#&gt;       distance           hour         minute      time_hour </span>
-<span class="co">#&gt;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;</span></code></pre>
-<p>To calculate the number of unique values in each column of <code>iris</code>:</p>
+<span class="co">#&gt;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;       &quot;double&quot;</span></code></pre></li>
+<li><p>There is no function that directly calculates the number of unique values
+in a vector. For a single column, the number of unique values of a vector
+can be calculated like so,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(iris<span class="op">$</span>Species))
+<span class="co">#&gt; [1] 3</span></code></pre>
+<p>To apply this to all columns, we can provide the map funtion anonymous function.
+We can write anonymous function using the standard R syntax, like this,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_int</span>(iris, <span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x)))
+<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
+<span class="co">#&gt;           35           23           43           22            3</span></code></pre>
+<p>or using the more compact, one-sided formula shortcut that <strong>purrr</strong> provides,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_int</span>(iris, <span class="op">~</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(.)))
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
 <span class="co">#&gt;           35           23           43           22            3</span></code></pre>
-<p>To generate 10 random normals for each of <span class="math inline">\(\mu = -10\)</span>, <span class="math inline">\(0\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(100\)</span>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>), rnorm, <span class="dt">n =</span> <span class="dv">10</span>)
+<p>The <code>map_int</code> function is used since <code>length()</code> returns an integer.
+However, <code>map_dbl</code> will also work,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(iris, <span class="op">~</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(.)))    </code></pre></li>
+<li><p>To generate 10 random normals for each of <span class="math inline">\(\mu = -10\)</span>, <span class="math inline">\(0\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(100\)</span>:
+The result is a list of numeric vectors.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>), <span class="op">~</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> .))
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;  [1] -11.27  -9.46  -9.92  -9.44  -9.58 -11.45  -9.06 -10.34 -10.08  -9.96</span>
 <span class="co">#&gt; </span>
@@ -1435,6 +1394,11 @@ Though if by type, <code>typeof</code> is meant:</p>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[4]]</span>
 <span class="co">#&gt;  [1] 101.2  98.6 101.4 100.0  99.9 100.4 100.1  99.2  99.5  98.8</span></code></pre>
+<p>Since a single call of <code>rnorm()</code> returns a numeric vector with a length greater
+than one we cannot use <code>map_dbl</code>, which requires the function to return a numeric
+vector that is only length one (see <a href="iteration.html#exercise-21.5.3.4">Exercise 21.5.3.4</a>
+The map functions pass any additional arguments to the function being called.</p></li>
+</ol>
 </div>
 </div>
 <div id="exercise-21.5.3.2" class="section level3 unnumbered exercise">
@@ -1443,10 +1407,16 @@ Though if by type, <code>typeof</code> is meant:</p>
 <p>How can you create a single vector that for each column in a data frame indicates whether or not it’s a factor?</p>
 </div>
 <div class="answer">
-<p>Use <code>map_lgl</code> with the function <code>is.factor</code>,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_lgl</span>(mtcars, is.factor)
-<span class="co">#&gt;   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb </span>
-<span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></code></pre>
+<p>The function <code>is.factor</code> indicates whether a vector is a factor. For example,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(iris<span class="op">$</span>Species)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="kw">is.factor</span>(iris<span class="op">$</span>Sepal.Length)
+<span class="co">#&gt; [1] FALSE</span></code></pre>
+<p>To apply this to all columns in a data frame, use <code>map_lgl</code> since the result
+of <code>is.factor</code> is logical. For example,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_lgl</span>(iris, is.factor)
+<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
+<span class="co">#&gt;        FALSE        FALSE        FALSE        FALSE         TRUE</span></code></pre>
 </div>
 </div>
 <div id="exercise-21.5.3.3" class="section level3 unnumbered exercise">
@@ -1457,7 +1427,11 @@ What does <code>map(1:5, runif)</code> do?
 Why?</p>
 </div>
 <div class="answer">
-<p>The function <code>map</code> applies the function to each element of the vector.</p>
+<p>Map functions work with any vectors, not just lists.
+As with lists, the map functions will apply the function to each element of the vector.</p>
+<p>The expression <code>map(1:5, runif)</code> is equivalent to running <code>runif(1)</code>, <code>runif(2)</code>,
+…, <code>runif(5)</code>, and collecting the results in a list.
+The result is a length five list with numeric vectors of sizes one through five.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, runif)
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [1] 0.226</span>
@@ -1478,12 +1452,11 @@ Why?</p>
 <div id="exercise-21.5.3.4" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">21.5.3.4</span></h3>
 <div class="question">
-<p>What does <code>map(-2:2, rnorm, n = 5)</code> do? Why? &gt;
-What does <code>map_dbl(-2:2, rnorm, n = 5)</code> do?
-Why?</p>
+<p>What does <code>map(-2:2, rnorm, n = 5)</code> do? Why?</p>
+<p>What does <code>map_dbl(-2:2, rnorm, n = 5)</code> do? Why?</p>
 </div>
 <div class="answer">
-<p>This takes samples of <code>n = 5</code> from normal distributions of means -2, -1, 0, 1, and 2, and returns a list with each element a numeric vectors of length 5.</p>
+<p>Consider the first expression.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(<span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">2</span>, rnorm, <span class="dt">n =</span> <span class="dv">5</span>)
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [1] -0.945 -2.821 -2.638 -2.153 -3.416</span>
@@ -1499,12 +1472,13 @@ Why?</p>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[5]]</span>
 <span class="co">#&gt; [1] 1.8914 3.8278 0.0381 2.9460 2.5490</span></code></pre>
-<p>However, if we use <code>map_dbl</code> it throws an error. <code>map_dbl</code> expects the function
-to return a numeric vector of length one.</p>
+<p>This takes samples size five from five normal distributions, each with a different mean of (-2, -1, 0, 1, and 2) but all have the same standard deviation (1). It returns a list with each element a numeric vectors of length 5.</p>
+<p>However, if we use <code>map_dbl</code> it throws an error.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">2</span>, rnorm, <span class="dt">n =</span> <span class="dv">5</span>)
 <span class="co">#&gt; Error: Result 1 is not a length 1 atomic vector</span></code></pre>
-<p>If we wanted a numeric vector, we could use <code>map()</code> followed by `flatten_dbl(</p>
-<p>)`,</p>
+<p>This is because <code>map_dbl</code> expects the function it applies to each element to
+return a numeric vector of length one.</p>
+<p>If we wanted a numeric vector, we could use <code>map()</code> followed by <code>flatten_dbl()</code>,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">flatten_dbl</span>(<span class="kw">map</span>(<span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">2</span>, rnorm, <span class="dt">n =</span> <span class="dv">5</span>))
 <span class="co">#&gt;  [1] -1.402 -1.872 -3.717 -1.964 -0.993 -0.287 -2.110 -0.851 -1.386 -1.230</span>
 <span class="co">#&gt; [11]  0.392  0.470  0.989 -0.714  1.270  1.709  2.047 -0.210  1.380  0.933</span>

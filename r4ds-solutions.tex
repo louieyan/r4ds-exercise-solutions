@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{September 19, 2018}
+    \date{September 22, 2018}
 
 \usepackage{amsthm}
 
@@ -13499,15 +13499,14 @@ the more that pre-allocation will outperform appending.
 
 Imagine you have a directory full of CSV files that you want to read in.
 You have their paths in a vector,
-
 \texttt{files\ \textless{}-\ dir("data/",\ pattern\ =\ "\textbackslash{}\textbackslash{}.csv\$",\ full.names\ =\ TRUE)},
 and now want to read each one with \texttt{read\_csv()}. Write the for
 loop that will load them into a single data frame.
 
-I will pre-allocate a list, read each file as data frame into an element
-in that list. This creates a list of data frames. I then use
-\texttt{bind\_rows()} to create a single data frame from the list of
-data frames.
+First, I pre-allocate a list. Then, I read each file into a data frame,
+and assign it to an element in that list. The result is a list of data
+frames. I then use \texttt{bind\_rows()} to combine the list of data
+frames into a single data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13814,7 +13813,12 @@ Write code that uses one of the map functions to:
   and \(100\).
 \end{enumerate}
 
-To calculate the mean of every column in \texttt{mtcars}:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  To calculate the mean of every column in \texttt{mtcars}, apply the
+  function \texttt{mean()} to each column, and use \texttt{map\_dbl},
+  since the results are numeric.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13825,73 +13829,12 @@ To calculate the mean of every column in \texttt{mtcars}:
 \CommentTok{#>   3.688   2.812}
 \end{Highlighting}
 \end{Shaded}
-
-To calculate the type of every column in \texttt{nycflights13::flights}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{map}\NormalTok{(nycflights13}\OperatorTok{::}\NormalTok{flights, class)}
-\CommentTok{#> $year}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $month}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $day}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $dep_time}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $sched_dep_time}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $dep_delay}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $arr_time}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $sched_arr_time}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $arr_delay}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $carrier}
-\CommentTok{#> [1] "character"}
-\CommentTok{#> }
-\CommentTok{#> $flight}
-\CommentTok{#> [1] "integer"}
-\CommentTok{#> }
-\CommentTok{#> $tailnum}
-\CommentTok{#> [1] "character"}
-\CommentTok{#> }
-\CommentTok{#> $origin}
-\CommentTok{#> [1] "character"}
-\CommentTok{#> }
-\CommentTok{#> $dest}
-\CommentTok{#> [1] "character"}
-\CommentTok{#> }
-\CommentTok{#> $air_time}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $distance}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $hour}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $minute}
-\CommentTok{#> [1] "numeric"}
-\CommentTok{#> }
-\CommentTok{#> $time_hour}
-\CommentTok{#> [1] "POSIXct" "POSIXt"}
-\end{Highlighting}
-\end{Shaded}
-
-I had to use \texttt{map} rather than \texttt{map\_chr} since the class
-Though if by type, \texttt{typeof} is meant:
+\item
+  To calculate the type of every column in
+  \texttt{nycflights13::flights} apply the function \texttt{typeof()},
+  discussed in the section on
+  \href{http://r4ds.had.co.nz/vectors.html\#vector-basics}{Vector
+  basics}, and use \texttt{map\_chr()}, since the results are character.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13906,9 +13849,32 @@ Though if by type, \texttt{typeof} is meant:
 \CommentTok{#>       "double"       "double"       "double"       "double"}
 \end{Highlighting}
 \end{Shaded}
+\item
+  There is no function that directly calculates the number of unique
+  values in a vector. For a single column, the number of unique values
+  of a vector can be calculated like so,
 
-To calculate the number of unique values in each column of
-\texttt{iris}:
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Species))}
+\CommentTok{#> [1] 3}
+\end{Highlighting}
+\end{Shaded}
+
+  To apply this to all columns, we can provide the map funtion anonymous
+  function. We can write anonymous function using the standard R syntax,
+  like this,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_int}\NormalTok{(iris, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(x)))}
+\CommentTok{#> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species }
+\CommentTok{#>           35           23           43           22            3}
+\end{Highlighting}
+\end{Shaded}
+
+  or using the more compact, one-sided formula shortcut that
+  \textbf{purrr} provides,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13918,12 +13884,21 @@ To calculate the number of unique values in each column of
 \end{Highlighting}
 \end{Shaded}
 
-To generate 10 random normals for each of \(\mu = -10\), \(0\), \(10\),
-and \(100\):
+  The \texttt{map\_int} function is used since \texttt{length()} returns
+  an integer. However, \texttt{map\_dbl} will also work,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{map}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{), rnorm, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{)}
+\KeywordTok{map_dbl}\NormalTok{(iris, }\OperatorTok{~}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(.)))    }
+\end{Highlighting}
+\end{Shaded}
+\item
+  To generate 10 random normals for each of \(\mu = -10\), \(0\),
+  \(10\), and \(100\): The result is a list of numeric vectors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{), }\OperatorTok{~}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{mean =}\NormalTok{ .))}
 \CommentTok{#> [[1]]}
 \CommentTok{#>  [1] -11.27  -9.46  -9.92  -9.44  -9.58 -11.45  -9.06 -10.34 -10.08  -9.96}
 \CommentTok{#> }
@@ -13938,6 +13913,14 @@ and \(100\):
 \end{Highlighting}
 \end{Shaded}
 
+  Since a single call of \texttt{rnorm()} returns a numeric vector with
+  a length greater than one we cannot use \texttt{map\_dbl}, which
+  requires the function to return a numeric vector that is only length
+  one (see \protect\hyperlink{exercise-21.5.3.4}{Exercise 21.5.3.4} The
+  map functions pass any additional arguments to the function being
+  called.
+\end{enumerate}
+
 \hypertarget{exercise-21.5.3.2}{%
 \subsection*{\texorpdfstring{Exercise
 {21.5.3.2}}{Exercise 21.5.3.2}}\label{exercise-21.5.3.2}}
@@ -13946,13 +13929,26 @@ and \(100\):
 How can you create a single vector that for each column in a data frame
 indicates whether or not it's a factor?
 
-Use \texttt{map\_lgl} with the function \texttt{is.factor},
+The function \texttt{is.factor} indicates whether a vector is a factor.
+For example,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{map_lgl}\NormalTok{(mtcars, is.factor)}
-\CommentTok{#>   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb }
-\CommentTok{#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE}
+\KeywordTok{is.factor}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Species)}
+\CommentTok{#> [1] TRUE}
+\KeywordTok{is.factor}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length)}
+\CommentTok{#> [1] FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+To apply this to all columns in a data frame, use \texttt{map\_lgl}
+since the result of \texttt{is.factor} is logical. For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_lgl}\NormalTok{(iris, is.factor)}
+\CommentTok{#> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species }
+\CommentTok{#>        FALSE        FALSE        FALSE        FALSE         TRUE}
 \end{Highlighting}
 \end{Shaded}
 
@@ -13964,8 +13960,13 @@ Use \texttt{map\_lgl} with the function \texttt{is.factor},
 What happens when you use the map functions on vectors that aren't
 lists? What does \texttt{map(1:5,\ runif)} do? Why?
 
-The function \texttt{map} applies the function to each element of the
-vector.
+Map functions work with any vectors, not just lists. As with lists, the
+map functions will apply the function to each element of the vector.
+
+The expression \texttt{map(1:5,\ runif)} is equivalent to running
+\texttt{runif(1)}, \texttt{runif(2)}, \ldots{}, \texttt{runif(5)}, and
+collecting the results in a list. The result is a length five list with
+numeric vectors of sizes one through five.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13992,12 +13993,11 @@ vector.
 {21.5.3.4}}{Exercise 21.5.3.4}}\label{exercise-21.5.3.4}}
 \addcontentsline{toc}{subsection}{Exercise {21.5.3.4}}
 
-What does \texttt{map(-2:2,\ rnorm,\ n\ =\ 5)} do? Why? \textgreater{}
+What does \texttt{map(-2:2,\ rnorm,\ n\ =\ 5)} do? Why?
+
 What does \texttt{map\_dbl(-2:2,\ rnorm,\ n\ =\ 5)} do? Why?
 
-This takes samples of \texttt{n\ =\ 5} from normal distributions of
-means -2, -1, 0, 1, and 2, and returns a list with each element a
-numeric vectors of length 5.
+Consider the first expression.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14019,9 +14019,12 @@ numeric vectors of length 5.
 \end{Highlighting}
 \end{Shaded}
 
+This takes samples size five from five normal distributions, each with a
+different mean of (-2, -1, 0, 1, and 2) but all have the same standard
+deviation (1). It returns a list with each element a numeric vectors of
+length 5.
+
 However, if we use \texttt{map\_dbl} it throws an error.
-\texttt{map\_dbl} expects the function to return a numeric vector of
-length one.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14030,10 +14033,11 @@ length one.
 \end{Highlighting}
 \end{Shaded}
 
-If we wanted a numeric vector, we could use \texttt{map()} followed by
-`flatten\_dbl(
+This is because \texttt{map\_dbl} expects the function it applies to
+each element to return a numeric vector of length one.
 
-)`,
+If we wanted a numeric vector, we could use \texttt{map()} followed by
+\texttt{flatten\_dbl()},
 
 \begin{Shaded}
 \begin{Highlighting}[]

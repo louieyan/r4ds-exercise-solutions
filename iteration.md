@@ -532,16 +532,17 @@ You may get different answers, but the longer the vector and the bigger the obje
 <div class="question">
 Imagine you have a directory full of CSV files that you want to read in.
 You have their paths in a vector,
-</div>
-
-<div class="answer">
 `files <- dir("data/", pattern = "\\.csv$", full.names = TRUE)`, and now
 want to read each one with `read_csv()`. Write the for loop that will
 load them into a single data frame.
 
-I will pre-allocate a list, read each file as data frame into an element in that list.
-This creates a list of data frames.
-I then use `bind_rows()` to create a single data frame from the list of data frames.
+</div>
+
+<div class="answer">
+
+First, I pre-allocate a list. Then, I read each file into a data frame, and assign it to an element in that list.
+The result is a list of data frames.
+I then use `bind_rows()` to combine the list of data frames into a single data frame.
 
 ```r
 df <- vector("list", length(files))
@@ -804,116 +805,85 @@ Write code that uses one of the map functions to:
 
 <div class="answer">
 
-To calculate the mean of every column in `mtcars`:
+1.  To calculate the mean of every column in `mtcars`, apply the function
+    `mean()` to each column, and use `map_dbl`, since the results are numeric.
+    
+    ```r
+    map_dbl(mtcars, mean)
+    #>     mpg     cyl    disp      hp    drat      wt    qsec      vs      am 
+    #>  20.091   6.188 230.722 146.688   3.597   3.217  17.849   0.438   0.406 
+    #>    gear    carb 
+    #>   3.688   2.812
+    ```
 
-```r
-map_dbl(mtcars, mean)
-#>     mpg     cyl    disp      hp    drat      wt    qsec      vs      am 
-#>  20.091   6.188 230.722 146.688   3.597   3.217  17.849   0.438   0.406 
-#>    gear    carb 
-#>   3.688   2.812
-```
+1.  To calculate the type of every column in `nycflights13::flights` apply
+    the function `typeof()`, discussed in the section on [Vector basics](http://r4ds.had.co.nz/vectors.html#vector-basics), 
+    and use `map_chr()`, since the results are character.
+    
+    ```r
+    map_chr(nycflights13::flights, typeof)
+    #>           year          month            day       dep_time sched_dep_time 
+    #>      "integer"      "integer"      "integer"      "integer"      "integer" 
+    #>      dep_delay       arr_time sched_arr_time      arr_delay        carrier 
+    #>       "double"      "integer"      "integer"       "double"    "character" 
+    #>         flight        tailnum         origin           dest       air_time 
+    #>      "integer"    "character"    "character"    "character"       "double" 
+    #>       distance           hour         minute      time_hour 
+    #>       "double"       "double"       "double"       "double"
+    ```
+    
 
-To calculate the type of every column in `nycflights13::flights`.
+1.  There is no function that directly calculates the number of unique values 
+    in a vector. For a single column, the number of unique values of a vector
+    can be calculated like so,
+    
+    ```r
+    length(unique(iris$Species))
+    #> [1] 3
+    ```
+    To apply this to all columns, we can provide the map funtion anonymous function.
+    We can write anonymous function using the standard R syntax, like this,
+    
+    ```r
+    map_int(iris, function(x) length(unique(x)))
+    #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+    #>           35           23           43           22            3
+    ```
+    or using the more compact, one-sided formula shortcut that **purrr** provides,
+    
+    ```r
+    map_int(iris, ~ length(unique(.)))
+    #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+    #>           35           23           43           22            3
+    ```
+    The `map_int` function is used since `length()` returns an integer.
+    However, `map_dbl` will also work,
+    
+    ```r
+    map_dbl(iris, ~ length(unique(.)))    
+    ```
 
-```r
-map(nycflights13::flights, class)
-#> $year
-#> [1] "integer"
-#> 
-#> $month
-#> [1] "integer"
-#> 
-#> $day
-#> [1] "integer"
-#> 
-#> $dep_time
-#> [1] "integer"
-#> 
-#> $sched_dep_time
-#> [1] "integer"
-#> 
-#> $dep_delay
-#> [1] "numeric"
-#> 
-#> $arr_time
-#> [1] "integer"
-#> 
-#> $sched_arr_time
-#> [1] "integer"
-#> 
-#> $arr_delay
-#> [1] "numeric"
-#> 
-#> $carrier
-#> [1] "character"
-#> 
-#> $flight
-#> [1] "integer"
-#> 
-#> $tailnum
-#> [1] "character"
-#> 
-#> $origin
-#> [1] "character"
-#> 
-#> $dest
-#> [1] "character"
-#> 
-#> $air_time
-#> [1] "numeric"
-#> 
-#> $distance
-#> [1] "numeric"
-#> 
-#> $hour
-#> [1] "numeric"
-#> 
-#> $minute
-#> [1] "numeric"
-#> 
-#> $time_hour
-#> [1] "POSIXct" "POSIXt"
-```
-I had to use `map` rather than `map_chr` since the class
-Though if by type, `typeof` is meant:
-
-```r
-map_chr(nycflights13::flights, typeof)
-#>           year          month            day       dep_time sched_dep_time 
-#>      "integer"      "integer"      "integer"      "integer"      "integer" 
-#>      dep_delay       arr_time sched_arr_time      arr_delay        carrier 
-#>       "double"      "integer"      "integer"       "double"    "character" 
-#>         flight        tailnum         origin           dest       air_time 
-#>      "integer"    "character"    "character"    "character"       "double" 
-#>       distance           hour         minute      time_hour 
-#>       "double"       "double"       "double"       "double"
-```
-
-To calculate the number of unique values in each column of `iris`:
-
-```r
-map_int(iris, ~ length(unique(.)))
-#> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
-#>           35           23           43           22            3
-```
-
-To generate 10 random normals for each of $\mu = -10$, $0$, $10$, and $100$:
-
-```r
-map(c(-10, 0, 10, 100), rnorm, n = 10)
-#> [[1]]
-#>  [1] -11.27  -9.46  -9.92  -9.44  -9.58 -11.45  -9.06 -10.34 -10.08  -9.96
-#> 
-#> [[2]]
-#>  [1]  0.124 -0.998  1.233  0.340 -0.473  0.709 -1.529  0.237 -1.313  0.747
-#> 
-#> [[3]]
-#>  [1]  8.44 10.07  9.36  9.15 10.68 11.15  8.31  9.10 11.32 11.10
-#> 
-#> [[4]]
-#>  [1] 101.2  98.6 101.4 100.0  99.9 100.4 100.1  99.2  99.5  98.8
-```
+1.  To generate 10 random normals for each of $\mu = -10$, $0$, $10$, and $100$:
+    The result is a list of numeric vectors.
+    
+    ```r
+    map(c(-10, 0, 10, 100), ~ rnorm(n = 10, mean = .))
+    #> [[1]]
+    #>  [1] -11.27  -9.46  -9.92  -9.44  -9.58 -11.45  -9.06 -10.34 -10.08  -9.96
+    #> 
+    #> [[2]]
+    #>  [1]  0.124 -0.998  1.233  0.340 -0.473  0.709 -1.529  0.237 -1.313  0.747
+    #> 
+    #> [[3]]
+    #>  [1]  8.44 10.07  9.36  9.15 10.68 11.15  8.31  9.10 11.32 11.10
+    #> 
+    #> [[4]]
+    #>  [1] 101.2  98.6 101.4 100.0  99.9 100.4 100.1  99.2  99.5  98.8
+    ```
+    Since a single call of `rnorm()` returns a numeric vector with a length greater
+    than one we cannot use `map_dbl`, which requires the function to return a numeric
+    vector that is only length one (see [Exercise 21.5.3.4](#exercise-21.5.3.4)
+    The map functions pass any additional arguments to the function being called.
 
 </div>
 
@@ -925,12 +895,21 @@ How can you create a single vector that for each column in a data frame indicate
 
 <div class="answer">
 
-Use `map_lgl` with the function `is.factor`,
+The function `is.factor` indicates whether a vector is a factor. For example,
 
 ```r
-map_lgl(mtcars, is.factor)
-#>   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+is.factor(iris$Species)
+#> [1] TRUE
+is.factor(iris$Sepal.Length)
+#> [1] FALSE
+```
+To apply this to all columns in a data frame, use `map_lgl` since the result
+of `is.factor` is logical. For example,
+
+```r
+map_lgl(iris, is.factor)
+#> Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+#>        FALSE        FALSE        FALSE        FALSE         TRUE
 ```
 
 </div>
@@ -945,7 +924,12 @@ Why?
 
 <div class="answer">
 
-The function `map` applies the function to each element of the vector.
+Map functions work with any vectors, not just lists. 
+As with lists, the map functions will apply the function to each element of the vector.
+
+The expression `map(1:5, runif)` is equivalent to running `runif(1)`, `runif(2)`,
+..., `runif(5)`, and collecting the results in a list.
+The result is a length five list with numeric vectors of sizes one through five.
 
 ```r
 map(1:5, runif)
@@ -965,19 +949,20 @@ map(1:5, runif)
 #> [1] 0.2726 0.6537 0.9279 0.0266 0.5595
 ```
 
+
 </div>
 
 ### Exercise <span class="exercise-number">21.5.3.4</span> {.unnumbered .exercise}
 
 <div class="question">
-What does `map(-2:2, rnorm, n = 5)` do? Why? >
-What does `map_dbl(-2:2, rnorm, n = 5)` do?
-Why?
+What does `map(-2:2, rnorm, n = 5)` do? Why?
+
+What does `map_dbl(-2:2, rnorm, n = 5)` do? Why?
 </div>
 
 <div class="answer">
 
-This takes samples of `n = 5` from normal distributions of means -2, -1, 0, 1, and 2, and returns a list with each element a numeric vectors of length 5.
+Consider the first expression.
 
 ```r
 map(-2:2, rnorm, n = 5)
@@ -996,18 +981,18 @@ map(-2:2, rnorm, n = 5)
 #> [[5]]
 #> [1] 1.8914 3.8278 0.0381 2.9460 2.5490
 ```
+This takes samples size five from five normal distributions, each with a different mean of (-2, -1, 0, 1, and 2) but all have the same standard deviation (1). It returns a list with each element a numeric vectors of length 5.
 
-However, if we use `map_dbl` it throws an error. `map_dbl` expects the function
-to return a numeric vector of length one.
+However, if we use `map_dbl` it throws an error. 
 
 ```r
 map_dbl(-2:2, rnorm, n = 5)
 #> Error: Result 1 is not a length 1 atomic vector
 ```
+This is because `map_dbl` expects the function it applies to each element to 
+return a numeric vector of length one.
 
-If we wanted a numeric vector, we could use `map()` followed by `flatten_dbl(
-  
-  )`,
+If we wanted a numeric vector, we could use `map()` followed by `flatten_dbl()`,
 
 ```r
 flatten_dbl(map(-2:2, rnorm, n = 5))
