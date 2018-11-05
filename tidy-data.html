@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-22">
+<meta name="date" content="2018-11-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -723,7 +723,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="co">#&gt; 4 Brazil       2000  80488  174504898</span>
 <span class="co">#&gt; 5 China        1999 212258 1272915272</span>
 <span class="co">#&gt; 6 China        2000 213766 1280428583</span></code></pre>
-<p>In <code>table2</code>, each row is country, year , variable (“cases”, “population”) combination, and there is a <code>count</code> variable with the numeric value of the variable.</p>
+<p>In <code>table2</code>, each row is country, year , variable (“cases”, “population”) combination, and there is a <code>count</code> variable with the numeric value of the combination.</p>
 <pre class="sourceCode r"><code class="sourceCode r">table2
 <span class="co">#&gt; # A tibble: 12 x 4</span>
 <span class="co">#&gt;   country      year type           count</span>
@@ -991,14 +991,15 @@ the code will work.</p>
 </ul>
 <p>The observations in this data are unique combinations of sex and pregnancy status.</p>
 <pre class="sourceCode r"><code class="sourceCode r">preg_tidy &lt;-<span class="st"> </span>preg <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(male, female, <span class="dt">key =</span> <span class="st">&quot;sex&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="st">  </span><span class="kw">gather</span>(male, female, <span class="dt">key =</span> <span class="st">&quot;sex&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;count&quot;</span>)
 preg_tidy
-<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # A tibble: 4 x 3</span>
 <span class="co">#&gt;   pregnant sex    count</span>
-<span class="co">#&gt; * &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 no       male      20</span>
-<span class="co">#&gt; 2 yes      female    10</span>
-<span class="co">#&gt; 3 no       female    12</span></code></pre>
+<span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 yes      male      NA</span>
+<span class="co">#&gt; 2 no       male      20</span>
+<span class="co">#&gt; 3 yes      female    10</span>
+<span class="co">#&gt; 4 no       female    12</span></code></pre>
 <p>However, we should consider the missing value in the male, non-pregnant row.
 Is it missing due to missing data, or missing due to structural reasons?
 This will be discussed in the upcoming section on <a href="http://r4ds.had.co.nz/tidy-data.html#missing-values-3">Missing Values</a>.
@@ -1078,7 +1079,8 @@ Compare the <code>filter()</code> calls to select non-pregnant females from <cod
 <span class="co">#&gt; 2 d     e     &lt;NA&gt; </span>
 <span class="co">#&gt; 3 f     g     i</span></code></pre>
 <p>The <code>extra</code> argument tells <code>separate()</code> what to do if there are too many pieces,
-and the <code>fill</code> argument if there aren’t enough.</p>
+and the <code>fill</code> argument if there aren’t enough.
+By default, <code>separate()</code> drops the extra values with a warning.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;a,b,c&quot;</span>, <span class="st">&quot;d,e,f,g&quot;</span>, <span class="st">&quot;h,i,j&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>))
 <span class="co">#&gt; Warning: Expected 3 pieces. Additional pieces discarded in 1 rows [2].</span>
@@ -1088,7 +1090,7 @@ and the <code>fill</code> argument if there aren’t enough.</p>
 <span class="co">#&gt; 1 a     b     c    </span>
 <span class="co">#&gt; 2 d     e     f    </span>
 <span class="co">#&gt; 3 h     i     j</span></code></pre>
-<p>By default, <code>separate()</code> drops the extra values with a warning.</p>
+<p><code>extra = &quot;drop&quot;</code> produces the same result as above, dropping extra values, but without the warning.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;a,b,c&quot;</span>, <span class="st">&quot;d,e,f,g&quot;</span>, <span class="st">&quot;h,i,j&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>), <span class="dt">extra =</span> <span class="st">&quot;drop&quot;</span>)
 <span class="co">#&gt; # A tibble: 3 x 3</span>
@@ -1097,7 +1099,7 @@ and the <code>fill</code> argument if there aren’t enough.</p>
 <span class="co">#&gt; 1 a     b     c    </span>
 <span class="co">#&gt; 2 d     e     f    </span>
 <span class="co">#&gt; 3 h     i     j</span></code></pre>
-<p>This produces the same result as above, dropping extra values, but without the warning.</p>
+<p>Another option for <code>extra</code> is <code>&quot;merge&quot;</code>, then the extra values are not split, so <code>&quot;f,g&quot;</code> appears in column three.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;a,b,c&quot;</span>, <span class="st">&quot;d,e,f,g&quot;</span>, <span class="st">&quot;h,i,j&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>), <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>)
 <span class="co">#&gt; # A tibble: 3 x 3</span>
@@ -1106,9 +1108,8 @@ and the <code>fill</code> argument if there aren’t enough.</p>
 <span class="co">#&gt; 1 a     b     c    </span>
 <span class="co">#&gt; 2 d     e     f,g  </span>
 <span class="co">#&gt; 3 h     i     j</span></code></pre>
-<p>In this, the extra values are not split, so <code>&quot;f,g&quot;</code> appears in column three.</p>
 <p>In this, one of the entries for column, <code>&quot;d,e&quot;</code>, has too few elements.
-The default for <code>fill</code> is similar to those in separate <code>separate()</code>; it fills with missing values but emits a warning. In this, row 2 of column “three”, is <code>NA</code>.</p>
+The default for <code>fill</code> is similar to those in separate <code>separate()</code>; it fills with missing values but emits a warning. In this, row 2 of column <code>three</code> is <code>NA</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;a,b,c&quot;</span>, <span class="st">&quot;d,e&quot;</span>, <span class="st">&quot;f,g,i&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>))
 <span class="co">#&gt; Warning: Expected 3 pieces. Missing pieces filled with `NA` in 1 rows [2].</span>
@@ -1128,7 +1129,7 @@ The default for <code>fill</code> is similar to those in separate <code>separate
 <span class="co">#&gt; 2 d     e     &lt;NA&gt; </span>
 <span class="co">#&gt; 3 f     g     i</span></code></pre>
 <p>The option <code>fill = &quot;left&quot;</code> also fills with missing values without a warning, but this time from the left side.
-Now, column “one” of row 2 will be missing, and the other values in that row are shifted over.</p>
+Now, row 2 of column <code>one</code> will be missing, and the other values in that row are shifted over.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;a,b,c&quot;</span>, <span class="st">&quot;d,e&quot;</span>, <span class="st">&quot;f,g,i&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>), <span class="dt">fill =</span> <span class="st">&quot;left&quot;</span>)
 <span class="co">#&gt; # A tibble: 3 x 3</span>
@@ -1142,10 +1143,10 @@ Now, column “one” of row 2 will be missing, and the other values in that row
 <div id="exercise-12.4.3.2" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">12.4.3.2</span></h3>
 <div class="question">
-<p>Both <code>unite()</code> and <code>separate()</code> have a remove argument. What does it do? Why would you set it to <code>FALSE</code>?</p>
+<p>Both <code>unite()</code> and <code>separate()</code> have a <code>remove</code> argument. What does it do? Why would you set it to <code>FALSE</code>?</p>
 </div>
 <div class="answer">
-<p>You would set it to <code>FALSE</code> if you want to create a new variable, but keep the old one.</p>
+<p>The <code>remove</code> argument discards input columns in the result data frame. You would set it to <code>FALSE</code> if you want to create a new variable, but keep the old one.</p>
 </div>
 </div>
 <div id="exercise-12.4.3.3" class="section level3 unnumbered exercise">
@@ -1154,8 +1155,7 @@ Now, column “one” of row 2 will be missing, and the other values in that row
 <p>Compare and contrast <code>separate()</code> and <code>extract()</code>, Why are there three variations of separation (by position, by separator, and with groups), but only one unite?</p>
 </div>
 <div class="answer">
-<p>The function <code>separate()</code>, splits columns a column into multiple groups using
-by separator, if the <code>sep</code> argument is a character vector, or character positions, if <code>sep</code> is numeric.</p>
+<p>The function <code>separate()</code>, splits a column into multiple columns by separator, if the <code>sep</code> argument is a character vector, or by character positions, if <code>sep</code> is numeric.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># example with separators</span>
 <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;X_1&quot;</span>, <span class="st">&quot;X_2&quot;</span>, <span class="st">&quot;AA_1&quot;</span>, <span class="st">&quot;AA_2&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(x, <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;into&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
@@ -1225,7 +1225,7 @@ However, <code>unite()</code> converts many columns to one, with a choice of a s
 <span class="co">#&gt; 4 Y_2</span></code></pre>
 <p>In other words, with <code>extract()</code> and <code>separate()</code> only one column can be chosen,
 but there are many choices how to split that single column into different columns.
-With <code>unite()</code>, there are many choices as to which columns to include, but only
+With <code>unite()</code>, there are many choices as to which columns to include, but only one
 choice as to how to combine their contents into a single vector.</p>
 </div>
 </div>

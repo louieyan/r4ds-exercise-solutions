@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-22">
+<meta name="date" content="2018-11-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1260,22 +1260,22 @@ The shortest flights in terms of air time are</p>
 <span class="co">#&gt; 6      554        -4      740        12</span>
 <span class="co">#&gt; # ... with 3.368e+05 more rows</span></code></pre></li>
 <li><p>Specifying the column numbers of the variables.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">9</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">9</span>)
 <span class="co">#&gt; # A tibble: 336,776 x 4</span>
-<span class="co">#&gt;   dep_time sched_dep_time dep_delay arr_delay</span>
-<span class="co">#&gt;      &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1      517            515         2        11</span>
-<span class="co">#&gt; 2      533            529         4        20</span>
-<span class="co">#&gt; 3      542            540         2        33</span>
-<span class="co">#&gt; 4      544            545        -1       -18</span>
-<span class="co">#&gt; 5      554            600        -6       -25</span>
-<span class="co">#&gt; 6      554            558        -4        12</span>
+<span class="co">#&gt;   dep_time dep_delay arr_time arr_delay</span>
+<span class="co">#&gt;      &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1      517         2      830        11</span>
+<span class="co">#&gt; 2      533         4      850        20</span>
+<span class="co">#&gt; 3      542         2      923        33</span>
+<span class="co">#&gt; 4      544        -1     1004       -18</span>
+<span class="co">#&gt; 5      554        -6      812       -25</span>
+<span class="co">#&gt; 6      554        -4      740        12</span>
 <span class="co">#&gt; # ... with 3.368e+05 more rows</span></code></pre>
 <p>This works, but is not good practice for two reasons.
 First, the column location of variables may change, resulting in code that
 may continue to run without error, but produce the wrong answer.
 Second code is obfuscated, since it is not clear from the code which
-variables are being selected. What variable does column 5 correspond to?
+variables are being selected. What variable does column 6 correspond to?
 I just wrote the code, and I’ve already forgotten.</p></li>
 <li><p>Specifying the names of the variables with character vector and <code>one_of()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="kw">one_of</span>(<span class="kw">c</span>(<span class="st">&quot;dep_time&quot;</span>, <span class="st">&quot;dep_delay&quot;</span>, <span class="st">&quot;arr_time&quot;</span>, <span class="st">&quot;arr_delay&quot;</span>)))
@@ -2110,8 +2110,7 @@ we only consider only delayed flights, and ignore on-time or early flights.</p>
          <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z_score =</span> (air_time <span class="op">-</span><span class="st"> </span>air_time_mean) <span class="op">/</span><span class="st"> </span>air_time_sd)</code></pre>
-<p>Possible unusual flights are the
-Lets print out the 10 flights with the largest</p>
+<p>Possible unusual flights are those flights with the largest absolute values of z-scores.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights_with_zscore <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(<span class="kw">abs</span>(z_score))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>() <span class="op">%&gt;%</span>

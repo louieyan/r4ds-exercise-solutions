@@ -724,23 +724,23 @@ A few ways include:
 -   Specifying the column numbers of the variables.
     
     ```r
-    select(flights, 4, 5, 6, 9)
+    select(flights, 4, 6, 7, 9)
     #> # A tibble: 336,776 x 4
-    #>   dep_time sched_dep_time dep_delay arr_delay
-    #>      <int>          <int>     <dbl>     <dbl>
-    #> 1      517            515         2        11
-    #> 2      533            529         4        20
-    #> 3      542            540         2        33
-    #> 4      544            545        -1       -18
-    #> 5      554            600        -6       -25
-    #> 6      554            558        -4        12
+    #>   dep_time dep_delay arr_time arr_delay
+    #>      <int>     <dbl>    <int>     <dbl>
+    #> 1      517         2      830        11
+    #> 2      533         4      850        20
+    #> 3      542         2      923        33
+    #> 4      544        -1     1004       -18
+    #> 5      554        -6      812       -25
+    #> 6      554        -4      740        12
     #> # ... with 3.368e+05 more rows
     ```
     This works, but is not good practice for two reasons.
     First, the column location of variables may change, resulting in code that 
     may continue to run without error, but produce the wrong answer. 
     Second code is obfuscated, since it is not clear from the code which 
-    variables are being selected. What variable does column 5 correspond to? 
+    variables are being selected. What variable does column 6 correspond to? 
     I just wrote the code, and I've already forgotten.
 
 -   Specifying the names of the variables with character vector and `one_of()`.
@@ -1843,8 +1843,7 @@ flights_with_zscore <- flights %>%
   mutate(z_score = (air_time - air_time_mean) / air_time_sd)
 ```
 
-Possible unusual flights are the
-Lets print out the 10 flights with the largest
+Possible unusual flights are those flights with the largest absolute values of z-scores.
 
 ```r
 flights_with_zscore %>%

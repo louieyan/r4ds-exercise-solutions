@@ -33,7 +33,7 @@ table1
 #> 6 China        2000 213766 1280428583
 ```
 
-In `table2`, each row is country, year , variable ("cases", "population") combination, and there is a `count` variable with the numeric value of the variable.
+In `table2`, each row is country, year , variable ("cases", "population") combination, and there is a `count` variable with the numeric value of the combination.
 
 ```r
 table2
@@ -400,14 +400,15 @@ The observations in this data are unique combinations of sex and pregnancy statu
 
 ```r
 preg_tidy <- preg %>%
-  gather(male, female, key = "sex", value = "count", na.rm = TRUE)
+  gather(male, female, key = "sex", value = "count")
 preg_tidy
-#> # A tibble: 3 x 3
+#> # A tibble: 4 x 3
 #>   pregnant sex    count
-#> * <chr>    <chr>  <dbl>
-#> 1 no       male      20
-#> 2 yes      female    10
-#> 3 no       female    12
+#>   <chr>    <chr>  <dbl>
+#> 1 yes      male      NA
+#> 2 no       male      20
+#> 3 yes      female    10
+#> 4 no       female    12
 ```
 
 However, we should consider the missing value in the male, non-pregnant row.
@@ -507,7 +508,7 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 
 The `extra` argument tells `separate()` what to do if there are too many pieces,
 and the `fill` argument if there aren't enough.
-
+By default, `separate()` drops the extra values with a warning.
 
 ```r
 tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
@@ -520,7 +521,8 @@ tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
 #> 2 d     e     f    
 #> 3 h     i     j
 ```
-By default, `separate()` drops the extra values with a warning.
+
+`extra = "drop"` produces the same result as above, dropping extra values, but without the warning.
 
 ```r
 tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
@@ -532,7 +534,8 @@ tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
 #> 2 d     e     f    
 #> 3 h     i     j
 ```
-This produces the same result as above, dropping extra values, but without the warning.
+
+Another option for `extra` is `"merge"`, then the extra values are not split, so `"f,g"` appears in column three.
 
 ```r
 tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
@@ -544,10 +547,10 @@ tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>%
 #> 2 d     e     f,g  
 #> 3 h     i     j
 ```
-In this, the extra values are not split, so `"f,g"` appears in column three.
 
 In this, one of the entries for column, `"d,e"`, has too few elements.
-The default for `fill` is similar to those in separate `separate()`; it fills with missing values but emits a warning. In this, row 2 of column "three", is `NA`.
+The default for `fill` is similar to those in separate `separate()`; it fills with missing values but emits a warning. In this, row 2 of column `three` is `NA`.
+
 
 ```r
 tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
@@ -574,7 +577,7 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 #> 3 f     g     i
 ```
 The option `fill = "left"` also fills with missing values without a warning, but this time from the left side.
-Now, column "one" of row 2 will be missing, and the other values in that row are shifted over.
+Now, row 2 of column `one` will be missing, and the other values in that row are shifted over.
 
 ```r
 tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
@@ -592,12 +595,12 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 ### Exercise <span class="exercise-number">12.4.3.2</span> {.unnumbered .exercise}
 
 <div class="question">
-Both `unite()` and `separate()` have a remove argument. What does it do? Why would you set it to `FALSE`?
+Both `unite()` and `separate()` have a `remove` argument. What does it do? Why would you set it to `FALSE`?
 </div>
 
 <div class="answer">
 
-You would set it to `FALSE` if you want to create a new variable, but keep the old one.
+The `remove` argument discards input columns in the result data frame. You would set it to `FALSE` if you want to create a new variable, but keep the old one.
 
 </div>
 
@@ -609,8 +612,7 @@ Compare and contrast `separate()` and `extract()`, Why are there three variation
 
 <div class="answer">
 
-The function `separate()`, splits columns a column into multiple groups using
-by separator, if the `sep` argument is a character vector, or character positions, if `sep` is numeric.
+The function `separate()`, splits a column into multiple columns by separator, if the `sep` argument is a character vector, or by character positions, if `sep` is numeric.
 
 ```r
 # example with separators
@@ -694,7 +696,7 @@ tibble(variable = c("X", "X", "Y", "Y"), id = c(1, 2, 1, 2)) %>%
 
 In other words, with `extract()` and `separate()` only one column can be chosen,
 but there are many choices how to split that single column into different columns.
-With `unite()`, there are many choices as to which columns to include, but only
+With `unite()`, there are many choices as to which columns to include, but only one 
 choice as to how to combine their contents into a single vector.
 
 </div>

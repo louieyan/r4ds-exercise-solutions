@@ -51,7 +51,9 @@ Weather only contains information for the origin (NYC) airports. If it contained
 
 <div class="answer">
 
-`year`, `month`, `day`, `hour`, `origin` in `weather` would be matched to `year`, `month`, `day`, `hour`, `dest` in `flight` (though it should use the arrival date-time values for `dest` if possible).
+If the weather was included for all airports in the US, then it would provide the weather for the destination.
+The columns `year`, `month`, `day`, `hour`, `origin` in the `weather` data frame could be matched to the columns `year`, `month`, `day`, `hour`, `dest` in the `flights` data frame.
+This would provide information about the weather at the distination airport at the time of the flight take off, unless the arrival date-time were calculated.
 
 </div>
 
@@ -66,7 +68,7 @@ We know that some days of the year are “special”, and fewer people than usua
 I would add a table of special dates.
 Its primary key would be  `date`.
 This would match to the `year`, `month`,
-and `day` columns of `flights.
+and `day` columns of `flights`.
 
 The table would resemble the following:
 

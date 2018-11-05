@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{September 22, 2018}
+    \date{November 04, 2018}
 
 \usepackage{amsthm}
 
@@ -2952,16 +2952,16 @@ A few ways include:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{select}\NormalTok{(flights, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\KeywordTok{select}\NormalTok{(flights, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{)}
 \CommentTok{#> # A tibble: 336,776 x 4}
-\CommentTok{#>   dep_time sched_dep_time dep_delay arr_delay}
-\CommentTok{#>      <int>          <int>     <dbl>     <dbl>}
-\CommentTok{#> 1      517            515         2        11}
-\CommentTok{#> 2      533            529         4        20}
-\CommentTok{#> 3      542            540         2        33}
-\CommentTok{#> 4      544            545        -1       -18}
-\CommentTok{#> 5      554            600        -6       -25}
-\CommentTok{#> 6      554            558        -4        12}
+\CommentTok{#>   dep_time dep_delay arr_time arr_delay}
+\CommentTok{#>      <int>     <dbl>    <int>     <dbl>}
+\CommentTok{#> 1      517         2      830        11}
+\CommentTok{#> 2      533         4      850        20}
+\CommentTok{#> 3      542         2      923        33}
+\CommentTok{#> 4      544        -1     1004       -18}
+\CommentTok{#> 5      554        -6      812       -25}
+\CommentTok{#> 6      554        -4      740        12}
 \CommentTok{#> # ... with 3.368e+05 more rows}
 \end{Highlighting}
 \end{Shaded}
@@ -2970,7 +2970,7 @@ A few ways include:
   column location of variables may change, resulting in code that may
   continue to run without error, but produce the wrong answer. Second
   code is obfuscated, since it is not clear from the code which
-  variables are being selected. What variable does column 5 correspond
+  variables are being selected. What variable does column 6 correspond
   to? I just wrote the code, and I've already forgotten.
 \item
   Specifying the names of the variables with character vector and
@@ -4252,8 +4252,8 @@ the z-score of observations each flight.
 \end{Highlighting}
 \end{Shaded}
 
-Possible unusual flights are the Lets print out the 10 flights with the
-largest
+Possible unusual flights are those flights with the largest absolute
+values of z-scores.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6472,7 +6472,7 @@ In \texttt{table1} each row is a (country, year) with variables
 
 In \texttt{table2}, each row is country, year , variable (``cases'',
 ``population'') combination, and there is a \texttt{count} variable with
-the numeric value of the variable.
+the numeric value of the combination.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6898,14 +6898,15 @@ pregnancy status.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{preg_tidy <-}\StringTok{ }\NormalTok{preg }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(male, female, }\DataTypeTok{key =} \StringTok{"sex"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"count"}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\StringTok{  }\KeywordTok{gather}\NormalTok{(male, female, }\DataTypeTok{key =} \StringTok{"sex"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"count"}\NormalTok{)}
 \NormalTok{preg_tidy}
-\CommentTok{#> # A tibble: 3 x 3}
+\CommentTok{#> # A tibble: 4 x 3}
 \CommentTok{#>   pregnant sex    count}
-\CommentTok{#> * <chr>    <chr>  <dbl>}
-\CommentTok{#> 1 no       male      20}
-\CommentTok{#> 2 yes      female    10}
-\CommentTok{#> 3 no       female    12}
+\CommentTok{#>   <chr>    <chr>  <dbl>}
+\CommentTok{#> 1 yes      male      NA}
+\CommentTok{#> 2 no       male      20}
+\CommentTok{#> 3 yes      female    10}
+\CommentTok{#> 4 no       female    12}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7021,7 +7022,8 @@ Experiment with the various options for the following two toy datasets.
 
 The \texttt{extra} argument tells \texttt{separate()} what to do if
 there are too many pieces, and the \texttt{fill} argument if there
-aren't enough.
+aren't enough. By default, \texttt{separate()} drops the extra values
+with a warning.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7037,7 +7039,8 @@ aren't enough.
 \end{Highlighting}
 \end{Shaded}
 
-By default, \texttt{separate()} drops the extra values with a warning.
+\texttt{extra\ =\ "drop"} produces the same result as above, dropping
+extra values, but without the warning.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7052,8 +7055,8 @@ By default, \texttt{separate()} drops the extra values with a warning.
 \end{Highlighting}
 \end{Shaded}
 
-This produces the same result as above, dropping extra values, but
-without the warning.
+Another option for \texttt{extra} is \texttt{"merge"}, then the extra
+values are not split, so \texttt{"f,g"} appears in column three.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7068,13 +7071,10 @@ without the warning.
 \end{Highlighting}
 \end{Shaded}
 
-In this, the extra values are not split, so \texttt{"f,g"} appears in
-column three.
-
 In this, one of the entries for column, \texttt{"d,e"}, has too few
 elements. The default for \texttt{fill} is similar to those in separate
 \texttt{separate()}; it fills with missing values but emits a warning.
-In this, row 2 of column ``three'', is \texttt{NA}.
+In this, row 2 of column \texttt{three} is \texttt{NA}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7107,9 +7107,9 @@ missing values from the right, but without a warning
 \end{Shaded}
 
 The option \texttt{fill\ =\ "left"} also fills with missing values
-without a warning, but this time from the left side. Now, column ``one''
-of row 2 will be missing, and the other values in that row are shifted
-over.
+without a warning, but this time from the left side. Now, row 2 of
+column \texttt{one} will be missing, and the other values in that row
+are shifted over.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7129,11 +7129,12 @@ over.
 {12.4.3.2}}{Exercise 12.4.3.2}}\label{exercise-12.4.3.2}}
 \addcontentsline{toc}{subsection}{Exercise {12.4.3.2}}
 
-Both \texttt{unite()} and \texttt{separate()} have a remove argument.
-What does it do? Why would you set it to \texttt{FALSE}?
+Both \texttt{unite()} and \texttt{separate()} have a \texttt{remove}
+argument. What does it do? Why would you set it to \texttt{FALSE}?
 
-You would set it to \texttt{FALSE} if you want to create a new variable,
-but keep the old one.
+The \texttt{remove} argument discards input columns in the result data
+frame. You would set it to \texttt{FALSE} if you want to create a new
+variable, but keep the old one.
 
 \hypertarget{exercise-12.4.3.3}{%
 \subsection*{\texorpdfstring{Exercise
@@ -7144,9 +7145,9 @@ Compare and contrast \texttt{separate()} and \texttt{extract()}, Why are
 there three variations of separation (by position, by separator, and
 with groups), but only one unite?
 
-The function \texttt{separate()}, splits columns a column into multiple
-groups using by separator, if the \texttt{sep} argument is a character
-vector, or character positions, if \texttt{sep} is numeric.
+The function \texttt{separate()}, splits a column into multiple columns
+by separator, if the \texttt{sep} argument is a character vector, or by
+character positions, if \texttt{sep} is numeric.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7237,8 +7238,8 @@ with a choice of a separator to include between column values.
 In other words, with \texttt{extract()} and \texttt{separate()} only one
 column can be chosen, but there are many choices how to split that
 single column into different columns. With \texttt{unite()}, there are
-many choices as to which columns to include, but only choice as to how
-to combine their contents into a single vector.
+many choices as to which columns to include, but only one choice as to
+how to combine their contents into a single vector.
 
 \hypertarget{missing-values-1}{%
 \section{Missing Values}\label{missing-values-1}}
@@ -7552,11 +7553,14 @@ Weather only contains information for the origin (NYC) airports. If it
 contained weather records for all airports in the USA, what additional
 relation would it define with \texttt{flights}?
 
+If the weather was included for all airports in the US, then it would
+provide the weather for the destination. The columns \texttt{year},
+\texttt{month}, \texttt{day}, \texttt{hour}, \texttt{origin} in the
+\texttt{weather} data frame could be matched to the columns
 \texttt{year}, \texttt{month}, \texttt{day}, \texttt{hour},
-\texttt{origin} in \texttt{weather} would be matched to \texttt{year},
-\texttt{month}, \texttt{day}, \texttt{hour}, \texttt{dest} in
-\texttt{flight} (though it should use the arrival date-time values for
-\texttt{dest} if possible).
+\texttt{dest} in the \texttt{flights} data frame. This would provide
+information about the weather at the distination airport at the time of
+the flight take off, unless the arrival date-time were calculated.
 
 \hypertarget{exercise-13.2.1.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -7570,7 +7574,7 @@ connect to the existing tables?
 
 I would add a table of special dates. Its primary key would be
 \texttt{date}. This would match to the \texttt{year}, \texttt{month},
-and \texttt{day} columns of `flights.
+and \texttt{day} columns of \texttt{flights}.
 
 The table would resemble the following:
 

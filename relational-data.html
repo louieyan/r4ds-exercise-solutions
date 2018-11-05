@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-09-22">
+<meta name="date" content="2018-11-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -737,7 +737,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Weather only contains information for the origin (NYC) airports. If it contained weather records for all airports in the USA, what additional relation would it define with <code>flights</code>?</p>
 </div>
 <div class="answer">
-<p><code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>origin</code> in <code>weather</code> would be matched to <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>dest</code> in <code>flight</code> (though it should use the arrival date-time values for <code>dest</code> if possible).</p>
+<p>If the weather was included for all airports in the US, then it would provide the weather for the destination.
+The columns <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>origin</code> in the <code>weather</code> data frame could be matched to the columns <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>dest</code> in the <code>flights</code> data frame.
+This would provide information about the weather at the distination airport at the time of the flight take off, unless the arrival date-time were calculated.</p>
 </div>
 </div>
 <div id="exercise-13.2.1.4" class="section level3 unnumbered exercise">
@@ -749,7 +751,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>I would add a table of special dates.
 Its primary key would be <code>date</code>.
 This would match to the <code>year</code>, <code>month</code>,
-and <code>day</code> columns of `flights.</p>
+and <code>day</code> columns of <code>flights</code>.</p>
 <p>The table would resemble the following:</p>
 <pre class="sourceCode r"><code class="sourceCode r">special_days &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>year, <span class="op">~</span>month, <span class="op">~</span>day, <span class="op">~</span>holiday,
