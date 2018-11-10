@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-04">
+<meta name="date" content="2018-11-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2116,7 +2116,9 @@ we only consider only delayed flights, and ignore on-time or early flights.</p>
 <span class="st">  </span><span class="kw">select</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)
 <span class="co">#&gt; # A tibble: 327,346 x 0</span></code></pre>
-<p>Now that we’ve identified potentially bad observations, we would to distinguish between the real problems and</p>
+<p>However, this does not necessarily imply that there was a data entry error.
+We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is
+an error in our understanding of the data.</p>
 <!--
 One idea would be to compare actual air time with the scheduled air time.
 However, this requires the scheduled air time - which is not easily available

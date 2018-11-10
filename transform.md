@@ -1853,7 +1853,9 @@ flights_with_zscore %>%
 #> # A tibble: 327,346 x 0
 ```
 
-Now that we've identified potentially bad observations, we would to distinguish between the real problems and
+However, this does not necessarily imply that there was a data entry error.
+We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is 
+an error in our understanding of the data.
 
 <!--
 One idea would be to compare actual air time with the scheduled air time.

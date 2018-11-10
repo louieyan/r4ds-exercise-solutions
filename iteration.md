@@ -949,7 +949,6 @@ map(1:5, runif)
 #> [1] 0.2726 0.6537 0.9279 0.0266 0.5595
 ```
 
-
 </div>
 
 ### Exercise <span class="exercise-number">21.5.3.4</span> {.unnumbered .exercise}
