@@ -882,7 +882,7 @@ Write code that uses one of the map functions to:
     ```
     Since a single call of `rnorm()` returns a numeric vector with a length greater
     than one we cannot use `map_dbl`, which requires the function to return a numeric
-    vector that is only length one (see [Exercise 21.5.3.4](#exercise-21.5.3.4)
+    vector that is only length one (see [Exercise 21.5.3.4](#exercise-21.5.3.4)). 
     The map functions pass any additional arguments to the function being called.
 
 </div>
@@ -1111,7 +1111,7 @@ col_sum2(iris, mean)
 ### Exercise <span class="exercise-number">21.9.3.3</span> {.unnumbered .exercise}
 
 <div class="question">
-Create possible base R equivalent of `col_sum()` is:
+A possible base R equivalent of `col_sum()` is:
 
 
 ```r

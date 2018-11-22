@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-09">
+<meta name="date" content="2018-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,12 +47,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
 <script src="libs/str_view-binding-1.3.1/str_view.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61453123-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61453123-2');
+</script>
 
 
 <style type="text/css">
@@ -119,8 +128,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="r4ds.css" type="text/css" />
-<link rel="stylesheet" href="r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
 </head>
 
 <body>
@@ -1396,7 +1405,7 @@ The result is a list of numeric vectors.</p>
 <span class="co">#&gt;  [1] 101.2  98.6 101.4 100.0  99.9 100.4 100.1  99.2  99.5  98.8</span></code></pre>
 <p>Since a single call of <code>rnorm()</code> returns a numeric vector with a length greater
 than one we cannot use <code>map_dbl</code>, which requires the function to return a numeric
-vector that is only length one (see <a href="iteration.html#exercise-21.5.3.4">Exercise 21.5.3.4</a>
+vector that is only length one (see <a href="iteration.html#exercise-21.5.3.4">Exercise 21.5.3.4</a>).
 The map functions pass any additional arguments to the function being called.</p></li>
 </ol>
 </div>
@@ -1572,7 +1581,7 @@ every2 &lt;-<span class="st"> </span><span class="cf">function</span>(.x, .p, ..
 <div id="exercise-21.9.3.3" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">21.9.3.3</span></h3>
 <div class="question">
-<p>Create possible base R equivalent of <code>col_sum()</code> is:</p>
+<p>A possible base R equivalent of <code>col_sum()</code> is:</p>
 <pre class="sourceCode r"><code class="sourceCode r">col_sum3 &lt;-<span class="st"> </span><span class="cf">function</span>(df, f) {
   is_num &lt;-<span class="st"> </span><span class="kw">sapply</span>(df, is.numeric)
   df_num &lt;-<span class="st"> </span>df[, is_num]

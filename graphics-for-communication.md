@@ -24,7 +24,7 @@ Create one plot on the fuel economy data with customized `title`,
 
 ```r
 ggplot(data = mpg,
-       mapping = aes(x = reorder(class, hwy, median), y = hwy)) +
+       mapping = aes(x = forcats::fct_reorder(class, hwy), y = hwy)) +
   geom_boxplot() +
   coord_flip() +
   labs(
@@ -55,7 +55,7 @@ a better model.
 
 ```r
 ggplot(mpg, aes(displ, hwy, colour = class)) +
-  geom_point(aes(colour = class)) +
+  geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     title = "Fuel efficiency generally decreases with engine size",
@@ -369,26 +369,34 @@ Change the display of the presidential terms by:
 
 
 ```r
-years <- lubridate::make_date(seq(year(min(presidential$start)),
-             year(max(presidential$end)),
-             by = 4), 1, 1)
+fouryears <- lubridate::make_date(seq(year(min(presidential$start)),
+                                      year(max(presidential$end)),
+                                      by = 4), 1, 1)
 
 presidential %>%
   mutate(id = 33 + row_number(),
-         name_id = stringr::str_c(name, " (", id, ")"),
-         name_id = factor(name_id, levels = name_id)) %>%
+         name_id = forcats::fct_inorder(stringr::str_c(name, " (", id, ")"))) %>%
   ggplot(aes(start, name_id, colour = party)) +
     geom_point() +
     geom_segment(aes(xend = end, yend = name_id)) +
-    scale_colour_manual(values = c(Republican = "red", Democratic = "blue")) +
+    scale_colour_manual("Party", values = c(Republican = "red", Democratic = "blue")) +
     scale_y_discrete(NULL) +
-    scale_x_date(NULL, breaks = years, date_labels = "'%y") +
-    theme(panel.grid.minor = element_blank())
+    scale_x_date(NULL, breaks = presidential$start, date_labels = "'%y",
+                 minor_breaks = fouryears) +
+    ggtitle("Terms of US Presdients", 
+            subtitle = "Roosevelth (34th) to Obama (44th)") +
+    theme(panel.grid.minor = element_blank(),
+          axis.ticks.y = element_blank())
 ```
 
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+To include both the start dates of presidential terms and every
+four years, I use different levels of emphasis. 
+The presidential term start years are used as major breaks with thicker lines and x-axis labels.
+Lines for every four years is indicated with minor breaks that use thinner lines to distinguish them from presidential term start years and to avoid cluttering the plot.
 
 </div>
 

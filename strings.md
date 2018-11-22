@@ -212,7 +212,7 @@ How would you match the sequence `"'\` ?
 
 
 ```r
-str_view("\"'\\", "\"'\\\\")
+str_view("\"'\\", "\"'\\\\", match = TRUE)
 ```
 
 </div>
@@ -229,7 +229,7 @@ It will match any patterns that are a dot followed by any character, repeated th
 
 
 ```r
-str_view(c(".a.b.c", ".a.b", "....."), c("\\..\\..\\.."))
+str_view(c(".a.b.c", ".a.b", "....."), c("\\..\\..\\.."), match = TRUE)
 ```
 
 </div>
@@ -246,7 +246,7 @@ How would you match the literal string `"$^$"`?
 
 
 ```r
-str_view(c("$^$", "ab$^$sfas"), "^\\$\\^\\$$")
+str_view(c("$^$", "ab$^$sfas"), "^\\$\\^\\$$", match = TRUE)
 ```
 
 </div>
@@ -261,7 +261,7 @@ Given the corpus of common words in `stringr::words`, create regular expressions
 1.  Are exactly three letters long. (Don’t cheat by using `str_length()`!)
 1.  Have seven letters or more.
 
-Since this list is long, you might want to use the match argument to `str_view()` to show only the matching or non-matching words.
+Since this list is long, you might want to use the `match` argument to `str_view()` to show only the matching or non-matching words.
 
 </div>
 
@@ -545,21 +545,21 @@ The answer to each part follows.
 
     
     ```r
-    str_view(words, "^[^aeiou]{3}")
+    str_view(words, "^[^aeiou]{3}", match = TRUE)
     ```
 
 1.  This regex finds three or more vowels in a row:
 
     
     ```r
-    str_view(words, "[aeiou]{3,}")
+    str_view(words, "[aeiou]{3,}", match = TRUE)
     ```
 
 1.  This regex finds two or more vowel-consonant pairs in a row.
 
     
     ```r
-    str_view(words, "([aeiou][^aeiou]){2,}")
+    str_view(words, "([aeiou][^aeiou]){2,}", match = TRUE)
     ```
 
 </div>
@@ -587,7 +587,7 @@ Describe, in words, what these expressions will match:
 
 1.  `(.)\1\1` :
 1.  `"(.)(.)\\2\\1"`:
-1.  `(..)\1`: Any two characters repeated. E.g. `"a1a1"`.
+1.  `(..)\1`: 
 1.  `"(.).\\1.\\1"`:
 1.  `"(.)(.)(.).*\\3\\2\\1"`
 
@@ -627,30 +627,26 @@ The answer to each part follows.
     str_view(stringr::words, "^(.)((.*\\1$)|\\1?$)", match = TRUE)
     ```
 
-1.  This regex matches words that contain a repeated pair of letters.
-
+1.  Either of these patterns checks for any pair of repeated letters, where
+    *letters* is defined to the ASCII letters A-Z.
+    
     
     ```r
-    str_view(words, "(..).*\\1")
-    ```
-
-    These patterns checks for any pair of repeated "letters".
-
-    
-    ```r
-    str_view(words, "([A-Za-z][A-Za-z]).*\\1")
+    str_view(words, "([A-Za-z][A-Za-z]).*\\1", match = TRUE)
     ```
 
     
     ```r
-    str_view(words, "([[:letter:]]).*\\1")
+    str_view(words, "([[:letter:]]).*\\1", match = TRUE)
     ```
+
+    The `\\1` pattern is called a backreference. It matches whatever the first group
+    matched. This allows the pattern to match a repeating pair of letters without having
+    to specify exactly what pair letters is being repeated.
 
     Note that these patterns are case sensitive. Use the
     case insensitive flag if you want to check for repeated pairs
     of letters with different capitalization.
-
-    The `\\1` is used to refer back to the first group (`(.)`) so that whatever letter is matched by `[A-Za-z]` is again matched.
 
 1.  This regex matches words that contain one letter repeated in at least three places.
 
@@ -682,7 +678,6 @@ For each of the following challenges, try solving it by using both a single regu
 1.  Find all words that start or end with x.
 1.  Find all words that start with a vowel and end with a consonant.
 1.  Are there any words that contain at least one of each different vowel?
-1.  What word has the higher number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)
 
 </div>
 
@@ -724,14 +719,13 @@ The answer to each part follows.
     
     ```r
     pattern <-
-      cross_n(rerun(5, c("a", "e", "i", "o", "u")),
+      cross(rerun(5, c("a", "e", "i", "o", "u")),
             .filter = function(...) {
               x <- as.character(unlist(list(...)))
               length(x) != length(unique(x))
             }) %>%
       map_chr(~ str_c(unlist(.x), collapse = ".*")) %>%
       str_c(collapse = "|")
-    #> Warning: `cross_n()` is deprecated; please use `cross()` instead.
     ```
 
     To check that this pattern works, test it on a pattern that
@@ -760,22 +754,35 @@ The answer to each part follows.
 
     There appear to be none.
 
-1.  The word with the highest number of vowels is
-    
-    ```r
-    vowels <- str_count(words, "[aeiou]")
-    words[which(vowels == max(vowels))]
-    #> [1] "appropriate" "associate"   "available"   "colleague"   "encourage"  
-    #> [6] "experience"  "individual"  "television"
-    ```
+</div>
 
-    The word with the highest proportion of vowels is
+#### Exercise <span class="exercise-number">14.4.2.2</span> {.unnumbered .exercise}
+
+<div class="question">
+  
+What word has the higher number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)
+
+</div>
+
+<div class="answer">
+  
+The word with the highest number of vowels is
     
-    ```r
-    prop_vowels <- str_count(words, "[aeiou]") / str_length(words)
-    words[which(prop_vowels == max(prop_vowels))]
-    #> [1] "a"
-    ```
+
+```r
+vowels <- str_count(words, "[aeiou]")
+words[which(vowels == max(vowels))]
+#> [1] "appropriate" "associate"   "available"   "colleague"   "encourage"  
+#> [6] "experience"  "individual"  "television"
+```
+
+The word with the highest proportion of vowels is
+
+```r
+prop_vowels <- str_count(words, "[aeiou]") / str_length(words)
+words[which(prop_vowels == max(prop_vowels))]
+#> [1] "a"
+```
 
 </div>
 
@@ -907,8 +914,7 @@ Find all contractions. Separate out the pieces before and after the apostrophe.
 
 ```r
 contraction <- "([A-Za-z]+)'([A-Za-z]+)"
-sentences %>%
-  `[`(str_detect(sentences, contraction)) %>%
+sentences[str_detect(sentences, contraction)] %>%
   str_extract(contraction)
 #>  [1] "It's"       "man's"      "don't"      "store's"    "workmen's" 
 #>  [6] "Let's"      "sun's"      "child's"    "king's"     "It's"      
@@ -929,7 +935,7 @@ Replace all forward slashes in a string with backslashes.
 
 
 ```r
-backslashed <- str_replace_all("past/present/future", "\\/", "\\\\")
+backslashed <- str_replace_all("past/present/future", "/", "\\\\")
 writeLines(backslashed)
 #> past\present\future
 ```

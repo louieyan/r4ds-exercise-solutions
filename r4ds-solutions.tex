@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{November 09, 2018}
+    \date{November 21, 2018}
 
 \usepackage{amsthm}
 
@@ -186,6 +186,7 @@ contributed solutions. Thank you to all of those who contributed on
 \href{https://github.com/jmclawson}{@jmclawson},
 \href{https://github.com/KleinGeard}{@KleinGeard},
 \href{https://github.com/mjones01}{@mjones01},
+\href{https://github.com/mvhone}{@mvhone},
 \href{https://github.com/nickcorona}{@nickcorona},
 \href{https://github.com/nzxwang}{@nzxwang},
 and\href{https://github.com/tinhb92}{@tinhb92}.
@@ -4234,34 +4235,88 @@ Compute the air time of a flight relative to the shortest flight to that
 destination. Which flights were most delayed in the air?
 
 When calculating this answer we should only compare flights within the
-same origin, destination pair.
+same (origin, destination) pair.
 
-A common approach to finding unusual observations would be to calculate
-the z-score of observations each flight.
+A common approach to finding unusual observations would be to
+\href{https://en.wikipedia.org/wiki/Standard_score}{standardize} the
+observations each flight by subtracting the mean and dividing by the
+standard deviation, \[
+\mathsf{standarized}(x) = \frac{x - \mathsf{mean}(x)}{\mathsf{sd}(x)} .
+\] This is often called a \(z\)-score. The units of the standardized
+variable are standard deviations from the mean. This is essential,
+because it will put the flight times from different routes all on the
+same scale. The larger the absolute value of standardized variable for
+an observation, the more unusual the observation is.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights_with_zscore <-}\StringTok{ }\NormalTok{flights }\OperatorTok{%>%}
+\NormalTok{standardized_flights <-}\StringTok{ }\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(air_time)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(dest, origin) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{air_time_mean =} \KeywordTok{mean}\NormalTok{(air_time),}
          \DataTypeTok{air_time_sd =} \KeywordTok{sd}\NormalTok{(air_time),}
          \DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{z_score =}\NormalTok{ (air_time }\OperatorTok{-}\StringTok{ }\NormalTok{air_time_mean) }\OperatorTok{/}\StringTok{ }\NormalTok{air_time_sd)}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{air_time_standard =}\NormalTok{ (air_time }\OperatorTok{-}\StringTok{ }\NormalTok{air_time_mean) }\OperatorTok{/}\StringTok{ }\NormalTok{air_time_sd)}
 \end{Highlighting}
 \end{Shaded}
 
-Possible unusual flights are those flights with the largest absolute
-values of z-scores.
+The distribution of the standardized air flights shows them to have a
+long right tail.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights_with_zscore }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(}\KeywordTok{abs}\NormalTok{(z_score))) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{print}\NormalTok{(}\DataTypeTok{n =} \DecValTok{15}\NormalTok{)}
-\CommentTok{#> # A tibble: 327,346 x 0}
+\KeywordTok{ggplot}\NormalTok{(standardized_flights, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ air_time_standard)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{()}
+\CommentTok{#> Warning: Removed 4 rows containing non-finite values (stat_density).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-89-1} \end{center}
+
+What about the distribution compared to the length of the flight? We
+might be concerned that short flights may have too many unusual events.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(standardized_flights, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ air_time_mean, }\DataTypeTok{y =}\NormalTok{ air_time_standard)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\CommentTok{#> Warning: Removed 4 rows containing missing values (geom_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-90-1} \end{center}
+
+Unusually fast flights are those flights that are the number of standard
+deviations from the mean
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{standardized_flights }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(air_time_standard) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{date =} \KeywordTok{str_c}\NormalTok{(year, }\StringTok{"-"}\NormalTok{, month, }\StringTok{"-"}\NormalTok{, day, }\StringTok{" "}\NormalTok{, dep_time), }
+         \DataTypeTok{flightnum =} \KeywordTok{str_c}\NormalTok{(carrier, flight)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(date, flightnum, origin, dest, distance, air_time, air_time_mean, air_time_standard) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{print}\NormalTok{(}\DataTypeTok{width =} \DecValTok{100}\NormalTok{)}
+\CommentTok{#> # A tibble: 10 x 8}
+\CommentTok{#>   date            flightnum origin dest  distance air_time air_time_mean}
+\CommentTok{#>   <chr>           <chr>     <chr>  <chr>    <dbl>    <dbl>         <dbl>}
+\CommentTok{#> 1 2013-5-25 1709  DL1499    LGA    ATL        762       65         114. }
+\CommentTok{#> 2 2013-7-2 1558   EV4667    EWR    MSP       1008       93         151. }
+\CommentTok{#> 3 2013-5-13 2040  EV4292    EWR    GSP        594       55          93.2}
+\CommentTok{#> 4 2013-11-10 2307 B62002    JFK    BUF        301       38          57.1}
+\CommentTok{#> 5 2013-3-23 1914  EV3805    EWR    BNA        748       70         115. }
+\CommentTok{#> 6 2013-9-29 1359  EV4687    EWR    CVG        569       62          96.1}
+\CommentTok{#>   air_time_standard}
+\CommentTok{#>               <dbl>}
+\CommentTok{#> 1             -5.03}
+\CommentTok{#> 2             -4.83}
+\CommentTok{#> 3             -4.72}
+\CommentTok{#> 4             -4.10}
+\CommentTok{#> 5             -4.07}
+\CommentTok{#> 6             -4.03}
+\CommentTok{#> # ... with 4 more rows}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4270,18 +4325,18 @@ error. We should check these flights to see whether there was some
 reason for the difference, e.g.~an emergency or other unusual occurence,
 or whether there is an error in our understanding of the data.
 
-One potential issue with the way that we calculated z-scores is that the
-mean and standard deviation used to calculate it include the unusual
+A potential issue with the way that we standardized the flights is that
+the mean and standard deviation used to calculate it include the unusual
 observations that we are looking for. Since the mean and standard
 deviation are sensitive to outliers, that means that an outlier could
 affect the mean and standard deviation calculations enough that it does
-not look like one. We would want to calculate the z-score of each
+not look like one. We would want to calculate the standardize each
 observation using the mean and standard deviation based on all other
 flights to that origin and destination. This will be more of an issue if
-the number of of observations is small. Thankfully, there are easy
-methods to update the mean and variance by
-\href{https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance}{removing
-an observation}, but for now, we won't use them.\footnote{In most
+the number of of observations is small.\footnote{There are easy methods
+  to update the mean and variance by
+  \href{https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance}{removing
+  an observation}, but I don't pursue that option here. In most
   interesting data analysis questions, no answer ever ``right''. With
   infinite time and money, an analysis could almost always improve their
   answer with more data or better methods. The difficulty in real life
@@ -4294,13 +4349,18 @@ sensitive to outliers. Adjust the previous code and see if it makes a
 difference.
 
 All of these answers have relied on the distribution of comparable
-observations (flights from the same origin to the same destination) to
+observations, flights from the same origin to the same destination, to
 flag unusual observations. Apart from our knowledge that flights from
 the same origin to the same destination should have similar air times,
-we have not used any domain specific knowledge. But actually know much
-more about this problem. We know that aircraft have maximum speeds. So
-could use the time and distance of each flight to calculate the average
-speed of each flight and find any clearly impossibly fast flights.
+we have not used any domain specific knowledge. But we know much more
+about this problem. We know that aircraft have maximum speeds. So could
+also use the time and distance of each flight to calculate the average
+speed of each flight and find any clearly impossibly fast flights. This
+complicated by the way in which winds, especially the jetstream
+influence the ground-speed of flights. A strong tailwind can increase
+ground-speed of the aircraft by
+\href{https://www.wired.com/story/norwegian-air-transatlantic-speed-record/}{200
+mph}.
 
 \hypertarget{exercise-5.7.1.7}{%
 \subsection*{\texorpdfstring{Exercise
@@ -7564,6 +7624,18 @@ provide the weather for the destination of each flight. The
 information about the weather at the distination airport at the time of
 the flight take off, unless the arrival date-time were calculated.
 
+So why was this not a relationship prior to adding additional rows to
+the \texttt{weather} table? In a foreign key relationship, the
+collection columns of columns in the child table must refer to a unique
+collection of columns in the parent table. When the \texttt{weather}
+table only contained New York airports, there were many values of
+(\texttt{year}, \texttt{month}, \texttt{day}, \texttt{hour},
+\texttt{dest}) in \texttt{flights} that did not appear in the
+\texttt{weather} table. Therefore, it was not a foreign key. It was only
+after all combinations of year, month, day, hour, and airports that are
+defined in \texttt{flights} were added to the \texttt{weather} table
+that there existed this relation between these tables.
+
 \hypertarget{exercise-13.2.1.4}{%
 \subsection*{\texorpdfstring{Exercise
 {13.2.1.4}}{Exercise 13.2.1.4}}\label{exercise-13.2.1.4}}
@@ -7869,6 +7941,7 @@ tables:
   \texttt{AwardsManagers}:
 
   \begin{itemize}
+  \tightlist
   \item
     Primary keys: \texttt{playerID}, \texttt{awardID}, \texttt{yearID}
   \item
@@ -7943,6 +8016,9 @@ delays. Here's an easy way to draw a map of the United States:
 (Don't worry if you don't understand what \texttt{semi\_join()} does ---
 you'll learn about it next.)
 
+You might want to use the size or color of the points to display the
+average delay for each airport.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{avg_dest_delays <-}
@@ -7961,9 +8037,6 @@ you'll learn about it next.)
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-16-1} \end{center}
-
-You might want to use the size or color of the points to display the
-average delay for each airport.
 
 \hypertarget{exercise-13.4.6.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -8048,31 +8121,76 @@ It's always good practice to have clear variable names.
 
 Is there a relationship between the age of a plane and its delays?
 
-Surprisingly not. If anything (departure) delay seems to decrease
-slightly with the age of the plane. This could be due to choices about
-how airlines allocate planes to airports.
+The question does not specify whether the relationship is with departure
+delay or arrival delay. I will look at both.
+
+To compare the age of the plane to flights delay, I will merge
+\texttt{flights} with the \texttt{planes}, which contains a variable
+\texttt{plane\_year}, with the year in which the plane was built. To
+look at the relationship between plane age and departure delay, I will
+calculate the average arrival and departure delay for each age of a
+flight.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{plane_ages <-}
-\StringTok{  }\NormalTok{planes }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{age =} \DecValTok{2013} \OperatorTok{-}\StringTok{ }\NormalTok{year) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(tailnum, age)}
-
-\NormalTok{flights }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{inner_join}\NormalTok{(plane_ages, }\DataTypeTok{by =} \StringTok{"tailnum"}\NormalTok{) }\OperatorTok{%>%}
+\NormalTok{plane_cohorts <-}\StringTok{ }\KeywordTok{inner_join}\NormalTok{(flights,}
+           \KeywordTok{select}\NormalTok{(planes, tailnum, }\DataTypeTok{plane_year =}\NormalTok{ year), }
+           \DataTypeTok{by =} \StringTok{"tailnum"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{age =}\NormalTok{ year }\OperatorTok{-}\StringTok{ }\NormalTok{plane_year) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(age)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(age) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(dep_delay)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{delay =} \KeywordTok{mean}\NormalTok{(dep_delay)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ age, }\DataTypeTok{y =}\NormalTok{ delay)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{()}
-\CommentTok{#> Warning: Removed 1 rows containing missing values (geom_point).}
-\CommentTok{#> Warning: Removed 1 rows containing missing values (geom_path).}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{dep_delay_mean =} \KeywordTok{mean}\NormalTok{(dep_delay, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{dep_delay_sd =} \KeywordTok{sd}\NormalTok{(dep_delay, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{arr_delay_mean =} \KeywordTok{mean}\NormalTok{(arr_delay, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{arr_delay_sd =} \KeywordTok{sd}\NormalTok{(arr_delay, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{n =} \KeywordTok{n}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
+I will look for a relationship between departure delay and age by
+plotting age against the average departure delay. The average departure
+delay is increasing for planes with ages up until 10 years. After that
+the departure delay decreases or levels off. The decrease in departure
+delay could be because older planes with many mechanical issues are
+removed from service or because air lines schedule these planes with
+enough time so that mechanical issues do not delay them. There are few
+planes older than 30 years, so the relationship is mostly noise after
+that.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(plane_cohorts, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ age, }\DataTypeTok{y =}\NormalTok{ dep_delay_mean)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_ribbon}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =}\NormalTok{ dep_delay_mean }\OperatorTok{-}\StringTok{ }
+\StringTok{                              }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{dep_delay_sd }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n), }
+                            \DataTypeTok{ymax =}\NormalTok{ dep_delay_mean }\OperatorTok{+}\StringTok{ }
+\StringTok{                              }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{dep_delay_sd }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)),}
+              \DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\StringTok{"Age of plane (years)"}\NormalTok{, }\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DataTypeTok{by =} \DecValTok{10}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\StringTok{"Mean Departure Delay (minutes)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+There is a similar relationship in arrival delays. Delays increase with
+the age of the plane until ten years, then it declines and flattens out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(plane_cohorts, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ age, }\DataTypeTok{y =}\NormalTok{ arr_delay_mean)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_ribbon}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =}\NormalTok{ arr_delay_mean }\OperatorTok{-}\StringTok{ }
+\StringTok{                              }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{arr_delay_sd }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n), }
+                            \DataTypeTok{ymax =}\NormalTok{ arr_delay_mean }\OperatorTok{+}\StringTok{ }
+\StringTok{                              }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{arr_delay_sd }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)),}
+              \DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\StringTok{"Age of Plane (years)"}\NormalTok{, }\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DataTypeTok{by =} \DecValTok{10}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\StringTok{"Mean Departure Delay (minutes)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 \hypertarget{exercise-13.4.6.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -8102,14 +8220,14 @@ not as strong a trend after 0.02 in as one would expect
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \hypertarget{exercise-13.4.6.5}{%
 \subsection*{\texorpdfstring{Exercise
 {13.4.6.5}}{Exercise 13.4.6.5}}\label{exercise-13.4.6.5}}
 \addcontentsline{toc}{subsection}{Exercise {13.4.6.5}}
 
-What happened on June 13 2013? Display the spatial pattern of delays,
+What happened on June 13, 2013? Display the spatial pattern of delays,
 and then use Google to cross-reference with the weather.
 
 There was a large series of storms (derechos) in the southeastern US
@@ -8137,7 +8255,7 @@ Midwest, which were the locations of the derechos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 \hypertarget{filtering-joins}{%
 \section{Filtering Joins}\label{filtering-joins}}
@@ -8215,35 +8333,8 @@ Filter flights to only show flights with planes that have flown at least
 Combine \texttt{fueleconomy::vehicles} and \texttt{fueleconomy::common}
 to find only the records for the most common models.
 
-The table \texttt{fueleconomy::common} identifies vehicles by
-\texttt{make} and \texttt{model}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{glimpse}\NormalTok{(fueleconomy}\OperatorTok{::}\NormalTok{vehicles)}
-\CommentTok{#> Observations: 33,442}
-\CommentTok{#> Variables: 12}
-\CommentTok{#> $ id    <int> 27550, 28426, 27549, 28425, 1032, 1033, 3347, 13309, 133...}
-\CommentTok{#> $ make  <chr> "AM General", "AM General", "AM General", "AM General", ...}
-\CommentTok{#> $ model <chr> "DJ Po Vehicle 2WD", "DJ Po Vehicle 2WD", "FJ8c Post Off...}
-\CommentTok{#> $ year  <int> 1984, 1984, 1984, 1984, 1985, 1985, 1987, 1997, 1997, 19...}
-\CommentTok{#> $ class <chr> "Special Purpose Vehicle 2WD", "Special Purpose Vehicle ...}
-\CommentTok{#> $ trans <chr> "Automatic 3-spd", "Automatic 3-spd", "Automatic 3-spd",...}
-\CommentTok{#> $ drive <chr> "2-Wheel Drive", "2-Wheel Drive", "2-Wheel Drive", "2-Wh...}
-\CommentTok{#> $ cyl   <int> 4, 4, 6, 6, 4, 6, 6, 4, 4, 6, 4, 4, 6, 4, 4, 6, 5, 5, 6,...}
-\CommentTok{#> $ displ <dbl> 2.5, 2.5, 4.2, 4.2, 2.5, 4.2, 3.8, 2.2, 2.2, 3.0, 2.3, 2...}
-\CommentTok{#> $ fuel  <chr> "Regular", "Regular", "Regular", "Regular", "Regular", "...}
-\CommentTok{#> $ hwy   <int> 17, 17, 13, 13, 17, 13, 21, 26, 28, 26, 27, 29, 26, 27, ...}
-\CommentTok{#> $ cty   <int> 18, 18, 13, 13, 16, 13, 14, 20, 22, 18, 19, 21, 17, 20, ...}
-\KeywordTok{glimpse}\NormalTok{(fueleconomy}\OperatorTok{::}\NormalTok{common)}
-\CommentTok{#> Observations: 347}
-\CommentTok{#> Variables: 4}
-\CommentTok{#> $ make  <chr> "Acura", "Acura", "Acura", "Acura", "Acura", "Audi", "Au...}
-\CommentTok{#> $ model <chr> "Integra", "Legend", "MDX 4WD", "NSX", "TSX", "A4", "A4 ...}
-\CommentTok{#> $ n     <int> 42, 28, 12, 28, 27, 49, 49, 66, 20, 12, 46, 20, 30, 29, ...}
-\CommentTok{#> $ years <int> 16, 10, 12, 14, 11, 19, 15, 19, 19, 12, 20, 15, 16, 16, ...}
-\end{Highlighting}
-\end{Shaded}
+The columns \texttt{make} and \texttt{model} are the primary key for
+\texttt{fueleconomy::common}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8261,6 +8352,56 @@ The table \texttt{fueleconomy::common} identifies vehicles by
 \CommentTok{#> # ... with 1.452e+04 more rows}
 \end{Highlighting}
 \end{Shaded}
+
+Why is \texttt{model} alone not a primary key? It is possible for two
+car brands (\texttt{make}) to produce a car with the same name
+(\texttt{make}). In both the \texttt{vehicles} and \texttt{common} data
+we can find examples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fueleconomy}\OperatorTok{::}\NormalTok{vehicles }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{distinct}\NormalTok{(model, make) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(model) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(model) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{head}\NormalTok{()}
+\CommentTok{#> # A tibble: 6 x 2}
+\CommentTok{#> # Groups:   model [3]}
+\CommentTok{#>   make                   model              }
+\CommentTok{#>   <chr>                  <chr>              }
+\CommentTok{#> 1 Audi                   200                }
+\CommentTok{#> 2 Chrysler               200                }
+\CommentTok{#> 3 Mcevoy Motors          240 DL/240 GL Wagon}
+\CommentTok{#> 4 Volvo                  240 DL/240 GL Wagon}
+\CommentTok{#> 5 Lambda Control Systems 300E               }
+\CommentTok{#> 6 Mercedes-Benz          300E}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fueleconomy}\OperatorTok{::}\NormalTok{common }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{distinct}\NormalTok{(model, make) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(model) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(model) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{head}\NormalTok{()}
+\CommentTok{#> # A tibble: 6 x 2}
+\CommentTok{#> # Groups:   model [3]}
+\CommentTok{#>   make       model    }
+\CommentTok{#>   <chr>      <chr>    }
+\CommentTok{#> 1 Dodge      Colt     }
+\CommentTok{#> 2 Plymouth   Colt     }
+\CommentTok{#> 3 Mitsubishi Truck 2WD}
+\CommentTok{#> 4 Nissan     Truck 2WD}
+\CommentTok{#> 5 Toyota     Truck 2WD}
+\CommentTok{#> 6 Mitsubishi Truck 4WD}
+\end{Highlighting}
+\end{Shaded}
+
+If we were to merge these data \texttt{model} alone, there would be
+incorrect matches. For example, see ``Limousine''.
 
 \hypertarget{exercise-13.5.1.4}{%
 \subsection*{\texorpdfstring{Exercise
@@ -8330,12 +8471,12 @@ associated with more than one appear in this data. Let's check:
 \NormalTok{multi_carrier_planes <-}
 \StringTok{  }\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(tailnum)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{count}\NormalTok{(tailnum, carrier) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{distinct}\NormalTok{(tailnum, carrier) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{count}\NormalTok{(tailnum) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(nn }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(n }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{)}
 \NormalTok{multi_carrier_planes}
 \CommentTok{#> # A tibble: 17 x 2}
-\CommentTok{#>   tailnum    nn}
+\CommentTok{#>   tailnum     n}
 \CommentTok{#>   <chr>   <int>}
 \CommentTok{#> 1 N146PQ      2}
 \CommentTok{#> 2 N153PQ      2}
@@ -8379,7 +8520,7 @@ and extract the unique combinations of \texttt{tailnum} and
 
 The names of airlines are easier to understand than the two-letter
 carrier codes. Join the multi-airline table with the associated airline
-in \texttt{airlines} using the \texttt{carrier} column. The spread the
+in \texttt{airlines} using the \texttt{carrier} column. We spread the
 data so it has columns \texttt{carrier\_1}, \texttt{carrier\_2}, and so
 on. This is not tidy, but it is more easier to display.
 
@@ -8678,7 +8819,7 @@ How would you match the sequence
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{'}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{'}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{'}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{'}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8696,7 +8837,7 @@ repeated three times.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{".a.b.c"}\NormalTok{, }\StringTok{".a.b"}\NormalTok{, }\StringTok{"....."}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{..}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{..}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.."}\NormalTok{))}
+\KeywordTok{str_view}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{".a.b.c"}\NormalTok{, }\StringTok{".a.b"}\NormalTok{, }\StringTok{"....."}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{..}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{..}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.."}\NormalTok{), }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8712,7 +8853,7 @@ How would you match the literal string \texttt{"\$\^{}\$"}?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"$^$"}\NormalTok{, }\StringTok{"ab$^$sfas"}\NormalTok{), }\StringTok{"^}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{^}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{$$"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"$^$"}\NormalTok{, }\StringTok{"ab$^$sfas"}\NormalTok{), }\StringTok{"^}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{^}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{$$"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8738,8 +8879,9 @@ regular expressions that find all words that:
   Have seven letters or more.
 \end{enumerate}
 
-Since this list is long, you might want to use the match argument to
-\texttt{str\_view()} to show only the matching or non-matching words.
+Since this list is long, you might want to use the \texttt{match}
+argument to \texttt{str\_view()} to show only the matching or
+non-matching words.
 
 The answer to each part follows.
 
@@ -9105,7 +9247,7 @@ The answer to each part follows.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"^[^aeiou]\{3\}"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"^[^aeiou]\{3\}"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -9113,7 +9255,7 @@ The answer to each part follows.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"[aeiou]\{3,\}"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"[aeiou]\{3,\}"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -9121,7 +9263,7 @@ The answer to each part follows.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([aeiou][^aeiou])\{2,\}"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([aeiou][^aeiou])\{2,\}"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \end{enumerate}
@@ -9156,8 +9298,7 @@ Describe, in words, what these expressions will match:
 \item
   \texttt{"(.)(.)\textbackslash{}\textbackslash{}2\textbackslash{}\textbackslash{}1"}:
 \item
-  \texttt{(..)\textbackslash{}1}: Any two characters repeated. E.g.
-  \texttt{"a1a1"}.
+  \texttt{(..)\textbackslash{}1}:
 \item
   \texttt{"(.).\textbackslash{}\textbackslash{}1.\textbackslash{}\textbackslash{}1"}:
 \item
@@ -9227,35 +9368,29 @@ The answer to each part follows.
 \end{Highlighting}
 \end{Shaded}
 \item
-  This regex matches words that contain a repeated pair of letters.
+  Either of these patterns checks for any pair of repeated letters,
+  where \emph{letters} is defined to the ASCII letters A-Z.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"(..).*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-  These patterns checks for any pair of repeated ``letters''.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([A-Za-z][A-Za-z]).*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([A-Za-z][A-Za-z]).*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([[:letter:]]).*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{)}
+\KeywordTok{str_view}\NormalTok{(words, }\StringTok{"([[:letter:]]).*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{, }\DataTypeTok{match =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+  The \texttt{\textbackslash{}\textbackslash{}1} pattern is called a
+  backreference. It matches whatever the first group matched. This
+  allows the pattern to match a repeating pair of letters without having
+  to specify exactly what pair letters is being repeated.
 
   Note that these patterns are case sensitive. Use the case insensitive
   flag if you want to check for repeated pairs of letters with different
   capitalization.
-
-  The \texttt{\textbackslash{}\textbackslash{}1} is used to refer back
-  to the first group (\texttt{(.)}) so that whatever letter is matched
-  by \texttt{{[}A-Za-z{]}} is again matched.
 \item
   This regex matches words that contain one letter repeated in at least
   three places.
@@ -9301,9 +9436,6 @@ single regular expression, and a combination of multiple
   Find all words that start with a vowel and end with a consonant.
 \item
   Are there any words that contain at least one of each different vowel?
-\item
-  What word has the higher number of vowels? What word has the highest
-  proportion of vowels? (Hint: what is the denominator?)
 \end{enumerate}
 
 The answer to each part follows.
@@ -9346,14 +9478,13 @@ The answer to each part follows.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pattern <-}
-\StringTok{  }\KeywordTok{cross_n}\NormalTok{(}\KeywordTok{rerun}\NormalTok{(}\DecValTok{5}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{, }\StringTok{"i"}\NormalTok{, }\StringTok{"o"}\NormalTok{, }\StringTok{"u"}\NormalTok{)),}
+\StringTok{  }\KeywordTok{cross}\NormalTok{(}\KeywordTok{rerun}\NormalTok{(}\DecValTok{5}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{, }\StringTok{"i"}\NormalTok{, }\StringTok{"o"}\NormalTok{, }\StringTok{"u"}\NormalTok{)),}
         \DataTypeTok{.filter =} \ControlFlowTok{function}\NormalTok{(...) \{}
 \NormalTok{          x <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{list}\NormalTok{(...)))}
           \KeywordTok{length}\NormalTok{(x) }\OperatorTok{!=}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(x))}
 \NormalTok{        \}) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{map_chr}\NormalTok{(}\OperatorTok{~}\StringTok{ }\KeywordTok{str_c}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(.x), }\DataTypeTok{collapse =} \StringTok{".*"}\NormalTok{)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{str_c}\NormalTok{(}\DataTypeTok{collapse =} \StringTok{"|"}\NormalTok{)}
-\CommentTok{#> Warning: `cross_n()` is deprecated; please use `cross()` instead.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9385,8 +9516,17 @@ The answer to each part follows.
 \end{Shaded}
 
   There appear to be none.
-\item
-  The word with the highest number of vowels is
+\end{enumerate}
+
+\hypertarget{exercise-14.4.2.2}{%
+\subsubsection*{\texorpdfstring{Exercise
+{14.4.2.2}}{Exercise 14.4.2.2}}\label{exercise-14.4.2.2}}
+\addcontentsline{toc}{subsubsection}{Exercise {14.4.2.2}}
+
+What word has the higher number of vowels? What word has the highest
+proportion of vowels? (Hint: what is the denominator?)
+
+The word with the highest number of vowels is
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9397,7 +9537,7 @@ The answer to each part follows.
 \end{Highlighting}
 \end{Shaded}
 
-  The word with the highest proportion of vowels is
+The word with the highest proportion of vowels is
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9406,7 +9546,6 @@ The answer to each part follows.
 \CommentTok{#> [1] "a"}
 \end{Highlighting}
 \end{Shaded}
-\end{enumerate}
 
 \hypertarget{extract-matches}{%
 \subsection{Extract Matches}\label{extract-matches}}
@@ -9559,8 +9698,7 @@ apostrophe.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{contraction <-}\StringTok{ "([A-Za-z]+)'([A-Za-z]+)"}
-\NormalTok{sentences }\OperatorTok{%>%}
-\StringTok{  `}\DataTypeTok{[}\StringTok{`}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(sentences, contraction)) }\OperatorTok{%>%}
+\NormalTok{sentences[}\KeywordTok{str_detect}\NormalTok{(sentences, contraction)] }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{str_extract}\NormalTok{(contraction)}
 \CommentTok{#>  [1] "It's"       "man's"      "don't"      "store's"    "workmen's" }
 \CommentTok{#>  [6] "Let's"      "sun's"      "child's"    "king's"     "It's"      }
@@ -9580,7 +9718,7 @@ Replace all forward slashes in a string with backslashes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{backslashed <-}\StringTok{ }\KeywordTok{str_replace_all}\NormalTok{(}\StringTok{"past/present/future"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{)}
+\NormalTok{backslashed <-}\StringTok{ }\KeywordTok{str_replace_all}\NormalTok{(}\StringTok{"past/present/future"}\NormalTok{, }\StringTok{"/"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{)}
 \KeywordTok{writeLines}\NormalTok{(backslashed)}
 \CommentTok{#> past\textbackslash{}present\textbackslash{}future}
 \end{Highlighting}
@@ -9923,7 +10061,7 @@ The most common \texttt{relig} is ``Protestant''
 \begin{Highlighting}[]
 \NormalTok{gss_cat }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{count}\NormalTok{(relig) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\OperatorTok{-}\NormalTok{n) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \CommentTok{#> # A tibble: 1 x 2}
 \CommentTok{#>   relig          n}
@@ -9938,7 +10076,7 @@ The most common \texttt{partyid} is ``Independent''
 \begin{Highlighting}[]
 \NormalTok{gss_cat }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{count}\NormalTok{(partyid) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\OperatorTok{-}\NormalTok{n) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \CommentTok{#> # A tibble: 1 x 2}
 \CommentTok{#>   partyid         n}
@@ -10105,8 +10243,8 @@ count of observations in the data.
 \begin{Highlighting}[]
 \NormalTok{gss_cat }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(race)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{drop =} \OtherTok{FALSE}\NormalTok{)}
-\CommentTok{#> Warning: Ignoring unknown parameters: drop}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{drop =} \OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10414,12 +10552,12 @@ Let's try plotting this by month:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights_dt }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{time =} \KeywordTok{hour}\NormalTok{(dep_time) }\OperatorTok{*}\StringTok{ }\DecValTok{100} \OperatorTok{+}\StringTok{ }\KeywordTok{minute}\NormalTok{(dep_time),}
-         \DataTypeTok{mon =} \KeywordTok{as.factor}\NormalTok{(month}
-\NormalTok{                         (dep_time))) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{group =}\NormalTok{ mon, }\DataTypeTok{colour =}\NormalTok{ mon)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_freqpoly}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{100}\NormalTok{)}
+\NormalTok{flights_dt }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(dep_time)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dep_hour =} \KeywordTok{update}\NormalTok{(dep_time, }\DataTypeTok{yday =} \DecValTok{1}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{month =} \KeywordTok{factor}\NormalTok{(}\KeywordTok{month}\NormalTok{(dep_time))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dep_hour, }\DataTypeTok{color =}\NormalTok{ month)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_freqpoly}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{60}\OperatorTok{*}\DecValTok{60}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10431,12 +10569,12 @@ fewer flights.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights_dt }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{time =} \KeywordTok{hour}\NormalTok{(dep_time) }\OperatorTok{*}\StringTok{ }\DecValTok{100} \OperatorTok{+}\StringTok{ }\KeywordTok{minute}\NormalTok{(dep_time),}
-         \DataTypeTok{mon =} \KeywordTok{as.factor}\NormalTok{(month}
-\NormalTok{                         (dep_time))) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ ..density.., }\DataTypeTok{group =}\NormalTok{ mon, }\DataTypeTok{colour =}\NormalTok{ mon)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_freqpoly}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{100}\NormalTok{)}
+\NormalTok{flights_dt }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(dep_time)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dep_hour =} \KeywordTok{update}\NormalTok{(dep_time, }\DataTypeTok{yday =} \DecValTok{1}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{month =} \KeywordTok{factor}\NormalTok{(}\KeywordTok{month}\NormalTok{(dep_time))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dep_hour, }\DataTypeTok{color =}\NormalTok{ month)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_freqpoly}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ ..density..), }\DataTypeTok{binwidth =} \DecValTok{60}\OperatorTok{*}\DecValTok{60}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10478,10 +10616,15 @@ If they are consistent, then
 There exist discrepancies. It looks like there are mistakes in the
 dates. These are flights in which the actual departure time is on the
 \emph{next} day relative to the scheduled departure time. We forgot to
-account for this when creating the date-times. The code would have had
-to check if the departure time is less than the scheduled departure
-time. Alternatively, simply adding the delay time is more robust because
-it will automatically account for crossing into the next day.
+account for this when creating the date-times using
+\texttt{make\_datetime\_100()} function in
+\href{https://r4ds.had.co.nz/dates-and-times.html\#from-individual-components}{16.2.2
+From individual components}. The code would have had to check if the
+departure time is less than the scheduled departure time plus departure
+delay (in minutes). Alternatively, simply adding the departure delay to
+the scheduled departure time is a more robust way to construct the
+departure time because it will automatically account for crossing into
+the next day.
 
 \hypertarget{exercise-16.3.4.3}{%
 \subsection*{\texorpdfstring{Exercise
@@ -10678,8 +10821,8 @@ have differing numbers of days.
   28 or 29 days: February
 \end{itemize}
 
-Though in the past, in the pre-computer era, for arithmetic convenience,
-bankers adopted a 360 day year with 30 day months.
+The month is not a duration of time defined independently of when it
+occurs, but a special interval between two dates.
 
 \hypertarget{exercise-16.4.5.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -10756,15 +10899,61 @@ you are in years.
 Why can't
 \texttt{(today()\ \%-\/-\%\ (today()\ +\ years(1))\ /\ months(1)} work?
 
-It appears to work. Today is a date. Today + 1 year is a valid endpoint
-for an interval. And months is period that is defined in this period.
+The code in the question is missing a parentheses. So, I will assume
+that that the correct code is,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{%--%}\StringTok{ }\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{years}\NormalTok{(}\DecValTok{1}\NormalTok{))) }\OperatorTok{/}\StringTok{ }\KeywordTok{months}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{#> [1] 12}
+\end{Highlighting}
+\end{Shaded}
+
+While this code will not display a warning or message, it does not work
+exactly as expected. The problem is discussed in the
+\href{https://r4ds.had.co.nz/dates-and-times.html\#intervals}{Intervals}
+section.
+
+The numerator of the expression,
+\texttt{(today()\ \%-\/-\%\ (today()\ +\ years(1))}, is an
+\emph{interval}, which as a duration of time along with a starting
+point. The interval has an exact number of seconds. The denominator of
+the expression, \texttt{months(1)}, is a period, which is meaningful to
+humans but not defined in terms of an exact number of seconds. Months
+can be 28, 29, 30, or 31 days, so it is not clear what
+\texttt{months(1)} divide by? The code does not produce a warning
+message, but it will not always produce the correct result.
+
+To find the number of months within an interval use \texttt{\%/\%}
+instead of \texttt{/},
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{%--%}\StringTok{ }\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{years}\NormalTok{(}\DecValTok{1}\NormalTok{))) }\OperatorTok{%/%}\StringTok{ }\KeywordTok{months}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{#> Note: method with signature 'Timespan#Timespan' chosen for function '%/%',}
+\CommentTok{#>  target signature 'Interval#Period'.}
+\CommentTok{#>  "Interval#ANY", "ANY#Period" would also be valid}
 \CommentTok{#> [1] 12}
-\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{%--%}\StringTok{ }\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{years}\NormalTok{(}\DecValTok{1}\NormalTok{))) }\OperatorTok{/}\StringTok{ }\KeywordTok{months}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\CommentTok{#> [1] 12}
+\end{Highlighting}
+\end{Shaded}
+
+Alternatively, you could define a ``month'' as 30 days, and run
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{%--%}\StringTok{ }\NormalTok{(}\KeywordTok{today}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{years}\NormalTok{(}\DecValTok{1}\NormalTok{))) }\OperatorTok{/}\StringTok{ }\KeywordTok{days}\NormalTok{(}\DecValTok{30}\NormalTok{)}
+\CommentTok{#> [1] 12.2}
+\end{Highlighting}
+\end{Shaded}
+
+There's one other minor way in which this will not work is that
+\texttt{today()\ +\ years(1)} is not defined for February 29th on leap
+years:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2016-02-29"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{years}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{#> [1] NA}
 \end{Highlighting}
 \end{Shaded}
 
@@ -13942,8 +14131,8 @@ Write code that uses one of the map functions to:
   Since a single call of \texttt{rnorm()} returns a numeric vector with
   a length greater than one we cannot use \texttt{map\_dbl}, which
   requires the function to return a numeric vector that is only length
-  one (see \protect\hyperlink{exercise-21.5.3.4}{Exercise 21.5.3.4} The
-  map functions pass any additional arguments to the function being
+  one (see \protect\hyperlink{exercise-21.5.3.4}{Exercise 21.5.3.4}).
+  The map functions pass any additional arguments to the function being
   called.
 \end{enumerate}
 
@@ -14195,7 +14384,7 @@ I will use \texttt{map} to apply the function to all the columns, and
 {21.9.3.3}}{Exercise 21.9.3.3}}\label{exercise-21.9.3.3}}
 \addcontentsline{toc}{subsection}{Exercise {21.9.3.3}}
 
-Create possible base R equivalent of \texttt{col\_sum()} is:
+A possible base R equivalent of \texttt{col\_sum()} is:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -16242,7 +16431,7 @@ Create one plot on the fuel economy data with customized \texttt{title},
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg,}
-       \DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{reorder}\NormalTok{(class, hwy, median), }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
+       \DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ forcats}\OperatorTok{::}\KeywordTok{fct_reorder}\NormalTok{(class, hwy), }\DataTypeTok{y =}\NormalTok{ hwy)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}
@@ -16272,7 +16461,7 @@ a better model.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(mpg, }\KeywordTok{aes}\NormalTok{(displ, hwy, }\DataTypeTok{colour =}\NormalTok{ class)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =}\NormalTok{ class)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}
     \DataTypeTok{title =} \StringTok{"Fuel efficiency generally decreases with engine size"}\NormalTok{,}
@@ -16591,25 +16780,35 @@ Change the display of the presidential terms by:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{years <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{make_date}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\KeywordTok{year}\NormalTok{(}\KeywordTok{min}\NormalTok{(presidential}\OperatorTok{$}\NormalTok{start)),}
-             \KeywordTok{year}\NormalTok{(}\KeywordTok{max}\NormalTok{(presidential}\OperatorTok{$}\NormalTok{end)),}
-             \DataTypeTok{by =} \DecValTok{4}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{fouryears <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{make_date}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\KeywordTok{year}\NormalTok{(}\KeywordTok{min}\NormalTok{(presidential}\OperatorTok{$}\NormalTok{start)),}
+                                      \KeywordTok{year}\NormalTok{(}\KeywordTok{max}\NormalTok{(presidential}\OperatorTok{$}\NormalTok{end)),}
+                                      \DataTypeTok{by =} \DecValTok{4}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
 
 \NormalTok{presidential }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{id =} \DecValTok{33} \OperatorTok{+}\StringTok{ }\KeywordTok{row_number}\NormalTok{(),}
-         \DataTypeTok{name_id =}\NormalTok{ stringr}\OperatorTok{::}\KeywordTok{str_c}\NormalTok{(name, }\StringTok{" ("}\NormalTok{, id, }\StringTok{")"}\NormalTok{),}
-         \DataTypeTok{name_id =} \KeywordTok{factor}\NormalTok{(name_id, }\DataTypeTok{levels =}\NormalTok{ name_id)) }\OperatorTok{%>%}
+         \DataTypeTok{name_id =}\NormalTok{ forcats}\OperatorTok{::}\KeywordTok{fct_inorder}\NormalTok{(stringr}\OperatorTok{::}\KeywordTok{str_c}\NormalTok{(name, }\StringTok{" ("}\NormalTok{, id, }\StringTok{")"}\NormalTok{))) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(start, name_id, }\DataTypeTok{colour =}\NormalTok{ party)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xend =}\NormalTok{ end, }\DataTypeTok{yend =}\NormalTok{ name_id)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{Republican =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{Democratic =} \StringTok{"blue"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_colour_manual}\NormalTok{(}\StringTok{"Party"}\NormalTok{, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{Republican =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{Democratic =} \StringTok{"blue"}\NormalTok{)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{scale_y_discrete}\NormalTok{(}\OtherTok{NULL}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_x_date}\NormalTok{(}\OtherTok{NULL}\NormalTok{, }\DataTypeTok{breaks =}\NormalTok{ years, }\DataTypeTok{date_labels =} \StringTok{"'%y"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.grid.minor =} \KeywordTok{element_blank}\NormalTok{())}
+\StringTok{    }\KeywordTok{scale_x_date}\NormalTok{(}\OtherTok{NULL}\NormalTok{, }\DataTypeTok{breaks =}\NormalTok{ presidential}\OperatorTok{$}\NormalTok{start, }\DataTypeTok{date_labels =} \StringTok{"'%y"}\NormalTok{,}
+                 \DataTypeTok{minor_breaks =}\NormalTok{ fouryears) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Terms of US Presdients"}\NormalTok{, }
+            \DataTypeTok{subtitle =} \StringTok{"Roosevelth (34th) to Obama (44th)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.grid.minor =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+To include both the start dates of presidential terms and every four
+years, I use different levels of emphasis. The presidential term start
+years are used as major breaks with thicker lines and x-axis labels.
+Lines for every four years is indicated with minor breaks that use
+thinner lines to distinguish them from presidential term start years and
+to avoid cluttering the plot.
 
 \hypertarget{exercise-28.4.4.4}{%
 \subsection*{\texorpdfstring{Exercise

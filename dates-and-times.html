@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-09">
+<meta name="date" content="2018-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,12 +47,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
 <script src="libs/str_view-binding-1.3.1/str_view.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61453123-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61453123-2');
+</script>
 
 
 <style type="text/css">
@@ -119,8 +128,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="r4ds.css" type="text/css" />
-<link rel="stylesheet" href="r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
 </head>
 
 <body>
@@ -786,21 +795,21 @@ within a day change over the course of the year?</p>
 </div>
 <div class="answer">
 <p>Let’s try plotting this by month:</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights_dt <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">hour</span>(dep_time) <span class="op">*</span><span class="st"> </span><span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="kw">minute</span>(dep_time),
-         <span class="dt">mon =</span> <span class="kw">as.factor</span>(month
-                         (dep_time))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">group =</span> mon, <span class="dt">colour =</span> mon)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_freqpoly</span>(<span class="dt">binwidth =</span> <span class="dv">100</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flights_dt <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_time)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dep_hour =</span> <span class="kw">update</span>(dep_time, <span class="dt">yday =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">factor</span>(<span class="kw">month</span>(dep_time))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(dep_hour, <span class="dt">color =</span> month)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_freqpoly</span>(<span class="dt">binwidth =</span> <span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</code></pre>
 <p><img src="datetimes_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This will look better if everything is normalized within groups. The reason
 that February is lower is that there are fewer days and thus fewer flights.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights_dt <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">hour</span>(dep_time) <span class="op">*</span><span class="st"> </span><span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="kw">minute</span>(dep_time),
-         <span class="dt">mon =</span> <span class="kw">as.factor</span>(month
-                         (dep_time))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> ..density.., <span class="dt">group =</span> mon, <span class="dt">colour =</span> mon)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_freqpoly</span>(<span class="dt">binwidth =</span> <span class="dv">100</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flights_dt <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_time)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dep_hour =</span> <span class="kw">update</span>(dep_time, <span class="dt">yday =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">factor</span>(<span class="kw">month</span>(dep_time))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(dep_hour, <span class="dt">color =</span> month)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_freqpoly</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..), <span class="dt">binwidth =</span> <span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</code></pre>
 <p><img src="datetimes_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>At least to me there doesn’t appear to much difference in within-day distribution over the year, but I maybe thinking about it incorrectly.</p>
 </div>
@@ -826,10 +835,8 @@ that February is lower is that there are fewer days and thus fewer flights.</p>
 <p>There exist discrepancies. It looks like there are mistakes in the dates. These
 are flights in which the actual departure time is on the <em>next</em> day relative to
 the scheduled departure time. We forgot to account for this when creating the
-date-times. The code would have had to check if the departure time is less than
-the scheduled departure time. Alternatively, simply adding the delay time is
-more robust because it will automatically account for crossing into the next
-day.</p>
+date-times using <code>make_datetime_100()</code> function in <a href="https://r4ds.had.co.nz/dates-and-times.html#from-individual-components">16.2.2 From individual components</a>. The code would have had to check if the departure time is less than
+the scheduled departure time plus departure delay (in minutes). Alternatively, simply adding the departure delay to the scheduled departure time is a more robust way to construct the departure time because it will automatically account for crossing into the next day.</p>
 </div>
 <div id="exercise-16.3.4.3" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">16.3.4.3</span></h3>
@@ -937,7 +944,7 @@ ending in 0 and 5.</p>
 <li>30 days: April, June, September, November, December</li>
 <li>28 or 29 days: February</li>
 </ul>
-<p>Though in the past, in the pre-computer era, for arithmetic convenience, bankers adopted a 360 day year with 30 day months.</p>
+<p>The month is not a duration of time defined independently of when it occurs, but a special interval between two dates.</p>
 </div>
 </div>
 <div id="exercise-16.4.5.2" class="section level3 unnumbered exercise">
@@ -991,11 +998,30 @@ I can do that by taking <code>today()</code> and truncating it to the year using
 <p>Why can’t <code>(today() %--% (today() + years(1)) / months(1)</code> work?</p>
 </div>
 <div class="answer">
-<p>It appears to work. Today is a date. Today + 1 year is a valid endpoint for an interval. And months is period that is defined in this period.</p>
-<pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">today</span>() <span class="op">%--%</span><span class="st"> </span>(<span class="kw">today</span>() <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>))) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)
-<span class="co">#&gt; [1] 12</span>
-(<span class="kw">today</span>() <span class="op">%--%</span><span class="st"> </span>(<span class="kw">today</span>() <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>))) <span class="op">/</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)
+<p>The code in the question is missing a parentheses.
+So, I will assume that that the correct code is,</p>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">today</span>() <span class="op">%--%</span><span class="st"> </span>(<span class="kw">today</span>() <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>))) <span class="op">/</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)
 <span class="co">#&gt; [1] 12</span></code></pre>
+<p>While this code will not display a warning or message, it does not work exactly as
+expected. The problem is discussed in the <a href="https://r4ds.had.co.nz/dates-and-times.html#intervals">Intervals</a> section.</p>
+<p>The numerator of the expression, <code>(today() %--% (today() + years(1))</code>, is an <em>interval</em>, which
+as a duration of time along with a starting point. The interval has an exact number of
+seconds.
+The denominator of the expression, <code>months(1)</code>, is a period, which is meaningful to humans but not defined in terms of an exact number of seconds.
+Months can be 28, 29, 30, or 31 days, so it is not clear what <code>months(1)</code> divide by?
+The code does not produce a warning message, but it will not always produce the correct result.</p>
+<p>To find the number of months within an interval use <code>%/%</code> instead of <code>/</code>,</p>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">today</span>() <span class="op">%--%</span><span class="st"> </span>(<span class="kw">today</span>() <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>))) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)
+<span class="co">#&gt; Note: method with signature &#39;Timespan#Timespan&#39; chosen for function &#39;%/%&#39;,</span>
+<span class="co">#&gt;  target signature &#39;Interval#Period&#39;.</span>
+<span class="co">#&gt;  &quot;Interval#ANY&quot;, &quot;ANY#Period&quot; would also be valid</span>
+<span class="co">#&gt; [1] 12</span></code></pre>
+<p>Alternatively, you could define a “month” as 30 days, and run</p>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">today</span>() <span class="op">%--%</span><span class="st"> </span>(<span class="kw">today</span>() <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>))) <span class="op">/</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">30</span>)
+<span class="co">#&gt; [1] 12.2</span></code></pre>
+<p>There’s one other minor way in which this will not work is that <code>today() + years(1)</code> is not defined for February 29th on leap years:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="st">&quot;2016-02-29&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)
+<span class="co">#&gt; [1] NA</span></code></pre>
 </div>
 </div>
 </div>

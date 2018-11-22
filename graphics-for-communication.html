@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-09">
+<meta name="date" content="2018-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,12 +47,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
 <script src="libs/str_view-binding-1.3.1/str_view.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61453123-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61453123-2');
+</script>
 
 
 <style type="text/css">
@@ -119,8 +128,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="r4ds.css" type="text/css" />
-<link rel="stylesheet" href="r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
 </head>
 
 <body>
@@ -716,7 +725,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="answer">
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,
-       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(class, hwy, median), <span class="dt">y =</span> hwy)) <span class="op">+</span>
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> forcats<span class="op">::</span><span class="kw">fct_reorder</span>(class, hwy), <span class="dt">y =</span> hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(
@@ -738,7 +747,7 @@ Use your modeling tools to fit and display</p>
 <div class="answer">
 <p>a better model.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">colour =</span> class)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(
     <span class="dt">title =</span> <span class="st">&quot;Fuel efficiency generally decreases with engine size&quot;</span>,
@@ -958,22 +967,29 @@ It is equivalent to using the <code>labs</code> function.</p>
 </ol>
 </div>
 <div class="answer">
-<pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">make_date</span>(<span class="kw">seq</span>(<span class="kw">year</span>(<span class="kw">min</span>(presidential<span class="op">$</span>start)),
-             <span class="kw">year</span>(<span class="kw">max</span>(presidential<span class="op">$</span>end)),
-             <span class="dt">by =</span> <span class="dv">4</span>), <span class="dv">1</span>, <span class="dv">1</span>)
+<pre class="sourceCode r"><code class="sourceCode r">fouryears &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">make_date</span>(<span class="kw">seq</span>(<span class="kw">year</span>(<span class="kw">min</span>(presidential<span class="op">$</span>start)),
+                                      <span class="kw">year</span>(<span class="kw">max</span>(presidential<span class="op">$</span>end)),
+                                      <span class="dt">by =</span> <span class="dv">4</span>), <span class="dv">1</span>, <span class="dv">1</span>)
 
 presidential <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> <span class="op">+</span><span class="st"> </span><span class="kw">row_number</span>(),
-         <span class="dt">name_id =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(name, <span class="st">&quot; (&quot;</span>, id, <span class="st">&quot;)&quot;</span>),
-         <span class="dt">name_id =</span> <span class="kw">factor</span>(name_id, <span class="dt">levels =</span> name_id)) <span class="op">%&gt;%</span>
+         <span class="dt">name_id =</span> forcats<span class="op">::</span><span class="kw">fct_inorder</span>(stringr<span class="op">::</span><span class="kw">str_c</span>(name, <span class="st">&quot; (&quot;</span>, id, <span class="st">&quot;)&quot;</span>))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, name_id, <span class="dt">colour =</span> party)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> name_id)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="st">&quot;Party&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_discrete</span>(<span class="ot">NULL</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> years, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</code></pre>
+<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential<span class="op">$</span>start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>,
+                 <span class="dt">minor_breaks =</span> fouryears) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Terms of US Presdients&quot;</span>, 
+            <span class="dt">subtitle =</span> <span class="st">&quot;Roosevelth (34th) to Obama (44th)&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</code></pre>
 <p><img src="graphics-for-communication_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>To include both the start dates of presidential terms and every
+four years, I use different levels of emphasis.
+The presidential term start years are used as major breaks with thicker lines and x-axis labels.
+Lines for every four years is indicated with minor breaks that use thinner lines to distinguish them from presidential term start years and to avoid cluttering the plot.</p>
 </div>
 </div>
 <div id="exercise-28.4.4.4" class="section level3 unnumbered exercise">

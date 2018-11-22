@@ -55,6 +55,15 @@ If the weather was included for all airports in the US, then it would provide th
 The `weather` data frame columns (`year`, `month`, `day`, `hour`, `origin`) are a foreign key for the `flights` data frame columns (`year`, `month`, `day`, `hour`, `dest`).
 This would provide information about the weather at the distination airport at the time of the flight take off, unless the arrival date-time were calculated.
 
+So why was this not a relationship prior to adding additional rows to the `weather` table?
+In a foreign key relationship, the collection columns of columns in the child table 
+must refer to a unique collection of columns in the parent table. 
+When the `weather` table only contained New York airports,
+there were many values of  (`year`, `month`, `day`, `hour`, `dest`) in `flights` that
+did not appear in the `weather` table. Therefore, it was not a foreign key. It was only after
+all combinations of year, month, day, hour, and airports that are defined in `flights`
+were added to the `weather` table that there existed this relation between these tables.
+
 </div>
 
 ### Exercise <span class="exercise-number">13.2.1.4</span> {.unnumbered .exercise}
@@ -287,7 +296,6 @@ For the `Master`, `Manager`, and `AwardsManagers` tables:
 -   `AwardsManagers`:
 
     -   Primary keys: `playerID`, `awardID`, `yearID`
-
     -   `playerID` = `Master$playerID` (many-to-1)
 
 
@@ -328,8 +336,6 @@ flights2 <- flights %>%
 Compute the average delay by destination, then join on the `airports` data frame so you can show the spatial distribution of delays. Here’s an easy way to draw a map of the United States:
 </div>
 
-<div class="answer">
-
 
 ```r
 airports %>%
@@ -345,6 +351,10 @@ airports %>%
 \begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 (Don’t worry if you don’t understand what `semi_join()` does — you’ll learn about it next.)
+
+You might want to use the size or color of the points to display the average delay for each airport.
+
+<div class="answer">
 
 
 ```r
@@ -365,8 +375,6 @@ avg_dest_delays %>%
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-16-1} \end{center}
-
-You might want to use the size or color of the points to display the average delay for each airport.
 
 </div>
 
@@ -447,30 +455,73 @@ Is there a relationship between the age of a plane and its delays?
 
 <div class="answer">
 
-Surprisingly not. If anything (departure) delay seems to decrease slightly with the age of the plane.
-This could be due to choices about how airlines allocate planes to airports.
+The question does not specify whether the relationship is with departure delay
+or arrival delay. I will look at both.
+
+To compare the age of the plane to flights delay, I will merge `flights` with
+the `planes`, which contains a variable `plane_year`, with the year in which the 
+plane was built. To look at the relationship between plane age and departure
+delay, I will calculate the average arrival and departure delay for each age 
+of a flight.
 
 ```r
-plane_ages <-
-  planes %>%
-  mutate(age = 2013 - year) %>%
-  select(tailnum, age)
-
-flights %>%
-  inner_join(plane_ages, by = "tailnum") %>%
+plane_cohorts <- inner_join(flights,
+           select(planes, tailnum, plane_year = year), 
+           by = "tailnum") %>%
+  mutate(age = year - plane_year) %>%
+  filter(!is.na(age)) %>%
   group_by(age) %>%
-  filter(!is.na(dep_delay)) %>%
-  summarise(delay = mean(dep_delay)) %>%
-  ggplot(aes(x = age, y = delay)) +
+  summarise(dep_delay_mean = mean(dep_delay, na.rm = TRUE),
+            dep_delay_sd = sd(dep_delay, na.rm = TRUE),
+            arr_delay_mean = mean(arr_delay, na.rm = TRUE),
+            arr_delay_sd = sd(arr_delay, na.rm = TRUE),
+            n = n())
+```
+
+I will look for a relationship between departure delay and age by plotting 
+age against the average departure delay. The average departure delay is increasing
+for planes with ages up until 10 years. After that the departure delay decreases 
+or levels off. The decrease in departure delay could be because older planes
+with many mechanical issues are removed from service or because air lines schedule
+these planes with enough time so that mechanical issues do not delay them.
+There are few planes older than 30 years, so the relationship is mostly noise
+after that.
+
+
+```r
+ggplot(plane_cohorts, aes(x = age, y = dep_delay_mean)) +
+  geom_ribbon(mapping = aes(ymin = dep_delay_mean - 
+                              2 * dep_delay_sd / sqrt(n), 
+                            ymax = dep_delay_mean + 
+                              2 * dep_delay_sd / sqrt(n)),
+              alpha = 0.3) +
   geom_point() +
-  geom_line()
-#> Warning: Removed 1 rows containing missing values (geom_point).
-#> Warning: Removed 1 rows containing missing values (geom_path).
+  scale_x_continuous("Age of plane (years)", breaks = seq(0, 50, by = 10)) +
+  scale_y_continuous("Mean Departure Delay (minutes)")
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+There is a similar relationship in arrival delays. Delays increase with the age 
+of the plane until ten years, then it declines and flattens out.
+
+```r
+ggplot(plane_cohorts, aes(x = age, y = arr_delay_mean)) +
+  geom_ribbon(mapping = aes(ymin = arr_delay_mean - 
+                              2 * arr_delay_sd / sqrt(n), 
+                            ymax = arr_delay_mean + 
+                              2 * arr_delay_sd / sqrt(n)),
+              alpha = 0.3) +
+  geom_point() +
+  scale_x_continuous("Age of Plane (years)", breaks = seq(0, 50, by = 10)) +
+  scale_y_continuous("Mean Departure Delay (minutes)")
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 </div>
 
@@ -502,14 +553,14 @@ flight_weather %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 </div>
 
 ### Exercise <span class="exercise-number">13.4.6.5</span> {.unnumbered .exercise}
 
 <div class="question">
-What happened on June 13 2013? Display the spatial pattern of delays, and then use Google to cross-reference with the weather.
+What happened on June 13, 2013? Display the spatial pattern of delays, and then use Google to cross-reference with the weather.
 </div>
 
 <div class="answer">
@@ -535,7 +586,7 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{relational-data_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 </div>
 
@@ -612,33 +663,7 @@ Combine `fueleconomy::vehicles` and `fueleconomy::common` to find only the recor
 
 <div class="answer">
 
-The table `fueleconomy::common` identifies vehicles by `make` and `model`:
-
-```r
-glimpse(fueleconomy::vehicles)
-#> Observations: 33,442
-#> Variables: 12
-#> $ id    <int> 27550, 28426, 27549, 28425, 1032, 1033, 3347, 13309, 133...
-#> $ make  <chr> "AM General", "AM General", "AM General", "AM General", ...
-#> $ model <chr> "DJ Po Vehicle 2WD", "DJ Po Vehicle 2WD", "FJ8c Post Off...
-#> $ year  <int> 1984, 1984, 1984, 1984, 1985, 1985, 1987, 1997, 1997, 19...
-#> $ class <chr> "Special Purpose Vehicle 2WD", "Special Purpose Vehicle ...
-#> $ trans <chr> "Automatic 3-spd", "Automatic 3-spd", "Automatic 3-spd",...
-#> $ drive <chr> "2-Wheel Drive", "2-Wheel Drive", "2-Wheel Drive", "2-Wh...
-#> $ cyl   <int> 4, 4, 6, 6, 4, 6, 6, 4, 4, 6, 4, 4, 6, 4, 4, 6, 5, 5, 6,...
-#> $ displ <dbl> 2.5, 2.5, 4.2, 4.2, 2.5, 4.2, 3.8, 2.2, 2.2, 3.0, 2.3, 2...
-#> $ fuel  <chr> "Regular", "Regular", "Regular", "Regular", "Regular", "...
-#> $ hwy   <int> 17, 17, 13, 13, 17, 13, 21, 26, 28, 26, 27, 29, 26, 27, ...
-#> $ cty   <int> 18, 18, 13, 13, 16, 13, 14, 20, 22, 18, 19, 21, 17, 20, ...
-glimpse(fueleconomy::common)
-#> Observations: 347
-#> Variables: 4
-#> $ make  <chr> "Acura", "Acura", "Acura", "Acura", "Acura", "Audi", "Au...
-#> $ model <chr> "Integra", "Legend", "MDX 4WD", "NSX", "TSX", "A4", "A4 ...
-#> $ n     <int> 42, 28, 12, 28, 27, 49, 49, 66, 20, 12, 46, 20, 30, 29, ...
-#> $ years <int> 16, 10, 12, 14, 11, 19, 15, 19, 19, 12, 20, 15, 16, 16, ...
-```
-
+The columns `make` and `model` are the primary key for `fueleconomy::common`.
 
 ```r
 fueleconomy::vehicles %>%
@@ -654,6 +679,50 @@ fueleconomy::vehicles %>%
 #> 6  4184 Acura Integ~  1988 Subc~ Manu~ Fron~     4   1.6 Regu~    28    23
 #> # ... with 1.452e+04 more rows
 ```
+
+Why is `model` alone not a primary key? It is possible for two car brands
+(`make`) to produce a car with the same name (`make`). In both the `vehicles`
+and `common` data we can find examples.
+
+```r
+fueleconomy::vehicles %>% 
+  distinct(model, make) %>% 
+  group_by(model) %>%
+  filter(n() > 1) %>%
+  arrange(model) %>%
+  head()
+#> # A tibble: 6 x 2
+#> # Groups:   model [3]
+#>   make                   model              
+#>   <chr>                  <chr>              
+#> 1 Audi                   200                
+#> 2 Chrysler               200                
+#> 3 Mcevoy Motors          240 DL/240 GL Wagon
+#> 4 Volvo                  240 DL/240 GL Wagon
+#> 5 Lambda Control Systems 300E               
+#> 6 Mercedes-Benz          300E
+```
+
+```r
+fueleconomy::common %>% 
+  distinct(model, make) %>% 
+  group_by(model) %>%
+  filter(n() > 1) %>%
+  arrange(model) %>%
+  head()
+#> # A tibble: 6 x 2
+#> # Groups:   model [3]
+#>   make       model    
+#>   <chr>      <chr>    
+#> 1 Dodge      Colt     
+#> 2 Plymouth   Colt     
+#> 3 Mitsubishi Truck 2WD
+#> 4 Nissan     Truck 2WD
+#> 5 Toyota     Truck 2WD
+#> 6 Mitsubishi Truck 4WD
+```
+If we were to merge these data `model` alone, there would be incorrect matches.
+For example, see "Limousine".
 
 </div>
 
@@ -717,12 +786,12 @@ Let's check:
 multi_carrier_planes <-
   flights %>%
   filter(!is.na(tailnum)) %>%
-  count(tailnum, carrier) %>%
+  distinct(tailnum, carrier) %>%
   count(tailnum) %>%
-  filter(nn > 1)
+  filter(n > 1)
 multi_carrier_planes
 #> # A tibble: 17 x 2
-#>   tailnum    nn
+#>   tailnum     n
 #>   <chr>   <int>
 #> 1 N146PQ      2
 #> 2 N153PQ      2
@@ -758,7 +827,7 @@ multi_carrier_planes
 
 The names of airlines are easier to understand than the two-letter carrier codes.
 Join the multi-airline table with the associated airline in `airlines` using the `carrier` column.
-The spread the data so it has columns `carrier_1`, `carrier_2`, and so on.
+We spread the data so it has columns `carrier_1`, `carrier_2`, and so on.
 This is not tidy, but it is more easier to display.
 
 ```r

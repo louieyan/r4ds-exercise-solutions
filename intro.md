@@ -13,7 +13,7 @@ These solutions have benefited from those who fixed problems and contributed
 solutions. Thank you to all of those who contributed on
 [GitHub](https://github.com/jrnold/r4ds-exercise-solutions/graphs/contributors) 
 (in alphabetical order):
-(in alphabetical order) [\@adamblake](https://github.com/adamblake), [\@benherbertson](https://github.com/benherbertson), [\@carajoos](https://github.com/carajoos), [\@dcgreaves](https://github.com/dcgreaves), [\@decoursin](https://github.com/decoursin), [\@dongzhuoer](https://github.com/dongzhuoer), [\@GoldbergData](https://github.com/GoldbergData), [\@gvwilson](https://github.com/gvwilson), [\@JamesCuster](https://github.com/JamesCuster), [\@jmclawson](https://github.com/jmclawson), [\@KleinGeard](https://github.com/KleinGeard), [\@mjones01](https://github.com/mjones01), [\@nickcorona](https://github.com/nickcorona), [\@nzxwang](https://github.com/nzxwang), and[\@tinhb92](https://github.com/tinhb92).
+(in alphabetical order) [\@adamblake](https://github.com/adamblake), [\@benherbertson](https://github.com/benherbertson), [\@carajoos](https://github.com/carajoos), [\@dcgreaves](https://github.com/dcgreaves), [\@decoursin](https://github.com/decoursin), [\@dongzhuoer](https://github.com/dongzhuoer), [\@GoldbergData](https://github.com/GoldbergData), [\@gvwilson](https://github.com/gvwilson), [\@JamesCuster](https://github.com/JamesCuster), [\@jmclawson](https://github.com/jmclawson), [\@KleinGeard](https://github.com/KleinGeard), [\@mjones01](https://github.com/mjones01), [\@mvhone](https://github.com/mvhone), [\@nickcorona](https://github.com/nickcorona), [\@nzxwang](https://github.com/nzxwang), and[\@tinhb92](https://github.com/tinhb92).
 
 ## Organization {-}
 

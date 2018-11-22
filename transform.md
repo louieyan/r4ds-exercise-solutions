@@ -1828,59 +1828,106 @@ Look at each destination. Can you find flights that are suspiciously fast? (i.e.
 
 <div class="answer">
 
-When calculating this answer we should only compare flights within the same origin, destination pair.
+When calculating this answer we should only compare flights within the same (origin, destination) pair.
 
-A common approach to finding unusual observations would be to calculate the z-score of observations each flight.
+A common approach to finding unusual observations would be to [standardize](https://en.wikipedia.org/wiki/Standard_score) the
+observations each flight by subtracting the mean and dividing by the standard deviation,
+$$
+\mathsf{standarized}(x) = \frac{x - \mathsf{mean}(x)}{\mathsf{sd}(x)} .
+$$
+This is often called a $z$-score.
+The units of the standardized variable are standard deviations from the mean. 
+This is essential, because it will put the flight times from different routes all on the same scale.
+The larger the absolute value of standardized variable for an observation, the more unusual the observation is.
+
 
 ```r
-flights_with_zscore <- flights %>%
+standardized_flights <- flights %>%
   filter(!is.na(air_time)) %>%
   group_by(dest, origin) %>%
   mutate(air_time_mean = mean(air_time),
          air_time_sd = sd(air_time),
          n = n()) %>%
   ungroup() %>%
-  mutate(z_score = (air_time - air_time_mean) / air_time_sd)
+  mutate(air_time_standard = (air_time - air_time_mean) / air_time_sd)
 ```
 
-Possible unusual flights are those flights with the largest absolute values of z-scores.
+The distribution of the standardized air flights shows them to have a long right tail.
 
 ```r
-flights_with_zscore %>%
-  arrange(desc(abs(z_score))) %>%
-  select() %>%
-  print(n = 15)
-#> # A tibble: 327,346 x 0
+ggplot(standardized_flights, aes(x = air_time_standard)) +
+  geom_density()
+#> Warning: Removed 4 rows containing non-finite values (stat_density).
 ```
 
-However, this does not necessarily imply that there was a data entry error.
-We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is 
-an error in our understanding of the data.
 
-<!--
-One idea would be to compare actual air time with the scheduled air time.
-However, this requires the scheduled air time - which is not easily available
-without the taxi time data, which is not included in the flights datasets
--->
 
-One potential issue with the way that we calculated z-scores is that the mean and standard deviation used to calculate it include the unusual observations that we are looking for.
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-89-1} \end{center}
+
+What about the distribution compared to the length of the flight? 
+We might be concerned that short flights may have too many unusual events.
+
+```r
+ggplot(standardized_flights, aes(x = air_time_mean, y = air_time_standard)) +
+  geom_point()
+#> Warning: Removed 4 rows containing missing values (geom_point).
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{transform_files/figure-latex/unnamed-chunk-90-1} \end{center}
+
+Unusually fast flights are those flights that are the  number of standard deviations from the mean 
+
+```r
+standardized_flights %>%
+  arrange(air_time_standard) %>%
+  mutate(date = str_c(year, "-", month, "-", day, " ", dep_time), 
+         flightnum = str_c(carrier, flight)) %>%
+  select(date, flightnum, origin, dest, distance, air_time, air_time_mean, air_time_standard) %>%
+  head(10) %>%
+  print(width = 100)
+#> # A tibble: 10 x 8
+#>   date            flightnum origin dest  distance air_time air_time_mean
+#>   <chr>           <chr>     <chr>  <chr>    <dbl>    <dbl>         <dbl>
+#> 1 2013-5-25 1709  DL1499    LGA    ATL        762       65         114. 
+#> 2 2013-7-2 1558   EV4667    EWR    MSP       1008       93         151. 
+#> 3 2013-5-13 2040  EV4292    EWR    GSP        594       55          93.2
+#> 4 2013-11-10 2307 B62002    JFK    BUF        301       38          57.1
+#> 5 2013-3-23 1914  EV3805    EWR    BNA        748       70         115. 
+#> 6 2013-9-29 1359  EV4687    EWR    CVG        569       62          96.1
+#>   air_time_standard
+#>               <dbl>
+#> 1             -5.03
+#> 2             -4.83
+#> 3             -4.72
+#> 4             -4.10
+#> 5             -4.07
+#> 6             -4.03
+#> # ... with 4 more rows
+```
+
+However, this does not necessarily imply that there was a data entry error. We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is an error in our understanding of the data.
+
+A potential issue with the way that we standardized the flights is that the mean and standard deviation used to calculate it include the unusual observations that we are looking for.
 Since the mean and standard deviation are sensitive to outliers,
 that means that an outlier could affect the mean and standard deviation calculations enough that it does not look like one.
-We would want to calculate the z-score of each observation using the mean and standard deviation based on all other
+We would want to calculate the standardize each observation using the mean and standard deviation based on all other
 flights to that origin and destination.
-This will be more of an issue if the number of of observations is small.
-Thankfully, there are easy methods to update the mean and variance by [removing an observation](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance), but for now, we won't use them.[^methods]
+This will be more of an issue if the number of of observations is small.[^methods]
 
 Another way to improve this calculation is to use the same method
 used in box plots (see `geom_boxplot()`) to screen outliers.
-That method uses the median and inter-quartile range, and thus is less sensitive to outliers.
+That method uses the median and inter-quartile range, and thus is less sensitive to outliers. 
 Adjust the previous code and see if it makes a difference.
 
-All of these answers have relied on the distribution of comparable observations (flights from the same origin to the same destination) to flag unusual observations.
+All of these answers have relied on the distribution of comparable observations, flights from the same origin to the same destination,  to flag unusual observations.
 Apart from our knowledge that flights from the same origin to the same destination should have similar air times, we have not used any domain specific knowledge.
-But actually know much more about this problem.
+But we know much more about this problem.
 We know that aircraft have maximum speeds.
-So could use the time and distance of each flight to calculate the average speed of each flight and find any clearly impossibly fast flights.
+So could also use the time and distance of each flight to calculate the average speed of each flight and find any clearly impossibly fast flights.
+This complicated by the way in which winds, especially the jetstream influence the ground-speed of flights.
+A strong tailwind can increase ground-speed of the aircraft by [200 mph](https://www.wired.com/story/norwegian-air-transatlantic-speed-record/).
 
 </div>
 
@@ -1979,7 +2026,11 @@ flights %>%
 
 </div>
 
-[^methods]: In most interesting data analysis questions, no answer ever "right". With infinite time and money, an analysis could almost always improve their answer with more data or better methods.
+[^methods]: There are easy methods to update the mean and variance by [removing an observation](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance),
+    but I don't pursue that option here. 
+    In most interesting data analysis questions, no answer ever "right".
+    With infinite time and money, an analysis could almost always improve 
+    their answer with more data or better methods.
     The difficulty in real life is finding the quickest, simplest method
     that works "good enough".
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-09">
+<meta name="date" content="2018-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,12 +47,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
 <script src="libs/str_view-binding-1.3.1/str_view.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61453123-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61453123-2');
+</script>
 
 
 <style type="text/css">
@@ -119,8 +128,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="r4ds.css" type="text/css" />
-<link rel="stylesheet" href="r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
+<link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
 </head>
 
 <body>
@@ -2100,46 +2109,79 @@ we only consider only delayed flights, and ignore on-time or early flights.</p>
 <p>Look at each destination. Can you find flights that are suspiciously fast? (i.e. flights that represent a potential data entry error). Compute the air time of a flight relative to the shortest flight to that destination. Which flights were most delayed in the air?</p>
 </div>
 <div class="answer">
-<p>When calculating this answer we should only compare flights within the same origin, destination pair.</p>
-<p>A common approach to finding unusual observations would be to calculate the z-score of observations each flight.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights_with_zscore &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
+<p>When calculating this answer we should only compare flights within the same (origin, destination) pair.</p>
+<p>A common approach to finding unusual observations would be to <a href="https://en.wikipedia.org/wiki/Standard_score">standardize</a> the
+observations each flight by subtracting the mean and dividing by the standard deviation,
+<span class="math display">\[
+\mathsf{standarized}(x) = \frac{x - \mathsf{mean}(x)}{\mathsf{sd}(x)} .
+\]</span>
+This is often called a <span class="math inline">\(z\)</span>-score.
+The units of the standardized variable are standard deviations from the mean.
+This is essential, because it will put the flight times from different routes all on the same scale.
+The larger the absolute value of standardized variable for an observation, the more unusual the observation is.</p>
+<pre class="sourceCode r"><code class="sourceCode r">standardized_flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(air_time)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(dest, origin) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">air_time_mean =</span> <span class="kw">mean</span>(air_time),
          <span class="dt">air_time_sd =</span> <span class="kw">sd</span>(air_time),
          <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z_score =</span> (air_time <span class="op">-</span><span class="st"> </span>air_time_mean) <span class="op">/</span><span class="st"> </span>air_time_sd)</code></pre>
-<p>Possible unusual flights are those flights with the largest absolute values of z-scores.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights_with_zscore <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(<span class="kw">abs</span>(z_score))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)
-<span class="co">#&gt; # A tibble: 327,346 x 0</span></code></pre>
-<p>However, this does not necessarily imply that there was a data entry error.
-We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is
-an error in our understanding of the data.</p>
-<!--
-One idea would be to compare actual air time with the scheduled air time.
-However, this requires the scheduled air time - which is not easily available
-without the taxi time data, which is not included in the flights datasets
--->
-<p>One potential issue with the way that we calculated z-scores is that the mean and standard deviation used to calculate it include the unusual observations that we are looking for.
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">air_time_standard =</span> (air_time <span class="op">-</span><span class="st"> </span>air_time_mean) <span class="op">/</span><span class="st"> </span>air_time_sd)</code></pre>
+<p>The distribution of the standardized air flights shows them to have a long right tail.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(standardized_flights, <span class="kw">aes</span>(<span class="dt">x =</span> air_time_standard)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>()
+<span class="co">#&gt; Warning: Removed 4 rows containing non-finite values (stat_density).</span></code></pre>
+<p><img src="transform_files/figure-html/unnamed-chunk-89-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>What about the distribution compared to the length of the flight?
+We might be concerned that short flights may have too many unusual events.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(standardized_flights, <span class="kw">aes</span>(<span class="dt">x =</span> air_time_mean, <span class="dt">y =</span> air_time_standard)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()
+<span class="co">#&gt; Warning: Removed 4 rows containing missing values (geom_point).</span></code></pre>
+<p><img src="transform_files/figure-html/unnamed-chunk-90-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Unusually fast flights are those flights that are the number of standard deviations from the mean</p>
+<pre class="sourceCode r"><code class="sourceCode r">standardized_flights <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(air_time_standard) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">str_c</span>(year, <span class="st">&quot;-&quot;</span>, month, <span class="st">&quot;-&quot;</span>, day, <span class="st">&quot; &quot;</span>, dep_time), 
+         <span class="dt">flightnum =</span> <span class="kw">str_c</span>(carrier, flight)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(date, flightnum, origin, dest, distance, air_time, air_time_mean, air_time_standard) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">width =</span> <span class="dv">100</span>)
+<span class="co">#&gt; # A tibble: 10 x 8</span>
+<span class="co">#&gt;   date            flightnum origin dest  distance air_time air_time_mean</span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;         &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 2013-5-25 1709  DL1499    LGA    ATL        762       65         114. </span>
+<span class="co">#&gt; 2 2013-7-2 1558   EV4667    EWR    MSP       1008       93         151. </span>
+<span class="co">#&gt; 3 2013-5-13 2040  EV4292    EWR    GSP        594       55          93.2</span>
+<span class="co">#&gt; 4 2013-11-10 2307 B62002    JFK    BUF        301       38          57.1</span>
+<span class="co">#&gt; 5 2013-3-23 1914  EV3805    EWR    BNA        748       70         115. </span>
+<span class="co">#&gt; 6 2013-9-29 1359  EV4687    EWR    CVG        569       62          96.1</span>
+<span class="co">#&gt;   air_time_standard</span>
+<span class="co">#&gt;               &lt;dbl&gt;</span>
+<span class="co">#&gt; 1             -5.03</span>
+<span class="co">#&gt; 2             -4.83</span>
+<span class="co">#&gt; 3             -4.72</span>
+<span class="co">#&gt; 4             -4.10</span>
+<span class="co">#&gt; 5             -4.07</span>
+<span class="co">#&gt; 6             -4.03</span>
+<span class="co">#&gt; # ... with 4 more rows</span></code></pre>
+<p>However, this does not necessarily imply that there was a data entry error. We should check these flights to see whether there was some reason for the difference, e.g. an emergency or other unusual occurence, or whether there is an error in our understanding of the data.</p>
+<p>A potential issue with the way that we standardized the flights is that the mean and standard deviation used to calculate it include the unusual observations that we are looking for.
 Since the mean and standard deviation are sensitive to outliers,
 that means that an outlier could affect the mean and standard deviation calculations enough that it does not look like one.
-We would want to calculate the z-score of each observation using the mean and standard deviation based on all other
+We would want to calculate the standardize each observation using the mean and standard deviation based on all other
 flights to that origin and destination.
-This will be more of an issue if the number of of observations is small.
-Thankfully, there are easy methods to update the mean and variance by <a href="https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance">removing an observation</a>, but for now, we won’t use them.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+This will be more of an issue if the number of of observations is small.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>Another way to improve this calculation is to use the same method
 used in box plots (see <code>geom_boxplot()</code>) to screen outliers.
 That method uses the median and inter-quartile range, and thus is less sensitive to outliers.
 Adjust the previous code and see if it makes a difference.</p>
-<p>All of these answers have relied on the distribution of comparable observations (flights from the same origin to the same destination) to flag unusual observations.
+<p>All of these answers have relied on the distribution of comparable observations, flights from the same origin to the same destination, to flag unusual observations.
 Apart from our knowledge that flights from the same origin to the same destination should have similar air times, we have not used any domain specific knowledge.
-But actually know much more about this problem.
+But we know much more about this problem.
 We know that aircraft have maximum speeds.
-So could use the time and distance of each flight to calculate the average speed of each flight and find any clearly impossibly fast flights.</p>
+So could also use the time and distance of each flight to calculate the average speed of each flight and find any clearly impossibly fast flights.
+This complicated by the way in which winds, especially the jetstream influence the ground-speed of flights.
+A strong tailwind can increase ground-speed of the aircraft by <a href="https://www.wired.com/story/norwegian-air-transatlantic-speed-record/">200 mph</a>.</p>
 </div>
 </div>
 <div id="exercise-5.7.1.7" class="section level3 unnumbered exercise">
@@ -2224,7 +2266,11 @@ This business model explains why ExpressJet services the most destinations.</p>
 ended (November 3). But since daylight savings goes into effect at 02:00,
 and generally flights are not scheduled to depart between midnight and 2 am,
 the only flights which would be scheduled to depart in Eastern Daylight Savings Time (Eastern Standard Time) time but departed in Eastern Standard Time (Daylight Savings Time), would have been scheduled before midnight, meaning they were delayed across days.<a href="data-transformation.html#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>In most interesting data analysis questions, no answer ever “right”. With infinite time and money, an analysis could almost always improve their answer with more data or better methods.
+<li id="fn3"><p>There are easy methods to update the mean and variance by <a href="https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance">removing an observation</a>,
+but I don’t pursue that option here.
+In most interesting data analysis questions, no answer ever “right”.
+With infinite time and money, an analysis could almost always improve
+their answer with more data or better methods.
 The difficulty in real life is finding the quickest, simplest method
 that works “good enough”.<a href="data-transformation.html#fnref3" class="footnote-back">↩</a></p></li>
 </ol>

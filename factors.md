@@ -88,7 +88,7 @@ The most common `relig` is "Protestant"
 ```r
 gss_cat %>%
   count(relig) %>%
-  arrange(-n) %>%
+  arrange(desc(n)) %>%
   head(1)
 #> # A tibble: 1 x 2
 #>   relig          n
@@ -101,7 +101,7 @@ The most common `partyid` is "Independent"
 ```r
 gss_cat %>%
   count(partyid) %>%
-  arrange(-n) %>%
+  arrange(desc(n)) %>%
   head(1)
 #> # A tibble: 1 x 2
 #>   partyid         n
@@ -257,8 +257,8 @@ levels(gss_cat$race)
 ```r
 gss_cat %>%
   ggplot(aes(race)) +
-  geom_bar(drop = FALSE)
-#> Warning: Ignoring unknown parameters: drop
+  geom_bar() +
+  scale_x_discrete(drop = FALSE)
 ```
 
 

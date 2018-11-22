@@ -116,12 +116,12 @@ within a day change over the course of the year?
 Let's try plotting this by month:
 
 ```r
-flights_dt %>%
-  mutate(time = hour(dep_time) * 100 + minute(dep_time),
-         mon = as.factor(month
-                         (dep_time))) %>%
-  ggplot(aes(x = time, group = mon, colour = mon)) +
-  geom_freqpoly(binwidth = 100)
+flights_dt %>% 
+  filter(!is.na(dep_time)) %>% 
+    mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+    mutate(month = factor(month(dep_time))) %>%
+  ggplot(aes(dep_hour, color = month)) +
+    geom_freqpoly(binwidth = 60*60)
 ```
 
 
@@ -132,12 +132,12 @@ This will look better if everything is normalized within groups. The reason
 that February is lower is that there are fewer days and thus fewer flights.
 
 ```r
-flights_dt %>%
-  mutate(time = hour(dep_time) * 100 + minute(dep_time),
-         mon = as.factor(month
-                         (dep_time))) %>%
-  ggplot(aes(x = time, y = ..density.., group = mon, colour = mon)) +
-  geom_freqpoly(binwidth = 100)
+flights_dt %>% 
+  filter(!is.na(dep_time)) %>% 
+    mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+    mutate(month = factor(month(dep_time))) %>%
+  ggplot(aes(dep_hour, color = month)) +
+    geom_freqpoly(aes(y = ..density..), binwidth = 60*60)
 ```
 
 
@@ -175,10 +175,8 @@ flights_dt %>%
 There exist discrepancies. It looks like there are mistakes in the dates. These
 are flights in which the actual departure time is on the *next* day relative to
 the scheduled departure time. We forgot to account for this when creating the
-date-times. The code would have had to check if the departure time is less than
-the scheduled departure time. Alternatively, simply adding the delay time is
-more robust because it will automatically account for crossing into the next
-day.
+date-times using `make_datetime_100()` function in [16.2.2 From individual components](https://r4ds.had.co.nz/dates-and-times.html#from-individual-components). The code would have had to check if the departure time is less than
+the scheduled departure time plus departure delay (in minutes). Alternatively, simply adding the departure delay to the scheduled departure time is a more robust way to construct the departure time because it will automatically account for crossing into the next day.
 
 ### Exercise <span class="exercise-number">16.3.4.3</span> {.unnumbered .exercise}
 
@@ -342,7 +340,7 @@ There is no direct unambiguous value of months in seconds since months have diff
 -   30 days: April, June, September, November, December
 -   28 or 29 days: February
 
-Though in the past, in the pre-computer era, for arithmetic convenience, bankers adopted a 360 day year with 30 day months.
+The month is not a duration of time defined independently of when it occurs, but a special interval between two dates.
 
 </div>
 
@@ -418,14 +416,48 @@ Why can’t `(today() %--% (today() + years(1)) / months(1)` work?
 
 <div class="answer">
 
-It appears to work. Today is a date. Today + 1 year is a valid endpoint for an interval. And months is period that is defined in this period.
+The code in the question is missing a parentheses.
+So, I will assume that that the correct code is,
 
 ```r
-(today() %--% (today() + years(1))) %/% months(1)
-#> [1] 12
 (today() %--% (today() + years(1))) / months(1)
 #> [1] 12
 ```
+
+While this code will not display a warning or message, it does not work exactly as
+expected. The problem is discussed in the [Intervals](https://r4ds.had.co.nz/dates-and-times.html#intervals) section.
+
+The numerator of the expression, `(today() %--% (today() + years(1))`, is an *interval*, which 
+as a duration of time along with a starting point. The interval has an exact number of
+seconds.
+The denominator of the expression, `months(1)`, is a period, which is meaningful to humans but not defined in terms of an exact number of seconds.
+Months can be 28, 29, 30, or 31 days, so it is not clear what `months(1)` divide by?
+The code does not produce a warning message, but it will not always produce the correct result.
+
+To find the number of months within an interval use `%/%` instead of `/`,
+
+```r
+(today() %--% (today() + years(1))) %/% months(1)
+#> Note: method with signature 'Timespan#Timespan' chosen for function '%/%',
+#>  target signature 'Interval#Period'.
+#>  "Interval#ANY", "ANY#Period" would also be valid
+#> [1] 12
+```
+
+Alternatively, you could define a "month" as 30 days, and run
+
+```r
+(today() %--% (today() + years(1))) / days(30)
+#> [1] 12.2
+```
+
+There's one other minor  way in which this will not work is that `today() + years(1)` is not defined for February 29th on leap years:
+
+```r
+as.Date("2016-02-29") + years(1)
+#> [1] NA
+```
+
 
 </div>
 
