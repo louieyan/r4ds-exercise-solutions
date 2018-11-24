@@ -46,21 +46,23 @@ ggplot(data = mpg,
 
 <div class="question">
 The `geom_smooth()` is somewhat misleading because the `hwy` for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines.
-Use your modeling tools to fit and display
+Use your modeling tools to fit and display a better model.
 </div>
 
 <div class="answer">
-a better model.
 
+First, I'll plot the relationship between fuel efficiency and engine size (displacement) using all cars.
+The plot shows a strong negative relationship.
 
 ```r
-ggplot(mpg, aes(displ, hwy, colour = class)) +
+ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
-    title = "Fuel efficiency generally decreases with engine size",
-    subtitle = "Subcompact cars show the greatest sensitivity to engine size",
-    caption = "Data from fueleconomy.gov"
+    title = "Fuel Efficiency Decreases with Engine Size",
+    caption = "Data from fueleconomy.gov",
+    y = "Highway Miles per Gallon",
+    x = "Engine Displacement"
   )
 ```
 
@@ -68,26 +70,65 @@ ggplot(mpg, aes(displ, hwy, colour = class)) +
 
 \begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
+However, if I disaggregate by car class, and plot the relatinship between 
+fuel efficiency and engine displacement within each class, I see a different
+relationship.
+
+1.  For all car class except subcompact cars, there is no relationship or only
+    a small negative relationship between fuel efficiency and engine size.
+
+1.  For subcompact cars, there is a strong negative relationship between fuel
+    efficiency and engine size. As the question noted, this is because the 
+    subcompact car class includes both small cheap cars, and sports cars with
+    large engines.
+
 
 ```r
-mod <- lm(hwy ~ class, data = mpg)
-mpg %>%
-  add_residuals(mod) %>%
-  ggplot(aes(displ, resid)) +
+ggplot(mpg, aes(displ, hwy, colour = class)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
-    title = "Fuel efficiency decreases with engine size",
-    subtitle = "Highway MPG for Cars After Subtracing Mean MPG of their Class",
+    title = "Fuel Efficiency Mostly Varies by Car Class",
+    subtitle = "Subcompact caries fuel efficiency varies by engine size",
     caption = "Data from fueleconomy.gov",
-    x = "Highway MPG Relative to Class",
-    y = "Engine Displacement"
+    y = "Highway Miles per Gallon",
+    x = "Engine Displacement"
   )
 ```
 
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+Another way to model and visualize the relationship between fuel efficiency
+and engine displacement after accounting for car class is to regress 
+fuel efficiency on car class, and plot the residuals of that regression against
+engine displacement.
+The residuals of the first regression are the variation in fuel efficiency
+not explained by engine displacement.
+The relationship between fuel efficiency and engine displacement is attenuated
+after accounting for car class.
+
+
+```r
+mod <- lm(hwy ~ class, data = mpg)
+mpg %>%
+  add_residuals(mod) %>%
+  ggplot(aes(x = displ, y = resid)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Engine size has little effect on fuel efficiency",
+    subtitle = "After accounting for car class",
+    caption = "Data from fueleconomy.gov",
+    x = "Highway MPG Relative to Class Average",
+    y = "Engine Displacement"
+  )
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 </div>
 
@@ -133,7 +174,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 </div>
 
@@ -156,7 +197,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 </div>
 
@@ -189,7 +230,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 To draw the label in only one facet, add a column to the label data frame with the value of the faceting variable(s) in which to draw it.
 
@@ -210,7 +251,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 To draw labels in different plots, simply have the facetting variable(s):
 
@@ -231,7 +272,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 </div>
 
@@ -291,7 +332,7 @@ ggplot(df, aes(x, y)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 It does not override the default scale because the colors in `geom_hex()` are set by the `fill` aesthetic, not the `color` aesthetic.
 
@@ -305,7 +346,7 @@ ggplot(df, aes(x, y)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 </div>
 
@@ -333,7 +374,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ```r
@@ -348,7 +389,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 </div>
 
@@ -391,7 +432,7 @@ presidential %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 To include both the start dates of presidential terms and every
 four years, I use different levels of emphasis. 
@@ -416,7 +457,7 @@ ggplot(diamonds, aes(carat, price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 The problem with the legend is that the `alpha` value make the colors hard to see. So I'll override the alpha value to make the points solid in the legend.
 
@@ -429,7 +470,7 @@ ggplot(diamonds, aes(carat, price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{graphics-for-communication_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 </div>
 

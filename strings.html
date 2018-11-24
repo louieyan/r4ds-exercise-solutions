@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-23">
+<meta name="date" content="2018-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -429,12 +429,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#tools"><i class="fa fa-check"></i><b>14.4</b> Tools</a><ul>
 <li class="chapter" data-level="14.4.1" data-path="strings.html"><a href="strings.html#detect-matches"><i class="fa fa-check"></i><b>14.4.1</b> Detect matches</a></li>
-<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="strings.html#exercises-1"><i class="fa fa-check"></i><b>14.4.2</b> Exercises</a></li>
-<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.3</b> Extract Matches</a></li>
-<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.4</b> Grouped Matches</a></li>
-<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.5</b> Replacing Matches</a></li>
-<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="strings.html#splitting"><i class="fa fa-check"></i><b>14.4.6</b> Splitting</a></li>
-<li class="chapter" data-level="14.4.7" data-path="strings.html"><a href="strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.7</b> Find matches</a></li>
+<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.2</b> Extract Matches</a></li>
+<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.3</b> Grouped Matches</a></li>
+<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.4</b> Replacing Matches</a></li>
+<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="strings.html#splitting"><i class="fa fa-check"></i><b>14.4.5</b> Splitting</a></li>
+<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.6</b> Find matches</a></li>
 </ul></li>
 <li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#other-types-of-patterns"><i class="fa fa-check"></i><b>14.5</b> Other types of patterns</a><ul>
 <li><a href="strings.html#exercise-14.5.1.1">Exercise <span class="exercise-number">14.5.1.1</span></a></li>
@@ -1269,12 +1268,8 @@ of letters with different capitalization.</p></li>
 <h2><span class="header-section-number">14.4</span> Tools</h2>
 <div id="detect-matches" class="section level3">
 <h3><span class="header-section-number">14.4.1</span> Detect matches</h3>
-<p>No exercises</p>
-</div>
-<div id="exercises-1" class="section level3">
-<h3><span class="header-section-number">14.4.2</span> Exercises</h3>
-<div id="exercise-14.4.2.1" class="section level4 unnumbered exercise">
-<h4>Exercise <span class="exercise-number">14.4.2.1</span></h4>
+<div id="exercise-14.4.1.1" class="section level4 unnumbered exercise">
+<h4>Exercise <span class="exercise-number">14.4.1.1</span></h4>
 <div class="question">
 <p>For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple <code>str_detect()</code> calls.</p>
 <ol style="list-style-type: decimal">
@@ -1333,8 +1328,8 @@ words[<span class="kw">str_detect</span>(words, <span class="st">&quot;a&quot;</
 </ol>
 </div>
 </div>
-<div id="exercise-14.4.2.2" class="section level4 unnumbered exercise">
-<h4>Exercise <span class="exercise-number">14.4.2.2</span></h4>
+<div id="exercise-14.4.1.2" class="section level4 unnumbered exercise">
+<h4>Exercise <span class="exercise-number">14.4.1.2</span></h4>
 <div class="question">
 <p>What word has the higher number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)</p>
 </div>
@@ -1352,7 +1347,7 @@ words[<span class="kw">which</span>(prop_vowels <span class="op">==</span><span 
 </div>
 </div>
 <div id="extract-matches" class="section level3">
-<h3><span class="header-section-number">14.4.3</span> Extract Matches</h3>
+<h3><span class="header-section-number">14.4.2</span> Extract Matches</h3>
 <div id="exercise-14.4.3.1.1" class="section level4 unnumbered exercise">
 <h4>Exercise <span class="exercise-number">14.4.3.1.1</span></h4>
 <div class="question">
@@ -1410,7 +1405,7 @@ a reasonable heuristic.</p>
 </div>
 </div>
 <div id="grouped-matches" class="section level3">
-<h3><span class="header-section-number">14.4.4</span> Grouped Matches</h3>
+<h3><span class="header-section-number">14.4.3</span> Grouped Matches</h3>
 <div id="exercise-14.4.4.1.1" class="section level4 unnumbered exercise">
 <h4>Exercise <span class="exercise-number">14.4.4.1.1</span></h4>
 <div class="question">
@@ -1448,7 +1443,7 @@ sentences[<span class="kw">str_detect</span>(sentences, contraction)] <span clas
 </div>
 </div>
 <div id="replacing-matches" class="section level3">
-<h3><span class="header-section-number">14.4.5</span> Replacing Matches</h3>
+<h3><span class="header-section-number">14.4.4</span> Replacing Matches</h3>
 <div id="exercise-14.4.5.1.1" class="section level4 unnumbered exercise">
 <h4>Exercise <span class="exercise-number">14.4.5.1.1</span></h4>
 <div class="question">
@@ -1491,7 +1486,7 @@ sentences[<span class="kw">str_detect</span>(sentences, contraction)] <span clas
 </div>
 </div>
 <div id="splitting" class="section level3">
-<h3><span class="header-section-number">14.4.6</span> Splitting</h3>
+<h3><span class="header-section-number">14.4.5</span> Splitting</h3>
 <div id="exercise-14.4.6.1" class="section level4 unnumbered exercise">
 <h4>Exercise <span class="exercise-number">14.4.6.1</span></h4>
 <div class="question">
@@ -1539,7 +1534,7 @@ separating “32.2” and “can’t”,</p>
 </div>
 </div>
 <div id="find-matches" class="section level3">
-<h3><span class="header-section-number">14.4.7</span> Find matches</h3>
+<h3><span class="header-section-number">14.4.6</span> Find matches</h3>
 <p>No exercises</p>
 </div>
 </div>

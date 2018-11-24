@@ -1,4 +1,5 @@
 
+
 ---
 output: html_document
 editor_options:
@@ -32,33 +33,46 @@ How could you improve the plot?
 
 <div class="answer">
 
+My first attempt is to use `geom_bar()` with the default settings.
 
 ```r
 rincome_plot <-
   gss_cat %>%
-  ggplot(aes(rincome)) +
+  ggplot(aes(x = rincome)) +
   geom_bar()
 rincome_plot
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
-The default bar chart labels are too squished to read.
-One solution is to change the angle of the labels,
+The problem with default bar chart settings, are that the labels overlapping and impossible to read.
+I'll try changing the angle of the x-axis labels to vertical so that they will not overlap.
 
 ```r
 rincome_plot +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
-But that's not natural either, because text is vertical, and we read horizontally.
-So with long labels, it is better to flip it.
+This is better because the labels are not overlapping, but also difficult to read because the labels are vertical.
+I could try angling the labels so that they are easier to read, but not overlapping.
+
+```r
+rincome_plot +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+But the solution I prefer for bar charts with long labels is to flip the axes, so that the bars are horizontal. 
+Then the category labels are also horizontal, and easy to read.
 
 ```r
 rincome_plot +
@@ -67,10 +81,54 @@ rincome_plot +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
-This is better, but it unintuitively goes from low to high. It would help if the
-scale is reversed. Also, if all the missing factors were differentiated.
+Though more than asked for in this question, I could further improve this plot by 
+
+1.  removing the "Not applicable" responses, 
+1.  renaming "Lt \$1000" to "Less than \$1000",
+1.  using color to distinguish non-response catgories ("Refused", "Don't know", and "No answer") from income levels ("Lt $1000", ...), 
+1.  adding meaningful y- and x-axis titles, and
+1.  formatting the counts axis labels to use commas.
+
+
+```r
+gss_cat %>%
+  filter(!rincome %in% c("Not applicable")) %>%
+  mutate(rincome = fct_recode(rincome, 
+                              "Less than $1000" = "Lt $1000")) %>%
+  mutate(rincome_na = rincome %in% c("Refused", "Don't know", "No answer"))  %>%
+  ggplot(aes(x = rincome, fill = rincome_na)) +
+  geom_bar() +
+  coord_flip() +
+  scale_y_continuous("Number of Respondents", labels = scales::comma) +
+  scale_x_discrete("Respondent's Income") +
+  scale_fill_manual(values = c("FALSE" = "black", "TRUE" = "gray")) +
+  theme(legend.position = "None")
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+If I wer only interested in non-missing responses, then
+I could drop all respondents who answered "Not applicable", "Refused", "Don't know", or "No answer".
+
+```r
+gss_cat %>%
+  filter(!rincome %in% c("Not applicable", "Don't know", "No answer", "Refused")) %>%
+  mutate(rincome = fct_recode(rincome, 
+                              "Less than $1000" = "Lt $1000")) %>%
+  ggplot(aes(x = rincome)) +
+  geom_bar() +
+  coord_flip() +
+  scale_y_continuous("Number of Respondents", labels = scales::comma) +
+  scale_x_discrete("Respondent's Income")
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 </div>
 
@@ -165,7 +223,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 </div>
 
@@ -197,7 +255,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Whether the mean is the best summary depends on what you are using it for :-), i.e. your objective.
 But probably the median would be what most people prefer.
@@ -245,7 +303,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 The ordering of race is principled in that the categories are ordered by count of observations in the data.
 
@@ -263,7 +321,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 The levels of `rincome` are ordered in decreasing order of the income; however
 the placement of "No answer", "Don't know", and "Refused" before, and "Not
@@ -304,7 +362,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 The same goes for `denom`.
 
@@ -387,7 +445,7 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 </div>
 
@@ -429,5 +487,5 @@ gss_cat %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{factors_files/figure-latex/unnamed-chunk-30-1} \end{center}
 </div>

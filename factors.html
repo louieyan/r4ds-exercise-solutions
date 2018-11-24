@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-23">
+<meta name="date" content="2018-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -429,12 +429,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#tools"><i class="fa fa-check"></i><b>14.4</b> Tools</a><ul>
 <li class="chapter" data-level="14.4.1" data-path="strings.html"><a href="strings.html#detect-matches"><i class="fa fa-check"></i><b>14.4.1</b> Detect matches</a></li>
-<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="strings.html#exercises-1"><i class="fa fa-check"></i><b>14.4.2</b> Exercises</a></li>
-<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.3</b> Extract Matches</a></li>
-<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.4</b> Grouped Matches</a></li>
-<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.5</b> Replacing Matches</a></li>
-<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="strings.html#splitting"><i class="fa fa-check"></i><b>14.4.6</b> Splitting</a></li>
-<li class="chapter" data-level="14.4.7" data-path="strings.html"><a href="strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.7</b> Find matches</a></li>
+<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.2</b> Extract Matches</a></li>
+<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.3</b> Grouped Matches</a></li>
+<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.4</b> Replacing Matches</a></li>
+<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="strings.html#splitting"><i class="fa fa-check"></i><b>14.4.5</b> Splitting</a></li>
+<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.6</b> Find matches</a></li>
 </ul></li>
 <li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#other-types-of-patterns"><i class="fa fa-check"></i><b>14.5</b> Other types of patterns</a><ul>
 <li><a href="strings.html#exercise-14.5.1.1">Exercise <span class="exercise-number">14.5.1.1</span></a></li>
@@ -746,24 +745,61 @@ What makes the default bar chart hard to understand?
 How could you improve the plot?</p>
 </div>
 <div class="answer">
+<p>My first attempt is to use <code>geom_bar()</code> with the default settings.</p>
 <pre class="sourceCode r"><code class="sourceCode r">rincome_plot &lt;-
 <span class="st">  </span>gss_cat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(rincome)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rincome)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()
 rincome_plot</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>The default bar chart labels are too squished to read.
-One solution is to change the angle of the labels,</p>
-<pre class="sourceCode r"><code class="sourceCode r">rincome_plot <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>))</code></pre>
 <p><img src="factors_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>But that’s not natural either, because text is vertical, and we read horizontally.
-So with long labels, it is better to flip it.</p>
+<p>The problem with default bar chart settings, are that the labels overlapping and impossible to read.
+I’ll try changing the angle of the x-axis labels to vertical so that they will not overlap.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rincome_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre>
+<p><img src="factors_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>This is better because the labels are not overlapping, but also difficult to read because the labels are vertical.
+I could try angling the labels so that they are easier to read, but not overlapping.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rincome_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre>
+<p><img src="factors_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>But the solution I prefer for bar charts with long labels is to flip the axes, so that the bars are horizontal.
+Then the category labels are also horizontal, and easy to read.</p>
 <pre class="sourceCode r"><code class="sourceCode r">rincome_plot <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>This is better, but it unintuitively goes from low to high. It would help if the
-scale is reversed. Also, if all the missing factors were differentiated.</p>
+<p><img src="factors_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Though more than asked for in this question, I could further improve this plot by</p>
+<ol style="list-style-type: decimal">
+<li>removing the “Not applicable” responses,</li>
+<li>renaming “Lt $1000” to “Less than $1000”,</li>
+<li>using color to distinguish non-response catgories (“Refused”, “Don’t know”, and “No answer”) from income levels (“Lt $1000”, …),</li>
+<li>adding meaningful y- and x-axis titles, and</li>
+<li>formatting the counts axis labels to use commas.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>rincome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Not applicable&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rincome =</span> <span class="kw">fct_recode</span>(rincome, 
+                              <span class="st">&quot;Less than $1000&quot;</span> =<span class="st"> &quot;Lt $1000&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rincome_na =</span> rincome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Refused&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;No answer&quot;</span>))  <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rincome, <span class="dt">fill =</span> rincome_na)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;Number of Respondents&quot;</span>, <span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="st">&quot;Respondent&#39;s Income&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;FALSE&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;TRUE&quot;</span> =<span class="st"> &quot;gray&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;None&quot;</span>)</code></pre>
+<p><img src="factors_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>If I wer only interested in non-missing responses, then
+I could drop all respondents who answered “Not applicable”, “Refused”, “Don’t know”, or “No answer”.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>rincome <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Not applicable&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Refused&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rincome =</span> <span class="kw">fct_recode</span>(rincome, 
+                              <span class="st">&quot;Less than $1000&quot;</span> =<span class="st"> &quot;Lt $1000&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rincome)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;Number of Respondents&quot;</span>, <span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="st">&quot;Respondent&#39;s Income&quot;</span>)</code></pre>
+<p><img src="factors_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercise-15.3.1.2" class="section level3 unnumbered exercise">
@@ -831,7 +867,7 @@ proportional to the size of the number of answers (since otherwise there would b
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> relig, <span class="dt">y =</span> denom, <span class="dt">size =</span> n)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>))</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -851,7 +887,7 @@ Is the <code>mean</code> a good summary?</p>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(tvhours)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> tvhours)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>)</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Whether the mean is the best summary depends on what you are using it for :-), i.e. your objective.
 But probably the median would be what most people prefer.
 And the hours of TV doesn’t look that surprising to me.</p>
@@ -880,7 +916,7 @@ ordered” factors than one would expect.</p>
 <pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> marital)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The ordering of race is principled in that the categories are ordered by count of observations in the data.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(gss_cat<span class="op">$</span>race)
 <span class="co">#&gt; [1] &quot;Other&quot;          &quot;Black&quot;          &quot;White&quot;          &quot;Not applicable&quot;</span></code></pre>
@@ -888,7 +924,7 @@ ordered” factors than one would expect.</p>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(race)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">drop =</span> <span class="ot">FALSE</span>)</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The levels of <code>rincome</code> are ordered in decreasing order of the income; however
 the placement of “No answer”, “Don’t know”, and “Refused” before, and “Not
 applicable” after the income levels is arbitrary. It would be better to place
@@ -913,7 +949,7 @@ values.</p>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(relig)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The same goes for <code>denom</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(gss_cat<span class="op">$</span>denom)
 <span class="co">#&gt;  [1] &quot;No answer&quot;            &quot;Don&#39;t know&quot;           &quot;No denomination&quot;     </span>
@@ -973,7 +1009,7 @@ values.</p>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Party ID.&quot;</span>)</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercise-15.5.1.2" class="section level3 unnumbered exercise">
@@ -1002,7 +1038,7 @@ gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rincome)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>
-<p><img src="factors_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="factors_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 
 </div>

@@ -983,8 +983,8 @@ To get the departure times in the number of minutes, divide `dep_time` by 100 to
 For example, `1504` represents 15:04 (or 3:04 PM), which is 
 
 ```r
-15 * 9 + 4
-#> [1] 139
+15 * 60 + 4
+#> [1] 904
 ```
 minutes after midnight.
 In order to generalize this approach, we need a way to split out the hour digits from the minutes digits.
