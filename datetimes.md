@@ -458,7 +458,6 @@ as.Date("2016-02-29") + years(1)
 #> [1] NA
 ```
 
-
 </div>
 
 ## Time Zones

@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-21">
+<meta name="date" content="2018-11-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,6 +62,15 @@
 
   gtag('config', 'UA-61453123-2');
 </script>
+<!--
+License: MIT License
+Copyright (c) 2016 Open Review Toolkit & Ben Marwick
+
+See https://github.com/benmarwick/bookdown-ort/blob/master/hypothesis.html
+-->
+
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>window.hypothesisConfig = function () { return {showHighlights: false}; };</script>
 
 
 <style type="text/css">
@@ -130,6 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
 <link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/ort.css" type="text/css" />
 </head>
 
 <body>
@@ -143,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li><strong><a href="./">R for Data Science Solutions</a></strong></li>
+<div id="google_translate_element"></div>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
@@ -626,6 +637,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.2" data-path="many-models.html"><a href="many-models.html#gapminder"><i class="fa fa-check"></i><b>25.2</b> Gapminder</a><ul>
 <li><a href="many-models.html#exercise-25.2.5.1">Exercise <span class="exercise-number">25.2.5.1</span></a></li>
 <li><a href="many-models.html#exercise-25.2.5.2">Exercise <span class="exercise-number">25.2.5.2</span></a></li>
+<li><a href="many-models.html#exercise-25.2.5.3">Exercise <span class="exercise-number">25.2.5.3</span></a></li>
 </ul></li>
 <li class="chapter" data-level="25.3" data-path="many-models.html"><a href="many-models.html#list-columns"><i class="fa fa-check"></i><b>25.3</b> List-columns</a></li>
 <li class="chapter" data-level="25.4" data-path="many-models.html"><a href="many-models.html#creating-list-columns"><i class="fa fa-check"></i><b>25.4</b> Creating list-columns</a><ul>
@@ -690,6 +702,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="29" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html"><i class="fa fa-check"></i><b>29</b> R Markdown formats</a></li>
 <li class="chapter" data-level="30" data-path="r-markdown-workflow.html"><a href="r-markdown-workflow.html"><i class="fa fa-check"></i><b>30</b> R Markdown workflow</a></li>
+<li class="divider"></li>
+<a href="https://bookdown.org" target="https://bookdown.org/yihui/bookdown">Published with bookdown</a>
+
 </ul>
 
       </nav>
@@ -707,6 +722,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
+<div class = rmdreview>This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
 <div id="model-building" class="section level1">
 <h1><span class="header-section-number">24</span> Model building</h1>
 <div id="introduction-15" class="section level2">
@@ -762,7 +779,7 @@ mod_diamond2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lprice <sp
 <pre class="sourceCode r"><code class="sourceCode r">diamonds2 <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">add_predictions</span>(mod_diamond2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">add_residuals</span>(mod_diamond2) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sq_err =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(resid<span class="op">^</span><span class="dv">2</span>)),
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sq_err =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(resid <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)),
             <span class="dt">abs_err =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(resid)),
             <span class="dt">p975_err =</span> <span class="kw">quantile</span>(resid, <span class="fl">0.975</span>),
             <span class="dt">p025_err =</span> <span class="kw">quantile</span>(resid, <span class="fl">0.025</span>))
@@ -770,14 +787,12 @@ mod_diamond2 &lt;-<span class="st"> </span><span class="kw">lm</span>(lprice <sp
 <span class="co">#&gt;   sq_err abs_err p975_err p025_err</span>
 <span class="co">#&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1  0.192   0.149    0.384   -0.369</span></code></pre>
-<p>The average squared and absolute errors are <span class="math inline">\(2^0.19 = 1.14\)</span> and <span class="math inline">\(2^0.10\)</span> so on average, the error is <span class="math inline">\(\pm 10--15\)</span>%.
-And the 95% range of residuals is about <span class="math inline">\(2^0.37 = 1.3\)</span> so within <span class="math inline">\(\pm 30\)</span>%.
-This doesn’t seem terrible to me.</p>
 </div>
 </div>
 </div>
 <div id="what-affects-the-number-of-daily-flights" class="section level2">
 <h2><span class="header-section-number">24.3</span> What affects the number of daily flights?</h2>
+<p>This code is copied from the book and needed for the exercises.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;nycflights13&quot;</span>)
 daily &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">make_date</span>(year, month, day)) <span class="op">%&gt;%</span>
@@ -821,23 +836,30 @@ mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op"
 <p>Use your Google sleuthing skills to brainstorm why there were fewer than expected flights on Jan 20, May 26, and Sep 1. (Hint: they all have the same explanation.) How would these days generalize to another year?</p>
 </div>
 <div class="answer">
-<p>These are the Sundays before Monday holidays Martin Luther King Day, Memorial Day, and Labor Day.</p>
+<p>These are the Sundays before Monday holidays Martin Luther King Jr. Day, Memorial Day, and Labor Day.
+This would generalize to other years, by using the dates of the respective
+holidays for those years; the third Monday of January for Martin Luther King Jr. Day,
+the last Monday of May for Memorial Day, and the first Monday in September for
+Labor Day.</p>
 </div>
 </div>
 <div id="exercise-24.3.5.2" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">24.3.5.2</span></h3>
 <div class="question">
-
+<p>What do the three days with high positive residuals represent? How would these days generalize to another year?</p>
 </div>
 <div class="answer">
-<pre class="sourceCode r"><code class="sourceCode r">daily <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">3</span>, resid)
+<p>The top three days correspond to the Saturday after Thanksgiving (November 30th),
+the Sunday after Thanksgiving (December 1st), and the Saturday after Christmas (December 28th).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(daily, <span class="dv">3</span>, resid)
 <span class="co">#&gt; # A tibble: 3 x 5</span>
 <span class="co">#&gt;   date           n wday  term  resid</span>
 <span class="co">#&gt;   &lt;date&gt;     &lt;int&gt; &lt;ord&gt; &lt;fct&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 2013-11-30   857 Sat   fall  112. </span>
 <span class="co">#&gt; 2 2013-12-01   987 Sun   fall   95.5</span>
 <span class="co">#&gt; 3 2013-12-28   814 Sat   fall   69.4</span></code></pre>
+<p>We could generalize these to other years using the dates of those holidays on those
+years.</p>
 </div>
 </div>
 <div id="exercise-24.3.5.3" class="section level3 unnumbered exercise">
@@ -849,14 +871,14 @@ mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op"
 <p>I’ll use the function <code>case_when()</code> to do this, though there are other ways which it could be solved.</p>
 <pre class="sourceCode r"><code class="sourceCode r">daily &lt;-<span class="st"> </span>daily <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wday2 =</span>
-         <span class="kw">case_when</span>(.<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;summer&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-summer&quot;</span>,
-         .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span><span class="st"> </span>term <span class="op">==</span><span class="st"> &quot;fall&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-fall&quot;</span>,
-         .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;spring&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-spring&quot;</span>,
-         <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.<span class="op">$</span>wday)))</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">mod4 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op">~</span><span class="st"> </span>wday2, <span class="dt">data =</span> daily)
+         <span class="kw">case_when</span>(wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>term <span class="op">==</span><span class="st"> &quot;summer&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-summer&quot;</span>,
+                   wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>term <span class="op">==</span><span class="st"> &quot;fall&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-fall&quot;</span>,
+                   wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>term <span class="op">==</span><span class="st"> &quot;spring&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-spring&quot;</span>,
+                   <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(wday)))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op">~</span><span class="st"> </span>wday2, <span class="dt">data =</span> daily)
 
 daily <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather_residuals</span>(<span class="dt">sat_term =</span> mod4, <span class="dt">all_interact =</span> mod2) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather_residuals</span>(<span class="dt">sat_term =</span> mod3, <span class="dt">all_interact =</span> mod2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, resid, <span class="dt">colour =</span> model)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>)</code></pre>
 <p><img src="model-building_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /></p>
@@ -864,15 +886,15 @@ daily <span class="op">%&gt;%</span>
 If we are interested in the differences, it is better to plot the differences directly.
 In this code, I use <code>spread_residuals()</code> to add one <em>column</em> per model, rather than <code>gather_residuals()</code> which creates a new row for each model.</p>
 <pre class="sourceCode r"><code class="sourceCode r">daily <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread_residuals</span>(<span class="dt">sat_term =</span> mod4, <span class="dt">all_interact =</span> mod2) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread_residuals</span>(<span class="dt">sat_term =</span> mod3, <span class="dt">all_interact =</span> mod2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">resid_diff =</span> sat_term <span class="op">-</span><span class="st"> </span>all_interact) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, resid_diff)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>)</code></pre>
 <p><img src="model-building_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>The model with terms x Saturday has higher residuals in the fall, and lower residuals in the spring than the model with all interactions.</p>
-<p>Using overall model comparison terms, <code>mod4</code> has a lower <span class="math inline">\(R^2\)</span> and regression standard error, <span class="math inline">\(\hat\sigma\)</span>, despite using fewer variables.
-More importantly for prediction purposes, it has a higher AIC - which is an estimate of the out of sample error.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glance</span>(mod4) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(r.squared, sigma, AIC, df)
+<p>The model with terms × Saturday has higher residuals in the fall, and lower residuals in the spring than the model with all interactions.</p>
+<p>Using overall model comparison terms, <code>mod4</code> has a lower <span class="math inline">\(R^2\)</span> and regression standard error, <span class="math inline">\(\hat{\sigma}\)</span>, despite using fewer variables.
+More importantly for prediction purposes, this model has a higher AIC, which is an estimate of the out of sample error.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glance</span>(mod3) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(r.squared, sigma, AIC, df)
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   r.squared sigma   AIC    df</span>
 <span class="co">#&gt; *     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span>
@@ -890,43 +912,50 @@ More importantly for prediction purposes, it has a higher AIC - which is an esti
 <p>Create a new <code>wday</code> variable that combines the day of week, term (for Saturdays), and public holidays. What do the residuals of that model look like?</p>
 </div>
 <div class="answer">
-<p>The question is unclear how to handle the public holidays. We could include a dummy for all public holidays? or the Sunday before public holidays?</p>
-<p>Including a level for the public holidays themselves is insufficient because (1) public holiday’s effects on travel varies dramatically, (2) the effect can occur on the day itself or the day before and after, and (3) with Thanksgiving and Christmas there are increases in travel as well.</p>
+<p>The question is unclear how to handle public holidays. There are several questions to consider.</p>
+<p>First, what are the public holidays? I will include all <a href="https://en.wikipedia.org/wiki/Federal_holidays_in_the_United_States">federal holidays in the United States</a> in 2013.
+Other holidays to consider would be Easter and Good Friday which is US stock market holiday and widely celebrated religious holiday, Mothers Day, Fathers Day,
+and Patriots’ Day, which is a holiday in several states, and other state holidays.</p>
+<pre class="sourceCode r"><code class="sourceCode r">holidays_<span class="dv">2013</span> &lt;-
+<span class="st">  </span><span class="kw">tribble</span>(
+    <span class="op">~</span><span class="st"> </span>holiday,                    <span class="op">~</span><span class="st"> </span>date,
+    <span class="st">&quot;New Year&#39;s Day&quot;</span>,             <span class="dv">20130101</span>,
+    <span class="st">&quot;Martin Luther King Jr. Day&quot;</span>, <span class="dv">20130121</span>,
+    <span class="st">&quot;Washington&#39;s Birthday&quot;</span>,      <span class="dv">20130218</span>,
+    <span class="st">&quot;Memorial Day&quot;</span>,               <span class="dv">20130527</span>,
+    <span class="st">&quot;Independence Day&quot;</span>,           <span class="dv">20130704</span>,
+    <span class="st">&quot;Labor Day&quot;</span>,                  <span class="dv">20130902</span>,
+    <span class="st">&quot;Columbus Day&quot;</span>,               <span class="dv">20131028</span>,
+    <span class="st">&quot;Veteran&#39;s Day&quot;</span>,              <span class="dv">20131111</span>,
+    <span class="st">&quot;Thanksgiving&quot;</span>,               <span class="dv">20131128</span>,
+    <span class="st">&quot;Christmas&quot;</span>,                  <span class="dv">20131225</span>
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> lubridate<span class="op">::</span><span class="kw">ymd</span>(date))</code></pre>
+<p>The model could include a single dummy variable which indicates a day was a public holiday.
+Alternatively, I could include a dummy variable for each public holiday.
+I would expect that Veteran’s Day and Washington’s Birthday have a different effect on travel than Thanksgiving, Christmas, and New Year’s Day.</p>
+<p>Another question is whether and how I should handle the days before and after holidays.
+Travel could be lighter on the holiday itself,
+but heavier before and after.</p>
 <pre class="sourceCode r"><code class="sourceCode r">daily &lt;-<span class="st"> </span>daily <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wday3 =</span>
          <span class="kw">case_when</span>(
-           .<span class="op">$</span>date <span class="op">%in%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw">ymd</span>(<span class="kw">c</span>(<span class="dv">20130101</span>, <span class="co"># new years</span>
-                                        <span class="dv">20130121</span>, <span class="co"># mlk</span>
-                                        <span class="dv">20130218</span>, <span class="co"># presidents</span>
-                                        <span class="dv">20130527</span>, <span class="co"># memorial</span>
-                                        <span class="dv">20130704</span>, <span class="co"># independence</span>
-                                        <span class="dv">20130902</span>, <span class="co"># labor</span>
-                                        <span class="dv">20131028</span>, <span class="co"># columbus</span>
-                                        <span class="dv">20131111</span>, <span class="co"># veterans</span>
-                                        <span class="dv">20131128</span>, <span class="co"># thanksgiving</span>
-                                        <span class="dv">20131225</span>)) <span class="op">~</span>
-<span class="st">             &quot;holiday&quot;</span>,
+           (date <span class="op">-</span><span class="st"> </span>1L) <span class="op">%in%</span><span class="st"> </span>holidays_<span class="dv">2013</span><span class="op">$</span>date <span class="op">~</span><span class="st"> &quot;day before holiday&quot;</span>,
+           (date <span class="op">+</span><span class="st"> </span>1L) <span class="op">%in%</span><span class="st"> </span>holidays_<span class="dv">2013</span><span class="op">$</span>date <span class="op">~</span><span class="st"> &quot;day after holiday&quot;</span>,           
+           date <span class="op">%in%</span><span class="st"> </span>holidays_<span class="dv">2013</span><span class="op">$</span>date <span class="op">~</span><span class="st"> &quot;holiday&quot;</span>,           
            .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;summer&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-summer&quot;</span>,
-           .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span><span class="st"> </span>term <span class="op">==</span><span class="st"> &quot;fall&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-fall&quot;</span>,
+           .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;fall&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-fall&quot;</span>,
            .<span class="op">$</span>wday <span class="op">==</span><span class="st"> &quot;Sat&quot;</span> <span class="op">&amp;</span><span class="st"> </span>.<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;spring&quot;</span> <span class="op">~</span><span class="st"> &quot;Sat-spring&quot;</span>,
            <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.<span class="op">$</span>wday)))
 
-mod5 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op">~</span><span class="st"> </span>wday3, <span class="dt">data =</span> daily)
+mod4 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op">~</span><span class="st"> </span>wday3, <span class="dt">data =</span> daily)
 
 daily <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread_residuals</span>(mod5) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(<span class="kw">abs</span>(resid))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(date, wday, resid)
-<span class="co">#&gt; # A tibble: 20 x 3</span>
-<span class="co">#&gt;   date       wday  resid</span>
-<span class="co">#&gt;   &lt;date&gt;     &lt;ord&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2013-11-28 Thu   -332.</span>
-<span class="co">#&gt; 2 2013-11-29 Fri   -306.</span>
-<span class="co">#&gt; 3 2013-12-25 Wed   -244.</span>
-<span class="co">#&gt; 4 2013-07-04 Thu   -229.</span>
-<span class="co">#&gt; 5 2013-12-24 Tue   -190.</span>
-<span class="co">#&gt; 6 2013-12-31 Tue   -175.</span>
-<span class="co">#&gt; # ... with 14 more rows</span></code></pre>
+<span class="st">  </span><span class="kw">spread_residuals</span>(<span class="dt">resid_sat_terms =</span> mod3, <span class="dt">resid_holidays =</span> mod4) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">resid_diff =</span> resid_holidays <span class="op">-</span><span class="st"> </span>resid_sat_terms) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, resid_diff)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>)</code></pre>
+<p><img src="model-building_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercise-24.3.5.5" class="section level3 unnumbered exercise">
@@ -935,13 +964,23 @@ daily <span class="op">%&gt;%</span>
 <p>What happens if you fit a day of week effect that varies by month (i.e. <code>n ~ wday * month</code>)? Why is this not very helpful?</p>
 </div>
 <div class="answer">
-<p>There are only 4-5 observations per parameter since only there are only 4-5 weekdays in a given month.</p>
+<pre class="sourceCode r"><code class="sourceCode r">daily &lt;-<span class="st"> </span><span class="kw">mutate</span>(daily, <span class="dt">month =</span> lubridate<span class="op">::</span><span class="kw">month</span>(date))
+
+mod6 &lt;-<span class="st"> </span><span class="kw">lm</span>(n <span class="op">~</span><span class="st"> </span>wday <span class="op">*</span><span class="st"> </span>month, <span class="dt">data =</span> daily)</code></pre>
+<p>There model has only 4–5 observations to estimate each (month, weekday)
+combination parameter since only there only 4–5 weekdays in given month. Any
+estimates will be very uncertain.</p>
 </div>
 </div>
 <div id="exercise-24.3.5.6" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">24.3.5.6</span></h3>
+<div class="question">
+<p>What would you expect the model <code>n ~ wday + ns(date, 5)</code> to look like? Knowing what you know about the data, why would you expect it to be not particularly effective?</p>
+</div>
+<div class="answer">
 <p>It will estimate a smooth seasonal trend (<code>ns(date, 5)</code>) with a day of the week cyclicality, (<code>wday</code>).
 It probably will not be effective since</p>
+</div>
 </div>
 <div id="exercise-24.3.5.7" class="section level3 unnumbered exercise">
 <h3>Exercise <span class="exercise-number">24.3.5.7</span></h3>
@@ -958,7 +997,7 @@ It probably will not be effective since</p>
             <span class="dt">dist_median =</span> <span class="kw">median</span>(distance)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> dist_mean, <span class="dt">x =</span> wday)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="model-building_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="model-building_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>However, breaking it down by hour, I don’t see much evidence at first.
 Conditional on hour, the distance of Sunday flights seems similar to that of other days (excluding Saturday):</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
@@ -970,7 +1009,7 @@ Conditional on hour, the distance of Sunday flights seems similar to that of oth
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> dist_mean, <span class="dt">x =</span> hour, <span class="dt">colour =</span> wday)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="model-building_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="model-building_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Can someone think of a better way to check this?</p>
 </div>
 </div>
@@ -991,7 +1030,7 @@ Use <code>fct_relevel()</code> to put all levels in-front of the first level (�
 <span class="kw">ggplot</span>(daily, <span class="kw">aes</span>(<span class="kw">monday_first</span>(wday), n)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Day of Week&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of flights&quot;</span>)</code></pre>
-<p><img src="model-building_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="model-building_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -1001,6 +1040,11 @@ Use <code>fct_relevel()</code> to put all levels in-front of the first level (�
 
 </div>
 </div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-61453123-2'}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
             </section>
 
           </div>
@@ -1020,7 +1064,18 @@ Use <code>fct_relevel()</code> to put all levels in-front of the first level (�
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": true,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper", "vk"],
+"instapaper": false
+},
 "fontsettings": {
 "theme": "white",
 "family": "sans",

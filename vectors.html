@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-21">
+<meta name="date" content="2018-11-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,6 +62,15 @@
 
   gtag('config', 'UA-61453123-2');
 </script>
+<!--
+License: MIT License
+Copyright (c) 2016 Open Review Toolkit & Ben Marwick
+
+See https://github.com/benmarwick/bookdown-ort/blob/master/hypothesis.html
+-->
+
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>window.hypothesisConfig = function () { return {showHighlights: false}; };</script>
 
 
 <style type="text/css">
@@ -130,6 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
 <link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/ort.css" type="text/css" />
 </head>
 
 <body>
@@ -143,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li><strong><a href="./">R for Data Science Solutions</a></strong></li>
+<div id="google_translate_element"></div>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
@@ -626,6 +637,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.2" data-path="many-models.html"><a href="many-models.html#gapminder"><i class="fa fa-check"></i><b>25.2</b> Gapminder</a><ul>
 <li><a href="many-models.html#exercise-25.2.5.1">Exercise <span class="exercise-number">25.2.5.1</span></a></li>
 <li><a href="many-models.html#exercise-25.2.5.2">Exercise <span class="exercise-number">25.2.5.2</span></a></li>
+<li><a href="many-models.html#exercise-25.2.5.3">Exercise <span class="exercise-number">25.2.5.3</span></a></li>
 </ul></li>
 <li class="chapter" data-level="25.3" data-path="many-models.html"><a href="many-models.html#list-columns"><i class="fa fa-check"></i><b>25.3</b> List-columns</a></li>
 <li class="chapter" data-level="25.4" data-path="many-models.html"><a href="many-models.html#creating-list-columns"><i class="fa fa-check"></i><b>25.4</b> Creating list-columns</a><ul>
@@ -690,6 +702,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="29" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html"><i class="fa fa-check"></i><b>29</b> R Markdown formats</a></li>
 <li class="chapter" data-level="30" data-path="r-markdown-workflow.html"><a href="r-markdown-workflow.html"><i class="fa fa-check"></i><b>30</b> R Markdown workflow</a></li>
+<li class="divider"></li>
+<a href="https://bookdown.org" target="https://bookdown.org/yihui/bookdown">Published with bookdown</a>
+
 </ul>
 
       </nav>
@@ -707,6 +722,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
+<div class = rmdreview>This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
 <div id="vectors" class="section level1">
 <h1><span class="header-section-number">20</span> Vectors</h1>
 <div id="introduction-13" class="section level2">
@@ -781,7 +798,7 @@ numeric and special values.</caption>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     abs(x - y) &lt; tol</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x7fd16790ba40&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x7fa7e7886da0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:dplyr&gt;</span></code></pre>
 <p>Instead of checking for exact equality, it checks that two numbers are within a certain tolerance, <code>tol</code>.
 By default the tolerance is set to the square root of <code>.Machine$double.eps</code>, which is the smallest floating point number that the computer can represent.</p>
@@ -1016,7 +1033,7 @@ missing (<code>NA</code>), and not-a-number (<code>NaN</code>).</p>
 <p>The expression <code>mean(is.na(x))</code> calculates the proportion of missing values (values equal to <code>NA</code>) in a vector.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">is.na</span>(x))
 <span class="co">#&gt; [1] 0.286</span></code></pre>
-<p>The expression <code>sum(!is.finite(x))</code> calculates the number of elements in the vector that are equal to missing (<code>NA</code>), not-a-number (<code>NaN</code>), or inifinity (<code>Inf</code>).</p>
+<p>The expression <code>sum(!is.finite(x))</code> calculates the number of elements in the vector that are equal to missing (<code>NA</code>), not-a-number (<code>NaN</code>), or infinity (<code>Inf</code>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.finite</span>(x))
 <span class="co">#&gt; [1] 4</span></code></pre>
 <p>Review the <a href="http://r4ds.had.co.nz/vectors.html#numeric">Numeric</a> section for the differences between <code>is.na()</code> and <code>is.finite()</code>.</p>
@@ -1432,6 +1449,11 @@ In following chapters we’ll see that list vectors can be very useful: for exam
 </div>
 </div>
 </div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-61453123-2'}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
             </section>
 
           </div>
@@ -1451,7 +1473,18 @@ In following chapters we’ll see that list vectors can be very useful: for exam
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": true,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper", "vk"],
+"instapaper": false
+},
 "fontsettings": {
 "theme": "white",
 "family": "sans",

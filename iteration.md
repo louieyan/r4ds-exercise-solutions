@@ -841,7 +841,7 @@ Write code that uses one of the map functions to:
     length(unique(iris$Species))
     #> [1] 3
     ```
-    To apply this to all columns, we can provide the map funtion anonymous function.
+    To apply this to all columns, we can provide the map an anonymous function.
     We can write anonymous function using the standard R syntax, like this,
     
     ```r

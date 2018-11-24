@@ -27,7 +27,7 @@ library("nycflights13")
 ### Exercise <span class="exercise-number">7.3.4.1</span> {.unnumbered .exercise}
 
 <div class="question">
-Explore the distribution of each of the x, y, and z variables in diamonds. What do you learn? Think about a diamond and how you might decide which dimension is the length, width, and depth.
+Explore the distribution of each of the `x`, `y`, and `z` variables in `diamonds`. What do you learn? Think about a diamond and how you might decide which dimension is the length, width, and depth.
 </div>
 
 <div class="answer">
@@ -52,12 +52,34 @@ diamonds %>%
 There several noticeable features of the distributions
 
 1.  They are right skewed, with most diamonds small, but a few very large ones.
-1.  There is an outlier in `y`, and `z` (see the rug)
-1.  All three distributions have a bimodality (perhaps due to some sort of threshold)
 
-According to the documentation for `diamonds`:
-`x` is length, `y` is width, and `z` is depth.
-I don't know if I would have figured that out before; maybe if there was data on the type of cuts.
+1.  There is an outlier in `y` and `z`. This is visible in the z-axis and y-axis rugs.
+
+1.  All three distributions are bimodal.
+    This could be due to some threshold in diamond classification,
+    or popular values used for certain cuts.
+
+According to the documentation for `diamonds`, `x` is length,
+`y` is width, and `z` is depth.
+
+If documentation were unavailable, two reasonable assumptions are
+
+1.  length is less than width, otherwise the width would be called the length
+1.  depth is usually less than length or width, but not necessarily.
+
+
+```r
+summarise(diamonds, mean(x >= y), mean(x > z), mean(y > z))
+#> # A tibble: 1 x 3
+#>   `mean(x >= y)` `mean(x > z)` `mean(y > z)`
+#>            <dbl>         <dbl>         <dbl>
+#> 1          0.435         1.000         1.000
+```
+
+Surprisingly, it appears that depth (`z`) is always smaller than
+length (`x`) or width (`y`).  Length is less than width in more than half the observations, the opposite of expectations.
+I don't know what's going on. If this was not a widely used dataset
+I would think that `x`, `y`, and `z` were mislabeled.
 
 </div>
 
@@ -81,7 +103,7 @@ ggplot(filter(diamonds, price < 2500), aes(x = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 
 ```r
@@ -91,7 +113,7 @@ ggplot(filter(diamonds), aes(x = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Distribution of last digit
 
@@ -105,7 +127,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 
 ```r
@@ -118,7 +140,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ```r
@@ -132,7 +154,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 </div>
 
@@ -217,7 +239,7 @@ ggplot(diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 However, the `xlim()` and `ylim()` functions influence actions before the calculation
 of the stats related to the histogram. Thus, any values outside the x- and y-limits
@@ -237,7 +259,7 @@ ggplot(diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 </div>
 
@@ -266,7 +288,7 @@ ggplot(diamonds2, aes(x = y)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 In the `geom_bar()` function, `NA` is treated as another category. The `x` aesthetic in `geom_bar()` requires a discrete (categorical) variable, and missing values act like another category.
 
@@ -279,7 +301,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 In a histogram, the `x` aesthetic variable needs to be numeric, and `stat_bin()` groups the observations by ranges into bins.
 Since the numeric value of the `NA` observations is unknown, they cannot be placed in a particular bin, and are dropped.
@@ -335,7 +357,7 @@ nycflights13::flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 </div>
 
@@ -377,7 +399,7 @@ ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-19-1} \end{center}
 Note that the choice of the binning width is important, as if it were too large it would obscure any relationship, and if it were too small, the values in the bins could be too variable to reveal underlying trends.
 
 The variables `color` and `clarity` are ordered categorical variables.
@@ -421,7 +443,7 @@ ggplot(diamonds, aes(x = cut, y = carat)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 There is a lot of variability in the distribution of carat sizes within each cut category.
 There is a slight negative relationship between carat and cut.
@@ -451,7 +473,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 In this case the output looks the same, but `x` and `y` aesthetics are flipped.
 
@@ -464,7 +486,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 </div>
 
@@ -497,7 +519,7 @@ ggplot(diamonds, aes(x = cut, y = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 The letter-value plot is described in @HofmannWickhamKafadar2017.
 
@@ -532,7 +554,7 @@ ggplot(data = diamonds, mapping = aes(x = price, y = ..density..)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 
 ```r
@@ -544,7 +566,7 @@ ggplot(data = diamonds, mapping = aes(x = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 
 ```r
@@ -555,7 +577,7 @@ ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 The violin plot was first described in @HintzeNelson1998.
 
@@ -588,7 +610,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 
 ```r
@@ -600,7 +622,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 
 ```r
@@ -612,7 +634,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 
 ```r
@@ -624,7 +646,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 
 ```r
@@ -636,7 +658,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 
 ```r
@@ -647,7 +669,7 @@ ggplot(data = mpg) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 </div>
 
@@ -678,7 +700,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 Similarly, to scale by the distribution of `color` within `cut`,
 
@@ -694,7 +716,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 I add `limit = c(0, 1)` to put the color scale between (0, 1).
 These are the logical boundaries of proportions.
@@ -726,7 +748,7 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 There are several things that could be done to improve it,
 
@@ -756,7 +778,7 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 </div>
 
@@ -782,7 +804,7 @@ diamonds %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 Another justification, for switching the order is that the larger numbers are at the top when `x = color` and `y = cut`, and that lowers the cognitive burden of interpreting the plot.
 
@@ -821,7 +843,7 @@ ggplot(data = diamonds,
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 
 ```r
@@ -833,7 +855,7 @@ ggplot(data = diamonds,
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 </div>
 
@@ -856,7 +878,7 @@ ggplot(diamonds, aes(x = cut_number(price, 10), y = carat)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-40-1} \end{center}
 Plotted with a box plot with 10 equal-width bins of \$2,000. The argument `boundary = 0` ensures that first bin is \$0--\$2,000.
 
 ```r
@@ -868,7 +890,7 @@ ggplot(diamonds, aes(x = cut_width(price, 2000, boundary = 0), y = carat)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 </div>
 
@@ -913,7 +935,7 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 
 ```r
@@ -923,7 +945,7 @@ ggplot(diamonds, aes(x = cut_number(carat, 5), y = price, colour = cut)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 
 ```r
@@ -933,7 +955,7 @@ ggplot(diamonds, aes(colour = cut_number(carat, 5), y = price, x = cut)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 </div>
 
@@ -955,7 +977,7 @@ ggplot(data = diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 Why is a scatterplot a better display than a binned plot for this case?
 

@@ -14,8 +14,11 @@ library("gapminder")
 
 ### Exercise <span class="exercise-number">25.2.5.1</span> {.unnumbered .exercise}
 
+<div class="question">
 A linear trend seems to be slightly too simple for the overall trend. Can you do better with a quadratic polynomial? How can you interpret the coefficients of the quadratic? (Hint you might want to transform year so that it has mean zero.)
+</div>
 
+<div class="answer">
 The following code replicates the analysis in the chapter but the function `country_model()` is replaced with a regression that includes the year squared.
 
 ```r
@@ -80,6 +83,7 @@ by_country %>%
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{many-models_files/figure-latex/unnamed-chunk-7-1} \end{center}
+</div>
 
 ### Exercise <span class="exercise-number">25.2.5.2</span> {.unnumbered .exercise}
 
@@ -104,6 +108,39 @@ by_country %>%
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{many-models_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+</div>
+
+### Exercise <span class="exercise-number">25.2.5.3</span> {.unnumbered .exercise}
+
+<div class="question">
+
+To create the last plot (showing the data for the countries with the worst model fits),
+we needed two steps: we created a data frame with one row per country and
+then semi-joined it to the original dataset. 
+It’s possible to avoid this join if we use `unnest()` instead of `unnest(.drop = TRUE)`. How?
+
+</div>
+
+<div class="answer">
+
+
+```r
+gapminder %>% 
+  group_by(country, continent) %>% 
+  nest() %>% 
+  mutate(model = map(data, ~ lm(lifeExp ~ year, .))) %>% 
+  mutate(glance = map(model, broom::glance)) %>% 
+  unnest(glance) %>%
+  unnest(data) %>%
+  filter(r.squared < 0.25) %>%
+  ggplot(aes(year, lifeExp)) + 
+    geom_line(aes(color = country))
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{many-models_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 </div>
 
@@ -149,9 +186,6 @@ fivenum(mtcars$mpg)
 
 <div class="question">
 What’s missing in the following data frame? How does `quantile()` return that missing piece? Why isn’t that helpful here?
-</div>
-
-<div class="answer">
 
 
 ```r
@@ -170,6 +204,9 @@ mtcars %>%
 #> 6     6  17.8
 #> # ... with 9 more rows
 ```
+</div>
+
+<div class="answer">
 
 The particular quantiles of the values are missing, e.g. `0%`, `25%`, `50%`, `75%`, `100%`. `quantile()` returns these in the names of the vector.
 
@@ -188,6 +225,12 @@ Since the `unnest` function drops the names of the vector, they aren't useful he
 <div class="question">
 What does this code do?
 Why might might it be useful?
+
+```r
+mtcars %>%
+  group_by(cyl) %>%
+  summarise_each(funs(list))
+```
 </div>
 
 <div class="answer">

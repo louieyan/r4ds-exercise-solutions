@@ -25,7 +25,7 @@
 <meta name="author" content="Jeffrey B. Arnold">
 
 
-<meta name="date" content="2018-11-21">
+<meta name="date" content="2018-11-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,6 +62,15 @@
 
   gtag('config', 'UA-61453123-2');
 </script>
+<!--
+License: MIT License
+Copyright (c) 2016 Open Review Toolkit & Ben Marwick
+
+See https://github.com/benmarwick/bookdown-ort/blob/master/hypothesis.html
+-->
+
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>window.hypothesisConfig = function () { return {showHighlights: false}; };</script>
 
 
 <style type="text/css">
@@ -130,6 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <link rel="stylesheet" href="includes/r4ds.css" type="text/css" />
 <link rel="stylesheet" href="includes/r4ds-solutions.css" type="text/css" />
+<link rel="stylesheet" href="includes/ort.css" type="text/css" />
 </head>
 
 <body>
@@ -143,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li><strong><a href="./">R for Data Science Solutions</a></strong></li>
+<div id="google_translate_element"></div>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
@@ -626,6 +637,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.2" data-path="many-models.html"><a href="many-models.html#gapminder"><i class="fa fa-check"></i><b>25.2</b> Gapminder</a><ul>
 <li><a href="many-models.html#exercise-25.2.5.1">Exercise <span class="exercise-number">25.2.5.1</span></a></li>
 <li><a href="many-models.html#exercise-25.2.5.2">Exercise <span class="exercise-number">25.2.5.2</span></a></li>
+<li><a href="many-models.html#exercise-25.2.5.3">Exercise <span class="exercise-number">25.2.5.3</span></a></li>
 </ul></li>
 <li class="chapter" data-level="25.3" data-path="many-models.html"><a href="many-models.html#list-columns"><i class="fa fa-check"></i><b>25.3</b> List-columns</a></li>
 <li class="chapter" data-level="25.4" data-path="many-models.html"><a href="many-models.html#creating-list-columns"><i class="fa fa-check"></i><b>25.4</b> Creating list-columns</a><ul>
@@ -690,6 +702,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="29" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html"><i class="fa fa-check"></i><b>29</b> R Markdown formats</a></li>
 <li class="chapter" data-level="30" data-path="r-markdown-workflow.html"><a href="r-markdown-workflow.html"><i class="fa fa-check"></i><b>30</b> R Markdown workflow</a></li>
+<li class="divider"></li>
+<a href="https://bookdown.org" target="https://bookdown.org/yihui/bookdown">Published with bookdown</a>
+
 </ul>
 
       </nav>
@@ -707,6 +722,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
+<div class = rmdreview>This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
 <div id="iteration" class="section level1">
 <h1><span class="header-section-number">21</span> Iteration</h1>
 <div id="introduction-14" class="section level2">
@@ -1127,7 +1144,7 @@ The <code>microbenchmark()</code> function will run an R expression a number of 
 <span class="kw">microbenchmark</span>(<span class="kw">add_to_vector</span>(<span class="dv">10000</span>), <span class="dt">times =</span> <span class="dv">3</span>)
 <span class="co">#&gt; Unit: milliseconds</span>
 <span class="co">#&gt;                  expr min  lq mean median  uq max neval</span>
-<span class="co">#&gt;  add_to_vector(10000) 115 118  129    121 135 150     3</span></code></pre>
+<span class="co">#&gt;  add_to_vector(10000) 293 371  418    449 480 510     3</span></code></pre>
 <p>And one that pre-allocates it.</p>
 <pre class="sourceCode r"><code class="sourceCode r">add_to_vector_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
   output &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;integer&quot;</span>, n)
@@ -1137,9 +1154,9 @@ The <code>microbenchmark()</code> function will run an R expression a number of 
   output
 }
 <span class="kw">microbenchmark</span>(<span class="kw">add_to_vector_2</span>(<span class="dv">10000</span>), <span class="dt">times =</span> <span class="dv">3</span>)
-<span class="co">#&gt; Unit: microseconds</span>
-<span class="co">#&gt;                    expr min   lq mean median   uq  max neval</span>
-<span class="co">#&gt;  add_to_vector_2(10000) 664 2977 5289   5291 7602 9913     3</span></code></pre>
+<span class="co">#&gt; Unit: milliseconds</span>
+<span class="co">#&gt;                    expr  min  lq mean median   uq  max neval</span>
+<span class="co">#&gt;  add_to_vector_2(10000) 2.01 3.4 12.5   4.79 17.8 30.8     3</span></code></pre>
 <p>The pre-allocated vector is about <strong>10</strong> times faster!
 You may get different answers, but the longer the vector and the bigger the objects, the more that pre-allocation will outperform appending.</p>
 </div>
@@ -1377,7 +1394,7 @@ in a vector. For a single column, the number of unique values of a vector
 can be calculated like so,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(iris<span class="op">$</span>Species))
 <span class="co">#&gt; [1] 3</span></code></pre>
-<p>To apply this to all columns, we can provide the map funtion anonymous function.
+<p>To apply this to all columns, we can provide the map an anonymous function.
 We can write anonymous function using the standard R syntax, like this,</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_int</span>(iris, <span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x)))
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
@@ -1626,6 +1643,11 @@ This causes an error since we can’t use a list with <code>[</code>.</p>
 
 
 </div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-61453123-2'}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
             </section>
 
           </div>
@@ -1645,7 +1667,18 @@ This causes an error since we can’t use a list with <code>[</code>.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": true,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper", "vk"],
+"instapaper": false
+},
 "fontsettings": {
 "theme": "white",
 "family": "sans",

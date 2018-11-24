@@ -49,7 +49,7 @@ elements, and `NA` is a non-finite element.
 
 However, if both `finite = FALSE` and `na.rm = FALSE`, then this function will
 return a vector of `NA` values.
-Recall, artithmetic operations involving `NA` values will return `NA`.
+Recall, arithmetic operations involving `NA` values will return `NA`.
 
 ```r
 rescale01_alt2 <- function(x, na.rm = FALSE, finite = FALSE) {
@@ -151,7 +151,7 @@ sum_to_one(1:5)
 # if any missing, return all missing
 sum_to_one(c(1:5, NA))
 #> [1] NA NA NA NA NA NA
-# drop missing values when standarizing
+# drop missing values when standardizing
 sum_to_one(c(1:5, NA), na.rm = TRUE)
 #> [1] 0.0667 0.1333 0.2000 0.2667 0.3333     NA
 ```

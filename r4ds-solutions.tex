@@ -123,7 +123,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{November 21, 2018}
+    \date{November 23, 2018}
 
 \usepackage{amsthm}
 
@@ -4241,7 +4241,7 @@ A common approach to finding unusual observations would be to
 \href{https://en.wikipedia.org/wiki/Standard_score}{standardize} the
 observations each flight by subtracting the mean and dividing by the
 standard deviation, \[
-\mathsf{standarized}(x) = \frac{x - \mathsf{mean}(x)}{\mathsf{sd}(x)} .
+\mathsf{standardized}(x) = \frac{x - \mathsf{mean}(x)}{\mathsf{sd}(x)} .
 \] This is often called a \(z\)-score. The units of the standardized
 variable are standard deviations from the mean. This is essential,
 because it will put the flight times from different routes all on the
@@ -4322,8 +4322,9 @@ deviations from the mean
 
 However, this does not necessarily imply that there was a data entry
 error. We should check these flights to see whether there was some
-reason for the difference, e.g.~an emergency or other unusual occurence,
-or whether there is an error in our understanding of the data.
+reason for the difference. For example, was there an emergency or
+another unusual occurrence? It may be that we are missing some piece of
+information that explains these unusual times.
 
 A potential issue with the way that we standardized the flights is that
 the mean and standard deviation used to calculate it include the unusual
@@ -4356,9 +4357,9 @@ we have not used any domain specific knowledge. But we know much more
 about this problem. We know that aircraft have maximum speeds. So could
 also use the time and distance of each flight to calculate the average
 speed of each flight and find any clearly impossibly fast flights. This
-complicated by the way in which winds, especially the jetstream
-influence the ground-speed of flights. A strong tailwind can increase
-ground-speed of the aircraft by
+complicated by the way in which winds, especially the influence of wind,
+especially jet streams, on the ground-speed of flights. A strong
+tailwind can increase ground-speed of the aircraft by
 \href{https://www.wired.com/story/norwegian-air-transatlantic-speed-record/}{200
 mph}.
 
@@ -4555,9 +4556,10 @@ This will also use data from \textbf{nycflights13},
 {7.3.4.1}}{Exercise 7.3.4.1}}\label{exercise-7.3.4.1}}
 \addcontentsline{toc}{subsection}{Exercise {7.3.4.1}}
 
-Explore the distribution of each of the x, y, and z variables in
-diamonds. What do you learn? Think about a diamond and how you might
-decide which dimension is the length, width, and depth.
+Explore the distribution of each of the \texttt{x}, \texttt{y}, and
+\texttt{z} variables in \texttt{diamonds}. What do you learn? Think
+about a diamond and how you might decide which dimension is the length,
+width, and depth.
 
 In order to make it easier to plot them, I'll reshape the dataset so
 that I can use the variables as facets.
@@ -4581,21 +4583,48 @@ There several noticeable features of the distributions
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   They are right skewed, with most diamonds small, but a few very large
   ones.
 \item
-  There is an outlier in \texttt{y}, and \texttt{z} (see the rug)
+  There is an outlier in \texttt{y} and \texttt{z}. This is visible in
+  the z-axis and y-axis rugs.
 \item
-  All three distributions have a bimodality (perhaps due to some sort of
-  threshold)
+  All three distributions are bimodal. This could be due to some
+  threshold in diamond classification, or popular values used for
+  certain cuts.
 \end{enumerate}
 
-According to the documentation for \texttt{diamonds}: \texttt{x} is
-length, \texttt{y} is width, and \texttt{z} is depth. I don't know if I
-would have figured that out before; maybe if there was data on the type
-of cuts.
+According to the documentation for \texttt{diamonds}, \texttt{x} is
+length, \texttt{y} is width, and \texttt{z} is depth.
+
+If documentation were unavailable, two reasonable assumptions are
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  length is less than width, otherwise the width would be called the
+  length
+\item
+  depth is usually less than length or width, but not necessarily.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summarise}\NormalTok{(diamonds, }\KeywordTok{mean}\NormalTok{(x }\OperatorTok{>=}\StringTok{ }\NormalTok{y), }\KeywordTok{mean}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\NormalTok{z), }\KeywordTok{mean}\NormalTok{(y }\OperatorTok{>}\StringTok{ }\NormalTok{z))}
+\CommentTok{#> # A tibble: 1 x 3}
+\CommentTok{#>   `mean(x >= y)` `mean(x > z)` `mean(y > z)`}
+\CommentTok{#>            <dbl>         <dbl>         <dbl>}
+\CommentTok{#> 1          0.435         1.000         1.000}
+\end{Highlighting}
+\end{Shaded}
+
+Surprisingly, it appears that depth (\texttt{z}) is always smaller than
+length (\texttt{x}) or width (\texttt{y}). Length is less than width in
+more than half the observations, the opposite of expectations. I don't
+know what's going on. If this was not a widely used dataset I would
+think that \texttt{x}, \texttt{y}, and \texttt{z} were mislabeled.
 
 \hypertarget{exercise-7.3.4.2}{%
 \subsection*{\texorpdfstring{Exercise
@@ -4625,7 +4654,7 @@ sure you try a wide range of values.)
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4634,7 +4663,7 @@ sure you try a wide range of values.)
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Distribution of last digit
 
@@ -4648,7 +4677,7 @@ Distribution of last digit
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4660,7 +4689,7 @@ Distribution of last digit
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4673,7 +4702,7 @@ Distribution of last digit
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 \hypertarget{exercise-7.3.4.3}{%
 \subsection*{\texorpdfstring{Exercise
@@ -4765,7 +4794,7 @@ histogram bins have already been calculated, it is unaffected.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 However, the \texttt{xlim()} and \texttt{ylim()} functions influence
 actions before the calculation of the stats related to the histogram.
@@ -4785,7 +4814,7 @@ looks.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 \hypertarget{missing-values}{%
 \section{Missing Values}\label{missing-values}}
@@ -4814,7 +4843,7 @@ are calculated. See the warning message:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 In the \texttt{geom\_bar()} function, \texttt{NA} is treated as another
 category. The \texttt{x} aesthetic in \texttt{geom\_bar()} requires a
@@ -4830,7 +4859,7 @@ category.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 In a histogram, the \texttt{x} aesthetic variable needs to be numeric,
 and \texttt{stat\_bin()} groups the observations by ranges into bins.
@@ -4890,7 +4919,7 @@ Instead of a \texttt{freqplot} use a box-plot
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 \hypertarget{exercise-7.5.1.1.2}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -4930,7 +4959,7 @@ a boxplot by binning \texttt{carat} (as suggested in the chapter).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 Note that the choice of the binning width is important, as if it were
 too large it would obscure any relationship, and if it were too small,
@@ -4981,7 +5010,7 @@ be visualized with a box plot.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 There is a lot of variability in the distribution of carat sizes within
 each cut category. There is a slight negative relationship between carat
@@ -5012,7 +5041,7 @@ Earlier, we created this horizontal box plot of the distribution
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 In this case the output looks the same, but \texttt{x} and \texttt{y}
 aesthetics are flipped.
@@ -5026,7 +5055,7 @@ aesthetics are flipped.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \hypertarget{exercise-7.5.1.1.4}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -5065,7 +5094,7 @@ They are useful for larger datasets because,
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 The letter-value plot is described in Hofmann, Wickham, and Kafadar
 (\protect\hyperlink{ref-HofmannWickhamKafadar2017}{2017}).
@@ -5099,7 +5128,7 @@ parameters to determine the level of smoothness of the distribution.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5110,7 +5139,7 @@ parameters to determine the level of smoothness of the distribution.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5120,7 +5149,7 @@ parameters to determine the level of smoothness of the distribution.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 The violin plot was first described in Hintze and Nelson
 (\protect\hyperlink{ref-HintzeNelson1998}{1998}).
@@ -5161,7 +5190,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5172,7 +5201,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5183,7 +5212,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5194,7 +5223,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5205,7 +5234,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5215,7 +5244,7 @@ individual points, they are better suited for smaller datasets.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 \hypertarget{two-categorical-variables}{%
 \subsection{Two categorical variables}\label{two-categorical-variables}}
@@ -5246,7 +5275,7 @@ cut within a \texttt{color}. This is done using a grouped mutate.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 Similarly, to scale by the distribution of \texttt{color} within
 \texttt{cut},
@@ -5263,7 +5292,7 @@ Similarly, to scale by the distribution of \texttt{color} within
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 I add \texttt{limit\ =\ c(0,\ 1)} to put the color scale between (0, 1).
 These are the logical boundaries of proportions. This makes it possible
@@ -5294,7 +5323,7 @@ the plot difficult to read? How could you improve it?
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 There are several things that could be done to improve it,
 
@@ -5331,7 +5360,7 @@ higher variance in their average due to fewer observations).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \hypertarget{exercise-7.5.2.1.3}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -5356,7 +5385,7 @@ However, switching the order doesn't result in overlapping labels.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 Another justification, for switching the order is that the larger
 numbers are at the top when \texttt{x\ =\ color} and \texttt{y\ =\ cut},
@@ -5397,7 +5426,7 @@ than those in the box plots in order to be interpretable.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5408,7 +5437,7 @@ than those in the box plots in order to be interpretable.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 \hypertarget{exercise-7.5.3.1.2}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -5430,7 +5459,7 @@ observations, and the width determined by the number of observations.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 Plotted with a box plot with 10 equal-width bins of \$2,000. The
 argument \texttt{boundary\ =\ 0} ensures that first bin is \$0--\$2,000.
@@ -5444,7 +5473,7 @@ argument \texttt{boundary\ =\ 0} ensures that first bin is \$0--\$2,000.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 \hypertarget{exercise-7.5.3.1.3}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -5487,7 +5516,7 @@ Here are a few options that I tried.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5496,7 +5525,7 @@ Here are a few options that I tried.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5505,7 +5534,7 @@ Here are a few options that I tried.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \hypertarget{exercise-7.5.3.1.5}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -5526,7 +5555,7 @@ appear normal when examined separately.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{EDA_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 Why is a scatterplot a better display than a binned plot for this case?
 
@@ -7001,7 +7030,7 @@ impossible combination. We can do that by adding the argument
 Though not necessary, there is one more way in which we can improve this
 data. If a variable takes two values, like \texttt{pregnant} and
 \texttt{sex} do, it is often preferable to store them as logical
-vectors. The following vector uses logical vectors ro represent
+vectors. The following vector uses logical vectors to represent
 pregnancy and sex.
 
 \begin{Shaded}
@@ -7621,7 +7650,7 @@ provide the weather for the destination of each flight. The
 \texttt{day}, \texttt{hour}, \texttt{origin}) are a foreign key for the
 \texttt{flights} data frame columns (\texttt{year}, \texttt{month},
 \texttt{day}, \texttt{hour}, \texttt{dest}). This would provide
-information about the weather at the distination airport at the time of
+information about the weather at the destination airport at the time of
 the flight take off, unless the arrival date-time were calculated.
 
 So why was this not a relationship prior to adding additional rows to
@@ -7774,7 +7803,7 @@ The answer to each part follows.
   data frame already contains a column named \texttt{n}.
 
   This behavior requires knowing the names of the columns which
-  \texttt{count()} is being called on. The following code usese
+  \texttt{count()} is being called on. The following code uses
   \texttt{group\_by()} and \texttt{n()} to produces the same result.
 
 \begin{Shaded}
@@ -8995,7 +9024,7 @@ The answer to each part follows.
 {14.3.3.1.2}}{Exercise 14.3.3.1.2}}\label{exercise-14.3.3.1.2}}
 \addcontentsline{toc}{subsubsection}{Exercise {14.3.3.1.2}}
 
-Empirically verify the rule ``i before e except after c''.
+Empirically verify the rule ``i'' before e except after ``c''.
 
 Using only what has been introduced thus far:
 
@@ -9026,8 +9055,7 @@ rules:
 {14.3.3.1.3}}{Exercise 14.3.3.1.3}}\label{exercise-14.3.3.1.3}}
 \addcontentsline{toc}{subsubsection}{Exercise {14.3.3.1.3}}
 
-Is
-\texttt{q\textquotesingle{}\textquotesingle{}\ always\ followed\ by\ a}u''?
+Is ``q'' always followed by a ``u''?
 
 In the \texttt{stringr::words} dataset, yes. In the full English
 language, no.
@@ -9066,11 +9094,11 @@ The regex
 \texttt{ou\textbar{}ise\$\textbar{}ae\textbar{}oe\textbar{}yse\$} would
 match these.
 
-There are other {[}spelling differences between American and British
-English{]}
-(\url{https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences})
-but they are not patterns amenable to regular expressions. It would
-require a dictionary with differences in spellings for different words.
+There are other
+\href{https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences}{spelling
+differences between American and British English} but they are not
+patterns amenable to regular expressions. It would require a dictionary
+with differences in spellings for different words.
 
 \hypertarget{exercise-14.3.3.1.5}{%
 \subsubsection*{\texorpdfstring{Exercise
@@ -9141,15 +9169,23 @@ Pattern & \texttt{\{m,n\}} & Meaning\tabularnewline
 \bottomrule
 \end{longtable}
 
-For example, let's repeat the let's rewrite the \texttt{?}, \texttt{+},
-and \texttt{*} examples using \texttt{\{,\}}.
+For example, let's repeat the examples in the chapter, replacing
+\texttt{?} with \texttt{\{0,1\}}, \texttt{+} with \texttt{\{1,\}}, and
+\texttt{*} with \texttt{\{*,\}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{x <-}\StringTok{ "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{str_view}\NormalTok{(x, }\StringTok{"CC?"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\textbackslash{}begin\{center\}\includegraphics[width=0.7\linewidth]{strings_files/figure-latex/unnamed-chunk-29-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9166,6 +9202,34 @@ and \texttt{*} examples using \texttt{\{,\}}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{str_view}\NormalTok{(x, }\StringTok{"CC\{1,\}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str_view_all}\NormalTok{(x, }\StringTok{"C[LX]+"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str_view_all}\NormalTok{(x, }\StringTok{"C[LX]\{0,1\}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The chapter does not contain an example of \texttt{*}. This pattern
+looks for a ``C'' optionally followed by any number of ``L'' or ``X''
+characters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str_view_all}\NormalTok{(x, }\StringTok{"C[LX]*"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str_view_all}\NormalTok{(x, }\StringTok{"C[LX]\{0,\}"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9718,9 +9782,8 @@ Replace all forward slashes in a string with backslashes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{backslashed <-}\StringTok{ }\KeywordTok{str_replace_all}\NormalTok{(}\StringTok{"past/present/future"}\NormalTok{, }\StringTok{"/"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{)}
-\KeywordTok{writeLines}\NormalTok{(backslashed)}
-\CommentTok{#> past\textbackslash{}present\textbackslash{}future}
+\KeywordTok{str_replace_all}\NormalTok{(}\StringTok{"past/present/future"}\NormalTok{, }\StringTok{"/"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{)}
+\CommentTok{#> [1] "past\textbackslash{}\textbackslash{}present\textbackslash{}\textbackslash{}future"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9890,18 +9953,18 @@ How would you find all strings containing \texttt{\textbackslash{}} with
 
 What are the five most common words in sentences?
 
+Using \texttt{str\_extract\_all()} with the argument
+\texttt{boundary("word")} will extract all words. The rest of the code
+uses \textbf{dplyr} functions to count words and find the most common
+words.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_extract_all}\NormalTok{(sentences, }\KeywordTok{boundary}\NormalTok{(}\StringTok{"word"}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{unlist}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{str_to_lower}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{tibble}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{set_names}\NormalTok{(}\StringTok{"word"}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(word) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{count}\NormalTok{(}\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
+\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{unlist}\NormalTok{(}\KeywordTok{str_extract_all}\NormalTok{(sentences, }\KeywordTok{boundary}\NormalTok{(}\StringTok{"word"}\NormalTok{)))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{str_to_lower}\NormalTok{(word)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(word, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \CommentTok{#> # A tibble: 5 x 2}
-\CommentTok{#> # Groups:   word [5]}
 \CommentTok{#>   word      n}
 \CommentTok{#>   <chr> <int>}
 \CommentTok{#> 1 the     751}
@@ -11033,7 +11096,7 @@ element.
 
 However, if both \texttt{finite\ =\ FALSE} and \texttt{na.rm\ =\ FALSE},
 then this function will return a vector of \texttt{NA} values. Recall,
-artithmetic operations involving \texttt{NA} values will return
+arithmetic operations involving \texttt{NA} values will return
 \texttt{NA}.
 
 \begin{Shaded}
@@ -11149,7 +11212,7 @@ values.
 \CommentTok{# if any missing, return all missing}
 \KeywordTok{sum_to_one}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\OtherTok{NA}\NormalTok{))}
 \CommentTok{#> [1] NA NA NA NA NA NA}
-\CommentTok{# drop missing values when standarizing}
+\CommentTok{# drop missing values when standardizing}
 \KeywordTok{sum_to_one}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\OtherTok{NA}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \CommentTok{#> [1] 0.0667 0.1333 0.2000 0.2667 0.3333     NA}
 \end{Highlighting}
@@ -12368,7 +12431,7 @@ missing values (values equal to \texttt{NA}) in a vector.
 
 The expression \texttt{sum(!is.finite(x))} calculates the number of
 elements in the vector that are equal to missing (\texttt{NA}),
-not-a-number (\texttt{NaN}), or inifinity (\texttt{Inf}).
+not-a-number (\texttt{NaN}), or infinity (\texttt{Inf}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14076,7 +14139,7 @@ Write code that uses one of the map functions to:
 \end{Highlighting}
 \end{Shaded}
 
-  To apply this to all columns, we can provide the map funtion anonymous
+  To apply this to all columns, we can provide the map an anonymous
   function. We can write anonymous function using the standard R syntax,
   like this,
 
@@ -15351,7 +15414,7 @@ spend if you were buying a diamond?
 \NormalTok{diamonds2 }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{add_predictions}\NormalTok{(mod_diamond2) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{add_residuals}\NormalTok{(mod_diamond2) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{sq_err =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(resid}\OperatorTok{^}\DecValTok{2}\NormalTok{)),}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{sq_err =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(resid }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)),}
             \DataTypeTok{abs_err =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(resid)),}
             \DataTypeTok{p975_err =} \KeywordTok{quantile}\NormalTok{(resid, }\FloatTok{0.975}\NormalTok{),}
             \DataTypeTok{p025_err =} \KeywordTok{quantile}\NormalTok{(resid, }\FloatTok{0.025}\NormalTok{))}
@@ -15362,14 +15425,11 @@ spend if you were buying a diamond?
 \end{Highlighting}
 \end{Shaded}
 
-The average squared and absolute errors are \(2^0.19 = 1.14\) and
-\(2^0.10\) so on average, the error is \(\pm 10--15\)\%. And the 95\%
-range of residuals is about \(2^0.37 = 1.3\) so within \(\pm 30\)\%.
-This doesn't seem terrible to me.
-
 \hypertarget{what-affects-the-number-of-daily-flights}{%
 \section{What affects the number of daily
 flights?}\label{what-affects-the-number-of-daily-flights}}
+
+This code is copied from the book and needed for the exercises.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -15422,18 +15482,27 @@ Use your Google sleuthing skills to brainstorm why there were fewer than
 expected flights on Jan 20, May 26, and Sep 1. (Hint: they all have the
 same explanation.) How would these days generalize to another year?
 
-These are the Sundays before Monday holidays Martin Luther King Day,
-Memorial Day, and Labor Day.
+These are the Sundays before Monday holidays Martin Luther King Jr.~Day,
+Memorial Day, and Labor Day. This would generalize to other years, by
+using the dates of the respective holidays for those years; the third
+Monday of January for Martin Luther King Jr.~Day, the last Monday of May
+for Memorial Day, and the first Monday in September for Labor Day.
 
 \hypertarget{exercise-24.3.5.2}{%
 \subsection*{\texorpdfstring{Exercise
 {24.3.5.2}}{Exercise 24.3.5.2}}\label{exercise-24.3.5.2}}
 \addcontentsline{toc}{subsection}{Exercise {24.3.5.2}}
 
+What do the three days with high positive residuals represent? How would
+these days generalize to another year?
+
+The top three days correspond to the Saturday after Thanksgiving
+(November 30th), the Sunday after Thanksgiving (December 1st), and the
+Saturday after Christmas (December 28th).
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{daily }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{3}\NormalTok{, resid)}
+\KeywordTok{top_n}\NormalTok{(daily, }\DecValTok{3}\NormalTok{, resid)}
 \CommentTok{#> # A tibble: 3 x 5}
 \CommentTok{#>   date           n wday  term  resid}
 \CommentTok{#>   <date>     <int> <ord> <fct> <dbl>}
@@ -15442,6 +15511,9 @@ Memorial Day, and Labor Day.
 \CommentTok{#> 3 2013-12-28   814 Sat   fall   69.4}
 \end{Highlighting}
 \end{Shaded}
+
+We could generalize these to other years using the dates of those
+holidays on those years.
 
 \hypertarget{exercise-24.3.5.3}{%
 \subsection*{\texorpdfstring{Exercise
@@ -15461,19 +15533,19 @@ other ways which it could be solved.
 \begin{Highlighting}[]
 \NormalTok{daily <-}\StringTok{ }\NormalTok{daily }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{wday2 =}
-         \KeywordTok{case_when}\NormalTok{(.}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{term }\OperatorTok{==}\StringTok{ "summer"} \OperatorTok{~}\StringTok{ "Sat-summer"}\NormalTok{,}
-\NormalTok{         .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\StringTok{ }\NormalTok{term }\OperatorTok{==}\StringTok{ "fall"} \OperatorTok{~}\StringTok{ "Sat-fall"}\NormalTok{,}
-\NormalTok{         .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{term }\OperatorTok{==}\StringTok{ "spring"} \OperatorTok{~}\StringTok{ "Sat-spring"}\NormalTok{,}
-         \OtherTok{TRUE} \OperatorTok{~}\StringTok{ }\KeywordTok{as.character}\NormalTok{(.}\OperatorTok{$}\NormalTok{wday)))}
+         \KeywordTok{case_when}\NormalTok{(wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{term }\OperatorTok{==}\StringTok{ "summer"} \OperatorTok{~}\StringTok{ "Sat-summer"}\NormalTok{,}
+\NormalTok{                   wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{term }\OperatorTok{==}\StringTok{ "fall"} \OperatorTok{~}\StringTok{ "Sat-fall"}\NormalTok{,}
+\NormalTok{                   wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{term }\OperatorTok{==}\StringTok{ "spring"} \OperatorTok{~}\StringTok{ "Sat-spring"}\NormalTok{,}
+                   \OtherTok{TRUE} \OperatorTok{~}\StringTok{ }\KeywordTok{as.character}\NormalTok{(wday)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mod4 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(n }\OperatorTok{~}\StringTok{ }\NormalTok{wday2, }\DataTypeTok{data =}\NormalTok{ daily)}
+\NormalTok{mod3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(n }\OperatorTok{~}\StringTok{ }\NormalTok{wday2, }\DataTypeTok{data =}\NormalTok{ daily)}
 
 \NormalTok{daily }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather_residuals}\NormalTok{(}\DataTypeTok{sat_term =}\NormalTok{ mod4, }\DataTypeTok{all_interact =}\NormalTok{ mod2) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gather_residuals}\NormalTok{(}\DataTypeTok{sat_term =}\NormalTok{ mod3, }\DataTypeTok{all_interact =}\NormalTok{ mod2) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(date, resid, }\DataTypeTok{colour =}\NormalTok{ model)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.75}\NormalTok{)}
 \end{Highlighting}
@@ -15490,7 +15562,7 @@ row for each model.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{daily }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{spread_residuals}\NormalTok{(}\DataTypeTok{sat_term =}\NormalTok{ mod4, }\DataTypeTok{all_interact =}\NormalTok{ mod2) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{spread_residuals}\NormalTok{(}\DataTypeTok{sat_term =}\NormalTok{ mod3, }\DataTypeTok{all_interact =}\NormalTok{ mod2) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{resid_diff =}\NormalTok{ sat_term }\OperatorTok{-}\StringTok{ }\NormalTok{all_interact) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(date, resid_diff)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.75}\NormalTok{)}
@@ -15499,17 +15571,17 @@ row for each model.
 
 \begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
-The model with terms x Saturday has higher residuals in the fall, and
+The model with terms × Saturday has higher residuals in the fall, and
 lower residuals in the spring than the model with all interactions.
 
 Using overall model comparison terms, \texttt{mod4} has a lower \(R^2\)
-and regression standard error, \(\hat\sigma\), despite using fewer
-variables. More importantly for prediction purposes, it has a higher AIC
-- which is an estimate of the out of sample error.
+and regression standard error, \(\hat{\sigma}\), despite using fewer
+variables. More importantly for prediction purposes, this model has a
+higher AIC, which is an estimate of the out of sample error.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{glance}\NormalTok{(mod4) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(r.squared, sigma, AIC, df)}
+\KeywordTok{glance}\NormalTok{(mod3) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(r.squared, sigma, AIC, df)}
 \CommentTok{#> # A tibble: 1 x 4}
 \CommentTok{#>   r.squared sigma   AIC    df}
 \CommentTok{#> *     <dbl> <dbl> <dbl> <int>}
@@ -15536,55 +15608,70 @@ Create a new \texttt{wday} variable that combines the day of week, term
 (for Saturdays), and public holidays. What do the residuals of that
 model look like?
 
-The question is unclear how to handle the public holidays. We could
-include a dummy for all public holidays? or the Sunday before public
-holidays?
+The question is unclear how to handle public holidays. There are several
+questions to consider.
 
-Including a level for the public holidays themselves is insufficient
-because (1) public holiday's effects on travel varies dramatically, (2)
-the effect can occur on the day itself or the day before and after, and
-(3) with Thanksgiving and Christmas there are increases in travel as
-well.
+First, what are the public holidays? I will include all
+\href{https://en.wikipedia.org/wiki/Federal_holidays_in_the_United_States}{federal
+holidays in the United States} in 2013. Other holidays to consider would
+be Easter and Good Friday which is US stock market holiday and widely
+celebrated religious holiday, Mothers Day, Fathers Day, and Patriots'
+Day, which is a holiday in several states, and other state holidays.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{holidays_}\DecValTok{2013}\NormalTok{ <-}
+\StringTok{  }\KeywordTok{tribble}\NormalTok{(}
+    \OperatorTok{~}\StringTok{ }\NormalTok{holiday,                    }\OperatorTok{~}\StringTok{ }\NormalTok{date,}
+    \StringTok{"New Year's Day"}\NormalTok{,             }\DecValTok{20130101}\NormalTok{,}
+    \StringTok{"Martin Luther King Jr. Day"}\NormalTok{, }\DecValTok{20130121}\NormalTok{,}
+    \StringTok{"Washington's Birthday"}\NormalTok{,      }\DecValTok{20130218}\NormalTok{,}
+    \StringTok{"Memorial Day"}\NormalTok{,               }\DecValTok{20130527}\NormalTok{,}
+    \StringTok{"Independence Day"}\NormalTok{,           }\DecValTok{20130704}\NormalTok{,}
+    \StringTok{"Labor Day"}\NormalTok{,                  }\DecValTok{20130902}\NormalTok{,}
+    \StringTok{"Columbus Day"}\NormalTok{,               }\DecValTok{20131028}\NormalTok{,}
+    \StringTok{"Veteran's Day"}\NormalTok{,              }\DecValTok{20131111}\NormalTok{,}
+    \StringTok{"Thanksgiving"}\NormalTok{,               }\DecValTok{20131128}\NormalTok{,}
+    \StringTok{"Christmas"}\NormalTok{,                  }\DecValTok{20131225}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{date =}\NormalTok{ lubridate}\OperatorTok{::}\KeywordTok{ymd}\NormalTok{(date))}
+\end{Highlighting}
+\end{Shaded}
+
+The model could include a single dummy variable which indicates a day
+was a public holiday. Alternatively, I could include a dummy variable
+for each public holiday. I would expect that Veteran's Day and
+Washington's Birthday have a different effect on travel than
+Thanksgiving, Christmas, and New Year's Day.
+
+Another question is whether and how I should handle the days before and
+after holidays. Travel could be lighter on the holiday itself, but
+heavier before and after.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{daily <-}\StringTok{ }\NormalTok{daily }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{wday3 =}
          \KeywordTok{case_when}\NormalTok{(}
-\NormalTok{           .}\OperatorTok{$}\NormalTok{date }\OperatorTok{%in%}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{ymd}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{20130101}\NormalTok{, }\CommentTok{# new years}
-                                        \DecValTok{20130121}\NormalTok{, }\CommentTok{# mlk}
-                                        \DecValTok{20130218}\NormalTok{, }\CommentTok{# presidents}
-                                        \DecValTok{20130527}\NormalTok{, }\CommentTok{# memorial}
-                                        \DecValTok{20130704}\NormalTok{, }\CommentTok{# independence}
-                                        \DecValTok{20130902}\NormalTok{, }\CommentTok{# labor}
-                                        \DecValTok{20131028}\NormalTok{, }\CommentTok{# columbus}
-                                        \DecValTok{20131111}\NormalTok{, }\CommentTok{# veterans}
-                                        \DecValTok{20131128}\NormalTok{, }\CommentTok{# thanksgiving}
-                                        \DecValTok{20131225}\NormalTok{)) }\OperatorTok{~}
-\StringTok{             "holiday"}\NormalTok{,}
+\NormalTok{           (date }\OperatorTok{-}\StringTok{ }\NormalTok{1L) }\OperatorTok{%in%}\StringTok{ }\NormalTok{holidays_}\DecValTok{2013}\OperatorTok{$}\NormalTok{date }\OperatorTok{~}\StringTok{ "day before holiday"}\NormalTok{,}
+\NormalTok{           (date }\OperatorTok{+}\StringTok{ }\NormalTok{1L) }\OperatorTok{%in%}\StringTok{ }\NormalTok{holidays_}\DecValTok{2013}\OperatorTok{$}\NormalTok{date }\OperatorTok{~}\StringTok{ "day after holiday"}\NormalTok{,           }
+\NormalTok{           date }\OperatorTok{%in%}\StringTok{ }\NormalTok{holidays_}\DecValTok{2013}\OperatorTok{$}\NormalTok{date }\OperatorTok{~}\StringTok{ "holiday"}\NormalTok{,           }
 \NormalTok{           .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{term }\OperatorTok{==}\StringTok{ "summer"} \OperatorTok{~}\StringTok{ "Sat-summer"}\NormalTok{,}
-\NormalTok{           .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\StringTok{ }\NormalTok{term }\OperatorTok{==}\StringTok{ "fall"} \OperatorTok{~}\StringTok{ "Sat-fall"}\NormalTok{,}
+\NormalTok{           .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{term }\OperatorTok{==}\StringTok{ "fall"} \OperatorTok{~}\StringTok{ "Sat-fall"}\NormalTok{,}
 \NormalTok{           .}\OperatorTok{$}\NormalTok{wday }\OperatorTok{==}\StringTok{ "Sat"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{term }\OperatorTok{==}\StringTok{ "spring"} \OperatorTok{~}\StringTok{ "Sat-spring"}\NormalTok{,}
            \OtherTok{TRUE} \OperatorTok{~}\StringTok{ }\KeywordTok{as.character}\NormalTok{(.}\OperatorTok{$}\NormalTok{wday)))}
 
-\NormalTok{mod5 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(n }\OperatorTok{~}\StringTok{ }\NormalTok{wday3, }\DataTypeTok{data =}\NormalTok{ daily)}
+\NormalTok{mod4 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(n }\OperatorTok{~}\StringTok{ }\NormalTok{wday3, }\DataTypeTok{data =}\NormalTok{ daily)}
 
 \NormalTok{daily }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{spread_residuals}\NormalTok{(mod5) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(}\KeywordTok{abs}\NormalTok{(resid))) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{slice}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{20}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(date, wday, resid)}
-\CommentTok{#> # A tibble: 20 x 3}
-\CommentTok{#>   date       wday  resid}
-\CommentTok{#>   <date>     <ord> <dbl>}
-\CommentTok{#> 1 2013-11-28 Thu   -332.}
-\CommentTok{#> 2 2013-11-29 Fri   -306.}
-\CommentTok{#> 3 2013-12-25 Wed   -244.}
-\CommentTok{#> 4 2013-07-04 Thu   -229.}
-\CommentTok{#> 5 2013-12-24 Tue   -190.}
-\CommentTok{#> 6 2013-12-31 Tue   -175.}
-\CommentTok{#> # ... with 14 more rows}
+\StringTok{  }\KeywordTok{spread_residuals}\NormalTok{(}\DataTypeTok{resid_sat_terms =}\NormalTok{ mod3, }\DataTypeTok{resid_holidays =}\NormalTok{ mod4) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{resid_diff =}\NormalTok{ resid_holidays }\OperatorTok{-}\StringTok{ }\NormalTok{resid_sat_terms) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(date, resid_diff)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.75}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 \hypertarget{exercise-24.3.5.5}{%
 \subsection*{\texorpdfstring{Exercise
@@ -15595,13 +15682,27 @@ What happens if you fit a day of week effect that varies by month (i.e.
 \texttt{n\ \textasciitilde{}\ wday\ *\ month})? Why is this not very
 helpful?
 
-There are only 4-5 observations per parameter since only there are only
-4-5 weekdays in a given month.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{daily <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(daily, }\DataTypeTok{month =}\NormalTok{ lubridate}\OperatorTok{::}\KeywordTok{month}\NormalTok{(date))}
+
+\NormalTok{mod6 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(n }\OperatorTok{~}\StringTok{ }\NormalTok{wday }\OperatorTok{*}\StringTok{ }\NormalTok{month, }\DataTypeTok{data =}\NormalTok{ daily)}
+\end{Highlighting}
+\end{Shaded}
+
+There model has only 4--5 observations to estimate each (month, weekday)
+combination parameter since only there only 4--5 weekdays in given
+month. Any estimates will be very uncertain.
 
 \hypertarget{exercise-24.3.5.6}{%
 \subsection*{\texorpdfstring{Exercise
 {24.3.5.6}}{Exercise 24.3.5.6}}\label{exercise-24.3.5.6}}
 \addcontentsline{toc}{subsection}{Exercise {24.3.5.6}}
+
+What would you expect the model
+\texttt{n\ \textasciitilde{}\ wday\ +\ ns(date,\ 5)} to look like?
+Knowing what you know about the data, why would you expect it to be not
+particularly effective?
 
 It will estimate a smooth seasonal trend (\texttt{ns(date,\ 5)}) with a
 day of the week cyclicality, (\texttt{wday}). It probably will not be
@@ -15635,7 +15736,7 @@ long as Saturday flights (perhaps vacation flights?).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 However, breaking it down by hour, I don't see much evidence at first.
 Conditional on hour, the distance of Sunday flights seems similar to
@@ -15655,7 +15756,7 @@ that of other days (excluding Saturday):
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Can someone think of a better way to check this?
 
@@ -15692,7 +15793,7 @@ Now Monday is the first day of the week,
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 \hypertarget{learning-more-about-models}{%
 \section{Learning more about models}\label{learning-more-about-models}}
@@ -15820,6 +15921,34 @@ See exercise 7.5.1.1.6 for more on \textbf{ggbeeswarm}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{many-models_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
+\hypertarget{exercise-25.2.5.3}{%
+\subsection*{\texorpdfstring{Exercise
+{25.2.5.3}}{Exercise 25.2.5.3}}\label{exercise-25.2.5.3}}
+\addcontentsline{toc}{subsection}{Exercise {25.2.5.3}}
+
+To create the last plot (showing the data for the countries with the
+worst model fits), we needed two steps: we created a data frame with one
+row per country and then semi-joined it to the original dataset. It's
+possible to avoid this join if we use \texttt{unnest()} instead of
+\texttt{unnest(.drop\ =\ TRUE)}. How?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(country, continent) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{nest}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{model =} \KeywordTok{map}\NormalTok{(data, }\OperatorTok{~}\StringTok{ }\KeywordTok{lm}\NormalTok{(lifeExp }\OperatorTok{~}\StringTok{ }\NormalTok{year, .))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{glance =} \KeywordTok{map}\NormalTok{(model, broom}\OperatorTok{::}\NormalTok{glance)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{unnest}\NormalTok{(glance) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{unnest}\NormalTok{(data) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(r.squared }\OperatorTok{<}\StringTok{ }\FloatTok{0.25}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, lifeExp)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ country))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{many-models_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
 \hypertarget{list-columns}{%
 \section{List-columns}\label{list-columns}}
 
@@ -15906,6 +16035,14 @@ aren't useful here.
 \addcontentsline{toc}{subsection}{Exercise {25.4.5.4}}
 
 What does this code do? Why might might it be useful?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(cyl) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise_each}\NormalTok{(}\KeywordTok{funs}\NormalTok{(list))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]

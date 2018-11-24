@@ -74,7 +74,7 @@ Does the final model, `mod_diamonds2`, do a good job of predicting diamond price
 diamonds2 %>%
   add_predictions(mod_diamond2) %>%
   add_residuals(mod_diamond2) %>%
-  summarise(sq_err = sqrt(mean(resid^2)),
+  summarise(sq_err = sqrt(mean(resid ^ 2)),
             abs_err = mean(abs(resid)),
             p975_err = quantile(resid, 0.975),
             p025_err = quantile(resid, 0.025))
@@ -84,13 +84,11 @@ diamonds2 %>%
 #> 1  0.192   0.149    0.384   -0.369
 ```
 
-The average squared and absolute errors are $2^0.19 = 1.14$ and $2^0.10$ so on average, the error is $\pm 10--15$%.
-And the 95% range of residuals is about $2^0.37 = 1.3$ so within $\pm 30$%.
-This doesn't seem terrible to me.
-
 </div>
 
 ## What affects the number of daily flights?
+
+This code is copied from the book and needed for the exercises.
 
 
 ```r
@@ -141,22 +139,27 @@ Use your Google sleuthing skills to brainstorm why there were fewer than expecte
 
 <div class="answer">
 
-These are the Sundays before Monday holidays Martin Luther King Day, Memorial Day, and Labor Day.
+These are the Sundays before Monday holidays Martin Luther King Jr. Day, Memorial Day, and Labor Day.
+This would generalize to other years, by using the dates of the respective
+holidays for those years; the third Monday of January for Martin Luther King Jr. Day,
+the last Monday of May for Memorial Day, and the first Monday in September for
+Labor Day.
 
 </div>
 
 ### Exercise <span class="exercise-number">24.3.5.2</span> {.unnumbered .exercise}
 
 <div class="question">
-
+What do the three days with high positive residuals represent? How would these days generalize to another year?
 </div>
 
 <div class="answer">
 
+The top three days correspond to the Saturday after Thanksgiving (November 30th),
+the Sunday after Thanksgiving (December 1st), and the Saturday after Christmas (December 28th).
 
 ```r
-daily %>%
-  top_n(3, resid)
+top_n(daily, 3, resid)
 #> # A tibble: 3 x 5
 #>   date           n wday  term  resid
 #>   <date>     <int> <ord> <fct> <dbl>
@@ -164,6 +167,8 @@ daily %>%
 #> 2 2013-12-01   987 Sun   fall   95.5
 #> 3 2013-12-28   814 Sat   fall   69.4
 ```
+We could generalize these to other years using the dates of those holidays on those
+years.
 
 </div>
 
@@ -180,18 +185,18 @@ I'll use the function `case_when()` to do this, though there are other ways whic
 ```r
 daily <- daily %>%
   mutate(wday2 =
-         case_when(.$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
-         .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
-         .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
-         TRUE ~ as.character(.$wday)))
+         case_when(wday == "Sat" & term == "summer" ~ "Sat-summer",
+                   wday == "Sat" & term == "fall" ~ "Sat-fall",
+                   wday == "Sat" & term == "spring" ~ "Sat-spring",
+                   TRUE ~ as.character(wday)))
 ```
 
 
 ```r
-mod4 <- lm(n ~ wday2, data = daily)
+mod3 <- lm(n ~ wday2, data = daily)
 
 daily %>%
-  gather_residuals(sat_term = mod4, all_interact = mod2) %>%
+  gather_residuals(sat_term = mod3, all_interact = mod2) %>%
   ggplot(aes(date, resid, colour = model)) +
     geom_line(alpha = 0.75)
 ```
@@ -206,7 +211,7 @@ In this code, I use `spread_residuals()` to add one *column* per model, rather t
 
 ```r
 daily %>%
-  spread_residuals(sat_term = mod4, all_interact = mod2) %>%
+  spread_residuals(sat_term = mod3, all_interact = mod2) %>%
   mutate(resid_diff = sat_term - all_interact) %>%
   ggplot(aes(date, resid_diff)) +
     geom_line(alpha = 0.75)
@@ -216,13 +221,13 @@ daily %>%
 
 \begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
-The model with terms x Saturday has higher residuals in the fall, and lower residuals in the spring than the model with all interactions.
+The model with terms × Saturday has higher residuals in the fall, and lower residuals in the spring than the model with all interactions.
 
-Using overall model comparison terms, `mod4` has a lower $R^2$ and regression standard error, $\hat\sigma$, despite using fewer variables.
-More importantly for prediction purposes, it has a higher AIC - which is an estimate of the out of sample error.
+Using overall model comparison terms, `mod4` has a lower $R^2$ and regression standard error, $\hat{\sigma}$, despite using fewer variables.
+More importantly for prediction purposes, this model has a higher AIC, which is an estimate of the out of sample error.
 
 ```r
-glance(mod4) %>% select(r.squared, sigma, AIC, df)
+glance(mod3) %>% select(r.squared, sigma, AIC, df)
 #> # A tibble: 1 x 4
 #>   r.squared sigma   AIC    df
 #> *     <dbl> <dbl> <dbl> <int>
@@ -247,48 +252,63 @@ Create a new `wday` variable that combines the day of week, term (for Saturdays)
 
 <div class="answer">
 
-The question is unclear how to handle the public holidays. We could include a dummy for all public holidays? or the Sunday before public holidays?
+The question is unclear how to handle public holidays. There are several questions to consider.
 
-Including a level for the public holidays themselves is insufficient because (1) public holiday's effects on travel varies dramatically, (2) the effect can occur on the day itself or the day before and after, and (3) with Thanksgiving and Christmas there are increases in travel as well.
+First, what are the public holidays? I will include all [federal holidays in the United States](https://en.wikipedia.org/wiki/Federal_holidays_in_the_United_States) in 2013.
+Other holidays to consider would be Easter and Good Friday which is US stock market holiday and widely celebrated religious holiday, Mothers Day, Fathers Day,
+and Patriots' Day, which is a holiday in several states, and other state holidays.
+
+```r
+holidays_2013 <-
+  tribble(
+    ~ holiday,                    ~ date,
+    "New Year's Day",             20130101,
+    "Martin Luther King Jr. Day", 20130121,
+    "Washington's Birthday",      20130218,
+    "Memorial Day",               20130527,
+    "Independence Day",           20130704,
+    "Labor Day",                  20130902,
+    "Columbus Day",               20131028,
+    "Veteran's Day",              20131111,
+    "Thanksgiving",               20131128,
+    "Christmas",                  20131225
+  ) %>%
+  mutate(date = lubridate::ymd(date))
+```
+
+The model could include a single dummy variable which indicates a day was a public holiday.
+Alternatively, I could include a dummy variable for each public holiday.
+I would expect that Veteran's Day and Washington's Birthday have a different effect on travel than Thanksgiving, Christmas, and New Year's Day.
+
+Another question is whether and how I should handle the days before and after holidays.
+Travel could be lighter on the holiday itself,
+but heavier before and after.
 
 
 ```r
 daily <- daily %>%
   mutate(wday3 =
          case_when(
-           .$date %in% lubridate::ymd(c(20130101, # new years
-                                        20130121, # mlk
-                                        20130218, # presidents
-                                        20130527, # memorial
-                                        20130704, # independence
-                                        20130902, # labor
-                                        20131028, # columbus
-                                        20131111, # veterans
-                                        20131128, # thanksgiving
-                                        20131225)) ~
-             "holiday",
+           (date - 1L) %in% holidays_2013$date ~ "day before holiday",
+           (date + 1L) %in% holidays_2013$date ~ "day after holiday",           
+           date %in% holidays_2013$date ~ "holiday",           
            .$wday == "Sat" & .$term == "summer" ~ "Sat-summer",
-           .$wday == "Sat" & .$ term == "fall" ~ "Sat-fall",
+           .$wday == "Sat" & .$term == "fall" ~ "Sat-fall",
            .$wday == "Sat" & .$term == "spring" ~ "Sat-spring",
            TRUE ~ as.character(.$wday)))
 
-mod5 <- lm(n ~ wday3, data = daily)
+mod4 <- lm(n ~ wday3, data = daily)
 
 daily %>%
-  spread_residuals(mod5) %>%
-  arrange(desc(abs(resid))) %>%
-  slice(1:20) %>% select(date, wday, resid)
-#> # A tibble: 20 x 3
-#>   date       wday  resid
-#>   <date>     <ord> <dbl>
-#> 1 2013-11-28 Thu   -332.
-#> 2 2013-11-29 Fri   -306.
-#> 3 2013-12-25 Wed   -244.
-#> 4 2013-07-04 Thu   -229.
-#> 5 2013-12-24 Tue   -190.
-#> 6 2013-12-31 Tue   -175.
-#> # ... with 14 more rows
+  spread_residuals(resid_sat_terms = mod3, resid_holidays = mod4) %>%
+  mutate(resid_diff = resid_holidays - resid_sat_terms) %>%
+  ggplot(aes(date, resid_diff)) +
+    geom_line(alpha = 0.75)
 ```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 </div>
 
@@ -300,14 +320,29 @@ What happens if you fit a day of week effect that varies by month (i.e. `n ~ wda
 
 <div class="answer">
 
-There are only 4-5 observations per parameter since only there are only 4-5 weekdays in a given month.
+
+```r
+daily <- mutate(daily, month = lubridate::month(date))
+
+mod6 <- lm(n ~ wday * month, data = daily)
+```
+
+There model has only 4--5 observations to estimate each (month, weekday)
+combination parameter since only there only 4--5 weekdays in given month. Any
+estimates will be very uncertain.
 
 </div>
 
 ### Exercise <span class="exercise-number">24.3.5.6</span> {.unnumbered .exercise}
 
+<div class="question">
+What would you expect the model `n ~ wday + ns(date, 5)` to look like? Knowing what you know about the data, why would you expect it to be not particularly effective?
+</div>
+
+<div class="answer">
 It will estimate a smooth seasonal trend (`ns(date, 5)`) with a day of the week cyclicality, (`wday`).
 It probably will not be effective since
+</div>
 
 ### Exercise <span class="exercise-number">24.3.5.7</span> {.unnumbered .exercise}
 
@@ -332,7 +367,7 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 However, breaking it down by hour, I don't see much evidence at first.
 Conditional on hour, the distance of Sunday flights seems similar to that of other days (excluding Saturday):
@@ -352,7 +387,7 @@ flights %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Can someone think of a better way to check this?
 
@@ -388,7 +423,7 @@ ggplot(daily, aes(monday_first(wday), n)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{model-building_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 </div>
 

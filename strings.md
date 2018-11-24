@@ -354,7 +354,7 @@ The answer to each part follows.
 
 <div class="question">
 
-Empirically verify the rule ``i before e except after c''.
+Empirically verify the rule “i” before e except after “c”.
 
 </div>
 
@@ -384,7 +384,7 @@ sum(str_detect(stringr::words, "(cie|[^c]ei)"))
 #### Exercise <span class="exercise-number">14.3.3.1.3</span> {.unnumbered .exercise}
 
 <div class="question">
-Is ``q'' always followed by a ``u''?
+Is “q” always followed by a “u”?
 </div>
 
 <div class="answer">
@@ -415,7 +415,7 @@ But, there are a few heuristics to consider that would account for some common c
 
 The regex `ou|ise$|ae|oe|yse$` would match these.
 
-There are other [spelling differences between American and British English] (https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences) but they are not patterns amenable to regular expressions.
+There are other [spelling differences between American and British English](https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences) but they are not patterns amenable to regular expressions.
 It would require a dictionary with differences in spellings for different words.
 
 </div>
@@ -474,16 +474,25 @@ Describe the equivalents of `?`, `+`, `*` in `{m,n}` form.
 | `+`     | `{1,}`  | Match 1 or more   |
 | `*`     | `{0,}`  | Match 0 or more   |
 
-For example, let's repeat the let's rewrite the `?`, `+`, and `*` examples using `{,}`.
+For example, let's repeat the examples in the chapter, replacing `?` with `{0,1}`, 
+`+` with `{1,}`, and `*` with `{*,}`.
 
 ```r
 x <- "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"
+```
+
+```r
 str_view(x, "CC?")
 ```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{strings_files/figure-latex/unnamed-chunk-29-1} 
 
 ```r
 str_view(x, "CC{0,1}")
 ```
+
 
 ```r
 str_view(x, "CC+")
@@ -491,6 +500,27 @@ str_view(x, "CC+")
 
 ```r
 str_view(x, "CC{1,}")
+```
+
+
+```r
+str_view_all(x, "C[LX]+")
+```
+
+```r
+str_view_all(x, "C[LX]{0,1}")
+```
+
+The chapter does not contain an example of `*`.
+This pattern looks for a "C" optionally followed by
+any number of "L" or "X" characters.
+
+```r
+str_view_all(x, "C[LX]*")
+```
+
+```r
+str_view_all(x, "C[LX]{0,}")
 ```
 
 </div>
@@ -935,9 +965,8 @@ Replace all forward slashes in a string with backslashes.
 
 
 ```r
-backslashed <- str_replace_all("past/present/future", "/", "\\\\")
-writeLines(backslashed)
-#> past\present\future
+str_replace_all("past/present/future", "/", "\\\\")
+#> [1] "past\\present\\future"
 ```
 
 </div>
@@ -1091,18 +1120,16 @@ What are the five most common words in sentences?
 
 <div class="answer">
 
+Using `str_extract_all()` with the argument `boundary("word")` will extract all words.
+The rest of the code uses **dplyr** functions to count words and find the most
+common words.
 
 ```r
-str_extract_all(sentences, boundary("word")) %>%
-  unlist() %>%
-  str_to_lower() %>%
-  tibble() %>%
-  set_names("word") %>%
-  group_by(word) %>%
-  count(sort = TRUE) %>%
+tibble(word = unlist(str_extract_all(sentences, boundary("word")))) %>%
+  mutate(word = str_to_lower(word)) %>%
+  count(word, sort = TRUE) %>%
   head(5)
 #> # A tibble: 5 x 2
-#> # Groups:   word [5]
 #>   word      n
 #>   <chr> <int>
 #> 1 the     751

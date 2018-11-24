@@ -331,7 +331,7 @@ mean(is.na(x))
 #> [1] 0.286
 ```
 
-The expression `sum(!is.finite(x))` calculates the number of elements in the vector that are equal to missing (`NA`), not-a-number (`NaN`), or inifinity (`Inf`). 
+The expression `sum(!is.finite(x))` calculates the number of elements in the vector that are equal to missing (`NA`), not-a-number (`NaN`), or infinity (`Inf`). 
 
 ```r
 sum(!is.finite(x))
